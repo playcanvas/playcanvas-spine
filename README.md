@@ -38,3 +38,7 @@ Install package dependencies
 Run grunt to build
 
 `grunt`
+
+## Notes
+
+The version of the spine-js runtime in the this library is modified from the version on Esoteric's github page. Mainly to fix a couple of bugs in the mesh animation rendering.
