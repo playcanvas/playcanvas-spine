@@ -1,6 +1,6 @@
 pc.script.attribute("atlas", "asset", null, {type: "text", max: 1});
-pc.script.attribute("textures", "asset", null, {type: "texture"});
 pc.script.attribute("skeleton", "asset", null, {type: "json", max: 1});
+pc.script.attribute("textures", "asset", null, {type: "texture"});
 
 pc.script.create("spine", function (app) {
     var Spine = function (entity) {
