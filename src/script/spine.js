@@ -1,6 +1,7 @@
 pc.script.attribute("atlas", "asset", null, {type: "text", max: 1});
 pc.script.attribute("skeleton", "asset", null, {type: "json", max: 1});
 pc.script.attribute("textures", "asset", null, {type: "texture"});
+pc.script.attribute("priority", "number", 0, {});
 
 pc.script.create("spine", function (app) {
     var Spine = function (entity) {
@@ -16,6 +17,10 @@ pc.script.create("spine", function (app) {
                     textureAssets: this.textures,
                     skeletonAsset: this.skeleton
                 });
+
+                if(this.entity.spine)
+                    this.priority = this.priority ? this.priority : 0;
+                    this.entity.spine.spine.priority = this.priority;
             }
         },
 

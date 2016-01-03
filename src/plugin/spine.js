@@ -1,7 +1,11 @@
 pc.extend(pc, function () {
-    var createSortFn = function (p) {
+    var createSortFn = function (index, priority, factor) {
         return function () {
-            return p;
+            var d = 0;
+            if (priority === 0)
+                d = this.distSqr; // only use the distance if using default priorities
+
+            return index + (priority*factor) - d;
         };
     };
 
@@ -12,7 +16,6 @@ pc.extend(pc, function () {
         load: function (page, path, atlas) {
             var texture = this._textureData[path];
             if (texture) {
-                var texture =
                 page.rendererObject = texture;
                 page.width = texture.width;
                 page.height = texture.height;
@@ -51,11 +54,14 @@ pc.extend(pc, function () {
         this._meshInstances = [];
         this._materials = {};
 
+        this._priority = 0;
+
         this.update(0);
         this._model = new pc.Model();
         this._model.graph = this._node;
         this._model.meshInstances = this._meshInstances;
         this._modelChanged = true;
+        this._reordered = true;
     };
 
     Spine.prototype = {
@@ -171,37 +177,47 @@ pc.extend(pc, function () {
                 // get the texture
                 var texture = attachment.rendererObject.page.rendererObject;
                 if (texture) {
-                    // get a unique key for the texture
-                    var key = null;
-                    if (texture.getSource() instanceof Image) {
-                        key = texture.getSource().getAttribute("src");
-                    }
-
-                    // create a new material if required
-                    if (key && this._materials[key] !== undefined) {
-                        slot.materials[name] = this._materials[key];
+                    if (texture instanceof pc.PhongMaterial) {
+                        slot.materials[name] = texture;
+                        this._materials[texture.name] = texture;
                     } else {
-                        slot.materials[name] = new pc.PhongMaterial();
-                        slot.materials[name].emissiveMap = texture;
-                        slot.materials[name].opacityMap = texture;
-                        slot.materials[name].opacityMapChannel = "a";
-                        slot.materials[name].depthWrite = false;
-                        slot.materials[name].cull = pc.CULLFACE_NONE;
-                        slot.materials[name].blendType = pc.BLEND_NORMAL;
-                        slot.materials[name].update();
+                        // get a unique key for the texture
+                        var key = null;
+                        if (texture.getSource() instanceof Image) {
+                            key = texture.getSource().getAttribute("src");
+                        }
 
-                        if (key) {
-                            this._materials[key] = slot.materials[name];
+                        // create a new material if required
+                        if (key && this._materials[key] !== undefined) {
+                            slot.materials[name] = this._materials[key];
+                        } else {
+                            slot.materials[name] = new pc.PhongMaterial();
+                            slot.materials[name].emissiveMap = texture;
+                            slot.materials[name].opacityMap = texture;
+                            slot.materials[name].opacityMapChannel = "a";
+                            slot.materials[name].depthWrite = false;
+                            slot.materials[name].cull = pc.CULLFACE_NONE;
+                            slot.materials[name].blendType = pc.BLEND_NORMAL;
+                            slot.materials[name].update();
+
+                            if (key) {
+                                this._materials[key] = slot.materials[name];
+                            }
                         }
                     }
+
                 }
             }
 
             if (slot.meshInstances[name] === undefined) {
                 slot.meshInstances[name] = new pc.MeshInstance(this._node, slot.meshes[name], slot.materials[name]);
-                slot.meshInstances[name].sorter = createSortFn(index);
                 this._meshInstances.push(slot.meshInstances[name]);
                 this._modelChanged = true;
+                this._reordered = true;
+            }
+
+            if (this._reordered) {
+                slot.meshInstances[name].compare = createSortFn(index, this.priority, 1000);
             }
 
             slot.meshes[name].updateVertices(slot.positions);
@@ -226,19 +242,19 @@ pc.extend(pc, function () {
                 var slot = drawOrder[i];
                 this.updateSlot(i, slot);
             }
+
             if (this._modelChanged && this._model) {
                 this._app.scene.removeModel(this._model);
                 this._app.scene.addModel(this._model);
                 this._modelChanged = false;
             }
+
+            // reset reorder flag
+            this._reordered = false;
         },
 
         setPosition: function (p) {
             this._position.copy(p);
-        },
-
-        _addMeshInstance: function (mi) {
-            this._meshInstances.push(mi);
         }
     };
 
@@ -248,6 +264,16 @@ pc.extend(pc, function () {
         }
     });
 
+    Object.defineProperty(Spine.prototype, "priority", {
+        get: function () {
+            return this._priority;
+        },
+
+        set: function (value) {
+            this._priority = value;
+            this._reordered = true;
+        }
+    })
     return {
         Spine: Spine
     };

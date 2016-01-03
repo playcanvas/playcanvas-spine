@@ -103,6 +103,8 @@
                 light.translate(0, 0, 10);
 
                 var character = new pc.Entity();
+                app.root.addChild(character);
+
                 character.addComponent("script", {
                     scripts: [{
                         name: "spine",
@@ -120,19 +122,49 @@
                     }]
                 });
 
-                // character.spine.speed = 0.1;
+                character.spine.spine.priority = 0.1;
                 character.spine.skeleton.setSkinByName("goblingirl");
                 character.spine.skeleton.setSlotsToSetupPose();
                 character.spine.state.setAnimationByName(0, "walk", true);
 
+                var character2 = new pc.Entity();
+                app.root.addChild(character2);
+                character2.addComponent("script", {
+                    scripts: [{
+                        name: "spine",
+                        url:"../src/script/spine.js",
+                        attributes: [{
+                            name: "textures",
+                            value: [assets[1].id]
+                        }, {
+                            name: "atlas",
+                            value: assets[0].id
+                        }, {
+                            name: "skeleton",
+                            value: assets[2].id
+                        }]
+                    }]
+                });
+                character2.translate(0.25, 0, 0);
+                // character2.spine.spine.priority = 1;
+                character2.spine.skeleton.setSkinByName("goblin");
+                character2.spine.skeleton.setSlotsToSetupPose();
+                character2.spine.state.setAnimationByName(0, "walk", true);
+                character2.spine.speed = 0.4;
                 app.on("update", function (dt) {
                     if (app.keyboard.wasPressed(pc.KEY_SPACE)) {
                         character.spine.skeleton.setSkinByName("goblin");
                         character.spine.skeleton.setSlotsToSetupPose();
+
+                        character2.spine.skeleton.setSkinByName("goblingirl");
+                        character2.spine.skeleton.setSlotsToSetupPose();
                     }
                     if (app.keyboard.wasPressed(pc.KEY_R)) {
                         character.spine.skeleton.setSkinByName("goblingirl");
                         character.spine.skeleton.setSlotsToSetupPose();
+
+                        character2.spine.skeleton.setSkinByName("goblin");
+                        character2.spine.skeleton.setSlotsToSetupPose();
                     }
                 });
             });
