@@ -29,9 +29,18 @@ pc.extend(pc, function () {
     };
 
     /**
-    * atlasData - text data loaded from the atlas file
-    * skeletonData - JSON data loaded from the skeleton file
-    * textureData - index of texture filenames to texture resource
+    * @class
+    * @name pc.Spine
+    * @description A Spine animation object.
+    * Contains the skeleton and animation states as detailed in the Spine Runtime documentation
+    * @param {String} atlasData Text data loaded from the atlas file
+    * @param {Object} skeletonData JSON data loaded from the skeleton file
+    * @param {Object} textureData Texture initialization data. An object where the key is the texture filename and the value is the pc.Texture resource
+    * @property skeleton The Skeleton object
+    * @property {AnimationState} state The first AnimationState object. There is always one AnimationState
+    * @property {AnimationState[]} states A list of all AnimationState objects.
+    * @property {Number} priority An integer value which determines when the animation is rendered relative to other Spine animations. Lower numbers are rendered first.
+    * @property {Boolean} autoUpdate Determines whether the Spine object calls skeleton.updateWorldTransform in the update loop. Default is true.
     */
     var Spine = function (app, atlasData, skeletonData, textureData) {
         this._app = app;
@@ -57,6 +66,9 @@ pc.extend(pc, function () {
         this._priority = 0;
 
         this.update(0);
+
+        this.autoUpdate = true;
+
         this._model = new pc.Model();
         this._model.graph = this._node;
         this._model.meshInstances = this._meshInstances;
@@ -108,9 +120,9 @@ pc.extend(pc, function () {
 
             // update vertices positions
             if (attachment.computeVertices)
-                attachment.computeVertices(this._position.x + this.skeleton.x, this._position.y + this.skeleton.y, slot.bone, slot.vertices);
+            attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, slot.vertices);
             if (attachment.computeWorldVertices)
-                attachment.computeWorldVertices(this._position.x + this.skeleton.x, this._position.y + this.skeleton.y, slot, slot.vertices);
+                attachment.computeWorldVertices(this.skeleton.x, this.skeleton.y, slot, slot.vertices);
 
             if (attachment instanceof spine.RegionAttachment) {
                 slot.positions = [
@@ -234,7 +246,8 @@ pc.extend(pc, function () {
             for (var i = 0, n = this.states.length; i < n; i++) {
                 this.states[i].apply(this.skeleton);
             }
-            this.skeleton.updateWorldTransform();
+            if (this.autoUpdate)
+                this.skeleton.updateWorldTransform();
 
             var drawOrder = this.skeleton.drawOrder;
             var y = 0

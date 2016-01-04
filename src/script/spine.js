@@ -18,9 +18,10 @@ pc.script.create("spine", function (app) {
                     skeletonAsset: this.skeleton
                 });
 
-                if(this.entity.spine)
+                if(this.entity.spine) {
                     this.priority = this.priority ? this.priority : 0;
                     this.entity.spine.spine.priority = this.priority;
+                }
             }
         },
 
