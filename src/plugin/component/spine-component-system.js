@@ -34,11 +34,10 @@ pc.extend(pc, function () {
         },
 
         removeComponent: function (entity) {
-
-        },
-
-        cloneComponent: function (entity, clone) {
-
+            var data = entity.spine.data;
+            if (data.spine) {
+                data.spine.destroy();
+            }
         },
 
         onUpdate: function (dt) {
