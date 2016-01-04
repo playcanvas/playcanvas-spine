@@ -119,11 +119,12 @@ pc.extend(pc, function () {
             }
 
             // update vertices positions
-            if (attachment.computeVertices)
-            attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, slot.vertices);
-            if (attachment.computeWorldVertices)
+            if (attachment.computeVertices) {
+                attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, slot.vertices);
+            }
+            if (attachment.computeWorldVertices) {
                 attachment.computeWorldVertices(this.skeleton.x, this.skeleton.y, slot, slot.vertices);
-
+            }
             if (attachment instanceof spine.RegionAttachment) {
                 slot.positions = [
                     slot.vertices[0], slot.vertices[1], this._position.z,
@@ -228,15 +229,24 @@ pc.extend(pc, function () {
                 this._reordered = true;
             }
 
-            if (this._reordered) {
-                slot.meshInstances[name].compare = createSortFn(index, this.priority, 1000);
-            }
-
             slot.meshes[name].updateVertices(slot.positions);
 
             slot.current.mesh = slot.meshes[name];
             slot.current.meshInstance = slot.meshInstances[name];
             slot.current.meshInstance._hidden = false;
+        },
+
+        reorder: function () {
+            var drawOrder = this.skeleton.drawOrder;
+            for (var i = 0, n = drawOrder.length; i < n; i++) {
+                var slot = drawOrder[i];
+                if (!slot.attachment) continue;
+                var name = slot.attachment.name;
+                var mi = slot.meshInstances[name];
+                if (!mi) continue;
+
+                mi.compare = createSortFn(i, this.priority, 1000);
+            }
         },
 
         update: function (dt) {
@@ -250,7 +260,6 @@ pc.extend(pc, function () {
                 this.skeleton.updateWorldTransform();
 
             var drawOrder = this.skeleton.drawOrder;
-            var y = 0
             for (var i = 0, n = drawOrder.length; i < n; i++) {
                 var slot = drawOrder[i];
                 this.updateSlot(i, slot);
@@ -261,6 +270,11 @@ pc.extend(pc, function () {
                 this._app.scene.addModel(this._model);
                 this._modelChanged = false;
             }
+
+            if (this._reordered) {
+                this.reorder();
+            }
+
 
             // reset reorder flag
             this._reordered = false;
