@@ -98,13 +98,13 @@
 
                 var light = new pc.Entity();
                 light.addComponent("light", {
-                    type: "point",
-                    range: 15
+                    type: "directional"
                 });
                 app.root.addChild(light);
                 light.translate(0, 0, 10);
 
                 var character = new pc.Entity();
+                app.root.addChild(character);
                 character.addComponent("script", {
                     scripts: [{
                         name: "spine",

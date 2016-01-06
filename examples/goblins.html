@@ -12,7 +12,7 @@
             body {
                 margin: 0;
                 padding: 0;
-                background-color: black;
+                background-color: white;
             }
 
             canvas {
@@ -96,11 +96,11 @@
 
                 var light = new pc.Entity();
                 light.addComponent("light", {
-                    type: "point",
-                    range: 15
+                    type: "directional",
+                    intensity: 1
                 });
                 app.root.addChild(light);
-                light.translate(0, 0, 10);
+                light.translate(0, 0.5, 1);
 
                 var character = new pc.Entity();
                 app.root.addChild(character);
@@ -122,7 +122,7 @@
                     }]
                 });
 
-                character.spine.spine.priority = 0.1;
+                // character.spine.spine.priority = 0.1;
                 character.spine.skeleton.setSkinByName("goblingirl");
                 character.spine.skeleton.setSlotsToSetupPose();
                 character.spine.state.setAnimationByName(0, "walk", true);
@@ -145,7 +145,7 @@
                         }]
                     }]
                 });
-                character2.translate(0.25, 0, 0);
+                character2.translate(0.25, 0, -1);
                 // character2.spine.spine.priority = 1;
                 character2.spine.skeleton.setSkinByName("goblin");
                 character2.spine.skeleton.setSlotsToSetupPose();
@@ -175,7 +175,10 @@
         canvas.height = 512;
         var app = new pc.Application(canvas, {
             mouse: new pc.Mouse(canvas),
-            keyboard: new pc.Keyboard(window)
+            keyboard: new pc.Keyboard(window),
+            graphicsDeviceOptions: {
+                alpha: false
+            }
         });
         app.scene = new pc.Scene();
 
