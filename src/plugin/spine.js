@@ -74,6 +74,7 @@ pc.extend(pc, function () {
         this._model.meshInstances = this._meshInstances;
         this._modelChanged = true;
         this._reordered = true;
+
     };
 
     Spine.prototype = {
@@ -205,13 +206,16 @@ pc.extend(pc, function () {
                             slot.materials[name] = this._materials[key];
                         } else {
                             slot.materials[name] = new pc.PhongMaterial();
-                            slot.materials[name].emissiveMap = texture;
+                            slot.materials[name].shadingModel = pc.SPECULAR_BLINN;
+                            slot.materials[name].diffuseMap = texture;
                             slot.materials[name].opacityMap = texture;
                             slot.materials[name].opacityMapChannel = "a";
                             slot.materials[name].depthWrite = false;
                             slot.materials[name].cull = pc.CULLFACE_NONE;
-                            slot.materials[name].blendType = pc.BLEND_NORMAL;
+                            slot.materials[name].blendType = pc.BLEND_PREMULTIPLIED;
                             slot.materials[name].update();
+                            // override premultiplied chunk because images are already premultiplied
+                            slot.materials[name].chunks.outputAlphaPremulPS = pc.shaderChunks.outputAlphaPS
 
                             if (key) {
                                 this._materials[key] = slot.materials[name];
