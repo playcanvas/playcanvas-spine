@@ -91,13 +91,13 @@
 
                 var light = new pc.Entity();
                 light.addComponent("light", {
-                    type: "point",
-                    range: 15000
+                    type: "directional"
                 });
                 app.root.addChild(light);
                 light.translate(0, 0, 1);
 
                 var character = new pc.Entity();
+                app.root.addChild(character);
                 character.addComponent("script", {
                     scripts: [{
                         name: "spine",
@@ -117,7 +117,6 @@
 
                 character.spine.state.data.setMixByName("Idle", "Walk", 0.2);
                 character.spine.state.data.setMixByName("Walk", "Idle", 0.2);
-                // character.spine.state.data.setMixByName("Idle", "Attack", 1.2);
                 character.spine.spine.skeleton.setSkinByName("White");
                 character.spine.spine.skeleton.setSlotsToSetupPose();
                 character.spine.state.setAnimationByName(0, "Idle", true);
