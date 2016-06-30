@@ -3,7 +3,7 @@ pc.extend(pc, function () {
         return function () {
             var d = 0;
             if (priority === 0)
-                d = this.distSqr; // only use the distance if using default priorities
+                d = this.zdist; // only use the distance if using default priorities
 
             return index + (priority*factor) - d;
         };
@@ -96,7 +96,7 @@ pc.extend(pc, function () {
             // start by hiding previous mesh instance for this attachment
             // it will be unhidden later if needed
             if (slot.current && slot.current.meshInstance) {
-                slot.current.meshInstance._hidden = true;
+                slot.current.meshInstance.visible = false;
             }
 
             // if there is no longer an attachment, abort
@@ -237,7 +237,7 @@ pc.extend(pc, function () {
 
             slot.current.mesh = slot.meshes[name];
             slot.current.meshInstance = slot.meshInstances[name];
-            slot.current.meshInstance._hidden = false;
+            slot.current.meshInstance.visible = true;
         },
 
         reorder: function () {

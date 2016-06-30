@@ -20,7 +20,12 @@ pc.extend(pc, function () {
             var textureData = {};
             for (var i = 0, n = this.textureAssets.length; i < n; i++) {
                 var asset = this.system.app.assets.get(this.textureAssets[i]);
-                textureData[pc.path.getBasename(asset.file.url)] = asset.resource;
+                var path = pc.path.getBasename(asset.file.url);
+                var query = path.indexOf('?');
+                if (query !== -1)
+                    path = path.substring(0, query);
+
+                textureData[path] = asset.resource;
             }
 
             this.data.spine = new pc.Spine(this.system.app, this.atlasData, this.skeletonData, textureData);
