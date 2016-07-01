@@ -5,7 +5,7 @@ pc.extend(pc, function () {
             if (priority === 0)
                 d = this.zdist; // only use the distance if using default priorities
 
-            return index + (priority*factor) - d;
+            return index - (priority*factor) - d;
         };
     };
 
@@ -56,7 +56,7 @@ pc.extend(pc, function () {
 
         this.stateData = new spine.AnimationStateData(this.skeleton.data);
 
-        this.states = [new spine.AnimationState(this.stateData)]
+        this.states = [new spine.AnimationState(this.stateData)];
 
         this._node = new pc.GraphNode();
 
@@ -132,7 +132,7 @@ pc.extend(pc, function () {
                     slot.vertices[2], slot.vertices[3], this._position.z,
                     slot.vertices[4], slot.vertices[5], this._position.z,
                     slot.vertices[6], slot.vertices[7], this._position.z
-                ]
+                ];
 
                 if (slot.meshes[name] === undefined) {
                     var options = {
@@ -148,14 +148,14 @@ pc.extend(pc, function () {
                             1 - attachment.uvs[7],
                         ],
                         indices: [0,3,2,2,1,0]
-                    }
+                    };
                     slot.meshes[name] = pc.createMesh(this._app.graphicsDevice, slot.positions, options);
                     slot.meshes[name].name = name;
                 }
-            } else if (attachment instanceof spine.SkinnedMeshAttachment ||
+            } else if (attachment instanceof spine.WeightedMeshAttachment ||
                 attachment instanceof spine.MeshAttachment) {
                 var ii = 0;
-                var normals = []
+                var normals = [];
                 for (var i = 0, n = slot.vertices.length; i < n; i += 2) {
                     slot.positions[ii] = slot.vertices[i];
                     slot.positions[ii+1] = slot.vertices[i+1];
@@ -215,7 +215,7 @@ pc.extend(pc, function () {
                             slot.materials[name].blendType = pc.BLEND_PREMULTIPLIED;
                             slot.materials[name].update();
                             // override premultiplied chunk because images are already premultiplied
-                            slot.materials[name].chunks.outputAlphaPremulPS = pc.shaderChunks.outputAlphaPS
+                            slot.materials[name].chunks.outputAlphaPremulPS = pc.shaderChunks.outputAlphaPS;
 
                             if (key) {
                                 this._materials[key] = slot.materials[name];
