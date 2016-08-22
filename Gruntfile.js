@@ -16,7 +16,7 @@ module.exports = function (grunt) {
                 }
             },
             options: {
-                banner: "/* Copyright 2015 PlayCanvas Ltd */\n"
+                banner: "/* Copyright 2015-2016 PlayCanvas Ltd */\n"
             }
         }
     });

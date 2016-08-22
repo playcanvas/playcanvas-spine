@@ -5,7 +5,7 @@ pc.extend(pc, function () {
             if (priority === 0)
                 d = this.zdist; // only use the distance if using default priorities
 
-            return index - (priority*factor) - d;
+            return index + (priority*factor) - d;
         };
     };
 
@@ -205,7 +205,7 @@ pc.extend(pc, function () {
                         if (key && this._materials[key] !== undefined) {
                             slot.materials[name] = this._materials[key];
                         } else {
-                            slot.materials[name] = new pc.PhongMaterial();
+                            slot.materials[name] = new pc.StandardMaterial();
                             slot.materials[name].shadingModel = pc.SPECULAR_BLINN;
                             slot.materials[name].diffuseMap = texture;
                             slot.materials[name].opacityMap = texture;
