@@ -207,7 +207,7 @@ pc.extend(pc, function () {
                         } else {
                             slot.materials[name] = new pc.PhongMaterial();
                             slot.materials[name].shadingModel = pc.SPECULAR_BLINN;
-                            slot.materials[name].diffuseMap = texture;
+                            slot.materials[name].emissiveMap = texture;
                             slot.materials[name].opacityMap = texture;
                             slot.materials[name].opacityMapChannel = "a";
                             slot.materials[name].depthWrite = false;
