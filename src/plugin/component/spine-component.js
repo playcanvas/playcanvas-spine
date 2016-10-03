@@ -132,6 +132,23 @@ pc.extend(pc, function () {
 
         onAssetRemoved: function (asset) {
 
+        },
+
+        onEnable: function () {
+            SpineComponent._super.onEnable.call(this);
+
+            if (this.data.spine) {
+                this.data.spine.show();
+            }
+
+        },
+
+        onDisable: function () {
+            SpineComponent._super.onDisable.call(this);
+
+            if (this.data.spine) {
+                this.data.spine.hide();
+            }
         }
     });
 

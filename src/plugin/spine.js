@@ -1,14 +1,4 @@
 pc.extend(pc, function () {
-    var createSortFn = function (index, priority, factor) {
-        return function () {
-            var d = 0;
-            if (priority === 0)
-                d = this.zdist; // only use the distance if using default priorities
-
-            return index + (priority*factor) - d;
-        };
-    };
-
     var TextureLoader = function (textureData) {
         this._textureData = textureData;
     };
@@ -88,6 +78,29 @@ pc.extend(pc, function () {
             this.state = null;
             this._materials = {};
             this._node = null;
+        },
+
+        hide: function () {
+            var drawOrder = this.skeleton.drawOrder;
+            for (var i = 0, n = drawOrder.length; i < n; i++) {
+                var slot = drawOrder[i];
+                if (! slot.current || ! slot.current.meshInstance)
+                    continue;
+
+                slot.current.meshInstance.visible = false;
+            }
+        },
+
+        show: function () {
+            var drawOrder = this.skeleton.drawOrder;
+            for (var i = 0, n = drawOrder.length; i < n; i++) {
+                var slot = drawOrder[i];
+
+                if (! slot.current || ! slot.current.meshInstance)
+                    continue;
+
+                slot.current.meshInstance.visible = true;
+            }
         },
 
         updateSlot: function (index, slot) {
@@ -191,7 +204,7 @@ pc.extend(pc, function () {
                 // get the texture
                 var texture = attachment.rendererObject.page.rendererObject;
                 if (texture) {
-                    if (texture instanceof pc.PhongMaterial) {
+                    if (texture instanceof pc.StandardMaterial) {
                         slot.materials[name] = texture;
                         this._materials[texture.name] = texture;
                     } else {
@@ -207,6 +220,7 @@ pc.extend(pc, function () {
                         } else {
                             slot.materials[name] = new pc.StandardMaterial();
                             slot.materials[name].shadingModel = pc.SPECULAR_BLINN;
+                            slot.materials[name].diffuse = new pc.Color(0, 0, 0);
                             slot.materials[name].emissiveMap = texture;
                             slot.materials[name].opacityMap = texture;
                             slot.materials[name].opacityMapChannel = "a";
@@ -249,7 +263,7 @@ pc.extend(pc, function () {
                 var mi = slot.meshInstances[name];
                 if (!mi) continue;
 
-                mi.compare = createSortFn(i, this.priority, 1000);
+                mi.drawOrder = i + (this.priority * 1000);
             }
         },
 
@@ -305,6 +319,7 @@ pc.extend(pc, function () {
             this._reordered = true;
         }
     })
+
     return {
         Spine: Spine
     };

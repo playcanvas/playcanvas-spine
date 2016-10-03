@@ -1,34 +1,29 @@
-pc.script.attribute("atlas", "asset", null, {type: "text", max: 1});
-pc.script.attribute("skeleton", "asset", null, {type: "json", max: 1});
-pc.script.attribute("textures", "asset", null, {type: "texture"});
-pc.script.attribute("priority", "number", 0, {});
+var Spine = pc.createScript("spine");
 
-pc.script.create("spine", function (app) {
-    var Spine = function (entity) {
-        this.entity = entity;
-    };
+Spine.attributes.add("atlas", {type: "asset", assetType: "text"});
+Spine.attributes.add("skeleton", {type: "asset", assetType: "json"});
+Spine.attributes.add("textures", {type: "asset", array: true, assetType: "texture"});
+Spine.attributes.add("priority", {type: "number", default: 1});
 
-    Spine.prototype = {
-        initialize: function () {
-            if (this.atlas && this.textures && this.skeleton) {
-                // If all assets are present, add the spine component to the entity
-                this.entity.addComponent("spine", {
-                    atlasAsset: this.atlas,
-                    textureAssets: this.textures,
-                    skeletonAsset: this.skeleton
-                });
 
-                if(this.entity.spine) {
-                    this.priority = this.priority ? this.priority : 0;
-                    this.entity.spine.spine.priority = this.priority;
-                }
-            }
-        },
+Spine.prototype.initialize = function () {
+    if (this.atlas && this.textures && this.skeleton) {
+        // If all assets are present, add the spine component to the entity
+        this.entity.addComponent("spine", {
+            atlasAsset: this.atlas.id,
+            textureAssets: this.textures.map(function (a) {return a.id;}),
+            skeletonAsset: this.skeleton.id
+        });
 
-        update: function (dt) {
-
+        if(this.entity.spine) {
+            this.priority = this.priority ? this.priority : 0;
+            this.entity.spine.spine.priority = this.priority;
         }
-    };
+    }
 
-    return Spine;
-});
+    this.on('attr:priority', function (val) {
+        if (this.entity.spine) {
+            this.entity.spine.spine.priority = val;
+        }
+    }, this);
+};
