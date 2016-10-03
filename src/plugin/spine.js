@@ -65,6 +65,7 @@ pc.extend(pc, function () {
         this._modelChanged = true;
         this._reordered = true;
 
+        this._hidden = false;
     };
 
     Spine.prototype = {
@@ -81,6 +82,9 @@ pc.extend(pc, function () {
         },
 
         hide: function () {
+            if (this._hidden)
+                return;
+
             var drawOrder = this.skeleton.drawOrder;
             for (var i = 0, n = drawOrder.length; i < n; i++) {
                 var slot = drawOrder[i];
@@ -89,9 +93,14 @@ pc.extend(pc, function () {
 
                 slot.current.meshInstance.visible = false;
             }
+
+            this._hidden = true;
         },
 
         show: function () {
+            if (! this._hidden)
+                return;
+
             var drawOrder = this.skeleton.drawOrder;
             for (var i = 0, n = drawOrder.length; i < n; i++) {
                 var slot = drawOrder[i];
@@ -101,6 +110,8 @@ pc.extend(pc, function () {
 
                 slot.current.meshInstance.visible = true;
             }
+
+            this._hidden = false;
         },
 
         updateSlot: function (index, slot) {
@@ -268,6 +279,9 @@ pc.extend(pc, function () {
         },
 
         update: function (dt) {
+            if (this._hidden)
+                return;
+
             for (var i = 0, n = this.states.length; i < n; i++) {
                 this.states[i].update(dt);
             }
