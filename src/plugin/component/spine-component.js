@@ -137,17 +137,30 @@ pc.extend(pc, function () {
         onEnable: function () {
             SpineComponent._super.onEnable.call(this);
 
-            if (this.data.spine) {
-                this.data.spine.show();
+            var spine = this.data.spine;
+            if (spine && spine._model) {
+                this.system.app.scene.addModel(spine._model);
             }
-
         },
 
         onDisable: function () {
             SpineComponent._super.onDisable.call(this);
 
+            var spine = this.data.spine;
+            if (spine && spine._model) {
+                this.system.app.scene.removeModel(spine._model);
+            }
+        },
+
+        hide: function () {
             if (this.data.spine) {
                 this.data.spine.hide();
+            }
+        },
+
+        show: function () {
+            if (this.data.spine) {
+                this.data.spine.show();
             }
         }
     });
