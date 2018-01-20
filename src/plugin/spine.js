@@ -178,9 +178,9 @@ pc.extend(pc, function () {
                 }
             } else if (attachment instanceof spine.WeightedMeshAttachment ||
                 attachment instanceof spine.MeshAttachment) {
-                var ii = 0;
+                var i, ii = 0;
                 var normals = [];
-                for (var i = 0, n = slot.vertices.length; i < n; i += 2) {
+                for (i = 0, n = slot.vertices.length; i < n; i += 2) {
                     slot.positions[ii] = slot.vertices[i];
                     slot.positions[ii+1] = slot.vertices[i+1];
                     slot.positions[ii+2] = this._position.z;
@@ -192,18 +192,19 @@ pc.extend(pc, function () {
 
                 if (slot.meshes[name] === undefined) {
                     // invert v value
-                    var uvs = attachment.uvs.map(function (item, index) {
-                        if (index % 2) {
-                            return 1 - item;
+                    var uvs = new spine.Float32Array(attachment.uvs.length);
+                    for (i = 0; i < uvs.length; i++) {
+                        if (i % 2) {
+                            uvs[i] = 1 - attachment.uvs[i];
+                        } else {
+                            uvs[i] = attachment.uvs[i];
                         }
-
-                        return item;
-                    });
+                    }
 
                     var options = {
                         normals: normals,
                         uvs: uvs,
-                        indices: attachment.triangles.reverse()
+                        indices: attachment.triangles
                     };
                     slot.meshes[name] = pc.createMesh(this._app.graphicsDevice, slot.positions, options);
                     slot.meshes[name].name = name;
