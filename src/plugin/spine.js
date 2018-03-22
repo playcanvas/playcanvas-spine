@@ -54,6 +54,7 @@ pc.extend(pc, function () {
         this._materials = {};
 
         this._priority = 0;
+        this._layers = [pc.LAYERID_WORLD];
 
         this.update(0);
 
@@ -70,7 +71,9 @@ pc.extend(pc, function () {
 
     Spine.prototype = {
         destroy: function () {
-            this._app.scene.removeModel(this._model);
+            if (this._model) {
+                this._removeFromLayers();
+            }
 
             this._model = null;
             this._meshInstances = [];
@@ -298,8 +301,8 @@ pc.extend(pc, function () {
             }
 
             if (this._modelChanged && this._model) {
-                this._app.scene.removeModel(this._model);
-                this._app.scene.addModel(this._model);
+                this._removeFromLayers();
+                this._addToLayers();
                 this._modelChanged = false;
             }
 
@@ -314,6 +317,26 @@ pc.extend(pc, function () {
 
         setPosition: function (p) {
             this._position.copy(p);
+        },
+
+        _removeFromLayers: function () {
+            for (var i = 0; i<this._layers.length; i++) {
+                var id = this._layers[i];
+                var layer = this._app.scene.layers.getLayerById(id);
+                if (! layer) continue;
+
+                layer.removeMeshInstances(this._model.meshInstances);
+            }
+        },
+
+        _addToLayers: function () {
+            for (var i = 0; i<this._layers.length; i++) {
+                var id = this._layers[i];
+                var layer = this._app.scene.layers.getLayerById(id);
+                if (! layer) continue;
+
+                layer.addMeshInstances(this._model.meshInstances);
+            }
         }
     };
 
@@ -333,6 +356,22 @@ pc.extend(pc, function () {
             this._reordered = true;
         }
     })
+
+    Object.defineProperty(Spine.prototype, "layers", {
+        get: function () {
+            return this._layers;
+        },
+        set: function (value) {
+            if (this._model) {
+                this._removeFromLayers();
+            }
+            this._layers = value || [];
+
+            if (this._model) {
+                this._addToLayers();
+            }
+        }
+    });
 
     return {
         Spine: Spine
