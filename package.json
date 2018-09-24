@@ -3,9 +3,14 @@
   "description": "Spine plugin for PlayCanvas Engine",
   "version": "0.1.0",
   "devDependencies": {
-    "grunt-contrib-uglify": "*"
+    "grunt-contrib-uglify": "*",
+    "grunt": "^1.0.3",
+    "http-server": "^0.11.1"
   },
   "dependencies": {
-    "grunt": "^1.0.3"
+  },
+  "scripts": {
+    "build": "grunt",
+    "serve": "./node_modules/.bin/http-server ./ -a localhost"
   }
 }
