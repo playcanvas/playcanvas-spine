@@ -25,6 +25,7 @@
         pc.Application.registerPlugin("spine", register);
     } else {
         var app = pc.Application.getApplication();
-        new pc.SpineComponentSystem(app);
+        var system = new pc.SpineComponentSystem(app);
+        app.systems.add(system);
     }
 }());
