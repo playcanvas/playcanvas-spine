@@ -54,7 +54,7 @@ pc.extend(pc, function () {
         this._materials = {};
 
         this._priority = 0;
-        this._layers = [pc.LAYERID_WORLD];
+        this._layers = [pc.LAYERID_UI];
 
         this.update(0);
 

@@ -1,8 +1,6 @@
 pc.extend(pc, function () {
     var SpineComponentSystem = function SpineComponentSystem (app) {
         this.id = 'spine';
-        this.description = "";
-        app.systems.add(this.id, this);
 
         this.ComponentType = pc.SpineComponent;
         this.DataType = pc.SpineComponentData;
