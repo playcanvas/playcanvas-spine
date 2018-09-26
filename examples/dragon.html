@@ -1,12 +1,6 @@
 <html>
     <head>
-        <script src="/engine/build/output/playcanvas-latest.js"></script>
-        <script src="../contrib/spine-js/spine.js"></script>
-        <script src="../src/plugin/component/spine-component-data.js"></script>
-        <script src="../src/plugin/component/spine-component.js"></script>
-        <script src="../src/plugin/component/spine-component-system.js"></script>
-        <script src="../src/plugin/spine.js"></script>
-        <script src="../src/plugin/plugin.js"></script>
+        <script src="https://code.playcanvas.com/playcanvas-stable.js"></script>
 
         <style>
             body {
@@ -75,23 +69,20 @@
             preload(assets, function () {
                 var camera = new pc.Entity();
                 camera.addComponent("camera", {
-                    farClip: 10000
+                    farClip: 10000,
                 });
                 camera.addComponent("script", {
-                    scripts: [{
-                        name: "flyCamera",
-                        url: "http://code.playcanvas.com/camera/camera_fly.js",
-                        attributes: [{
-                            name: "speed",
-                            value: 10
-                        }, {
-                            name: "fastSpeed",
-                            value: 100
-                        }, {
-                            name: "mode",
-                            value: 0
-                        }]
-                    }]
+                    scripts: {
+                        flyCamera: {
+                            enabled: true,
+                            attributes: {
+                                "speed": 10,
+                                "fastSpeed": 100,
+                                "mode": 0
+                            }
+                        }
+                    },
+                    order: ["flyCamera"]
                 });
                 camera.translateLocal(0, 1, 10);
                 app.root.addChild(camera);
@@ -106,24 +97,21 @@
                 var character = new pc.Entity();
                 app.root.addChild(character);
                 character.addComponent("script", {
-                    scripts: [{
-                        name: "spine",
-                        url:"../src/script/spine.js",
-                        attributes: [{
-                            name: "textures",
-                            value: [assets[1].id, assets[3].id]
-                        }, {
-                            name: "atlas",
-                            value: assets[0].id
-                        }, {
-                            name: "skeleton",
-                            value: assets[2].id
-                        }]
-                    }]
+                    scripts: {
+                        "spine": {
+                            enabled: true,
+                            attributes: {
+                                "textures": [assets[1].id, assets[3].id],
+                                "atlas": assets[0].id,
+                                "skeleton": assets[2].id
+                            }
+                        }
+                    },
+                    order: ["spine"]
                 });
 
                 // character.spine.speed = 0.1;
-                character.spine.state.setAnimationByName(0, "flying", true);
+                character.spine.state.setAnimation(0, "flying", true);
 
                 app.on("update", function (dt) {
                 });
@@ -137,15 +125,15 @@
             mouse: new pc.Mouse(canvas),
             keyboard: new pc.Keyboard(window)
         });
-        app.scene = new pc.Scene();
 
         app.systems.script.preloading = true;
-        var scripts = ["../src/script/spine.js", "http://code.playcanvas.com/camera/camera_fly.js"];
+        var scripts = ["../src/script/spine.js", "../src/script/fly-camera.js"];
         loadScripts(scripts, function () {
             app.systems.script.preloading = false;
             start();
             app.start();
         });
     </script>
+    <script src="../lib/playcanvas-spine.min.js"></script>
     </body>
 </html>

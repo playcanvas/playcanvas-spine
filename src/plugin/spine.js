@@ -175,13 +175,13 @@ pc.extend(pc, function () {
                 }
             } else if (attachment instanceof spine.MeshAttachment) {
                 // update vertices positions
-                attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, attachment.vertices, 0, 2);
+                attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, slot.vertices, 0, 2);
 
                 var ii = 0;
                 var normals = [];
                 for (var i = 0, n = attachment.worldVerticesLength; i < n; i += 2) {
-                    slot.positions[ii] = attachment.vertices[i];
-                    slot.positions[ii+1] = attachment.vertices[i+1];
+                    slot.positions[ii] = slot.vertices[i];
+                    slot.positions[ii+1] = slot.vertices[i+1];
                     slot.positions[ii+2] = this._position.z;
                     normals[ii] = 0;
                     normals[ii+1] = 1;
