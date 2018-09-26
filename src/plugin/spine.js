@@ -1,22 +1,18 @@
 pc.extend(pc, function () {
-    var TextureLoader = function (textureData) {
-        this._textureData = textureData;
+    var SpineTextureWrapper = function (texture) {
+        this._image = { width: texture.width, height: texture.height };
+        this.pc_texture = texture;
     };
-    TextureLoader.prototype = {
-        load: function (page, path, atlas) {
-            var texture = this._textureData[path];
-            if (texture) {
-                page.rendererObject = texture;
-                page.width = texture.width;
-                page.height = texture.height;
-                atlas.updateUVs(page);
-            }
+    SpineTextureWrapper.prototype = {
+        setFilters: function (minFilter, magFilter) {
         },
-
-        unload: function (texture) {
-            texture.destroy();
+        setWraps: function (uWrap, vWrap) {
+        },
+        getImage: function () {
+            return this._image;
         }
     };
+    
 
     /**
     * @class
@@ -37,7 +33,9 @@ pc.extend(pc, function () {
 
         this._position = new pc.Vec3();
 
-        var atlas = new spine.Atlas(atlasData, new TextureLoader(textureData));
+        var atlas = new spine.TextureAtlas(atlasData, function (path) {
+            return new SpineTextureWrapper(textureData[path]);
+        });
         var json = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(atlas));
         json.scale *= 0.01;
         var _skeletonData = json.readSkeletonData(skeletonData);
@@ -146,14 +144,10 @@ pc.extend(pc, function () {
                 slot.materials = {};
             }
 
-            // update vertices positions
-            if (attachment.computeVertices) {
-                attachment.computeVertices(this.skeleton.x, this.skeleton.y, slot.bone, slot.vertices);
-            }
-            if (attachment.computeWorldVertices) {
-                attachment.computeWorldVertices(this.skeleton.x, this.skeleton.y, slot, slot.vertices);
-            }
             if (attachment instanceof spine.RegionAttachment) {
+                // update vertices positions
+                attachment.computeWorldVertices(slot.bone, slot.vertices, 0, 2);
+
                 slot.positions = [
                     slot.vertices[0], slot.vertices[1], this._position.z,
                     slot.vertices[2], slot.vertices[3], this._position.z,
@@ -179,13 +173,15 @@ pc.extend(pc, function () {
                     slot.meshes[name] = pc.createMesh(this._app.graphicsDevice, slot.positions, options);
                     slot.meshes[name].name = name;
                 }
-            } else if (attachment instanceof spine.WeightedMeshAttachment ||
-                attachment instanceof spine.MeshAttachment) {
+            } else if (attachment instanceof spine.MeshAttachment) {
+                // update vertices positions
+                attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, attachment.vertices, 0, 2);
+
                 var ii = 0;
                 var normals = [];
-                for (var i = 0, n = slot.vertices.length; i < n; i += 2) {
-                    slot.positions[ii] = slot.vertices[i];
-                    slot.positions[ii+1] = slot.vertices[i+1];
+                for (var i = 0, n = attachment.worldVerticesLength; i < n; i += 2) {
+                    slot.positions[ii] = attachment.vertices[i];
+                    slot.positions[ii+1] = attachment.vertices[i+1];
                     slot.positions[ii+2] = this._position.z;
                     normals[ii] = 0;
                     normals[ii+1] = 1;
@@ -216,7 +212,7 @@ pc.extend(pc, function () {
             // create / assign material
             if (slot.materials[name] === undefined) {
                 // get the texture
-                var texture = attachment.rendererObject.page.rendererObject;
+                var texture = attachment.region.texture.pc_texture;
                 if (texture) {
                     if (texture instanceof pc.StandardMaterial) {
                         slot.materials[name] = texture;

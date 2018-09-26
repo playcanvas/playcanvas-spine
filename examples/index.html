@@ -108,11 +108,11 @@
                     order: ["spine"]
                 });
 
-                character.spine.state.data.setMixByName("Idle", "Walk", 0.2);
-                character.spine.state.data.setMixByName("Walk", "Idle", 0.2);
+                character.spine.state.data.setMix("Idle", "Walk", 0.2);
+                character.spine.state.data.setMix("Walk", "Idle", 0.2);
                 character.spine.spine.skeleton.setSkinByName("White");
                 character.spine.spine.skeleton.setSlotsToSetupPose();
-                character.spine.state.setAnimationByName(0, "Idle", true);
+                character.spine.state.setAnimation(0, "Idle", true);
 
                 character.spine.states[1] = new spine.AnimationState(character.spine.spine.stateData);
                 var state = "idle";

@@ -1,6 +1,6 @@
 module.exports = function (grunt) {
     var sourceFiles = [
-        'contrib/spine-js/spine.js',
+        'contrib/spine-ts/build/spine-core.js',
         'src/plugin/spine.js',
         'src/plugin/component/spine-component-system.js',
         'src/plugin/component/spine-component.js',
@@ -16,7 +16,7 @@ module.exports = function (grunt) {
                 }
             },
             options: {
-                banner: "/* Copyright 2015-2016 PlayCanvas Ltd */\n"
+                banner: "/* Copyright 2015-2018 PlayCanvas Ltd */\n"
             }
         }
     });
