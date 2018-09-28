@@ -230,8 +230,12 @@ pc.extend(pc, function () {
                         } else {
                             slot.materials[name] = new pc.StandardMaterial();
                             slot.materials[name].shadingModel = pc.SPECULAR_BLINN;
-                            slot.materials[name].diffuse = new pc.Color(0, 0, 0);
+                            slot.materials[name].diffuse = new pc.Color(0, 0, 0, 0);
                             slot.materials[name].emissiveMap = texture;
+                            slot.materials[name].emissiveTint = true;
+                            slot.materials[name].emissive = new pc.Color(1, 1, 1, 1);
+                            slot.materials[name].opacityTint = true;
+                            slot.materials[name].opacity = 0;                            
                             slot.materials[name].opacityMap = texture;
                             slot.materials[name].opacityMapChannel = "a";
                             slot.materials[name].depthWrite = false;
@@ -239,14 +243,17 @@ pc.extend(pc, function () {
                             slot.materials[name].blendType = pc.BLEND_PREMULTIPLIED;
                             slot.materials[name].update();
                             // override premultiplied chunk because images are already premultiplied
-                            slot.materials[name].chunks.outputAlphaPremulPS = pc.shaderChunks.outputAlphaPS;
-
+                            // however the material_opacity is not premultiplied by slot alpha
+                            var alphaPremul = [
+                                'gl_FragColor.rgb *= material_opacity;',
+                                'gl_FragColor.a = dAlpha;'
+                            ].join('\n');
+                            slot.materials[name].chunks.outputAlphaPremulPS = alphaPremul;
                             if (key) {
                                 this._materials[key] = slot.materials[name];
                             }
                         }
                     }
-
                 }
             }
 
@@ -258,6 +265,11 @@ pc.extend(pc, function () {
             }
 
             slot.meshes[name].updateVertices(slot.positions);
+            slot.meshInstances[name].setParameter("material_opacity", slot.color.a);
+            slot.meshInstances[name].setParameter("material_emissive", new pc.Color(slot.color.r, slot.color.g, slot.color.b, 0));
+
+            // Should not be done every frame
+            this._reordered = true;
 
             slot.current.mesh = slot.meshes[name];
             slot.current.meshInstance = slot.meshInstances[name];
