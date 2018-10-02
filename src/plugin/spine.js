@@ -1,18 +1,33 @@
 pc.extend(pc, function () {
+    /**
+     * @class
+     * @name SpineTextureWrapper
+     * @description Implement Spine's interface for textures
+     * @param {pc.Texture} texture A PlayCanvas Texture
+     */
     var SpineTextureWrapper = function (texture) {
-        this._image = { width: texture.width, height: texture.height };
-        this.pc_texture = texture;
+        this._image = {
+            width: texture.width,
+            height: texture.height
+        };
+
+        this.pcTexture = texture;
     };
+
     SpineTextureWrapper.prototype = {
         setFilters: function (minFilter, magFilter) {
+            // TODO: implement
         },
+
         setWraps: function (uWrap, vWrap) {
+            // TODO: implement
         },
+
         getImage: function () {
             return this._image;
         }
     };
-    
+
 
     /**
     * @class
@@ -134,6 +149,7 @@ pc.extend(pc, function () {
             if (slot.positions === undefined) {
                 slot.vertices = [];
                 slot.positions = [];
+                slot.colorUniforms = {};
             }
 
             if (slot.meshes === undefined) {
@@ -212,7 +228,7 @@ pc.extend(pc, function () {
             // create / assign material
             if (slot.materials[name] === undefined) {
                 // get the texture
-                var texture = attachment.region.texture.pc_texture;
+                var texture = attachment.region.texture.pcTexture;
                 if (texture) {
                     if (texture instanceof pc.StandardMaterial) {
                         slot.materials[name] = texture;
@@ -230,18 +246,19 @@ pc.extend(pc, function () {
                         } else {
                             slot.materials[name] = new pc.StandardMaterial();
                             slot.materials[name].shadingModel = pc.SPECULAR_BLINN;
-                            slot.materials[name].diffuse = new pc.Color(0, 0, 0, 0);
+                            slot.materials[name].diffuse = new pc.Color(0, 0, 0); // no diffuse component should be included
                             slot.materials[name].emissiveMap = texture;
                             slot.materials[name].emissiveTint = true;
-                            slot.materials[name].emissive = new pc.Color(1, 1, 1, 1);
+                            slot.materials[name].emissive = new pc.Color(0, 0, 0); // use non-1 value so that shader includes emissive tint
                             slot.materials[name].opacityTint = true;
-                            slot.materials[name].opacity = 0;                            
+                            slot.materials[name].opacity = 0; // use non-1 value so that opacity is included
                             slot.materials[name].opacityMap = texture;
                             slot.materials[name].opacityMapChannel = "a";
                             slot.materials[name].depthWrite = false;
                             slot.materials[name].cull = pc.CULLFACE_NONE;
                             slot.materials[name].blendType = pc.BLEND_PREMULTIPLIED;
                             slot.materials[name].update();
+
                             // override premultiplied chunk because images are already premultiplied
                             // however the material_opacity is not premultiplied by slot alpha
                             var alphaPremul = [
@@ -264,9 +281,17 @@ pc.extend(pc, function () {
                 this._reordered = true;
             }
 
+            if (!slot.colorUniforms[name]) {
+                slot.colorUniforms[name] = new Float32Array(3);
+            }
+
+            slot.colorUniforms[name][0] = slot.color.r;
+            slot.colorUniforms[name][1] = slot.color.g;
+            slot.colorUniforms[name][2] = slot.color.b;
+
             slot.meshes[name].updateVertices(slot.positions);
             slot.meshInstances[name].setParameter("material_opacity", slot.color.a);
-            slot.meshInstances[name].setParameter("material_emissive", new pc.Color(slot.color.r, slot.color.g, slot.color.b, 0));
+            slot.meshInstances[name].setParameter("material_emissive", slot.colorUniforms[name]);
 
             // Should not be done every frame
             this._reordered = true;
