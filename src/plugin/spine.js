@@ -1,4 +1,21 @@
 pc.extend(pc, function () {
+
+    var TO_TEXTURE_FILTER = {
+        9728: pc.FILTER_NEAREST,
+        9729: pc.FILTER_LINEAR,
+        9987: pc.FILTER_LINEAR_MIPMAP_LINEAR,
+        9984: pc.FILTER_NEAREST_MIPMAP_NEAREST,
+        9985: pc.FILTER_LINEAR_MIPMAP_NEAREST,
+        9986: pc.FILTER_NEAREST_MIPMAP_LINEAR,
+        9987: pc.FILTER_LINEAR_MIPMAP_LINEAR
+    };
+
+    var TO_UV_WRAP_MODE = {
+        33648: pc.ADDRESS_MIRRORED_REPEAT,
+        33071: pc.ADDRESS_CLAMP_TO_EDGE,
+        10487: pc.ADDRESS_REPEAT
+    };
+
     /**
      * @class
      * @name SpineTextureWrapper
@@ -16,11 +33,13 @@ pc.extend(pc, function () {
 
     SpineTextureWrapper.prototype = {
         setFilters: function (minFilter, magFilter) {
-            // TODO: implement
+            this.pcTexture.minFilter = TO_TEXTURE_FILTER[minFilter];
+            this.pcTexture.magFilter = TO_TEXTURE_FILTER[magFilter];
         },
 
         setWraps: function (uWrap, vWrap) {
-            // TODO: implement
+            this.pcTexture.addressU = TO_UV_WRAP_MODE[uWrap];
+            this.pcTexture.addressV = TO_UV_WRAP_MODE[vWrap];
         },
 
         getImage: function () {
