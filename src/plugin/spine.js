@@ -149,10 +149,10 @@ pc.extend(pc, function () {
                 attachment.computeWorldVertices(slot.bone, slot.vertices, 0, 2);
 
                 slot.positions = [
-                    slot.vertices[0], slot.vertices[1], this._position.z,
-                    slot.vertices[2], slot.vertices[3], this._position.z,
-                    slot.vertices[4], slot.vertices[5], this._position.z,
-                    slot.vertices[6], slot.vertices[7], this._position.z
+                    slot.vertices[0], slot.vertices[1], 0,
+                    slot.vertices[2], slot.vertices[3], 0,
+                    slot.vertices[4], slot.vertices[5], 0,
+                    slot.vertices[6], slot.vertices[7], 0
                 ];
 
                 if (slot.meshes[name] === undefined) {
@@ -182,7 +182,7 @@ pc.extend(pc, function () {
                 for (var i = 0, n = attachment.worldVerticesLength; i < n; i += 2) {
                     slot.positions[ii] = slot.vertices[i];
                     slot.positions[ii+1] = slot.vertices[i+1];
-                    slot.positions[ii+2] = this._position.z;
+                    slot.positions[ii+2] = 0;
                     normals[ii] = 0;
                     normals[ii+1] = 1;
                     normals[ii+2] = 0;
