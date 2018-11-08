@@ -226,7 +226,7 @@ pc.extend(pc, function () {
 
                 if (slot.meshes[name] === undefined) {
                     // invert v value
-                    var uvs = new spine.Float32Array(attachment.uvs.length);
+                    var uvs = new Float32Array(attachment.uvs.length);
                     for (i = 0, n = uvs.length; i < n; i++) {
                         uvs[i] = (i % 2) ? 1 - attachment.uvs[i] : attachment.uvs[i];
                     }
