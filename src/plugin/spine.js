@@ -212,9 +212,9 @@ pc.extend(pc, function () {
                 // update vertices positions
                 attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, slot.vertices, 0, 2);
 
-                var ii = 0;
+                var i, n, ii = 0;
                 var normals = [];
-                for (var i = 0, n = attachment.worldVerticesLength; i < n; i += 2) {
+                for (i = 0, n = attachment.worldVerticesLength; i < n; i += 2) {
                     slot.positions[ii] = slot.vertices[i];
                     slot.positions[ii+1] = slot.vertices[i+1];
                     slot.positions[ii+2] = 0;
@@ -226,18 +226,15 @@ pc.extend(pc, function () {
 
                 if (slot.meshes[name] === undefined) {
                     // invert v value
-                    var uvs = attachment.uvs.map(function (item, index) {
-                        if (index % 2) {
-                            return 1 - item;
-                        }
-
-                        return item;
-                    });
+                    var uvs = new Float32Array(attachment.uvs.length);
+                    for (i = 0, n = uvs.length; i < n; i++) {
+                        uvs[i] = (i % 2) ? 1 - attachment.uvs[i] : attachment.uvs[i];
+                    }
 
                     var options = {
                         normals: normals,
                         uvs: uvs,
-                        indices: attachment.triangles.reverse()
+                        indices: attachment.triangles
                     };
                     slot.meshes[name] = pc.createMesh(this._app.graphicsDevice, slot.positions, options);
                     slot.meshes[name].name = name;
