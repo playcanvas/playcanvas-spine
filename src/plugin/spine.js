@@ -212,7 +212,7 @@ pc.extend(pc, function () {
                 // update vertices positions
                 attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, slot.vertices, 0, 2);
 
-                var i, ii = 0;
+                var i, n, ii = 0;
                 var normals = [];
                 for (i = 0, n = attachment.worldVerticesLength; i < n; i += 2) {
                     slot.positions[ii] = slot.vertices[i];
@@ -227,12 +227,8 @@ pc.extend(pc, function () {
                 if (slot.meshes[name] === undefined) {
                     // invert v value
                     var uvs = new spine.Float32Array(attachment.uvs.length);
-                    for (i = 0; i < uvs.length; i++) {
-                        if (i % 2) {
-                            uvs[i] = 1 - attachment.uvs[i];
-                        } else {
-                            uvs[i] = attachment.uvs[i];
-                        }
+                    for (i = 0, n = uvs.length; i < n; i++) {
+                        uvs[i] = (i % 2) ? 1 - attachment.uvs[i] : attachment.uvs[i];
                     }
 
                     var options = {
