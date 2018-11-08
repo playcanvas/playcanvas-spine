@@ -1,12 +1,6 @@
 <html>
     <head>
-        <script src="/engine/build/output/playcanvas-latest.js"></script>
-        <script src="../contrib/spine-js/spine.js"></script>
-        <script src="../src/plugin/component/spine-component-data.js"></script>
-        <script src="../src/plugin/component/spine-component.js"></script>
-        <script src="../src/plugin/component/spine-component-system.js"></script>
-        <script src="../src/plugin/spine.js"></script>
-        <script src="../src/plugin/plugin.js"></script>
+        <script src="https://code.playcanvas.com/playcanvas-stable.js"></script>
 
         <style>
             body {
@@ -59,9 +53,9 @@
             new pc.Asset();
 
             var urls = {
-                atlas: "data/goblins-ffd.atlas",
-                texture: "data/goblins-ffd.png",
-                skeleton: "data/goblins-ffd.json"
+                atlas: "data/goblins-pma.atlas",
+                texture: "data/goblins-pma.png",
+                skeleton: "data/goblins-pro.json"
             };
 
             var assets = [
@@ -73,23 +67,20 @@
             preload(assets, function () {
                 var camera = new pc.Entity();
                 camera.addComponent("camera", {
-                    farClip: 10000
+                    farClip: 10000,
                 });
                 camera.addComponent("script", {
-                    scripts: [{
-                        name: "flyCamera",
-                        url: "http://code.playcanvas.com/camera/camera_fly.js",
-                        attributes: [{
-                            name: "speed",
-                            value: 10
-                        }, {
-                            name: "fastSpeed",
-                            value: 100
-                        }, {
-                            name: "mode",
-                            value: 0
-                        }]
-                    }]
+                    scripts: {
+                        flyCamera: {
+                            enabled: true,
+                            attributes: {
+                                "speed": 10,
+                                "fastSpeed": 100,
+                                "mode": 0
+                            }
+                        }
+                    },
+                    order: ["flyCamera"]
                 });
                 camera.translateLocal(0, 2, 10);
                 app.root.addChild(camera);
@@ -106,50 +97,44 @@
                 app.root.addChild(character);
 
                 character.addComponent("script", {
-                    scripts: [{
-                        name: "spine",
-                        url:"../src/script/spine.js",
-                        attributes: [{
-                            name: "textures",
-                            value: [assets[1].id]
-                        }, {
-                            name: "atlas",
-                            value: assets[0].id
-                        }, {
-                            name: "skeleton",
-                            value: assets[2].id
-                        }]
-                    }]
+                    scripts: {
+                        "spine": {
+                            enabled: true,
+                            attributes: {
+                                "textures": [assets[1].id],
+                                "atlas": assets[0].id,
+                                "skeleton": assets[2].id
+                            }
+                        }
+                    },
+                    order: ["spine"]
                 });
 
                 // character.spine.spine.priority = 0.1;
                 character.spine.skeleton.setSkinByName("goblingirl");
                 character.spine.skeleton.setSlotsToSetupPose();
-                character.spine.state.setAnimationByName(0, "walk", true);
+                character.spine.state.setAnimation(0, "walk", true);
 
                 var character2 = new pc.Entity();
                 app.root.addChild(character2);
                 character2.addComponent("script", {
-                    scripts: [{
-                        name: "spine",
-                        url:"../src/script/spine.js",
-                        attributes: [{
-                            name: "textures",
-                            value: [assets[1].id]
-                        }, {
-                            name: "atlas",
-                            value: assets[0].id
-                        }, {
-                            name: "skeleton",
-                            value: assets[2].id
-                        }]
-                    }]
+                    scripts: {
+                        "spine": {
+                            enabled: true,
+                            attributes: {
+                                "textures": [assets[1].id],
+                                "atlas": assets[0].id,
+                                "skeleton": assets[2].id
+                            }
+                        }
+                    },
+                    order: ["spine"]
                 });
-                character2.translate(0.25, 0, -1);
+                character2.translate(2.5, 0, -1);
                 // character2.spine.spine.priority = 1;
                 character2.spine.skeleton.setSkinByName("goblin");
                 character2.spine.skeleton.setSlotsToSetupPose();
-                character2.spine.state.setAnimationByName(0, "walk", true);
+                character2.spine.state.setAnimation(0, "walk", true);
                 character2.spine.speed = 0.4;
                 app.on("update", function (dt) {
                     if (app.keyboard.wasPressed(pc.KEY_SPACE)) {
@@ -180,10 +165,9 @@
                 alpha: false
             }
         });
-        app.scene = new pc.Scene();
 
         app.systems.script.preloading = true;
-        var scripts = ["../src/script/spine.js", "http://code.playcanvas.com/camera/camera_fly.js"];
+        var scripts = ["../src/script/spine.js", "../src/script/fly-camera.js"];
         loadScripts(scripts, function () {
             app.systems.script.preloading = false;
             start();
@@ -191,5 +175,6 @@
         });
 
     </script>
+    <script src="../lib/playcanvas-spine.min.js"></script>
     </body>
 </html>

@@ -1,7 +1,6 @@
 <html>
     <head>
-        <script src="/engine/build/output/playcanvas-latest.js"></script>
-        <script src="../lib/playcanvas-spine.min.js"></script>
+        <script src="https://code.playcanvas.com/playcanvas-stable.js"></script>
 
         <style>
             body {
@@ -68,23 +67,20 @@
             preload(assets, function () {
                 var camera = new pc.Entity();
                 camera.addComponent("camera", {
-                    farClip: 10000
+                    farClip: 10000,
                 });
                 camera.addComponent("script", {
-                    scripts: [{
-                        name: "flyCamera",
-                        url: "http://code.playcanvas.com/camera/camera_fly.js",
-                        attributes: [{
-                            name: "speed",
-                            value: 10
-                        }, {
-                            name: "fastSpeed",
-                            value: 100
-                        }, {
-                            name: "mode",
-                            value: 0
-                        }]
-                    }]
+                    scripts: {
+                        flyCamera: {
+                            enabled: true,
+                            attributes: {
+                                "speed": 10,
+                                "fastSpeed": 100,
+                                "mode": 0
+                            }
+                        }
+                    },
+                    order: ["flyCamera"]
                 });
                 camera.translateLocal(0, 2, 10);
                 app.root.addChild(camera);
@@ -99,55 +95,57 @@
                 var character = new pc.Entity();
                 app.root.addChild(character);
                 character.addComponent("script", {
-                    scripts: [{
-                        name: "spine",
-                        url:"../src/script/spine.js",
-                        attributes: [{
-                            name: "textures",
-                            value: [assets[1].id]
-                        }, {
-                            name: "atlas",
-                            value: assets[0].id
-                        }, {
-                            name: "skeleton",
-                            value: assets[2].id
-                        }]
-                    }]
+                    scripts: {
+                        "spine": {
+                            enabled: true,
+                            attributes: {
+                                "textures": [assets[1].id],
+                                "atlas": assets[0].id,
+                                "skeleton": assets[2].id
+                            }
+                        }
+                    },
+                    order: ["spine"]
                 });
 
-                character.spine.state.data.setMixByName("Idle", "Walk", 0.2);
-                character.spine.state.data.setMixByName("Walk", "Idle", 0.2);
-                character.spine.spine.skeleton.setSkinByName("White");
+                character.spine.state.defaultMix = 0.2;
+                character.spine.state.data.setMix("idle", "run", 0.2);
+                character.spine.state.data.setMix("run", "idle", 0.2);
+                character.spine.state.data.setMix("attack", "run", 0.5);
+                character.spine.state.data.setMix("attack", "idle", 0.4);
+
+                character.spine.spine.skeleton.setSkinByName("default");
                 character.spine.spine.skeleton.setSlotsToSetupPose();
-                character.spine.state.setAnimationByName(0, "Idle", true);
+                character.spine.state.setAnimation(0, "idle", true);
 
                 character.spine.states[1] = new spine.AnimationState(character.spine.spine.stateData);
                 var state = "idle";
 
                 app.on("update", function (dt) {
-                    if (app.keyboard.isPressed(pc.KEY_RIGHT)) {
+                    if (app.keyboard.wasPressed(pc.KEY_SPACE)) {
+                        if (state !== "attack") {
+                            character.spine.state.setAnimation(0, "attack", false);
+                            state = "attack";
+                        }                        
+                    } else if (app.keyboard.isPressed(pc.KEY_RIGHT)) {
                         character.translate(10*dt, 0, 0);
                         if (state !== "walk") {
                             character.spine.spine.skeleton.flipX = false;
-                            character.spine.state.setAnimationByName(0, "Run", true);
+                            character.spine.state.setAnimation(0, "run", true);
                             state = "walk";
                         }
                     } else if (app.keyboard.isPressed(pc.KEY_LEFT)) {
                         character.translate(-10*dt, 0, 0);
                         if (state !== "walk") {
                             character.spine.spine.skeleton.flipX = true;
-                            character.spine.state.setAnimationByName(0, "Run", true);
+                            character.spine.state.setAnimation(0, "run", true);
                             state = "walk";
                         }
                     } else {
-                        if (state === "walk") {
-                            character.spine.state.setAnimationByName(0, "Idle", true);
+                        if (state !== "idle") {
+                            character.spine.state.setAnimation(0, "idle", true);
                             state = "idle";
                         }
-                    }
-
-                    if (app.keyboard.wasPressed(pc.KEY_SPACE)) {
-                        character.spine.states[1].setAnimationByName(0, "Attack", false);
                     }
                 });
             });
@@ -160,15 +158,15 @@
             mouse: new pc.Mouse(canvas),
             keyboard: new pc.Keyboard(window)
         });
-        app.scene = new pc.Scene();
 
         app.systems.script.preloading = true;
-        var scripts = ["../src/script/spine.js", "http://code.playcanvas.com/camera/camera_fly.js"];
+        var scripts = ["../src/script/spine.js", "../src/script/fly-camera.js"];
         loadScripts(scripts, function () {
             app.systems.script.preloading = false;
             start();
             app.start();
         });
     </script>
+    <script src="../lib/playcanvas-spine.min.js"></script>
     </body>
 </html>

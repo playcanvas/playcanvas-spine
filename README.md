@@ -39,4 +39,4 @@ Run grunt to build
 
 ## Notes
 
-The version of the spine-js runtime in the this library is modified from the version on Esoteric's github page. Mainly to fix a couple of bugs in the mesh animation rendering.
+This plugin uses the spine-ts runtime and is built from version 3.6
