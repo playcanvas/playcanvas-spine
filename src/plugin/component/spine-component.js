@@ -138,8 +138,8 @@ pc.extend(pc, function () {
             SpineComponent._super.onEnable.call(this);
 
             var spine = this.data.spine;
-            if (spine && spine._model) {
-                this.system.app.scene.addModel(spine._model);
+            if (spine) {
+                spine.addToLayers();
             }
         },
 
@@ -147,8 +147,8 @@ pc.extend(pc, function () {
             SpineComponent._super.onDisable.call(this);
 
             var spine = this.data.spine;
-            if (spine && spine._model) {
-                this.system.app.scene.removeModel(spine._model);
+            if (spine) {
+                spine.removeFromLayers();
             }
         },
 
