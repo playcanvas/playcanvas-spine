@@ -104,7 +104,7 @@ pc.extend(pc, function () {
     Spine.prototype = {
         destroy: function () {
             if (this._model) {
-                this._removeFromLayers();
+                this.removeFromLayers();
             }
 
             this._model = null;
@@ -350,8 +350,8 @@ pc.extend(pc, function () {
             }
 
             if (this._modelChanged && this._model) {
-                this._removeFromLayers();
-                this._addToLayers();
+                this.removeFromLayers();
+                this.addToLayers();
                 this._modelChanged = false;
             }
 
@@ -368,7 +368,9 @@ pc.extend(pc, function () {
             this._position.copy(p);
         },
 
-        _removeFromLayers: function () {
+        removeFromLayers: function () {
+            if (!this._model) return;
+
             for (var i = 0; i<this._layers.length; i++) {
                 var id = this._layers[i];
                 var layer = this._app.scene.layers.getLayerById(id);
@@ -378,7 +380,9 @@ pc.extend(pc, function () {
             }
         },
 
-        _addToLayers: function () {
+        addToLayers: function () {
+            if (!this._model) return;
+
             for (var i = 0; i<this._layers.length; i++) {
                 var id = this._layers[i];
                 var layer = this._app.scene.layers.getLayerById(id);
@@ -412,12 +416,12 @@ pc.extend(pc, function () {
         },
         set: function (value) {
             if (this._model) {
-                this._removeFromLayers();
+                this.removeFromLayers();
             }
             this._layers = value || [];
 
             if (this._model) {
-                this._addToLayers();
+                this.addToLayers();
             }
         }
     });
