@@ -20,7 +20,7 @@ pc.extend(pc, function () {
         this.on('remove', this.onRemove, this);
         // this.on('update', this.onUpdate, this);
 
-        pc.ComponentSystem.on('update', this.onUpdate, this);
+        pc.ComponentSystem.bind('update', this.onUpdate, this);
 
     };
     SpineComponentSystem = pc.inherits(SpineComponentSystem, pc.ComponentSystem);
