@@ -1,5 +1,11 @@
 pc.extend(pc, function () {
 
+    var ATTACHMENT_TYPE = {
+        NULL: 0,
+        MESH: 1,
+        REGION: 2
+    }
+
     var TO_TEXTURE_FILTER = {
         9728: pc.FILTER_NEAREST,
         9729: pc.FILTER_LINEAR,
@@ -47,6 +53,13 @@ pc.extend(pc, function () {
         }
     };
 
+    var _copyArray = function (source, target, offset, incr) {
+        for (var i = 0, len = source.length; i < len; i++) {
+            target[offset + i] = source[i];
+            if (incr) target[offset + i] += incr;
+        }
+        return source.length;
+    };
 
     /**
     * @class
@@ -84,6 +97,7 @@ pc.extend(pc, function () {
 
         this._meshInstances = [];
         this._materials = {};
+        this._offset = {};
 
         this._priority = 0;
         this._layers = [pc.LAYERID_UI];
@@ -123,7 +137,7 @@ pc.extend(pc, function () {
             var drawOrder = this.skeleton.drawOrder;
             for (var i = 0, n = drawOrder.length; i < n; i++) {
                 var slot = drawOrder[i];
-                if (! slot.current || ! slot.current.meshInstance)
+                if (!slot.current || !slot.current.meshInstance)
                     continue;
 
                 slot.current.meshInstance.visible = false;
@@ -149,8 +163,8 @@ pc.extend(pc, function () {
             this._hidden = false;
         },
 
-
         init: function () {
+            this.rebuildMeshes();
             var drawOrder = this.skeleton.drawOrder;
             for (var i = 0, n = drawOrder.length; i < n; i++) {
                 this.initSlot(drawOrder[i]);
@@ -160,15 +174,13 @@ pc.extend(pc, function () {
         initSlot: function (slot) {
             slot.vertices = [];
             slot.positions = [];
+            slot.options = {};
             slot.colorUniforms = {};
 
-            // current active mesh/instance
-            slot.current = {mesh: null, meshInstance: null};
+            // current active mesh and mesh offset/vert.num.
+            slot.current = {mesh: null, vertices: 0, offset: 0};
             // storage for all attached mesh/instances
-            slot.meshes = {};
-            slot.meshInstances = {};
-            slot.materials = {};
-            slot._attachments = [];
+            slot._active = { name: '', type: ATTACHMENT_TYPE.NULL };
 
             this.initAttachment(slot);
         },
@@ -179,102 +191,175 @@ pc.extend(pc, function () {
                 return;
 
             var name = attachment.name;
-            slot._attachments.push(name);
+            slot._active.name = name;
 
             if (attachment instanceof spine.RegionAttachment) {
+                slot._active.type = ATTACHMENT_TYPE.REGION;
                 slot.positions = new Array(12);
-                var options = {
+                slot.options = {
                     normals: [0,1,0,0,1,0,0,1,0,0,1,0],
                     uvs: attachment.uvs.map(function (e, i) { return (i % 2) ? 1 - e : e; }),
+                    colors: Array(16),
                     indices: [0,3,2,2,1,0]
                 };
-                slot.meshes[name] = pc.createMesh(this._app.graphicsDevice, slot.positions, options);
-                slot.meshes[name].name = name;
             } else if (attachment instanceof spine.MeshAttachment) {
+                slot._active.type = ATTACHMENT_TYPE.MESH;
                 var size = 3 * attachment.worldVerticesLength / 2;
                 slot.positions = new Array(size);
-                var options = {
+                slot.options = {
                     normals: new Array(size).map(function (e, i) { return (i % 3) == 1 ? 1 : 0; }),
                     uvs: attachment.uvs.map(function (e, i) { return (i % 2) ? 1 - e : e; }),
                     indices: attachment.triangles
                 };
-                slot.meshes[name] = pc.createMesh(this._app.graphicsDevice, slot.positions, options);
-                slot.meshes[name].name = name;
             }
 
             // create / assign material
-            // get the texture
             var texture = attachment.region.texture.pcTexture;
             if (texture) {
                 if (texture instanceof pc.StandardMaterial) {
-                    slot.materials[name] = texture;
                     this._materials[texture.name] = texture;
+                    slot.material = texture.name;
                 } else {
                     // get a unique key for the texture
                     var key = null;
                     if (texture.getSource() instanceof Image) {
                         key = texture.getSource().getAttribute("src");
                     }
+                    if (key) {
+                        // create a new material if required
+                        if (this._materials[key] === undefined) {
+                            var material = new pc.StandardMaterial();
+                            material.shadingModel = pc.SPECULAR_BLINN;
+                            material.diffuse = new pc.Color(0, 0, 0); // no diffuse component should be included
+                            material.emissiveMap = texture;
+                            material.emissiveTint = true;
+                            material.emissive = new pc.Color(0, 0, 0); // use non-1 value so that shader includes emissive tint
+                            material.opacityTint = true;
+                            material.opacity = 0; // use non-1 value so that opacity is included
+                            material.opacityMap = texture;
+                            material.opacityMapChannel = "a";
+                            material.depthWrite = false;
+                            material.cull = pc.CULLFACE_NONE;
+                            material.blendType = pc.BLEND_PREMULTIPLIED;
+                            material.update();
 
-                    // create a new material if required
-                    if (key && this._materials[key] !== undefined) {
-                        slot.materials[name] = this._materials[key];
-                    } else {
-                        slot.materials[name] = new pc.StandardMaterial();
-                        slot.materials[name].shadingModel = pc.SPECULAR_BLINN;
-                        slot.materials[name].diffuse = new pc.Color(0, 0, 0); // no diffuse component should be included
-                        slot.materials[name].emissiveMap = texture;
-                        slot.materials[name].emissiveTint = true;
-                        slot.materials[name].emissive = new pc.Color(0, 0, 0); // use non-1 value so that shader includes emissive tint
-                        slot.materials[name].opacityTint = true;
-                        slot.materials[name].opacity = 0; // use non-1 value so that opacity is included
-                        slot.materials[name].opacityMap = texture;
-                        slot.materials[name].opacityMapChannel = "a";
-                        slot.materials[name].depthWrite = false;
-                        slot.materials[name].cull = pc.CULLFACE_NONE;
-                        slot.materials[name].blendType = pc.BLEND_PREMULTIPLIED;
-                        slot.materials[name].update();
-
-                        // override premultiplied chunk because images are already premultiplied
-                        // however the material_opacity is not premultiplied by slot alpha
-                        var alphaPremul = [
-                            'gl_FragColor.rgb *= material_opacity;',
-                            'gl_FragColor.a = dAlpha;'
-                        ].join('\n');
-                        slot.materials[name].chunks.outputAlphaPremulPS = alphaPremul;
-                        if (key) {
-                            this._materials[key] = slot.materials[name];
+                            // override premultiplied chunk because images are already premultiplied
+                            // however the material_opacity is not premultiplied by slot alpha
+                            var alphaPremul = [
+                                'gl_FragColor.rgb *= material_opacity;',
+                                'gl_FragColor.a = dAlpha;'
+                            ].join('\n');
+                            material.chunks.outputAlphaPremulPS = alphaPremul;
+                            this._materials[key] = material;
+                            this._offset[key] = 0;
                         }
+                        slot.material = key;
                     }
                 }
             }
             
-            slot.meshInstances[name] = new pc.MeshInstance(this._node, slot.meshes[name], slot.materials[name]);
-            this._meshInstances.push(slot.meshInstances[name]);
             this._modelChanged = true;
-            this._reordered = true;
 
-            slot.colorUniforms[name] = new Float32Array(3);
+            // TODO: fix color
+            // slot.colorUniforms[name] = new Float32Array(3);
         },
 
-        updateSlot: function (index, slot) {
-            // start by hiding previous mesh instance for this attachment
-            // it will be unhidden later if needed
-            if (slot.current && slot.current.meshInstance) {
-                slot.current.meshInstance.visible = false;
+        rebuildMeshes: function() {
+            this.removeFromLayers();
+            this._meshes = {};
+            this._meshInstances.length = 0;
+            for (var m in this._materials) {
+                if (this._materials.hasOwnProperty(m)) {
+                    // TODO: debug
+                    console.log('material', m, 'mesh');
+                    this.createMesh(m);
+                }
             }
-            
+            this.addToLayers();
+        },
+
+        createMesh: function(material) {
+            var drawOrder = this.skeleton.drawOrder;
+            var num = drawOrder.reduce(function (acc, slot) {
+                if (slot.attachment && slot.material === material) {
+                    acc.pos += slot.positions.length;
+                    acc.norm += slot.options.normals.length;
+                    acc.idx += slot.options.indices.length;
+                    acc.uv += slot.options.uvs.length;
+                }
+                return acc;
+            }, { pos: 0, norm: 0, idx: 0, uv: 0 });
+
+            var positions = Array(num.pos), options = { normals: Array(num.norm), uvs: new Float32Array(num.uv), indices: Array(num.idx) };
+
+            drawOrder.reduce(function (acc, slot) {
+                if (slot.attachment && slot.material === material) {
+                    slot.current.offset = acc.pos / 3;
+                    slot.current.vertices = slot.positions.length / 3;
+                    // console.log(
+                    //     'slot ' + slot.attachment.name +
+                    //     ' new mesh offset ' + slot.current.offset + '/' +  acc.pos +
+                    //     ' verts ' + slot.current.vertices + '/' + slot.positions.length);
+
+                    acc.idx += _copyArray(slot.options.indices, acc.options.indices, acc.idx, slot.current.offset);
+                    acc.pos += _copyArray(slot.positions, acc.positions, acc.pos, 0);
+                    acc.norm += _copyArray(slot.options.normals, acc.options.normals, acc.norm, 0);
+                    acc.uv += _copyArray(slot.options.uvs, acc.options.uvs, acc.uv, 0);
+                }
+                return acc;
+            }, { pos: 0, norm: 0, idx: 0, uv: 0, positions: positions, options: options });
+
+            this._meshes[material] = pc.createMesh(this._app.graphicsDevice, positions, options);
+            this._meshes[material].name = material;
+            var mi = new pc.MeshInstance(this._node, this._meshes[material], this._materials[material]);
+            this._meshInstances.push(mi);
+
+            // TODO: put both color and alpha to vertices
+            var alpha = 0.5;
+            mi.setParameter("material_opacity", alpha);
+            var colorUniforms = new Float32Array(3);
+            colorUniforms[0] = 1;
+            colorUniforms[1] = 1;
+            colorUniforms[2] = 1;
+            mi.setParameter("material_emissive", colorUniforms);
+        },
+
+        updateMeshes: function () {
+            var m;
+            for (m in this._meshes) {
+                if (this._meshes.hasOwnProperty(m)) {
+                    this._meshes[m].startUpdate();
+                }
+            }
+            var drawOrder = this.skeleton.drawOrder;
+            for (var i = 0, len = drawOrder.length; i < len; i++) {
+                var slot = drawOrder[i];
+                if (slot.attachment && slot.current.mesh) {
+                    slot.current.mesh.updateVertices(slot.positions);
+                }
+            }
+            for (m in this._meshes) {
+                if (this._meshes.hasOwnProperty(m)) {
+                    this._meshes[m].finishUpdate();
+                }
+            }
+        },
+
+        updateSlot: function (slot) {
             var attachment = slot.attachment;
             // if there is no longer an attachment, abort
             if (!attachment) {
                 return;
             }
             var name = attachment.name;
-            if (slot._attachments.indexOf(name) < 0) {
+            var type = (attachment instanceof spine.RegionAttachment) ? ATTACHMENT_TYPE.REGION :
+                ((attachment instanceof spine.MeshAttachment) ? ATTACHMENT_TYPE.MESH : ATTACHMENT_TYPE.NULL);
+            if (slot._active.name !== name || slot._active.type != type) {
+                console.log('slot type changed', name, type);
                 this.initAttachment(slot);
             }
 
-            if (attachment instanceof spine.RegionAttachment) {
+            if (type === ATTACHMENT_TYPE.REGION) {
                 // update vertices positions
                 attachment.computeWorldVertices(slot.bone, slot.vertices, 0, 2);
 
@@ -284,7 +369,7 @@ pc.extend(pc, function () {
                     slot.vertices[4], slot.vertices[5], 0,
                     slot.vertices[6], slot.vertices[7], 0
                 ];
-            } else if (attachment instanceof spine.MeshAttachment) {
+            } else if (type === ATTACHMENT_TYPE.MESH) {
                 // update vertices positions
                 attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, slot.vertices, 0, 2);
 
@@ -297,20 +382,19 @@ pc.extend(pc, function () {
                 }
             }
 
-            slot.colorUniforms[name][0] = slot.color.r;
-            slot.colorUniforms[name][1] = slot.color.g;
-            slot.colorUniforms[name][2] = slot.color.b;
+            var mat = slot.material;
+            var mesh = this._meshes[mat];
+            var vertices = slot.positions.length / 3;
+            var offset = this._offset[mat];
 
-            slot.meshes[name].updateVertices(slot.positions);
-            slot.meshInstances[name].setParameter("material_opacity", slot.color.a);
-            slot.meshInstances[name].setParameter("material_emissive", slot.colorUniforms[name]);
+            if (slot.current.offset !== offset || slot.current.vertices !== vertices) {
+                // TODO: debug
+                console.log('slot reordered', name, slot.current.offset, offset, slot.current.vertices, vertices);
+                this._reordered = true;
+            }
 
-            // Should not be done every frame
-            this._reordered = true;
-
-            slot.current.mesh = slot.meshes[name];
-            slot.current.meshInstance = slot.meshInstances[name];
-            slot.current.meshInstance.visible = true;
+            this._offset[mat] += vertices;
+            slot.current.mesh = mesh;
         },
 
         reorder: function () {
@@ -339,20 +423,29 @@ pc.extend(pc, function () {
             if (this.autoUpdate)
                 this.skeleton.updateWorldTransform();
 
-            var drawOrder = this.skeleton.drawOrder;
-            for (var i = 0, n = drawOrder.length; i < n; i++) {
-                var slot = drawOrder[i];
-                this.updateSlot(i, slot);
+            for (var m in this._materials) {
+                if (this._materials.hasOwnProperty(m)) {
+                    this._offset[m] = 0;
+                }
             }
 
-            if (this._modelChanged && this._model) {
-                this.removeFromLayers();
-                this.addToLayers();
-                this._modelChanged = false;
+            var i, drawOrder = this.skeleton.drawOrder, n = drawOrder.length;
+            for (i = 0; i < n; i++) {
+                this.updateSlot(drawOrder[i]);
             }
+
+            if (this._modelChanged || this._reordered) {
+                this.rebuildMeshes();
+                this._modelChanged = false;
+                this._reordered = false;
+            } else {
+                this.updateMeshes();
+            }            
 
             if (this._reordered) {
-                this.reorder();
+                // TODO: do nothing, reordering is not required as long as it is only one material
+                // actually, this apprach might be inefficient for multitextured objects
+                // this.reorder();
                 this._reordered = false;
             }
         },
