@@ -272,7 +272,7 @@ pc.extend(pc, function () {
     };
 
     var _countMeshComponents = function (acc, slot) {
-        if (slot.attachment && slot.material === material) {
+        if (slot.attachment && slot.material === acc.mat) {
             acc.pos += slot.positions.length;
             acc.norm += slot.options.normals.length;
             acc.idx += slot.options.indices.length;
@@ -292,7 +292,7 @@ pc.extend(pc, function () {
     };
 
     var _populateMeshComponents = function (acc, slot) {
-        if (slot.attachment && slot.material === material) {
+        if (slot.attachment && slot.material === acc.mat) {
             slot.current.offset = acc.pos / 3;
             slot.current.vertices = slot.positions.length / 3;
 
@@ -307,7 +307,7 @@ pc.extend(pc, function () {
 
     Spine.prototype.createMesh = function (material) {
         var drawOrder = this.skeleton.drawOrder;
-        var num = drawOrder.reduce(_countMeshComponents, { pos: 0, norm: 0, idx: 0, uv: 0, col: 0 });
+        var num = drawOrder.reduce(_countMeshComponents, { mat: material, pos: 0, norm: 0, idx: 0, uv: 0, col: 0 });
 
         var positions = Array(num.pos),
             options = {
@@ -318,7 +318,7 @@ pc.extend(pc, function () {
             };
 
         drawOrder.reduce(_populateMeshComponents,
-            { pos: 0, norm: 0, idx: 0, uv: 0, col: 0, positions: positions, options: options });
+            { mat: material, pos: 0, norm: 0, idx: 0, uv: 0, col: 0, positions: positions, options: options });
 
         this._meshes[material] = pc.createMesh(this._app.graphicsDevice, positions, options);
         this._meshes[material].name = material;
