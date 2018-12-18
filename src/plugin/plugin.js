@@ -9,7 +9,7 @@
         this._iterator = null;
     };
 
-    pc.Mesh.prototype.updateVertices = function (positions, normals, tangents, uvs) {
+    pc.Mesh.prototype.updateVertices = function (positions, normals, tangents, uvs, colors) {
         var numVertices = positions.length / 3;
         this._counter += numVertices;
         for (var i = 0; i < numVertices; i++) {
@@ -22,6 +22,9 @@
             }
             if (uvs) {
                 this._iterator.element[pc.SEMANTIC_TEXCOORD0].set(uvs[i*2], uvs[i*2+1]);
+            }
+            if (colors) {
+                this._iterator.element[pc.SEMANTIC_COLOR].set(colors[i*4], colors[i*4+1], colors[i*4+2], colors[i*4+3]);
             }
             this._iterator.next();
         }

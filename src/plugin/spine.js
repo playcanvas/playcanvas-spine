@@ -204,11 +204,12 @@ pc.extend(pc, function () {
                 };
             } else if (attachment instanceof spine.MeshAttachment) {
                 slot._active.type = ATTACHMENT_TYPE.MESH;
-                var size = 3 * attachment.worldVerticesLength / 2;
-                slot.positions = new Array(size);
+                var size = attachment.worldVerticesLength / 2;
+                slot.positions = new Array(3 * size);
                 slot.options = {
-                    normals: new Array(size).map(function (e, i) { return (i % 3) == 1 ? 1 : 0; }),
+                    normals: new Array(3 * size).map(function (e, i) { return (i % 3) == 1 ? 1 : 0; }),
                     uvs: attachment.uvs.map(function (e, i) { return (i % 2) ? 1 - e : e; }),
+                    colors: Array(4 * size),
                     indices: attachment.triangles
                 };
             }
@@ -231,13 +232,21 @@ pc.extend(pc, function () {
                             var material = new pc.StandardMaterial();
                             material.shadingModel = pc.SPECULAR_BLINN;
                             material.diffuse = new pc.Color(0, 0, 0); // no diffuse component should be included
+
+                            // material.emissiveTint = true;
+                            // material.emissive = new pc.Color(0, 0, 0); // use non-1 value so that shader includes emissive tint
                             material.emissiveMap = texture;
-                            material.emissiveTint = true;
-                            material.emissive = new pc.Color(0, 0, 0); // use non-1 value so that shader includes emissive tint
-                            material.opacityTint = true;
-                            material.opacity = 0; // use non-1 value so that opacity is included
+                            material.emissiveMapChannel = "rgb";
+                            material.emissiveVertexColor = true;
+                            material.emissiveVertexColorChannel = "rgb";
+
+                            //material.opacityTint = true;
+                            //material.opacity = 0; // use non-1 value so that opacity is included
                             material.opacityMap = texture;
                             material.opacityMapChannel = "a";
+                            material.opacityVertexColor = true;
+                            material.opacityVertexColorChannel = "a";
+
                             material.depthWrite = false;
                             material.cull = pc.CULLFACE_NONE;
                             material.blendType = pc.BLEND_PREMULTIPLIED;
@@ -246,7 +255,7 @@ pc.extend(pc, function () {
                             // override premultiplied chunk because images are already premultiplied
                             // however the material_opacity is not premultiplied by slot alpha
                             var alphaPremul = [
-                                'gl_FragColor.rgb *= material_opacity;',
+                                'gl_FragColor.rgb *= vVertexColor.a;', // TODO: provide proper value and enable
                                 'gl_FragColor.a = dAlpha;'
                             ].join('\n');
                             material.chunks.outputAlphaPremulPS = alphaPremul;
@@ -259,9 +268,6 @@ pc.extend(pc, function () {
             }
             
             this._modelChanged = true;
-
-            // TODO: fix color
-            // slot.colorUniforms[name] = new Float32Array(3);
         },
 
         rebuildMeshes: function() {
@@ -286,11 +292,17 @@ pc.extend(pc, function () {
                     acc.norm += slot.options.normals.length;
                     acc.idx += slot.options.indices.length;
                     acc.uv += slot.options.uvs.length;
+                    acc.col += slot.options.colors.length;
                 }
                 return acc;
-            }, { pos: 0, norm: 0, idx: 0, uv: 0 });
+            }, { pos: 0, norm: 0, idx: 0, uv: 0, col: 0 });
 
-            var positions = Array(num.pos), options = { normals: Array(num.norm), uvs: new Float32Array(num.uv), indices: Array(num.idx) };
+            var positions = Array(num.pos),
+                options = {
+                    normals: Array(num.norm),
+                    uvs: new Float32Array(num.uv),
+                    indices: Array(num.idx),
+                    colors: Array(num.col) };
 
             drawOrder.reduce(function (acc, slot) {
                 if (slot.attachment && slot.material === material) {
@@ -305,9 +317,10 @@ pc.extend(pc, function () {
                     acc.pos += _copyArray(slot.positions, acc.positions, acc.pos, 0);
                     acc.norm += _copyArray(slot.options.normals, acc.options.normals, acc.norm, 0);
                     acc.uv += _copyArray(slot.options.uvs, acc.options.uvs, acc.uv, 0);
+                    acc.col += _copyArray(slot.options.colors, acc.options.colors, acc.col, 0);
                 }
                 return acc;
-            }, { pos: 0, norm: 0, idx: 0, uv: 0, positions: positions, options: options });
+            }, { pos: 0, norm: 0, idx: 0, uv: 0, col: 0, positions: positions, options: options });
 
             this._meshes[material] = pc.createMesh(this._app.graphicsDevice, positions, options);
             this._meshes[material].name = material;
@@ -315,13 +328,13 @@ pc.extend(pc, function () {
             this._meshInstances.push(mi);
 
             // TODO: put both color and alpha to vertices
-            var alpha = 0.5;
-            mi.setParameter("material_opacity", alpha);
+            var alpha = 1;
+            //mi.setParameter("material_opacity", alpha);
             var colorUniforms = new Float32Array(3);
             colorUniforms[0] = 1;
             colorUniforms[1] = 1;
             colorUniforms[2] = 1;
-            mi.setParameter("material_emissive", colorUniforms);
+            //mi.setParameter("material_emissive", colorUniforms);
         },
 
         updateMeshes: function () {
@@ -335,7 +348,7 @@ pc.extend(pc, function () {
             for (var i = 0, len = drawOrder.length; i < len; i++) {
                 var slot = drawOrder[i];
                 if (slot.attachment && slot.current.mesh) {
-                    slot.current.mesh.updateVertices(slot.positions);
+                    slot.current.mesh.updateVertices(slot.positions, null, null, null, slot.options.colors);
                 }
             }
             for (m in this._meshes) {
@@ -359,27 +372,23 @@ pc.extend(pc, function () {
                 this.initAttachment(slot);
             }
 
+            // update vertices positions
+            var i, n, ii = 0, ic = 0;
             if (type === ATTACHMENT_TYPE.REGION) {
-                // update vertices positions
                 attachment.computeWorldVertices(slot.bone, slot.vertices, 0, 2);
-
-                slot.positions = [
-                    slot.vertices[0], slot.vertices[1], 0,
-                    slot.vertices[2], slot.vertices[3], 0,
-                    slot.vertices[4], slot.vertices[5], 0,
-                    slot.vertices[6], slot.vertices[7], 0
-                ];
+                n = 8;  
             } else if (type === ATTACHMENT_TYPE.MESH) {
-                // update vertices positions
                 attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, slot.vertices, 0, 2);
-
-                var i, n, ii = 0;
-                for (i = 0, n = attachment.worldVerticesLength; i < n; i += 2) {
-                    slot.positions[ii] = slot.vertices[i];
-                    slot.positions[ii+1] = slot.vertices[i+1];
-                    slot.positions[ii+2] = 0;
-                    ii += 3;
-                }
+                n = attachment.worldVerticesLength;
+            }
+            for (i = 0; i < n; i += 2, ii += 3, ic += 4) {
+                slot.positions[ii + 0] = slot.vertices[i + 0];
+                slot.positions[ii + 1] = slot.vertices[i + 1];
+                slot.positions[ii + 2] = 0;
+                slot.options.colors[ic + 0] = Math.round(255 * slot.color.r);
+                slot.options.colors[ic + 1] = Math.round(255 * slot.color.g);
+                slot.options.colors[ic + 2] = Math.round(255 * slot.color.b);
+                slot.options.colors[ic + 3] = Math.round(255 * slot.color.a);
             }
 
             var mat = slot.material;
