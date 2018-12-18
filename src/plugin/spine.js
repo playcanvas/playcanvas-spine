@@ -90,6 +90,7 @@ pc.extend(pc, function () {
         this._meshInstances = [];
         this._materials = {};
         this._offset = {};
+        this._tint = {};
 
         this._priority = 0;
         this._layers = [pc.LAYERID_UI];
@@ -375,14 +376,20 @@ pc.extend(pc, function () {
             attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, slot.vertices, 0, 2);
             n = attachment.worldVerticesLength;
         }
+        var tint = this._tint[name],
+            r = Math.round(255 * slot.color.r * (tint ? tint.r : 1)),
+            g = Math.round(255 * slot.color.g * (tint ? tint.g : 1)),
+            b = Math.round(255 * slot.color.b * (tint ? tint.b : 1)),
+            a = Math.round(255 * slot.color.a * (tint ? tint.a : 1));
+        
         for (i = 0; i < n; i += 2, ii += 3, ic += 4) {
             slot.positions[ii + 0] = slot.vertices[i + 0];
             slot.positions[ii + 1] = slot.vertices[i + 1];
             slot.positions[ii + 2] = 0;
-            slot.options.colors[ic + 0] = Math.round(255 * slot.color.r);
-            slot.options.colors[ic + 1] = Math.round(255 * slot.color.g);
-            slot.options.colors[ic + 2] = Math.round(255 * slot.color.b);
-            slot.options.colors[ic + 3] = Math.round(255 * slot.color.a);
+            slot.options.colors[ic + 0] = r;
+            slot.options.colors[ic + 1] = g;
+            slot.options.colors[ic + 2] = b;
+            slot.options.colors[ic + 3] = a;
         }
 
         var mat = slot.material;
@@ -433,6 +440,10 @@ pc.extend(pc, function () {
 
     Spine.prototype.setPosition = function (p) {
         this._position.copy(p);
+    };
+
+    Spine.prototype.setTint = function (name, color) {
+        this._tint[name] = color;
     };
 
     Spine.prototype.removeFromLayers = function () {
