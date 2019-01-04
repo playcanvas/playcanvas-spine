@@ -126,13 +126,8 @@ pc.extend(pc, function () {
         if (this._hidden)
             return;
 
-        var drawOrder = this.skeleton.drawOrder;
-        for (var i = 0, n = drawOrder.length; i < n; i++) {
-            var slot = drawOrder[i];
-            if (!slot.current || !slot.current.meshInstance)
-                continue;
-
-            slot.current.meshInstance.visible = false;
+        for (var i = 0, n = this._meshInstances.length; i < n; i++) {
+            this._meshInstances[i].visible = false;
         }
 
         this._hidden = true;
@@ -142,14 +137,8 @@ pc.extend(pc, function () {
         if (!this._hidden)
             return;
 
-        var drawOrder = this.skeleton.drawOrder;
-        for (var i = 0, n = drawOrder.length; i < n; i++) {
-            var slot = drawOrder[i];
-
-            if (!slot.current || !slot.current.meshInstance)
-                continue;
-
-            slot.current.meshInstance.visible = true;
+        for (var i = 0, n = this._meshInstances.length; i < n; i++) {
+            this._meshInstances[i].visible = true;
         }
 
         this._hidden = false;
@@ -374,16 +363,16 @@ pc.extend(pc, function () {
         for (i = 0; i < len; i++) {
             this._meshes[i].name = batches[i].mat;
             var mi = new pc.MeshInstance(this._node, this._meshes[i], this._materials[batches[i].mat]);
+            mi.drawOrder = i + (this.priority * 1000);
+            mi.visible = !this._hidden;
             this._meshInstances.push(mi);
         }
     };
 
     Spine.prototype.updateMeshes = function () {
         var m;
-        for (m in this._meshes) {
-            if (this._meshes.hasOwnProperty(m)) {
-                this._meshes[m].startUpdate();
-            }
+        for (m = 0; m < this._meshes.length; m++) {
+            this._meshes[m].startUpdate();
         }
         var drawOrder = this.skeleton.drawOrder;
         for (var i = 0, len = drawOrder.length; i < len; i++) {
@@ -392,10 +381,8 @@ pc.extend(pc, function () {
                 this._meshes[slot.current.mesh].updateVertices(slot.positions, null, null, null, slot.options.colors);
             }
         }
-        for (m in this._meshes) {
-            if (this._meshes.hasOwnProperty(m)) {
-                this._meshes[m].finishUpdate();
-            }
+        for (m = 0; m < this._meshes.length; m++) {
+            this._meshes[m].finishUpdate();
         }
     };
 
