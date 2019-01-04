@@ -156,11 +156,11 @@ pc.extend(pc, function () {
     };
 
     Spine.prototype.init = function () {
-        this.rebuildMeshes();
         var drawOrder = this.skeleton.drawOrder;
         for (var i = 0, n = drawOrder.length; i < n; i++) {
             this.initSlot(drawOrder[i]);
         }
+        this.rebuildMeshes();
     };
 
     Spine.prototype.initSlot = function (slot) {
@@ -170,7 +170,7 @@ pc.extend(pc, function () {
         slot.colorUniforms = {};
 
         // assotiated mesh, num of vertices and offset in mat. mesh
-        slot.current = { mesh: null, vertices: 0, offset: 0 };
+        slot.current = { mesh: -1, vertices: 0, offset: 0 };
         // last update name and type
         slot._active = { name: '', type: ATTACHMENT_TYPE.NULL };
 
@@ -262,23 +262,40 @@ pc.extend(pc, function () {
 
     Spine.prototype.rebuildMeshes = function () {
         this.removeFromLayers();
-        this._meshes = {};
+        this._meshes = [];
         this._meshInstances.length = 0;
-        for (var m in this._materials) {
-            if (this._materials.hasOwnProperty(m)) {
-                this.createMesh(m);
-            }
-        }
+        this.createMeshes();
         this.addToLayers();
     };
 
     var _countMeshComponents = function (acc, slot) {
-        if (slot.attachment && slot.material === acc.mat) {
-            acc.pos += slot.positions.length;
-            acc.norm += slot.options.normals.length;
-            acc.idx += slot.options.indices.length;
-            acc.uv += slot.options.uvs.length;
-            acc.col += slot.options.colors.length;
+        if (slot.attachment) {
+            if (!acc.curr.mat)
+                acc.curr.mat = slot.material;
+
+            if (slot.material === acc.curr.mat) {
+                acc.curr.pos += slot.positions.length;
+                acc.curr.norm += slot.options.normals.length;
+                acc.curr.idx += slot.options.indices.length;
+                acc.curr.uv += slot.options.uvs.length;
+                acc.curr.col += slot.options.colors.length;
+            }
+            else {
+                acc.batches.push({
+                    mat: acc.curr.mat,
+                    pos: acc.curr.pos,
+                    norm: acc.curr.norm,
+                    idx: acc.curr.idx,
+                    uv: acc.curr.uv,
+                    col: acc.curr.col
+                });
+                acc.curr.mat = slot.material;
+                acc.curr.pos = slot.positions.length;
+                acc.curr.norm = slot.options.normals.length;
+                acc.curr.idx = slot.options.indices.length;
+                acc.curr.uv = slot.options.uvs.length;
+                acc.curr.col = slot.options.colors.length;
+            }
         }
         return acc;
     };
@@ -293,38 +310,72 @@ pc.extend(pc, function () {
     };
 
     var _populateMeshComponents = function (acc, slot) {
-        if (slot.attachment && slot.material === acc.mat) {
-            slot.current.offset = acc.pos / 3;
-            slot.current.vertices = slot.positions.length / 3;
+        if (slot.attachment) {
+            if (!acc.curr.mat)
+                acc.curr.mat = slot.material;
+            
+            if (slot.material !== acc.curr.mat) {
+                acc.meshes.push(pc.createMesh(acc.gd, acc.positions[acc.batchIdx], acc.options[acc.batchIdx]));
+                acc.batchIdx++;
 
-            acc.idx += _copyArray(slot.options.indices, acc.options.indices, acc.idx, slot.current.offset);
-            acc.pos += _copyArray(slot.positions, acc.positions, acc.pos, 0);
-            acc.norm += _copyArray(slot.options.normals, acc.options.normals, acc.norm, 0);
-            acc.uv += _copyArray(slot.options.uvs, acc.options.uvs, acc.uv, 0);
-            acc.col += _copyArray(slot.options.colors, acc.options.colors, acc.col, 0);
+                acc.curr.mat = slot.material;
+                acc.curr.pos = 0;
+                acc.curr.norm = 0;
+                acc.curr.idx = 0;
+                acc.curr.uv = 0;
+                acc.curr.col = 0;
+            }
+            slot.current.offset = acc.curr.pos / 3;
+            slot.current.vertices = slot.positions.length / 3;
+            slot.current.mesh = acc.batchIdx;
+
+            acc.curr.idx += _copyArray(slot.options.indices, acc.options[acc.batchIdx].indices, acc.curr.idx, slot.current.offset);
+            acc.curr.pos += _copyArray(slot.positions, acc.positions[acc.batchIdx], acc.curr.pos, 0);
+            acc.curr.norm += _copyArray(slot.options.normals, acc.options[acc.batchIdx].normals, acc.curr.norm, 0);
+            acc.curr.uv += _copyArray(slot.options.uvs, acc.options[acc.batchIdx].uvs, acc.curr.uv, 0);
+            acc.curr.col += _copyArray(slot.options.colors, acc.options[acc.batchIdx].colors, acc.curr.col, 0);
         }
         return acc;
     }
 
-    Spine.prototype.createMesh = function (material) {
+    Spine.prototype.createMeshes = function () {
         var drawOrder = this.skeleton.drawOrder;
-        var num = drawOrder.reduce(_countMeshComponents, { mat: material, pos: 0, norm: 0, idx: 0, uv: 0, col: 0 });
+        var bufComp = drawOrder.reduce(_countMeshComponents, {
+            curr: { pos: 0, norm: 0, idx: 0, uv: 0, col: 0 }, batches: []
+        });
+        if (bufComp.curr.pos > 0) {
+            bufComp.batches.push(bufComp.curr);
+        }
+        var batches = bufComp.batches;
 
-        var positions = Array(num.pos),
-            options = {
-                normals: Array(num.norm),
-                uvs: new Float32Array(num.uv),
-                indices: Array(num.idx),
-                colors: Array(num.col)
-            };
+        var i, positions = [], options = [];
 
-        drawOrder.reduce(_populateMeshComponents,
-            { mat: material, pos: 0, norm: 0, idx: 0, uv: 0, col: 0, positions: positions, options: options });
+        var len = batches.length;
+        if (len == 0)
+            return;
 
-        this._meshes[material] = pc.createMesh(this._app.graphicsDevice, positions, options);
-        this._meshes[material].name = material;
-        var mi = new pc.MeshInstance(this._node, this._meshes[material], this._materials[material]);
-        this._meshInstances.push(mi);
+        for (i = 0; i < len; i++) {
+            positions.push(Array(batches[i].pos));
+            options.push({
+                normals: Array(batches[i].norm),
+                uvs: new Float32Array(batches[i].uv),
+                indices: Array(batches[i].idx),
+                colors: Array(batches[i].col)
+            });
+        }
+
+        var meshComp = drawOrder.reduce(_populateMeshComponents, {
+            meshes: this._meshes, gd: this._app.graphicsDevice, batchIdx: 0,
+            curr: { pos: 0, norm: 0, idx: 0, uv: 0, col: 0 },
+            positions: positions, options: options 
+        });
+        this._meshes.push(pc.createMesh(meshComp.gd, positions[meshComp.batchIdx], options[meshComp.batchIdx]));
+
+        for (i = 0; i < len; i++) {
+            this._meshes[i].name = batches[i].mat;
+            var mi = new pc.MeshInstance(this._node, this._meshes[i], this._materials[batches[i].mat]);
+            this._meshInstances.push(mi);
+        }
     };
 
     Spine.prototype.updateMeshes = function () {
@@ -337,8 +388,8 @@ pc.extend(pc, function () {
         var drawOrder = this.skeleton.drawOrder;
         for (var i = 0, len = drawOrder.length; i < len; i++) {
             var slot = drawOrder[i];
-            if (slot.attachment && slot.current.mesh) {
-                slot.current.mesh.updateVertices(slot.positions, null, null, null, slot.options.colors);
+            if (slot.attachment && slot.current.mesh >= 0) {
+                this._meshes[slot.current.mesh].updateVertices(slot.positions, null, null, null, slot.options.colors);
             }
         }
         for (m in this._meshes) {
@@ -348,17 +399,9 @@ pc.extend(pc, function () {
         }
     };
 
-    Spine.prototype.updateSlot = function (slot) {
+    Spine.prototype.updateSlot = function (slot, batchIdx) {
         var attachment = slot.attachment;
-        // if there is no longer an attachment, abort
-        if (!attachment) {
-            if (slot._active.type != ATTACHMENT_TYPE.NULL) {
-                slot.current = { mesh: null, vertices: 0, offset: 0 };
-                slot._active = { name: '', type: ATTACHMENT_TYPE.NULL };
-                this._modelChanged = true;
-            }
-            return;
-        }
+
         var name = attachment.name;
         var type = (attachment instanceof spine.RegionAttachment) ? ATTACHMENT_TYPE.REGION :
             ((attachment instanceof spine.MeshAttachment) ? ATTACHMENT_TYPE.MESH : ATTACHMENT_TYPE.NULL);
@@ -392,17 +435,14 @@ pc.extend(pc, function () {
             slot.options.colors[ic + 3] = a;
         }
 
-        var mat = slot.material;
-        var mesh = this._meshes[mat];
         var vertices = slot.positions.length / 3;
-        var offset = this._offset[mat];
+        var offset = this._offset[batchIdx];
 
-        if (slot.current.offset !== offset || slot.current.vertices !== vertices) {
+        if (slot.current.offset !== offset || slot.current.vertices !== vertices || slot.current.mesh !== batchIdx) {
             this._reordered = true;
         }
 
-        this._offset[mat] += vertices;
-        slot.current.mesh = mesh;
+        this._offset[batchIdx] += vertices;
     };
 
     Spine.prototype.update = function (dt) {
@@ -425,8 +465,25 @@ pc.extend(pc, function () {
         }
 
         var i, drawOrder = this.skeleton.drawOrder, n = drawOrder.length;
+        var batchIdx = 0, mat = n ? drawOrder[0].material : "";
+        var slot;
         for (i = 0; i < n; i++) {
-            this.updateSlot(drawOrder[i]);
+            slot = drawOrder[i];
+            var attachment = slot.attachment;
+            // if there is no longer an attachment, abort
+            if (!attachment) {
+                if (slot._active.type != ATTACHMENT_TYPE.NULL) {
+                    slot.current = { mesh: -1, vertices: 0, offset: 0 };
+                    slot._active = { name: '', type: ATTACHMENT_TYPE.NULL };
+                    this._modelChanged = true;
+                }
+                continue;
+            }
+            if (mat !== slot.material) {
+                batchIdx++;
+                mat = slot.material;
+            }
+            this.updateSlot(slot, batchIdx);
         }
 
         if (this._modelChanged || this._reordered) {
