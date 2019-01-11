@@ -210,7 +210,7 @@ pc.extend(pc, function () {
                 if (texture.getSource() instanceof Image) {
                     key = texture.getSource().getAttribute("src");
                 } else if (texture instanceof pc.Texture) {
-                    key = texture.name;
+                    key = texture.name; // texture name might not be unique - should be resolved with content
                 }
                 if (key) {
                     // create a new material if required
