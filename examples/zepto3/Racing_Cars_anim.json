@@ -1,0 +1,366 @@
+{
+  "skeleton": {
+    "hash": "/jtFb3WvpU4KchD2hDUWBXM6HCI",
+    "spine": "3.6.53",
+    "width": 234.71,
+    "height": 234.71,
+    "fps": 60,
+    "images": "D:\\Users\\Sara Costa\\Desktop\\spine_anim"
+  },
+  "bones": [
+    { "name": "root" },
+    {
+      "name": "BODY",
+      "parent": "root",
+      "x": -2.15,
+      "y": -3.65,
+      "transform": "noScale"
+    },
+    {
+      "name": "ELEMENTS",
+      "parent": "root",
+      "x": -2.15,
+      "y": -50.65,
+      "transform": "noScale"
+    },
+    {
+      "name": "Ear L",
+      "parent": "root",
+      "x": 20,
+      "y": 39,
+      "transform": "noScale"
+    },
+    {
+      "name": "Ear R",
+      "parent": "root",
+      "x": -25,
+      "y": 39,
+      "transform": "noScale"
+    },
+    {
+      "name": "Eye L",
+      "parent": "root",
+      "x": 14.5,
+      "y": 9,
+      "transform": "noScale"
+    },
+    {
+      "name": "Eye R",
+      "parent": "root",
+      "x": -17.5,
+      "y": 8,
+      "transform": "noScale"
+    },
+    { "name": "Eyebrow L", "parent": "root", "transform": "noScale" },
+    { "name": "Eyebrow R", "parent": "root", "transform": "noScale" },
+    {
+      "name": "Helmet",
+      "parent": "root",
+      "x": -3,
+      "y": 35,
+      "transform": "noScale"
+    },
+    {
+      "name": "WHEELS BACK",
+      "parent": "root",
+      "x": -2.15,
+      "y": 24.35,
+      "transform": "noScale"
+    },
+    {
+      "name": "WHEELS FRONT",
+      "parent": "root",
+      "x": -1.65,
+      "y": -53.15,
+      "transform": "noScale"
+    },
+    {
+      "name": "head",
+      "parent": "root",
+      "x": -0.15,
+      "y": -0.65,
+      "transform": "noScale"
+    }
+  ],
+  "slots": [
+    {
+      "name": "WHEELS BACK",
+      "bone": "WHEELS BACK",
+      "attachment": "Activo F1.psd/F1/WHEELS BACK"
+    },
+    {
+      "name": "WHEELS FRONT",
+      "bone": "WHEELS FRONT",
+      "attachment": "Activo F1.psd/F1/WHEELS FRONT"
+    },
+    { "name": "BODY", "bone": "BODY", "attachment": "Activo F1.psd/F1/BODY" },
+    {
+      "name": "ELEMENTS",
+      "bone": "ELEMENTS",
+      "attachment": "Activo F1.psd/F1/ELEMENTS"
+    },
+    {
+      "name": "head",
+      "bone": "head",
+      "attachment": "Activo F1.psd/F1/head/head"
+    },
+    {
+      "name": "Ear L",
+      "bone": "Ear L",
+      "attachment": "Activo F1.psd/F1/head/Ear L"
+    },
+    {
+      "name": "Ear R",
+      "bone": "Ear R",
+      "attachment": "Activo F1.psd/F1/head/Ear R"
+    },
+    {
+      "name": "Eye R",
+      "bone": "Eye R",
+      "attachment": "Activo F1.psd/F1/head/Eye R"
+    },
+    {
+      "name": "Eye L",
+      "bone": "Eye L",
+      "attachment": "Activo F1.psd/F1/head/Eye L"
+    },
+    {
+      "name": "Eyebrow R",
+      "bone": "Eyebrow R",
+      "attachment": "Activo F1.psd/F1/head/Eyebrow R"
+    },
+    {
+      "name": "Eyebrow L",
+      "bone": "Eyebrow L",
+      "attachment": "Activo F1.psd/F1/head/Eyebrow L"
+    },
+    {
+      "name": "Helmet",
+      "bone": "Helmet",
+      "attachment": "Activo F1.psd/F1/head/Helmet"
+    }
+  ],
+  "skins": {
+    "default": {
+      "BODY": { "Activo F1.psd/F1/BODY": { "width": 84, "height": 152 } },
+      "ELEMENTS": {
+        "Activo F1.psd/F1/ELEMENTS": { "width": 74, "height": 76 }
+      },
+      "Ear L": { "Activo F1.psd/F1/head/Ear L": { "width": 26, "height": 28 } },
+      "Ear R": { "Activo F1.psd/F1/head/Ear R": { "width": 26, "height": 28 } },
+      "Eye L": { "Activo F1.psd/F1/head/Eye L": { "width": 23, "height": 18 } },
+      "Eye R": { "Activo F1.psd/F1/head/Eye R": { "width": 23, "height": 18 } },
+      "Eyebrow L": {
+        "Activo F1.psd/F1/head/Eyebrow L": {
+          "rotation": -0.18,
+          "width": 234,
+          "height": 234
+        }
+      },
+      "Eyebrow R": {
+        "Activo F1.psd/F1/head/Eyebrow R": { "width": 234, "height": 234 }
+      },
+      "Helmet": {
+        "Activo F1.psd/F1/head/Helmet": { "width": 76, "height": 58 }
+      },
+      "WHEELS BACK": {
+        "Activo F1.psd/F1/WHEELS BACK": { "width": 114, "height": 54 }
+      },
+      "WHEELS FRONT": {
+        "Activo F1.psd/F1/WHEELS FRONT": { "width": 81, "height": 35 }
+      },
+      "head": {
+        "Activo F1.psd/F1/head/head": {
+          "x": -2.5,
+          "y": 19.5,
+          "width": 71,
+          "height": 57
+        }
+      }
+    }
+  },
+  "animations": {
+    "idle": {
+      "bones": {
+        "BODY": {
+          "scale": [
+            { "time": 0, "x": 1, "y": 1 },
+            { "time": 0.05, "x": 1.05, "y": 1.06 },
+            { "time": 0.1, "x": 1, "y": 1 },
+            { "time": 0.15, "x": 1.05, "y": 1.06 },
+            { "time": 0.2, "x": 1, "y": 1 },
+            { "time": 0.25, "x": 1.05, "y": 1.06 },
+            { "time": 0.3, "x": 1, "y": 1 },
+            { "time": 0.35, "x": 1.05, "y": 1.06 },
+            { "time": 0.4, "x": 1, "y": 1 },
+            { "time": 0.45, "x": 1.05, "y": 1.06 },
+            { "time": 0.5, "x": 1, "y": 1 },
+            { "time": 0.55, "x": 1.05, "y": 1.06 },
+            { "time": 0.6, "x": 1, "y": 1 },
+            { "time": 0.65, "x": 1.05, "y": 1.06 },
+            { "time": 0.7, "x": 1, "y": 1 },
+            { "time": 0.75, "x": 1.05, "y": 1.06 },
+            { "time": 0.8, "x": 1, "y": 1 },
+            { "time": 0.85, "x": 1.05, "y": 1.06 },
+            { "time": 0.9, "x": 1, "y": 1 },
+            { "time": 0.95, "x": 1.05, "y": 1.06 },
+            { "time": 0.9833, "x": 1.02, "y": 1.02 }
+          ]
+        },
+        "ELEMENTS": {
+          "translate": [
+            { "time": 0, "x": 0, "y": 0 },
+            { "time": 0.05, "x": 0, "y": -1.5 },
+            { "time": 0.1, "x": 0, "y": 0 },
+            { "time": 0.15, "x": 0, "y": -1.5 },
+            { "time": 0.2, "x": 0, "y": 0 },
+            { "time": 0.25, "x": 0, "y": -1.5 },
+            { "time": 0.3, "x": 0, "y": 0 },
+            { "time": 0.35, "x": 0, "y": -1.5 },
+            { "time": 0.4, "x": 0, "y": 0 },
+            { "time": 0.45, "x": 0, "y": -1.5 },
+            { "time": 0.5, "x": 0, "y": 0 },
+            { "time": 0.55, "x": 0, "y": -1.5 },
+            { "time": 0.6, "x": 0, "y": 0 },
+            { "time": 0.65, "x": 0, "y": -1.5 },
+            { "time": 0.7, "x": 0, "y": 0 },
+            { "time": 0.75, "x": 0, "y": -1.5 },
+            { "time": 0.8, "x": 0, "y": 0 },
+            { "time": 0.85, "x": 0, "y": -1.5 },
+            { "time": 0.9, "x": 0, "y": 0 },
+            { "time": 0.95, "x": 0, "y": -1.5 },
+            { "time": 0.9833, "x": 0, "y": -0.5 }
+          ]
+        },
+        "head": {
+          "translate": [
+            { "time": 0, "x": 0, "y": 0 },
+            { "time": 0.2333, "x": -0.1, "y": 1.9 },
+            { "time": 0.4833, "x": 0, "y": 0 },
+            { "time": 0.7333, "x": -0.1, "y": 1.9 },
+            { "time": 0.9833, "x": 0, "y": 0 }
+          ],
+          "scale": [
+            { "time": 0, "x": 1, "y": 1 },
+            { "time": 0.2333, "x": 0.96, "y": 1.07 },
+            { "time": 0.4833, "x": 1, "y": 1 },
+            { "time": 0.7333, "x": 0.96, "y": 1.07 },
+            { "time": 0.9833, "x": 1, "y": 1 }
+          ]
+        },
+        "Ear L": {
+          "translate": [
+            { "time": 0, "x": 0, "y": 0 },
+            { "time": 0.2333, "x": -0.95, "y": 4.8 },
+            { "time": 0.4833, "x": 0, "y": 0 },
+            { "time": 0.7333, "x": -0.95, "y": 4.8 },
+            { "time": 0.9833, "x": 0, "y": 0 }
+          ],
+          "scale": [
+            { "time": 0, "x": 1, "y": 1 },
+            { "time": 0.2333, "x": 0.96, "y": 1.07 },
+            { "time": 0.4833, "x": 1, "y": 1 },
+            { "time": 0.7333, "x": 0.96, "y": 1.07 },
+            { "time": 0.9833, "x": 1, "y": 1 }
+          ]
+        },
+        "Ear R": {
+          "translate": [
+            { "time": 0, "x": 0, "y": 0 },
+            { "time": 0.2333, "x": 0.95, "y": 4.8 },
+            { "time": 0.4833, "x": 0, "y": 0 },
+            { "time": 0.7333, "x": 0.95, "y": 4.8 },
+            { "time": 0.9833, "x": 0, "y": 0 }
+          ],
+          "scale": [
+            { "time": 0, "x": 1, "y": 1 },
+            { "time": 0.2333, "x": 0.96, "y": 1.07 },
+            { "time": 0.4833, "x": 1, "y": 1 },
+            { "time": 0.7333, "x": 0.96, "y": 1.07 },
+            { "time": 0.9833, "x": 1, "y": 1 }
+          ]
+        },
+        "Eye R": {
+          "translate": [
+            { "time": 0, "x": 0, "y": 0 },
+            { "time": 0.2333, "x": 0.6, "y": 2.55 },
+            { "time": 0.4833, "x": 0, "y": 0 },
+            { "time": 0.7333, "x": 0.6, "y": 2.55 },
+            { "time": 0.9833, "x": 0, "y": 0 }
+          ],
+          "scale": [
+            { "time": 0, "x": 1, "y": 1 },
+            { "time": 0.2333, "x": 0.96, "y": 1.07 },
+            { "time": 0.4833, "x": 1, "y": 1 },
+            { "time": 0.7333, "x": 0.96, "y": 1.07 },
+            { "time": 0.9833, "x": 1, "y": 1 }
+          ]
+        },
+        "Eye L": {
+          "translate": [
+            { "time": 0, "x": 0, "y": 0 },
+            { "time": 0.2333, "x": -0.75, "y": 2.65 },
+            { "time": 0.4833, "x": 0, "y": 0 },
+            { "time": 0.7333, "x": -0.75, "y": 2.65 },
+            { "time": 0.9833, "x": 0, "y": 0 }
+          ],
+          "scale": [
+            { "time": 0, "x": 1, "y": 1 },
+            { "time": 0.2333, "x": 0.96, "y": 1.07 },
+            { "time": 0.4833, "x": 1, "y": 1 },
+            { "time": 0.7333, "x": 0.96, "y": 1.07 },
+            { "time": 0.9833, "x": 1, "y": 1 }
+          ]
+        },
+        "Eyebrow R": {
+          "translate": [
+            { "time": 0, "x": 0, "y": 0 },
+            { "time": 0.2333, "x": -0.15, "y": 1.95 },
+            { "time": 0.4833, "x": 0, "y": 0 },
+            { "time": 0.7333, "x": -0.15, "y": 1.95 },
+            { "time": 0.9833, "x": 0, "y": 0 }
+          ],
+          "scale": [
+            { "time": 0, "x": 1, "y": 1 },
+            { "time": 0.2333, "x": 0.96, "y": 1.07 },
+            { "time": 0.4833, "x": 1, "y": 1 },
+            { "time": 0.7333, "x": 0.96, "y": 1.07 },
+            { "time": 0.9833, "x": 1, "y": 1 }
+          ]
+        },
+        "Eyebrow L": {
+          "translate": [
+            { "time": 0, "x": 0, "y": 0 },
+            { "time": 0.2333, "x": -0.15, "y": 1.95 },
+            { "time": 0.4833, "x": 0, "y": 0 },
+            { "time": 0.7333, "x": -0.15, "y": 1.95 },
+            { "time": 0.9833, "x": 0, "y": 0 }
+          ],
+          "scale": [
+            { "time": 0, "x": 1, "y": 1 },
+            { "time": 0.2333, "x": 0.96, "y": 1.07 },
+            { "time": 0.4833, "x": 1, "y": 1 },
+            { "time": 0.7333, "x": 0.96, "y": 1.07 },
+            { "time": 0.9833, "x": 1, "y": 1 }
+          ]
+        },
+        "Helmet": {
+          "translate": [
+            { "time": 0, "x": 0, "y": 0 },
+            { "time": 0.2333, "x": 0, "y": 4.5 },
+            { "time": 0.4833, "x": 0, "y": 0 },
+            { "time": 0.7333, "x": 0, "y": 4.5 },
+            { "time": 0.9833, "x": 0, "y": 0 }
+          ],
+          "scale": [
+            { "time": 0, "x": 1, "y": 1 },
+            { "time": 0.2333, "x": 0.96, "y": 1.07 },
+            { "time": 0.4833, "x": 1, "y": 1 },
+            { "time": 0.7333, "x": 0.96, "y": 1.07 },
+            { "time": 0.9833, "x": 1, "y": 1 }
+          ]
+        }
+      }
+    }
+  }
+}

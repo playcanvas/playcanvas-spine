@@ -1,0 +1,55 @@
+
+Racing_Cars_anim.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+zepto_splash_texture/bubble
+  rotate: false
+  xy: 468, 441
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+zepto_splash_texture/logo_glass
+  rotate: false
+  xy: 2, 465
+  size: 491, 550
+  orig: 491, 550
+  offset: 0, 0
+  index: -1
+zepto_splash_texture/logo_gradient
+  rotate: false
+  xy: 2, 35
+  size: 464, 428
+  orig: 464, 428
+  offset: 0, 0
+  index: -1
+zepto_splash_texture/logo_steam
+  rotate: false
+  xy: 495, 697
+  size: 64, 185
+  orig: 64, 185
+  offset: 0, 0
+  index: -1
+zepto_splash_texture/logo_text
+  rotate: false
+  xy: 495, 884
+  size: 406, 131
+  orig: 406, 131
+  offset: 0, 0
+  index: -1
+zepto_splash_texture/pop_down
+  rotate: false
+  xy: 2, 2
+  size: 67, 31
+  orig: 67, 31
+  offset: 0, 0
+  index: -1
+zepto_splash_texture/pop_up
+  rotate: false
+  xy: 903, 984
+  size: 67, 31
+  orig: 67, 31
+  offset: 0, 0
+  index: -1

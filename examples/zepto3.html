@@ -1,0 +1,165 @@
+<html>
+    <head>
+        <script src="https://code.playcanvas.com/playcanvas-stable.js"></script>
+
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: black;
+            }
+
+            canvas {
+                width: 512px;
+                height: 512px;
+            }
+        </style>
+    </head>
+
+    <body>
+    <canvas id="application-canvas"></canvas>
+    <script>
+        var preload = function (assets, callback) {
+            var count = 0;
+            var l = assets.length;
+
+            for (var i = 0; i < l; i++) {
+                app.assets.add(assets[i]);
+                assets[i].ready(function (asset) {
+                    count++;
+                    if (count === l) {
+                        callback();
+                    }
+                });
+                app.assets.load(assets[i]);
+            }
+        };
+
+        var loadScripts = function (scripts, callback) {
+            var count = 0;
+            var l = scripts.length;
+            for (var i = 0; i < l; i++) {
+                app.loader.load(scripts[i], "script", function (err, s) {
+                    count++
+                    if (count === l) {
+                        callback();
+                    }
+                });
+            }
+        };
+
+        var start = function () {
+            // remove asset.id === 0;
+            new pc.Asset();
+
+            var urls = {
+                atlas: "zepto3/Racing_Cars_anim.atlas",
+                texture: "zepto3/Racing_Cars_anim.png",
+                skeleton: "zepto3/Racing_Cars_anim.json"
+            };
+
+            var assets = [
+                new pc.Asset("Atlas", "text", { url: urls.atlas }),
+                new pc.Asset("Texture", "texture", { url: urls.texture }),
+                new pc.Asset("Skeleton", "json", { url: urls.skeleton})
+            ];
+
+            preload(assets, function () {
+                var camera = new pc.Entity();
+                camera.addComponent("camera", {
+                    farClip: 10000,
+                });
+                camera.addComponent("script", {
+                    scripts: {
+                        flyCamera: {
+                            enabled: true,
+                            attributes: {
+                                "speed": 10,
+                                "fastSpeed": 100,
+                                "mode": 0
+                            }
+                        }
+                    },
+                    order: ["flyCamera"]
+                });
+                camera.translateLocal(0, 2, 10);
+                app.root.addChild(camera);
+
+                var light = new pc.Entity();
+                light.addComponent("light", {
+                    type: "directional"
+                });
+                app.root.addChild(light);
+                light.translate(0, 0, 1);
+
+                var character = new pc.Entity();
+                app.root.addChild(character);
+                character.addComponent("script", {
+                    scripts: {
+                        "spine": {
+                            enabled: true,
+                            attributes: {
+                                "textures": [assets[1].id],
+                                "atlas": assets[0].id,
+                                "skeleton": assets[2].id
+                            }
+                        }
+                    },
+                    order: ["spine"]
+                });
+                character.time = 0;
+                character.update = function(dt) {
+                    this.time += dt;
+                    var p = this.getPosition();
+                    p.z = Math.cos(this.time);
+                    this.setPosition(p);
+                };
+
+                character.spine.state.setAnimation(0, "idle", true);
+                var anims = [ "idle"];
+                var state = 0;
+
+                app.on("update", function (dt) {
+                    if (app.keyboard.wasPressed(pc.KEY_SPACE)) {
+                        state++;
+                        character.spine.state.setAnimation(0, anims[state % anims.length], true);
+                    }
+                    character.update(dt);
+                    // Draw Axis
+                    var startX = new pc.Vec3(0.0);
+                    var endX = new pc.Vec3().add2(new pc.Vec3(0.0), character.right.scale(-3.0));
+                    var colorX = new pc.Color(1, 0, 0);
+                    app.renderLine(startX, endX, colorX);
+                    
+                    var startY = new pc.Vec3(0.0);
+                    var endY = new pc.Vec3().add2(new pc.Vec3(0.0), character.forward.scale(-3.0));
+                    var colorY = new pc.Color(0, 1, 0);
+                    app.renderLine(startY, endY, colorY);
+                    
+                    var startZ = new pc.Vec3(0.0);
+                    var endZ = new pc.Vec3().add2(new pc.Vec3(0.0), character.up.scale(-3.0));
+                    var colorZ = new pc.Color(0, 0, 1);
+                    app.renderLine(startZ, endZ, colorZ);
+                });
+            });
+        };
+
+        var canvas = document.getElementById("application-canvas");
+        canvas.width = 512;
+        canvas.height = 512;
+        var app = new pc.Application(canvas, {
+            mouse: new pc.Mouse(canvas),
+            keyboard: new pc.Keyboard(window)
+        });
+
+        app.systems.script.preloading = true;
+        var scripts = ["../src/script/spine.js", "../src/script/fly-camera.js"];
+        loadScripts(scripts, function () {
+            app.systems.script.preloading = false;
+            start();
+            app.start();
+        });
+    </script>
+    <script src="../lib/playcanvas-spine.min.js"></script>
+    </body>
+</html>

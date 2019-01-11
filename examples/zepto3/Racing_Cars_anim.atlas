@@ -1,0 +1,90 @@
+
+Racing_Cars_anim.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Activo F1.psd/F1/BODY
+  rotate: false
+  xy: 474, 84
+  size: 84, 152
+  orig: 84, 152
+  offset: 0, 0
+  index: -1
+Activo F1.psd/F1/ELEMENTS
+  rotate: false
+  xy: 474, 6
+  size: 74, 76
+  orig: 74, 76
+  offset: 0, 0
+  index: -1
+Activo F1.psd/F1/WHEELS BACK
+  rotate: false
+  xy: 560, 182
+  size: 114, 54
+  orig: 114, 54
+  offset: 0, 0
+  index: -1
+Activo F1.psd/F1/WHEELS FRONT
+  rotate: false
+  xy: 749, 201
+  size: 81, 35
+  orig: 81, 35
+  offset: 0, 0
+  index: -1
+Activo F1.psd/F1/head/Ear L
+  rotate: false
+  xy: 560, 92
+  size: 26, 28
+  orig: 26, 28
+  offset: 0, 0
+  index: -1
+Activo F1.psd/F1/head/Ear R
+  rotate: false
+  xy: 638, 152
+  size: 26, 28
+  orig: 26, 28
+  offset: 0, 0
+  index: -1
+Activo F1.psd/F1/head/Eye L
+  rotate: false
+  xy: 749, 181
+  size: 23, 18
+  orig: 23, 18
+  offset: 0, 0
+  index: -1
+Activo F1.psd/F1/head/Eye R
+  rotate: false
+  xy: 832, 218
+  size: 23, 18
+  orig: 23, 18
+  offset: 0, 0
+  index: -1
+Activo F1.psd/F1/head/Eyebrow L
+  rotate: false
+  xy: 2, 2
+  size: 234, 234
+  orig: 234, 234
+  offset: 0, 0
+  index: -1
+Activo F1.psd/F1/head/Eyebrow R
+  rotate: false
+  xy: 238, 2
+  size: 234, 234
+  orig: 234, 234
+  offset: 0, 0
+  index: -1
+Activo F1.psd/F1/head/Helmet
+  rotate: false
+  xy: 560, 122
+  size: 76, 58
+  orig: 76, 58
+  offset: 0, 0
+  index: -1
+Activo F1.psd/F1/head/head
+  rotate: false
+  xy: 676, 179
+  size: 71, 57
+  orig: 71, 57
+  offset: 0, 0
+  index: -1
