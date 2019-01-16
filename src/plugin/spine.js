@@ -254,6 +254,21 @@ pc.extend(pc, function () {
     Spine.prototype.rebuildMeshes = function () {
         this.removeFromLayers();
         this._meshes = [];
+        for (var i = 0, len = this._meshInstances.length; i < len; i++) {
+            mesh = this._meshInstances[i].mesh;
+            if (mesh) {
+                if (mesh.vertexBuffer) {
+                    mesh.vertexBuffer.destroy();
+                    mesh.vertexBuffer = null;
+                }
+                for (j = 0; j < mesh.indexBuffer.length; j++) {
+                    if (mesh.indexBuffer[j])
+                        mesh.indexBuffer[j].destroy();
+                }
+                mesh.indexBuffer.length = 0;
+            }
+            this._meshInstances[i].material = null;
+        }
         this._meshInstances.length = 0;
         this.createMeshes();
         this.addToLayers();
