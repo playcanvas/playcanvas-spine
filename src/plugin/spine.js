@@ -242,7 +242,6 @@ pc.extend(pc, function () {
                         ].join('\n');
                         material.chunks.outputAlphaPremulPS = alphaPremul;
                         this._materials[key] = material;
-                        this._offset[key] = 0;
                     }
                     slot.material = key;
                 }
@@ -462,14 +461,9 @@ pc.extend(pc, function () {
         if (this.autoUpdate)
             this.skeleton.updateWorldTransform();
 
-        for (var m in this._materials) {
-            if (this._materials.hasOwnProperty(m)) {
-                this._offset[m] = 0;
-            }
-        }
-
         var i, drawOrder = this.skeleton.drawOrder, n = drawOrder.length;
         var batchIdx = 0, mat = n ? drawOrder[0].material : "";
+        this._offset[batchIdx] = 0;
         var slot;
         for (i = 0; i < n; i++) {
             slot = drawOrder[i];
@@ -485,6 +479,7 @@ pc.extend(pc, function () {
             }
             if (mat !== slot.material) {
                 batchIdx++;
+                this._offset[batchIdx] = 0;
                 mat = slot.material;
             }
             this.updateSlot(slot, batchIdx);
