@@ -1,6 +1,6 @@
 # PlayCanvas Spine
 
-Spine plugin for PlayCanvas Engine
+[Spine](http://esotericsoftware.com/) plugin for PlayCanvas Engine
 
 ![](images/spine-man.gif)
 
