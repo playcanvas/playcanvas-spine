@@ -2,6 +2,8 @@
 
 Spine plugin for PlayCanvas Engine
 
+![](images/spine-man.gif)
+
 ## Usage
 
 ### Editor
