@@ -1,5 +1,5 @@
 pc.extend(pc, function () {
-    var SpineComponent = function SpineComponent (system, entity)   {
+    var SpineComponent = function SpineComponent(system, entity)   {
         this.on("set_atlasAsset", this.onSetAsset, this);
         this.on("set_textureAssets", this.onSetAssets, this);
         this.on("set_skeletonAsset", this.onSetAsset, this);
@@ -49,7 +49,7 @@ pc.extend(pc, function () {
             }
         },
 
-        _onAssetAdd: function(asset) {
+        _onAssetAdd: function (asset) {
             asset.off('change', this.onAssetChanged, this);
             asset.on('change', this.onAssetChanged, this);
 
@@ -77,7 +77,7 @@ pc.extend(pc, function () {
                 }
             }
 
-            if(newValue) {
+            if (newValue) {
                 var id = newValue;
                 if (newValue instanceof pc.Asset) {
                     id = newValue.id;
@@ -87,7 +87,7 @@ pc.extend(pc, function () {
                 if (asset) {
                     this._onAssetAdd(asset);
                 } else {
-                    registry.on("add:" + id)
+                    registry.on("add:" + id);
                 }
             }
         },
@@ -95,7 +95,7 @@ pc.extend(pc, function () {
         onSetAssets: function (name, oldValue, newValue) {
             var registry = this.system.app.assets;
             var asset = null;
-            var i,n;
+            var i, n;
             if (oldValue.length) {
                 for (i = 0, n = oldValue.length; i < n; i++) {
                     asset = registry.get(oldValue[i]);
@@ -106,13 +106,12 @@ pc.extend(pc, function () {
                 }
             }
 
-            if(newValue && newValue.length) {
+            if (newValue && newValue.length) {
                 var ids = newValue.map(function (v) {
                     if (v instanceof pc.Asset) {
                         return v.id;
-                    } else {
-                        return v;
                     }
+                    return v;
                 });
 
                 for (i = 0, n = newValue.length; i < n; i++) {
@@ -120,7 +119,7 @@ pc.extend(pc, function () {
                     if (asset) {
                         this._onAssetAdd(asset);
                     } else {
-                        registry.on("add:" + ids[i])
+                        registry.on("add:" + ids[i]);
                     }
                 }
             }

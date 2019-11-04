@@ -57,19 +57,19 @@ FlyCamera.prototype.update = function (dt) {
 
     // Update the camera's position
     if (app.keyboard.isPressed(pc.KEY_UP) || app.keyboard.isPressed(pc.KEY_W)) {
-        this.entity.translateLocal(0, 0, -speed*dt);
+        this.entity.translateLocal(0, 0, -speed * dt);
     } else if (app.keyboard.isPressed(pc.KEY_DOWN) || app.keyboard.isPressed(pc.KEY_S)) {
-        this.entity.translateLocal(0, 0, speed*dt);
+        this.entity.translateLocal(0, 0, speed * dt);
     }
 
     if (app.keyboard.isPressed(pc.KEY_LEFT) || app.keyboard.isPressed(pc.KEY_A)) {
-        this.entity.translateLocal(-speed*dt, 0, 0);
+        this.entity.translateLocal(-speed * dt, 0, 0);
     } else if (app.keyboard.isPressed(pc.KEY_RIGHT) || app.keyboard.isPressed(pc.KEY_D)) {
-        this.entity.translateLocal(speed*dt, 0, 0);
+        this.entity.translateLocal(speed * dt, 0, 0);
     }
 };
 
-FlyCamera.prototype.rotateCamera = function(dx, dy) {
+FlyCamera.prototype.rotateCamera = function (dx, dy) {
     this.ex -= dy / 5;
     this.ex = pc.math.clamp(this.ex, -90, 90);
     this.ey -= dx / 5;
@@ -111,7 +111,7 @@ FlyCamera.prototype.onMouseUp = function (event) {
     }
 };
 
-FlyCamera.prototype.onTouchStart = function(event) {
+FlyCamera.prototype.onTouchStart = function (event) {
     if (event.touches.length == 1) {
         this.lmbDown = true;
         var touch = event.touches[0];
@@ -120,7 +120,7 @@ FlyCamera.prototype.onTouchStart = function(event) {
     event.event.preventDefault();
 };
 
-FlyCamera.prototype.onTouchEnd = function(event) {
+FlyCamera.prototype.onTouchEnd = function (event) {
     if (event.touches.length === 0) {
         this.lmbDown = false;
     } else if (event.touches.length == 1) {
@@ -129,7 +129,7 @@ FlyCamera.prototype.onTouchEnd = function(event) {
     }
 };
 
-FlyCamera.prototype.onTouchMove = function(event) {
+FlyCamera.prototype.onTouchMove = function (event) {
     var touch = event.touches[0];
     if (event.touches.length == 1) {
         this.rotateCamera((touch.x - this.lastTouchPosition.x), (touch.y - this.lastTouchPosition.y), this.touchLookSensitivity);
@@ -137,6 +137,6 @@ FlyCamera.prototype.onTouchMove = function(event) {
     this.lastTouchPosition.set(touch.x, touch.y);
 };
 
-FlyCamera.prototype.onTouchCancel = function(event) {
+FlyCamera.prototype.onTouchCancel = function (event) {
     this.lmbDown = false;
 };

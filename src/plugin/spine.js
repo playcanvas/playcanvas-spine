@@ -4,7 +4,7 @@ pc.extend(pc, function () {
         NULL: 0,
         MESH: 1,
         REGION: 2
-    }
+    };
 
     var TO_TEXTURE_FILTER = {
         9728: pc.FILTER_NEAREST,
@@ -166,8 +166,12 @@ pc.extend(pc, function () {
         this.initAttachment(slot);
     };
 
-    var _remapUV = function (e, i) { return (i % 2) ? 1 - e : e; };
-    var _genNormals = function (e, i) { return (i % 3) == 1 ? 1 : 0; };
+    var _remapUV = function (e, i) {
+        return (i % 2) ? 1 - e : e;
+    };
+    var _genNormals = function (e, i) {
+        return (i % 3) == 1 ? 1 : 0;
+    };
 
     Spine.prototype.initAttachment = function (slot) {
         var attachment = slot.attachment;
@@ -284,8 +288,7 @@ pc.extend(pc, function () {
                 acc.curr.idx += slot.options.indices.length;
                 acc.curr.uv += slot.options.uvs.length;
                 acc.curr.col += slot.options.colors.length;
-            }
-            else {
+            } else {
                 acc.batches.push({
                     mat: acc.curr.mat,
                     pos: acc.curr.pos,
@@ -318,7 +321,7 @@ pc.extend(pc, function () {
         if (slot.attachment) {
             if (!acc.curr.mat)
                 acc.curr.mat = slot.material;
-            
+
             if (slot.material !== acc.curr.mat) {
                 acc.meshes.push(pc.createMesh(acc.gd, acc.positions[acc.batchIdx], acc.options[acc.batchIdx]));
                 acc.batchIdx++;
@@ -341,7 +344,7 @@ pc.extend(pc, function () {
             acc.curr.col += _copyArray(slot.options.colors, acc.options[acc.batchIdx].colors, acc.curr.col, 0);
         }
         return acc;
-    }
+    };
 
     Spine.prototype.createMeshes = function () {
         var drawOrder = this.skeleton.drawOrder;
@@ -372,7 +375,7 @@ pc.extend(pc, function () {
         var meshComp = drawOrder.reduce(_populateMeshComponents, {
             meshes: this._meshes, gd: this._app.graphicsDevice, batchIdx: 0,
             curr: { pos: 0, norm: 0, idx: 0, uv: 0, col: 0 },
-            positions: positions, options: options 
+            positions: positions, options: options
         });
         this._meshes.push(pc.createMesh(meshComp.gd, positions[meshComp.batchIdx], options[meshComp.batchIdx]));
 
@@ -427,7 +430,7 @@ pc.extend(pc, function () {
             g = Math.round(255 * slot.color.g * (tint ? tint.g : 1)),
             b = Math.round(255 * slot.color.b * (tint ? tint.b : 1)),
             a = Math.round(255 * slot.color.a * (tint ? tint.a : 1));
-        
+
         for (i = 0; i < n; i += 2, ii += 3, ic += 4) {
             slot.positions[ii + 0] = slot.vertices[i + 0];
             slot.positions[ii + 1] = slot.vertices[i + 1];
@@ -540,7 +543,7 @@ pc.extend(pc, function () {
             this._priority = value;
             this._reordered = true;
         }
-    })
+    });
 
     Object.defineProperty(Spine.prototype, "layers", {
         get: function () {

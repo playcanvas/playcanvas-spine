@@ -1,4 +1,4 @@
-pc.extend(pc, function() {
+pc.extend(pc, function () {
     var SpineComponentData = function () {
         // serialized
         this.enabled = true;

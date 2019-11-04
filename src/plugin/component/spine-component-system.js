@@ -1,5 +1,5 @@
 pc.extend(pc, function () {
-    var SpineComponentSystem = function SpineComponentSystem (app) {
+    var SpineComponentSystem = function SpineComponentSystem(app) {
         this.id = 'spine';
 
         this.ComponentType = pc.SpineComponent;
@@ -55,7 +55,7 @@ pc.extend(pc, function () {
             }
         },
 
-        onRemove: function(entity, data) {
+        onRemove: function (entity, data) {
 
         }
     });
