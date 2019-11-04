@@ -32,7 +32,7 @@
 
     if (pc.Application.registerPlugin) {
         var register = function (app) {
-            var spine = new pc.SpineComponentSystem(app);
+            new pc.SpineComponentSystem(app);
         };
         pc.Application.registerPlugin("spine", register);
     } else {

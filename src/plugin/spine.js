@@ -9,7 +9,6 @@ pc.extend(pc, function () {
     var TO_TEXTURE_FILTER = {
         9728: pc.FILTER_NEAREST,
         9729: pc.FILTER_LINEAR,
-        9987: pc.FILTER_LINEAR_MIPMAP_LINEAR,
         9984: pc.FILTER_NEAREST_MIPMAP_NEAREST,
         9985: pc.FILTER_LINEAR_MIPMAP_NEAREST,
         9986: pc.FILTER_NEAREST_MIPMAP_LINEAR,
@@ -54,19 +53,20 @@ pc.extend(pc, function () {
     };
 
     /**
-    * @class
-    * @name pc.Spine
-    * @description A Spine animation object.
-    * Contains the skeleton and animation states as detailed in the Spine Runtime documentation
-    * @param {String} atlasData Text data loaded from the atlas file
-    * @param {Object} skeletonData JSON data loaded from the skeleton file
-    * @param {Object} textureData Texture initialization data. An object where the key is the texture filename and the value is the pc.Texture resource
-    * @property skeleton The Skeleton object
-    * @property {AnimationState} state The first AnimationState object. There is always one AnimationState
-    * @property {AnimationState[]} states A list of all AnimationState objects.
-    * @property {Number} priority An integer value which determines when the animation is rendered relative to other Spine animations. Lower numbers are rendered first.
-    * @property {Boolean} autoUpdate Determines whether the Spine object calls skeleton.updateWorldTransform in the update loop. Default is true.
-    */
+     * @constructor
+     * @name pc.Spine
+     * @classdesc  A Spine animation object.
+     * @description Contains the skeleton and animation states as detailed in the Spine Runtime documentation.
+     * @param {pc.Application} app The application that will manage this Spine object.
+     * @param {String} atlasData Text data loaded from the atlas file.
+     * @param {Object} skeletonData JSON data loaded from the skeleton file.
+     * @param {Object} textureData Texture initialization data. An object where the key is the texture filename and the value is the pc.Texture resource.
+     * @property {spine.Skeleton} skeleton The Skeleton object.
+     * @property {spine.AnimationState} state The first AnimationState object. There is always one AnimationState.
+     * @property {spine.AnimationState[]} states A list of all AnimationState objects.
+     * @property {Number} priority An integer value which determines when the animation is rendered relative to other Spine animations. Lower numbers are rendered first.
+     * @property {Boolean} autoUpdate Determines whether the Spine object calls skeleton.updateWorldTransform in the update loop. Default is true.
+     */
     var Spine = function (app, atlasData, skeletonData, textureData) {
         this._app = app;
 
@@ -452,19 +452,23 @@ pc.extend(pc, function () {
     };
 
     Spine.prototype.update = function (dt) {
+        var i, n;
+
         if (this._hidden)
             return;
 
-        for (var i = 0, n = this.states.length; i < n; i++) {
+        for (i = 0, n = this.states.length; i < n; i++) {
             this.states[i].update(dt);
         }
-        for (var i = 0, n = this.states.length; i < n; i++) {
+        for (i = 0, n = this.states.length; i < n; i++) {
             this.states[i].apply(this.skeleton);
         }
-        if (this.autoUpdate)
+        if (this.autoUpdate) {
             this.skeleton.updateWorldTransform();
+        }
 
-        var i, drawOrder = this.skeleton.drawOrder, n = drawOrder.length;
+        var drawOrder = this.skeleton.drawOrder;
+        n = drawOrder.length;
         var batchIdx = 0, mat = n ? drawOrder[0].material : "";
         this._offset[batchIdx] = 0;
         var slot;
