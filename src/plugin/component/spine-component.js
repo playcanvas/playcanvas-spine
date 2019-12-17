@@ -1,5 +1,7 @@
 pc.extend(pc, function () {
-    var SpineComponent = function SpineComponent(system, entity)   {
+    var SpineComponent = function SpineComponent(system, entity) {
+        pc.Component.call(this, system, entity);
+
         this.on("set_atlasAsset", this.onSetAsset, this);
         this.on("set_textureAssets", this.onSetAssets, this);
         this.on("set_skeletonAsset", this.onSetAsset, this);
@@ -8,9 +10,10 @@ pc.extend(pc, function () {
         this.on("set_textures", this.onSetResource, this);
         this.on("set_skeletonData", this.onSetResource, this);
     };
-    SpineComponent = pc.inherits(SpineComponent, pc.Component);
+    SpineComponent.prototype = Object.create(pc.Component.prototype);
+    SpineComponent.prototype.constructor = SpineComponent;
 
-    pc.extend(SpineComponent.prototype, {
+    Object.assign(SpineComponent.prototype, {
         _createSpine: function () {
             if (this.data.spine) {
                 this.data.spine.destroy();
@@ -134,7 +137,7 @@ pc.extend(pc, function () {
         },
 
         onEnable: function () {
-            SpineComponent._super.onEnable.call(this);
+            pc.Component.prototype.onEnable.call(this);
 
             var spine = this.data.spine;
             if (spine) {
@@ -143,7 +146,7 @@ pc.extend(pc, function () {
         },
 
         onDisable: function () {
-            SpineComponent._super.onDisable.call(this);
+            pc.Component.prototype.onDisable.call(this);
 
             var spine = this.data.spine;
             if (spine) {
@@ -160,6 +163,34 @@ pc.extend(pc, function () {
         show: function () {
             if (this.data.spine) {
                 this.data.spine.show();
+            }
+        },
+
+        removeComponent: function() {
+            if (this.atlasAsset) {
+                var asset = this.system.app.assets.get(this.atlasAsset);
+                if (asset) {
+                    asset.off("change", this.onAssetChanged);
+                    asset.off("remove", this.onAssetRemoved);
+                }
+            }
+
+            if (this.skeletonAsset) {
+                var asset = this.system.app.assets.get(this.skeletonAsset);
+                if (asset) {
+                    asset.off("change", this.onAssetChanged);
+                    asset.off("remove", this.onAssetRemoved);
+                }
+            }
+
+            if (this.textureAssets && this.textureAssets.length) {
+                for(var i = 0; i < this.textureAssets.length; i++) {
+                    var asset = this.system.app.assets.get(this.textureAssets[i]);
+                    if (asset) {
+                        asset.off("change", this.onAssetChanged);
+                        asset.off("remove", this.onAssetRemoved);
+                    }
+                }
             }
         }
     });

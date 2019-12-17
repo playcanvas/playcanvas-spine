@@ -113,6 +113,8 @@ pc.extend(pc, function () {
             this.removeFromLayers();
         }
 
+        this.destroyMeshes();
+
         this._model = null;
         this._meshInstances = [];
         this.skeleton = null;
@@ -120,6 +122,24 @@ pc.extend(pc, function () {
         this.state = null;
         this._materials = {};
         this._node = null;
+    };
+
+    Spine.prototype.destroyMeshes = function() {
+        for (var i = 0, len = this._meshInstances.length; i < len; i++) {
+            var mesh = this._meshInstances[i].mesh;
+            if (mesh) {
+                if (mesh.vertexBuffer) {
+                    mesh.vertexBuffer.destroy();
+                    mesh.vertexBuffer = null;
+                }
+                for (var j = 0; j < mesh.indexBuffer.length; j++) {
+                    if (mesh.indexBuffer[j])
+                        mesh.indexBuffer[j].destroy();
+                }
+                mesh.indexBuffer.length = 0;
+            }
+            this._meshInstances[i].material = null;
+        }
     };
 
     Spine.prototype.hide = function () {
@@ -257,21 +277,7 @@ pc.extend(pc, function () {
     Spine.prototype.rebuildMeshes = function () {
         this.removeFromLayers();
         this._meshes = [];
-        for (var i = 0, len = this._meshInstances.length; i < len; i++) {
-            var mesh = this._meshInstances[i].mesh;
-            if (mesh) {
-                if (mesh.vertexBuffer) {
-                    mesh.vertexBuffer.destroy();
-                    mesh.vertexBuffer = null;
-                }
-                for (var j = 0; j < mesh.indexBuffer.length; j++) {
-                    if (mesh.indexBuffer[j])
-                        mesh.indexBuffer[j].destroy();
-                }
-                mesh.indexBuffer.length = 0;
-            }
-            this._meshInstances[i].material = null;
-        }
+        this.destroyMeshes();
         this._meshInstances.length = 0;
         this.createMeshes();
         this.addToLayers();

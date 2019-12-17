@@ -13,7 +13,6 @@ pc.extend(pc, function () {
         this.textures = [];
         this.skeletonData = null;
     };
-    SpineComponentData = pc.inherits(SpineComponentData, pc.ComponentData);
 
     return {
         SpineComponentData: SpineComponentData

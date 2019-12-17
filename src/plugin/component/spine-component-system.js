@@ -1,5 +1,7 @@
 pc.extend(pc, function () {
     var SpineComponentSystem = function SpineComponentSystem(app) {
+        pc.ComponentSystem.call(this, app);
+
         this.id = 'spine';
 
         this.ComponentType = pc.SpineComponent;
@@ -17,18 +19,15 @@ pc.extend(pc, function () {
             'spine'
         ];
 
-        this.on('remove', this.onRemove, this);
-        // this.on('update', this.onUpdate, this);
-
         pc.ComponentSystem.bind('update', this.onUpdate, this);
-
     };
-    SpineComponentSystem = pc.inherits(SpineComponentSystem, pc.ComponentSystem);
+    SpineComponentSystem.prototype = Object.create(pc.ComponentSystem.prototype);
+    SpineComponentSystem.prototype.constructor = SpineComponentSystem;
 
-    pc.extend(SpineComponentSystem.prototype, {
+    Object.assign(SpineComponentSystem.prototype, {
         initializeComponentData: function (component, data, properties) {
             properties = ['enabled', 'atlasAsset', 'textureAssets', 'skeletonAsset', 'atlasData', 'textures', 'skeletonData', 'spine'];
-            SpineComponentSystem._super.initializeComponentData.call(this, component, data, properties);
+            pc.ComponentSystem.prototype.initializeComponentData.call(this.system, component, data, properties);
         },
 
         removeComponent: function (entity) {
@@ -36,6 +35,8 @@ pc.extend(pc, function () {
             if (data.spine) {
                 data.spine.destroy();
             }
+
+            entity.spine.removeComponent();
         },
 
         onUpdate: function (dt) {
@@ -53,10 +54,6 @@ pc.extend(pc, function () {
                     }
                 }
             }
-        },
-
-        onRemove: function (entity, data) {
-
         }
     });
 
