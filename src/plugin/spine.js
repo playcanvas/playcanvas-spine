@@ -124,7 +124,7 @@ pc.extend(pc, function () {
         this._node = null;
     };
 
-    Spine.prototype.destroyMeshes = function() {
+    Spine.prototype.destroyMeshes = function () {
         for (var i = 0, len = this._meshInstances.length; i < len; i++) {
             var mesh = this._meshInstances[i].mesh;
             if (mesh) {

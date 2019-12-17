@@ -166,9 +166,11 @@ pc.extend(pc, function () {
             }
         },
 
-        removeComponent: function() {
+        removeComponent: function () {
+            var asset;
+
             if (this.atlasAsset) {
-                var asset = this.system.app.assets.get(this.atlasAsset);
+                asset = this.system.app.assets.get(this.atlasAsset);
                 if (asset) {
                     asset.off("change", this.onAssetChanged);
                     asset.off("remove", this.onAssetRemoved);
@@ -176,7 +178,7 @@ pc.extend(pc, function () {
             }
 
             if (this.skeletonAsset) {
-                var asset = this.system.app.assets.get(this.skeletonAsset);
+                asset = this.system.app.assets.get(this.skeletonAsset);
                 if (asset) {
                     asset.off("change", this.onAssetChanged);
                     asset.off("remove", this.onAssetRemoved);
@@ -184,8 +186,8 @@ pc.extend(pc, function () {
             }
 
             if (this.textureAssets && this.textureAssets.length) {
-                for(var i = 0; i < this.textureAssets.length; i++) {
-                    var asset = this.system.app.assets.get(this.textureAssets[i]);
+                for (var i = 0; i < this.textureAssets.length; i++) {
+                    asset = this.system.app.assets.get(this.textureAssets[i]);
                     if (asset) {
                         asset.off("change", this.onAssetChanged);
                         asset.off("remove", this.onAssetRemoved);
