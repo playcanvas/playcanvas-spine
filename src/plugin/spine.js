@@ -25,7 +25,7 @@ pc.extend(pc, function () {
      * @class
      * @name SpineTextureWrapper
      * @description Implement Spine's interface for textures
-     * @param {pc.Texture} texture A PlayCanvas Texture
+     * @param {pc.Texture} texture - A PlayCanvas Texture
      */
     var SpineTextureWrapper = function (texture) {
         this._image = {
@@ -52,20 +52,27 @@ pc.extend(pc, function () {
         }
     };
 
+
     /**
-     * @constructor
+     * @name spine
+     * @namespace
+     * @description The Spine API.
+     */
+
+    /**
+     * @class
      * @name pc.Spine
      * @classdesc  A Spine animation object.
      * @description Contains the skeleton and animation states as detailed in the Spine Runtime documentation.
-     * @param {pc.Application} app The application that will manage this Spine object.
-     * @param {String} atlasData Text data loaded from the atlas file.
-     * @param {Object} skeletonData JSON data loaded from the skeleton file.
-     * @param {Object} textureData Texture initialization data. An object where the key is the texture filename and the value is the pc.Texture resource.
+     * @param {pc.Application} app - The application that will manage this Spine object.
+     * @param {string} atlasData - Text data loaded from the atlas file.
+     * @param {object} skeletonData - JSON data loaded from the skeleton file.
+     * @param {object} textureData - Texture initialization data. An object where the key is the texture filename and the value is the pc.Texture resource.
      * @property {spine.Skeleton} skeleton The Skeleton object.
      * @property {spine.AnimationState} state The first AnimationState object. There is always one AnimationState.
      * @property {spine.AnimationState[]} states A list of all AnimationState objects.
-     * @property {Number} priority An integer value which determines when the animation is rendered relative to other Spine animations. Lower numbers are rendered first.
-     * @property {Boolean} autoUpdate Determines whether the Spine object calls skeleton.updateWorldTransform in the update loop. Default is true.
+     * @property {number} priority An integer value which determines when the animation is rendered relative to other Spine animations. Lower numbers are rendered first.
+     * @property {boolean} autoUpdate Determines whether the Spine object calls skeleton.updateWorldTransform in the update loop. Default is true.
      */
     var Spine = function (app, atlasData, skeletonData, textureData) {
         this._app = app;
