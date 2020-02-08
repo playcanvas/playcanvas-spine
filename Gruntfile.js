@@ -1,5 +1,5 @@
 module.exports = function (grunt) {
-    var sourceFiles = [
+    const sourceFiles = [
         'contrib/spine-ts/build/spine-core.js',
         'src/plugin/spine.js',
         'src/plugin/component/spine-component-system.js',
@@ -7,8 +7,19 @@ module.exports = function (grunt) {
         'src/plugin/component/spine-component-data.js',
         'src/plugin/plugin.js',
     ];
+    const banner = '/* Copyright 2015-2020 PlayCanvas Ltd */\n';
 
     grunt.initConfig({
+        concat: {
+            js: {
+                options: {
+                    banner: banner,
+                    separator: '\n'
+                },
+                src: sourceFiles,
+                dest: 'lib/playcanvas-spine.js'
+            }
+        },
         uglify: {
             build: {
                 files: {
@@ -16,12 +27,13 @@ module.exports = function (grunt) {
                 }
             },
             options: {
-                banner: "/* Copyright 2015-2019 PlayCanvas Ltd */\n"
+                banner: banner
             }
         }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
-    grunt.registerTask("default", ['uglify'])
+    grunt.registerTask("default", ['concat', 'uglify'])
 };
