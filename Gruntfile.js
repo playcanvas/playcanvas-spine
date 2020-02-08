@@ -1,6 +1,6 @@
 module.exports = function (grunt) {
     const sourceFiles = [
-        'contrib/spine-ts/build/spine-core.js',
+        'contrib/spine-ts/build/3.6/spine-core.js',
         'src/plugin/spine.js',
         'src/plugin/component/spine-component-system.js',
         'src/plugin/component/spine-component.js',
@@ -17,13 +17,13 @@ module.exports = function (grunt) {
                     separator: '\n'
                 },
                 src: sourceFiles,
-                dest: 'lib/playcanvas-spine.js'
+                dest: 'lib/playcanvas-spine.3.6.js'
             }
         },
         uglify: {
             build: {
                 files: {
-                    'lib/playcanvas-spine.min.js': sourceFiles
+                    'lib/playcanvas-spine.3.6.min.js': sourceFiles
                 }
             },
             options: {
