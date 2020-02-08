@@ -1,33 +1,57 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <script src="https://code.playcanvas.com/playcanvas-stable.js"></script>
+<head>
+    <title>PlayCanvas Spine - Goblins</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="https://code.playcanvas.com/playcanvas-stable.js"></script>
+    <style>
+        body { 
+            margin: 0;
+            overflow-y: hidden;
+        }
+    </style>
+</head>
 
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-                background-color: white;
-            }
-
-            canvas {
-                width: 512px;
-                height: 512px;
-            }
-        </style>
-    </head>
-
-    <body>
+<body>
+    <!-- The canvas element -->
     <canvas id="application-canvas"></canvas>
+
+    <!-- The script -->
     <script>
+        var canvas = document.getElementById("application-canvas");
+
+        // Create the application and start the update loop
+        var app = new pc.Application(canvas, {
+            mouse: new pc.Mouse(canvas),
+            keyboard: new pc.Keyboard(window)
+        });
+        app.start();
+
+        // Set the canvas to fill the window and automatically change resolution to be the same as the canvas size
+        app.setCanvasFillMode(pc.FILLMODE_FILL_WINDOW);
+        app.setCanvasResolution(pc.RESOLUTION_AUTO);
+
+        window.addEventListener("resize", function () {
+            app.resizeCanvas(canvas.width, canvas.height);
+        });
+
+        var assets = [
+            new pc.Asset("playcanvas-spine.3.6.js", "script", { url: "../lib/playcanvas-spine.3.6.js" }),
+            new pc.Asset("spine.js", "script", { url: "assets/scripts/spine.js" }),
+            new pc.Asset("goblins-pma.atlas", "text", { url: "data/goblins-pma.atlas" }),
+            new pc.Asset("goblins-pro.json", "json", { url: "data/goblins-pro.json" }),
+            new pc.Asset("goblins-pma.png", "texture", { url: "data/goblins-pma.png" })
+        ];
+
         var preload = function (assets, callback) {
             var count = 0;
-            var l = assets.length;
 
-            for (var i = 0; i < l; i++) {
+            for (var i = 0; i < assets.length; i++) {
                 app.assets.add(assets[i]);
                 assets[i].ready(function (asset) {
                     count++;
-                    if (count === l) {
+                    if (count === assets.length) {
                         callback();
                     }
                 });
@@ -35,146 +59,62 @@
             }
         };
 
-        var loadScripts = function (scripts, callback) {
-            var count = 0;
-            var l = scripts.length;
-            for (var i = 0; i < l; i++) {
-                app.loader.load(scripts[i], "script", function (err, s) {
-                    count++
-                    if (count === l) {
-                        callback();
-                    }
-                });
-            }
-        };
+        preload(assets, function () {
+            var character = new pc.Entity();
+            app.root.addChild(character);
 
-        var start = function () {
-            // remove asset.id === 0;
-            new pc.Asset();
-
-            var urls = {
-                atlas: "data/goblins-pma.atlas",
-                texture: "data/goblins-pma.png",
-                skeleton: "data/goblins-pro.json"
-            };
-
-            var assets = [
-                new pc.Asset("Atlas", "text", { url: urls.atlas }),
-                new pc.Asset("Texture", "texture", { url: urls.texture }),
-                new pc.Asset("Skeleton", "json", { url: urls.skeleton})
-            ];
-
-            preload(assets, function () {
-                var camera = new pc.Entity();
-                camera.addComponent("camera", {
-                    farClip: 10000,
-                });
-                camera.addComponent("script", {
-                    scripts: {
-                        flyCamera: {
-                            enabled: true,
-                            attributes: {
-                                "speed": 10,
-                                "fastSpeed": 100,
-                                "mode": 0
-                            }
-                        }
-                    },
-                    order: ["flyCamera"]
-                });
-                camera.translateLocal(0, 2, 10);
-                app.root.addChild(camera);
-
-                var light = new pc.Entity();
-                light.addComponent("light", {
-                    type: "directional",
-                    intensity: 1
-                });
-                app.root.addChild(light);
-                light.translate(0, 0.5, 1);
-
-                var character = new pc.Entity();
-                app.root.addChild(character);
-
-                character.addComponent("script", {
-                    scripts: {
-                        "spine": {
-                            enabled: true,
-                            attributes: {
-                                "textures": [assets[1].id],
-                                "atlas": assets[0].id,
-                                "skeleton": assets[2].id
-                            }
-                        }
-                    },
-                    order: ["spine"]
-                });
-
-                // character.spine.spine.priority = 0.1;
-                character.spine.skeleton.setSkinByName("goblingirl");
-                character.spine.skeleton.setSlotsToSetupPose();
-                character.spine.state.setAnimation(0, "walk", true);
-
-                var character2 = new pc.Entity();
-                app.root.addChild(character2);
-                character2.addComponent("script", {
-                    scripts: {
-                        "spine": {
-                            enabled: true,
-                            attributes: {
-                                "textures": [assets[1].id],
-                                "atlas": assets[0].id,
-                                "skeleton": assets[2].id
-                            }
-                        }
-                    },
-                    order: ["spine"]
-                });
-                character2.translate(2.5, 0, -1);
-                // character2.spine.spine.priority = 1;
-                character2.spine.skeleton.setSkinByName("goblin");
-                character2.spine.skeleton.setSlotsToSetupPose();
-                character2.spine.state.setAnimation(0, "walk", true);
-                character2.spine.speed = 0.4;
-                app.on("update", function (dt) {
-                    if (app.keyboard.wasPressed(pc.KEY_SPACE)) {
-                        character.spine.skeleton.setSkinByName("goblin");
-                        character.spine.skeleton.setSlotsToSetupPose();
-
-                        character2.spine.skeleton.setSkinByName("goblingirl");
-                        character2.spine.skeleton.setSlotsToSetupPose();
-                    }
-                    if (app.keyboard.wasPressed(pc.KEY_R)) {
-                        character.spine.skeleton.setSkinByName("goblingirl");
-                        character.spine.skeleton.setSlotsToSetupPose();
-
-                        character2.spine.skeleton.setSkinByName("goblin");
-                        character2.spine.skeleton.setSlotsToSetupPose();
-                    }
-                });
+            character.addComponent("script");
+            character.script.create("spine", {
+                attributes: {
+                    "atlas": assets[2].id,
+                    "skeleton": assets[3].id,
+                    "textures": [ assets[4].id ]
+                }
             });
-        };
+            character.translate(-1.5, 0, 0);
+            character.spine.skeleton.setSkinByName("goblingirl");
+            character.spine.skeleton.setSlotsToSetupPose();
+            character.spine.state.setAnimation(0, "walk", true);
 
-        var canvas = document.getElementById("application-canvas");
-        canvas.width = 512;
-        canvas.height = 512;
-        var app = new pc.Application(canvas, {
-            mouse: new pc.Mouse(canvas),
-            keyboard: new pc.Keyboard(window),
-            graphicsDeviceOptions: {
-                alpha: false
-            }
+            var character2 = new pc.Entity();
+            app.root.addChild(character2);
+            character2.addComponent("script");
+            character2.script.create("spine", {
+                attributes: {
+                    "atlas": assets[2].id,
+                    "skeleton": assets[3].id,
+                    "textures": [ assets[4].id ]
+                }
+            });
+            character2.translate(1.5, 0, -1);
+            character2.spine.skeleton.setSkinByName("goblin");
+            character2.spine.skeleton.setSlotsToSetupPose();
+            character2.spine.state.setAnimation(0, "walk", true);
+            character2.spine.speed = 0.4;
+
+            app.on("update", function (dt) {
+                if (app.keyboard.wasPressed(pc.KEY_SPACE)) {
+                    character.spine.skeleton.setSkinByName("goblin");
+                    character.spine.skeleton.setSlotsToSetupPose();
+
+                    character2.spine.skeleton.setSkinByName("goblingirl");
+                    character2.spine.skeleton.setSlotsToSetupPose();
+                }
+                if (app.keyboard.wasPressed(pc.KEY_R)) {
+                    character.spine.skeleton.setSkinByName("goblingirl");
+                    character.spine.skeleton.setSlotsToSetupPose();
+
+                    character2.spine.skeleton.setSkinByName("goblin");
+                    character2.spine.skeleton.setSlotsToSetupPose();
+                }
+            });
+
+            // Create a camera to render the scene
+            var camera = new pc.Entity();
+            camera.addComponent("camera");
+            camera.translateLocal(0, 2, 8);
+            app.root.addChild(camera);
         });
-
-        app.systems.script.preloading = true;
-        var scripts = ["../src/script/spine.js", "../src/script/fly-camera.js"];
-        loadScripts(scripts, function () {
-            app.systems.script.preloading = false;
-            start();
-            app.start();
-        });
-
     </script>
-    <script src="../lib/playcanvas-spine.min.js"></script>
-    </body>
+</body>
 </html>
