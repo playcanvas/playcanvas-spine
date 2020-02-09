@@ -8,7 +8,7 @@ A [Spine](http://esotericsoftware.com/) plugin for the PlayCanvas Engine.
 
 ### Editor
 
-Add the files `lib/playcanvas-spine.min.js` and `src/script/spline.js` to your project. 
+Add the files `lib/playcanvas-spine.3.6.min.js` and `examples/assets/script/spine.js` to your project. 
 
 Create an Entity with a Script Component and add the spine entity script `spine` to your Entity. Upload your exported spine resources (atlas, skeleton json file, textures) and attach them to the spine script on your Entity.
 
@@ -27,17 +27,13 @@ entity.addComponent("spine", {
 
 ## Building
 
-If you don't already have it installed, install Grunt.
-
-`npm -g install grunt`
-
-Install package dependencies
+Install package dependencies:
 
 `npm install`
 
-Run grunt to build
+To build:
 
-`grunt`
+`npm run build`
 
 ## Notes
 
