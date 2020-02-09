@@ -79,14 +79,24 @@
                 } else if (keyboard.isPressed(pc.KEY_RIGHT)) {
                     character.translate(10 * dt, 0, 0);
                     if (this.state !== "runleft") {
-                        spine.spine.skeleton.flipX = false;
+                        // Spine 3.6 has flipX, 3.8 has scaleX
+                        if (spine.spine.skeleton.hasOwnProperty('flipX')) {
+                            spine.spine.skeleton.flipX = false;
+                        } else {
+                            spine.spine.skeleton.scaleX = 1;
+                        }
                         spine.state.setAnimation(0, "run", true);
                         this.state = "runleft";
                     }
                 } else if (keyboard.isPressed(pc.KEY_LEFT)) {
                     character.translate(-10 * dt, 0, 0);
                     if (this.state !== "runright") {
-                        spine.spine.skeleton.flipX = true;
+                        // Spine 3.6 has flipX, 3.8 has scaleX
+                        if (spine.spine.skeleton.hasOwnProperty('flipX')) {
+                            spine.spine.skeleton.flipX = true;
+                        } else {
+                            spine.spine.skeleton.scaleX = -1;
+                        }
                         spine.state.setAnimation(0, "run", true);
                         this.state = "runright";
                     }
