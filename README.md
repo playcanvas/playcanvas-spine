@@ -14,7 +14,7 @@ Create an Entity with a Script Component and add the spine entity script `spine`
 
 ### Engine-only
 
-Include the library script `lib/playcanvas-spine.min.js`. Either use the script `src/script/spine.js` in script components or directly add spine components to your Entities.
+Load the library script `lib/playcanvas-spine.3.6.min.js`. Either use the script `examples/assets/script/spine.js` in script components or directly add spine components to your Entities as follows:
 
 ```javascript
 var entity = new pc.Entity();
