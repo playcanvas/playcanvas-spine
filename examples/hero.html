@@ -108,28 +108,27 @@
             }
 
             // Create the hero character
-            var character = new pc.Entity();
-            character.addComponent("spine", {
+            var hero = new pc.Entity();
+            hero.addComponent("spine", {
                 atlasAsset: assets[1].id,
                 skeletonAsset: assets[2].id,
                 textureAssets: [ assets[3].id ]
             });
-            character.addComponent("script");
-            character.script.create("heroControls");
-            app.root.addChild(character);
+            hero.addComponent("script");
+            hero.script.create("heroControls");
+            app.root.addChild(hero);
 
-            var spine = character.spine;
-            spine.state.defaultMix = 0.2;
-            spine.state.data.setMix("idle", "run", 0.2);
-            spine.state.data.setMix("run", "idle", 0.2);
-            spine.state.data.setMix("attack", "run", 0.5);
-            spine.state.data.setMix("attack", "idle", 0.4);
+            hero.spine.state.defaultMix = 0.2;
+            hero.spine.state.data.setMix("idle", "run", 0.2);
+            hero.spine.state.data.setMix("run", "idle", 0.2);
+            hero.spine.state.data.setMix("attack", "run", 0.5);
+            hero.spine.state.data.setMix("attack", "idle", 0.4);
 
-            spine.spine.skeleton.setSkinByName("default");
-            spine.spine.skeleton.setSlotsToSetupPose();
-            spine.state.setAnimation(0, "idle", true);
+            hero.spine.spine.skeleton.setSkinByName("default");
+            hero.spine.spine.skeleton.setSlotsToSetupPose();
+            hero.spine.state.setAnimation(0, "idle", true);
 
-            spine.states[1] = new spine.AnimationState(character.spine.spine.stateData);
+            hero.spine.states[1] = new spine.AnimationState(hero.spine.spine.stateData);
 
             // Create a camera to render the scene
             var camera = new pc.Entity();
