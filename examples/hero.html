@@ -38,7 +38,6 @@
 
         var assets = [
             new pc.Asset("playcanvas-spine.3.6.js", "script", { url: "../lib/playcanvas-spine.3.6.js" }),
-            new pc.Asset("spine.js", "script", { url: "assets/scripts/spine.js" }),
             new pc.Asset("hero-mesh.atlas", "text", { url: "data/hero-mesh.atlas" }),
             new pc.Asset("hero-mesh.json", "json", { url: "data/hero-mesh.json" }),
             new pc.Asset("hero-mesh.png", "texture", { url: "data/hero-mesh.png" })
@@ -110,28 +109,27 @@
 
             // Create the hero character
             var character = new pc.Entity();
-            character.addComponent("script");
-            character.script.create("spine", {
-                attributes: {
-                    "atlas": assets[2].id,
-                    "skeleton": assets[3].id,
-                    "textures": [ assets[4].id ]
-                }
+            character.addComponent("spine", {
+                atlasAsset: assets[1].id,
+                skeletonAsset: assets[2].id,
+                textureAssets: [ assets[3].id ]
             });
+            character.addComponent("script");
             character.script.create("heroControls");
             app.root.addChild(character);
 
-            character.spine.state.defaultMix = 0.2;
-            character.spine.state.data.setMix("idle", "run", 0.2);
-            character.spine.state.data.setMix("run", "idle", 0.2);
-            character.spine.state.data.setMix("attack", "run", 0.5);
-            character.spine.state.data.setMix("attack", "idle", 0.4);
+            var spine = character.spine;
+            spine.state.defaultMix = 0.2;
+            spine.state.data.setMix("idle", "run", 0.2);
+            spine.state.data.setMix("run", "idle", 0.2);
+            spine.state.data.setMix("attack", "run", 0.5);
+            spine.state.data.setMix("attack", "idle", 0.4);
 
-            character.spine.spine.skeleton.setSkinByName("default");
-            character.spine.spine.skeleton.setSlotsToSetupPose();
-            character.spine.state.setAnimation(0, "idle", true);
+            spine.spine.skeleton.setSkinByName("default");
+            spine.spine.skeleton.setSlotsToSetupPose();
+            spine.state.setAnimation(0, "idle", true);
 
-            character.spine.states[1] = new spine.AnimationState(character.spine.spine.stateData);
+            spine.states[1] = new spine.AnimationState(character.spine.spine.stateData);
 
             // Create a camera to render the scene
             var camera = new pc.Entity();
