@@ -134,6 +134,9 @@ pc.extend(pc, function () {
         json.scale *= 0.01;
         var _skeletonData = json.readSkeletonData(skeletonData);
         this.skeletonVersion = _skeletonData.version;
+        this._spine_3_6_0 = versionCompare(this.skeletonVersion, "3.6.0") <= 0;
+        this._spine_3_7_99 = versionCompare(this.skeletonVersion, "3.7.99") <= 0;
+
         this.skeleton = new spine.Skeleton(_skeletonData);
         this.skeleton.updateWorldTransform();
 
@@ -272,7 +275,7 @@ pc.extend(pc, function () {
         material.cull = pc.CULLFACE_NONE;
         material.blendType = pc.BLEND_PREMULTIPLIED;
 
-        if (versionCompare(this.skeletonVersion, "3.6.0") <= 0) {
+        if (this._spine_3_6_0) {
             // override premultiplied chunk because images are already premultiplied however the opacity is not premultiplied by slot alpha
             var alphaPremul = [
                 'gl_FragColor.rgb *= vVertexColor.a;',
@@ -408,9 +411,11 @@ pc.extend(pc, function () {
         for (var i = 0; i < count; i++) {
             var slot = drawOrder[i];
 
-            if (!slot.bone.active) {
-                clipper.clipEndWithSlot(slot);
-                continue;
+            if (!this._spine_3_7_99) {
+                if (!slot.bone.active) {
+                    clipper.clipEndWithSlot(slot);
+                    continue;
+                }
             }
 
             if (slotRangeStart >= 0 && slotRangeStart == slot.data.index) {
@@ -431,7 +436,8 @@ pc.extend(pc, function () {
                 clipper.clipStart(slot, attachment);
                 continue;
             } else if ( !(attachment instanceof spine.RegionAttachment) && !(attachment instanceof spine.MeshAttachment) ){
-                clipper.clipEndWithSlot(slot);
+                if (!this._spine_3_7_99)
+                    clipper.clipEndWithSlot(slot);
                 continue;
             }
 
