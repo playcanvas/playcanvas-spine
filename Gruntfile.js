@@ -4,7 +4,7 @@ module.exports = function (grunt) {
         'src/component/spine-component-system.js',
         'src/component/spine-component.js',
         'src/component/spine-component-data.js',
-        'src/mesh-plugin.js',
+        'src/spine-plugin.js'
     ];
     const src36 = [
         'contrib/spine-ts/build/3.6/spine-core.js',
