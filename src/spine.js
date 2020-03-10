@@ -31,11 +31,9 @@ pc.extend(pc, function () {
 
             if (v1parts[i] == v2parts[i]) {
                 continue;
-            }
-            else if (v1parts[i] > v2parts[i]) {
+            } else if (v1parts[i] > v2parts[i]) {
                 return 1;
-            }
-            else {
+            } else {
                 return -1;
             }
         }
@@ -285,7 +283,7 @@ pc.extend(pc, function () {
 
         material.update();
         return material;
-    }
+    };
 
     Spine.prototype.initAttachment = function (slot) {
         var attachment = slot.attachment;
@@ -347,14 +345,16 @@ pc.extend(pc, function () {
         // mesh vertex color
         var tint = this._tint[name];
         slot.vertexColor = {
-            r : Math.round(255 * slot.color.r * (tint ? tint.r : 1)),
-            g : Math.round(255 * slot.color.g * (tint ? tint.g : 1)),
-            b : Math.round(255 * slot.color.b * (tint ? tint.b : 1)),
-            a : Math.round(255 * slot.color.a * (tint ? tint.a : 1))
+            r: Math.round(255 * slot.color.r * (tint ? tint.r : 1)),
+            g: Math.round(255 * slot.color.g * (tint ? tint.g : 1)),
+            b: Math.round(255 * slot.color.b * (tint ? tint.b : 1)),
+            a: Math.round(255 * slot.color.a * (tint ? tint.a : 1))
         };
 
         // indices
         var srcTriangles = attachment.triangles || QUAD_TRIANGLES;
+
+        var i, count;
 
         if (clipper.isClipping()) {
             // clip triangles on CPU
@@ -365,8 +365,8 @@ pc.extend(pc, function () {
             slot.positions.length = 0;
             slot.uvs.length = 0;
             var vertexSize = twoColorTint ? 12 : 8;     // clipper output format
-            var count = clipper.clippedVertices.length;
-            for (var i = 0; i < count; i += vertexSize) {
+            count = clipper.clippedVertices.length;
+            for (i = 0; i < count; i += vertexSize) {
                 slot.positions.push(clipper.clippedVertices[i], clipper.clippedVertices[i + 1]);
                 slot.uvs.push(clipper.clippedVertices[i + 6], 1 - clipper.clippedVertices[i + 7]);
             }
@@ -376,8 +376,8 @@ pc.extend(pc, function () {
         } else {
             // copy vertex data (uvs only, position was filled in already)
             slot.uvs.length = 0;
-            var count = slot.positions.length;
-            for (var i = 0; i < count; i += 2) {
+            count = slot.positions.length;
+            for (i = 0; i < count; i += 2) {
                 slot.uvs.push(attachment.uvs[i], 1 - attachment.uvs[i + 1]);
             }
 
@@ -438,7 +438,7 @@ pc.extend(pc, function () {
             // update slot geometry
             this.updateSlot(slot, clipper);
         }
-    }
+    };
 
     Spine.prototype.render = function () {
 
@@ -453,10 +453,9 @@ pc.extend(pc, function () {
             this.skeleton.getBounds(this._aabbTempOffset, this._aabbTempSize, this._aabbTempArray);
             this._aabb.center = new pc.Vec3(this._aabbTempOffset.x, this._aabbTempOffset.y, 0);
             this._aabb.halfExtents = new pc.Vec3(0.5 * this._aabbTempSize.x, 0.5 * this._aabbTempSize.y, 0);
-    
+
             // make vertex buffer at least required size
-            if (!this._vertexBuffer || this._vertexBuffer.getNumVertices() < this._renderCounts.vertexCount)
-            {
+            if (!this._vertexBuffer || this._vertexBuffer.getNumVertices() < this._renderCounts.vertexCount) {
                 if (this._vertexBuffer)
                     this._vertexBuffer.destroy();
 
@@ -464,8 +463,7 @@ pc.extend(pc, function () {
             }
 
             // make index buffer at least required size
-            if (!this._indexBuffer || this._indexBuffer.getNumIndices() < this._renderCounts.indexCount)
-            {
+            if (!this._indexBuffer || this._indexBuffer.getNumIndices() < this._renderCounts.indexCount) {
                 if (this._indexBuffer)
                     this._indexBuffer.destroy();
 
@@ -486,12 +484,11 @@ pc.extend(pc, function () {
             var count = drawOrder.length;
             for (var i = 0; i < count; i++) {
                 var slot = drawOrder[i];
-            
+
                 if (slot.attachment && slot.material && slot.positions.length > 0 && slot.indices.length > 0) {
 
                     // material switch
-                    if (currentMaterialKey && currentMaterialKey !== slot.material)
-                    {
+                    if (currentMaterialKey && currentMaterialKey !== slot.material) {
                         this.SubmitBatch(batchStartIndex, batchIndexCount, currentMaterialKey);
 
                         // prepare next batch
@@ -515,7 +512,7 @@ pc.extend(pc, function () {
                         dstVertices.element[pc.SEMANTIC_TEXCOORD0].set(uvs[j * 2], uvs[j * 2 + 1]);
                         dstVertices.next();
                     }
-    
+
                     // write index data
                     var indices = slot.indices;
                     var indCount = indices.length;
@@ -525,8 +522,8 @@ pc.extend(pc, function () {
                     batchIndexCount += indCount;
                     dstIndexOffset += indCount;
                     dstVertexOffset += posCount;
-                }                
-            }    
+                }
+            }
 
             dstVertices.end();
             this._indexBuffer.unlock();
@@ -537,7 +534,7 @@ pc.extend(pc, function () {
 
         // add all instances to layers
         this.addToLayers();
-    }
+    };
 
     Spine.prototype.SubmitBatch = function (indexBase, indexCount, materialKey) {
         if (indexCount > 0) {
@@ -555,8 +552,8 @@ pc.extend(pc, function () {
             mi.drawOrder = this.priority + this._meshInstances.length;
             mi.visible = !this._hidden;
             this._meshInstances.push(mi);
-        }        
-    }
+        }
+    };
 
     Spine.prototype.update = function (dt) {
         if (this._hidden)
