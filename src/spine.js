@@ -448,6 +448,11 @@ pc.extend(pc, function () {
 
     Spine.prototype.render = function () {
 
+        // remove materials from meshInstances as they keep references to meshInstances not allowing them to be GC'd
+        this._meshInstances.forEach(function (instance) {
+            instance.material = null;
+        });
+
         this.removeFromLayers();
         this._meshes = [];
         this._meshInstances.length = 0;
