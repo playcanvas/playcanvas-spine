@@ -23,7 +23,7 @@ module.exports = function (grunt) {
                     separator: '\n'
                 },
                 src: src36,
-                dest: 'lib/playcanvas-spine.3.6.js'
+                dest: 'build/playcanvas-spine.3.6.js'
             },
             spine38: {
                 options: {
@@ -31,14 +31,14 @@ module.exports = function (grunt) {
                     separator: '\n'
                 },
                 src: src38,
-                dest: 'lib/playcanvas-spine.3.8.js'
+                dest: 'build/playcanvas-spine.3.8.js'
             }
         },
         uglify: {
             build: {
                 files: {
-                    'lib/playcanvas-spine.3.6.min.js': src36,
-                    'lib/playcanvas-spine.3.8.min.js': src38
+                    'build/playcanvas-spine.3.6.min.js': src36,
+                    'build/playcanvas-spine.3.8.min.js': src38
                 }
             },
             options: {

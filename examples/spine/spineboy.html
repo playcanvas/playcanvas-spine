@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PlayCanvas Spine - Dragon</title>
+    <title>PlayCanvas Spine - SpineBoy</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <script src="https://code.playcanvas.com/playcanvas-stable.js"></script>
@@ -37,11 +37,10 @@
         });
 
         var assets = [
-            new pc.Asset("playcanvas-spine.3.6.js", "script", { url: "../lib/playcanvas-spine.3.6.js" }),
-            new pc.Asset("dragon-pma.atlas", "text", { url: "data/dragon-pma.atlas" }),
-            new pc.Asset("dragon.json", "json", { url: "data/dragon.json" }),
-            new pc.Asset("dragon-pma.png", "texture", { url: "data/dragon-pma.png" }),
-            new pc.Asset("dragon-pma2.png", "texture", { url: "data/dragon-pma2.png" })
+            new pc.Asset("playcanvas-spine.3.8.js", "script", { url: "../../build/playcanvas-spine.3.8.js" }),
+            new pc.Asset("spineboy-pro.atlas", "text", { url: "../assets/spine/spineboy-pro.atlas" }),
+            new pc.Asset("spineboy-pro.json", "json", { url: "../assets/spine/spineboy-pro.json" }),
+            new pc.Asset("spineboy-pro.png", "texture", { url: "../assets/spine/spineboy-pro.png" })
         ];
 
         var preload = function (assets, callback) {
@@ -60,21 +59,20 @@
         };
 
         preload(assets, function () {
-            // Create the dragon
-            var dragon = new pc.Entity();
-            dragon.addComponent("spine", {
+            var alien = new pc.Entity();
+            alien.addComponent("spine", {
                 atlasAsset: assets[1].id,
                 skeletonAsset: assets[2].id,
-                textureAssets: [ assets[3].id, assets[4].id ]
+                textureAssets: [ assets[3].id ]
             });
-            app.root.addChild(dragon);
+            app.root.addChild(alien);
 
-            dragon.spine.state.setAnimation(0, "flying", true);
+            alien.spine.state.setAnimation(0, "portal", true);
 
             // Create a camera to render the scene
             var camera = new pc.Entity();
             camera.addComponent("camera");
-            camera.translateLocal(0, 1, 10);
+            camera.translateLocal(0, 7, 20);
             app.root.addChild(camera);
         });
     </script>
