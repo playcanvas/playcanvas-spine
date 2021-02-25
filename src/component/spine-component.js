@@ -23,7 +23,12 @@ pc.extend(pc, function () {
             var textureData = {};
             for (var i = 0, n = this.textureAssets.length; i < n; i++) {
                 var asset = this.system.app.assets.get(this.textureAssets[i]);
-                var path = pc.path.getBasename(asset.file.url);
+                var path = asset.filename;
+                // Fallback if filename doesn't exist
+                if (!path) {
+                    path = pc.path.getBasename(asset.file.url);
+                }
+
                 var query = path.indexOf('?');
                 if (query !== -1)
                     path = path.substring(0, query);
