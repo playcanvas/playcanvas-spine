@@ -435,7 +435,7 @@ pc.extend(pc, function () {
             if (attachment instanceof spine.ClippingAttachment) {
                 clipper.clipStart(slot, attachment);
                 continue;
-            } else if ( !(attachment instanceof spine.RegionAttachment) && !(attachment instanceof spine.MeshAttachment) ){
+            } else if (!(attachment instanceof spine.RegionAttachment) && !(attachment instanceof spine.MeshAttachment)) {
                 if (!this._spine_3_7_99)
                     clipper.clipEndWithSlot(slot);
                 continue;
