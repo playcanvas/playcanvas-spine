@@ -1,4 +1,4 @@
-/* Copyright 2015-2020 PlayCanvas Ltd */
+/* Copyright 2015-2021 PlayCanvas Ltd */
 var __extends = (this && this.__extends) || (function () {
 	var extendStatics = Object.setPrototypeOf ||
 		({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||

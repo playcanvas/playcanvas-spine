@@ -7,13 +7,13 @@ module.exports = function (grunt) {
         'src/spine-plugin.js'
     ];
     const src36 = [
-        'contrib/spine-ts/build/3.6/spine-core.js',
+        'contrib/spine-ts/build/3.6/spine-core.js'
     ].concat(srcCommon);
     const src38 = [
-        'contrib/spine-ts/build/3.8/spine-core.js',
+        'contrib/spine-ts/build/3.8/spine-core.js'
     ].concat(srcCommon);
 
-    const banner = '/* Copyright 2015-2020 PlayCanvas Ltd */\n';
+    const banner = '/* Copyright 2015-2021 PlayCanvas Ltd */\n';
 
     grunt.initConfig({
         concat: {
@@ -50,5 +50,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
-    grunt.registerTask("default", ['concat', 'uglify'])
+    grunt.registerTask("default", ['concat', 'uglify']);
 };
