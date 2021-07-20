@@ -7030,7 +7030,7 @@ pc.extend(pc, function () {
             if (attachment instanceof spine.ClippingAttachment) {
                 clipper.clipStart(slot, attachment);
                 continue;
-            } else if ( !(attachment instanceof spine.RegionAttachment) && !(attachment instanceof spine.MeshAttachment) ){
+            } else if (!(attachment instanceof spine.RegionAttachment) && !(attachment instanceof spine.MeshAttachment)) {
                 if (!this._spine_3_7_99)
                     clipper.clipEndWithSlot(slot);
                 continue;
@@ -7115,7 +7115,7 @@ pc.extend(pc, function () {
                         dstVertices.element[pc.SEMANTIC_POSITION].set(positions[j * 2], positions[j * 2 + 1]);
                         dstVertices.element[pc.SEMANTIC_NORMAL].set(0, 255, 0, 0);      // 0,1,0 normal stored in 8 bit per component
                         dstVertices.element[pc.SEMANTIC_COLOR].set(r, g, b, a);
-                        dstVertices.element[pc.SEMANTIC_TEXCOORD0].set(uvs[j * 2], uvs[j * 2 + 1]);
+                        dstVertices.element[pc.SEMANTIC_TEXCOORD0].set(uvs[j * 2], 1.0 - uvs[j * 2 + 1]);
                         dstVertices.next();
                     }
 
