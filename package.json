@@ -1,6 +1,6 @@
 {
   "name": "playcanvas-spine",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "PlayCanvas <support@playcanvas.com>",
   "homepage": "https://playcanvas.com",
   "description": "Spine plugin for PlayCanvas Engine",

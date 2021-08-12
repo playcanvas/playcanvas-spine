@@ -19,6 +19,7 @@ pc.extend(pc, function () {
             'spine'
         ];
 
+        this.on('beforeremove', this.onBeforeRemove, this);
         pc.ComponentSystem.bind('update', this.onUpdate, this);
     };
     SpineComponentSystem.prototype = Object.create(pc.ComponentSystem.prototype);
@@ -30,7 +31,7 @@ pc.extend(pc, function () {
             pc.ComponentSystem.prototype.initializeComponentData.call(this.system, component, data, properties);
         },
 
-        removeComponent: function (entity) {
+        onBeforeRemove: function (entity, component) {
             var data = entity.spine.data;
             if (data.spine) {
                 data.spine.destroy();
