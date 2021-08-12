@@ -167,18 +167,11 @@ pc.extend(pc, function () {
         this.init();
 
         this.autoUpdate = true;
-
-        this._model = new pc.Model();
-        this._model.graph = this._node;
-        this._model.meshInstances = this._meshInstances;
-
         this._hidden = false;
     };
 
     Spine.prototype.destroy = function () {
-        if (this._model) {
-            this.removeFromLayers();
-        }
+        this.removeFromLayers();
 
         for (var i = 0; i < this._meshInstances.length; i++) {
             this._meshInstances[i].mesh.vertexBuffer = null;
@@ -196,7 +189,6 @@ pc.extend(pc, function () {
             this._indexBuffer = null;
         }
 
-        this._model = null;
         this._meshInstances = [];
         this.skeleton = null;
         this.stateData = null;
@@ -598,21 +590,21 @@ pc.extend(pc, function () {
     };
 
     Spine.prototype.removeFromLayers = function () {
-        if (this._model) {
+        if (this._meshInstances.length) {
             for (var i = 0; i < this._layers.length; i++) {
                 var layer = this._app.scene.layers.getLayerById(this._layers[i]);
                 if (layer)
-                    layer.removeMeshInstances(this._model.meshInstances);
+                    layer.removeMeshInstances(this._meshInstances);
             }
         }
     };
 
     Spine.prototype.addToLayers = function () {
-        if (this._model) {
+        if (this._meshInstances.length) {
             for (var i = 0; i < this._layers.length; i++) {
                 var layer = this._app.scene.layers.getLayerById(this._layers[i]);
                 if (layer)
-                    layer.addMeshInstances(this._model.meshInstances);
+                    layer.addMeshInstances(this._meshInstances);
             }
         }
     };
@@ -646,14 +638,9 @@ pc.extend(pc, function () {
             return this._layers;
         },
         set: function (value) {
-            if (this._model) {
-                this.removeFromLayers();
-            }
+            this.removeFromLayers();
             this._layers = value || [];
-
-            if (this._model) {
-                this.addToLayers();
-            }
+            this.addToLayers();
         }
     });
 
