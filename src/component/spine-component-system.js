@@ -20,7 +20,7 @@ pc.extend(pc, function () {
         ];
 
         this.on('beforeremove', this.onBeforeRemove, this);
-        pc.ComponentSystem.bind('update', this.onUpdate, this);
+        this.app.systems.on('update', this.onUpdate, this);
     };
     SpineComponentSystem.prototype = Object.create(pc.ComponentSystem.prototype);
     SpineComponentSystem.prototype.constructor = SpineComponentSystem;
