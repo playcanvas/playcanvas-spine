@@ -6787,7 +6787,6 @@ pc.extend(pc, function () {
         this._meshInstances = [];
         this.skeleton = null;
         this.stateData = null;
-        this.state = null;
         this._materials = {};
         this._node = null;
     };
