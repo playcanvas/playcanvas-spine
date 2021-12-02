@@ -10,7 +10,7 @@ Examples such as the Hero above can be found in the `examples` folder. To run th
 
 ### Editor
 
-Add the files `lib/playcanvas-spine.3.6.min.js` and `lib/spine.js` to your project. Note that a 3.8 version of the library is available too.
+Add the files `lib/playcanvas-spine.3.6.min.js` and `lib/spine.js` to your project. Note that a 3.8 and 4.0 version of the library is available too.
 
 Create an entity with a script component and add the script `spine` to it. Upload your exported spine resources (atlas, skeleton json file, textures) and attach them to the spine script on your entity.
 

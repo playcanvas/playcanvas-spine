@@ -12,6 +12,9 @@ module.exports = function (grunt) {
     const src38 = [
         'contrib/spine-ts/build/3.8/spine-core.js'
     ].concat(srcCommon);
+    const src40 = [
+        'contrib/spine-ts/build/4.0/spine-core.js'
+    ].concat(srcCommon);
 
     const banner = '/* Copyright 2015-2021 PlayCanvas Ltd */\n';
 
@@ -32,13 +35,22 @@ module.exports = function (grunt) {
                 },
                 src: src38,
                 dest: 'build/playcanvas-spine.3.8.js'
+            },
+            spine40: {
+                options: {
+                    banner: banner,
+                    separator: '\n'
+                },
+                src: src40,
+                dest: 'build/playcanvas-spine.4.0.js'
             }
         },
         uglify: {
             build: {
                 files: {
                     'build/playcanvas-spine.3.6.min.js': src36,
-                    'build/playcanvas-spine.3.8.min.js': src38
+                    'build/playcanvas-spine.3.8.min.js': src38,
+                    'build/playcanvas-spine.4.0.min.js': src40,
                 }
             },
             options: {
