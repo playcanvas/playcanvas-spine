@@ -8291,6 +8291,9 @@ pc.extend(pc, function () {
         this.skeletonVersion = _skeletonData.version;
         this._spine_3_6_0 = versionCompare(this.skeletonVersion, "3.6.0") <= 0;
         this._spine_3_7_99 = versionCompare(this.skeletonVersion, "3.7.99") <= 0;
+        this._spine_4_0_0 = versionCompare(this.skeletonVersion, "4.0.0") <= 0;
+
+        console.log(this._spine_4_0_0);
 
         this.skeleton = new spine.Skeleton(_skeletonData);
         this.skeleton.updateWorldTransform();
