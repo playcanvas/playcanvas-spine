@@ -21,17 +21,20 @@
     "url": "https://github.com/playcanvas/playcanvas-spine.git"
   },
   "eslintConfig": {
-    "extends": "@playcanvas/eslint-config"
+    "extends": "@playcanvas/eslint-config",
+    "globals": {
+      "pc": "readonly",
+      "spine": "readonly"
+    }
   },
   "devDependencies": {
-    "@playcanvas/eslint-config": "^1.0.8",
-    "eslint": "^7.32.0",
+    "@playcanvas/eslint-config": "^1.0.16",
+    "eslint": "^8.6.0",
     "grunt": "^1.4.1",
-    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-concat": "^2.0.0",
     "grunt-contrib-uglify": "^5.0.1",
-    "http-server": "^13.0.1"
+    "http-server": "^14.1.0"
   },
-  "dependencies": {},
   "scripts": {
     "build": "grunt",
     "lint": "eslint src",
