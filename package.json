@@ -28,11 +28,11 @@
     }
   },
   "devDependencies": {
-    "@playcanvas/eslint-config": "^1.0.16",
-    "eslint": "^8.6.0",
-    "grunt": "^1.4.1",
-    "grunt-contrib-concat": "^2.0.0",
-    "grunt-contrib-uglify": "^5.0.1",
+    "@playcanvas/eslint-config": "^1.1.1",
+    "eslint": "^8.14.0",
+    "grunt": "^1.5.2",
+    "grunt-contrib-concat": "^2.1.0",
+    "grunt-contrib-uglify": "^5.2.1",
     "http-server": "^14.1.0"
   },
   "scripts": {
