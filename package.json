@@ -30,7 +30,7 @@
   "devDependencies": {
     "@playcanvas/eslint-config": "^1.0.16",
     "eslint": "^8.6.0",
-    "grunt": "^1.4.1",
+    "grunt": "^1.5.2",
     "grunt-contrib-concat": "^2.0.0",
     "grunt-contrib-uglify": "^5.0.1",
     "http-server": "^14.1.0"
