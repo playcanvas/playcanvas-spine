@@ -6620,11 +6620,11 @@ pc.extend(pc, function () {
         }
 
         for (var i = 0; i < v1parts.length; ++i) {
-            if (v2parts.length == i) {
+            if (v2parts.length === i) {
                 return 1;
             }
 
-            if (v1parts[i] == v2parts[i]) {
+            if (v1parts[i] === v2parts[i]) {
                 continue;
             } else if (v1parts[i] > v2parts[i]) {
                 return 1;
@@ -6633,7 +6633,7 @@ pc.extend(pc, function () {
             }
         }
 
-        if (v1parts.length != v2parts.length) {
+        if (v1parts.length !== v2parts.length) {
             return -1;
         }
 
@@ -6922,7 +6922,7 @@ pc.extend(pc, function () {
 
         // attachment can change on the slot
         var type = (attachment instanceof spine.RegionAttachment) ? ATTACHMENT_TYPE.REGION : ((attachment instanceof spine.MeshAttachment) ? ATTACHMENT_TYPE.MESH : ATTACHMENT_TYPE.NULL);
-        if (slot._active.name !== name || slot._active.type != type) {
+        if (slot._active.name !== name || slot._active.type !== type) {
             this.initAttachment(slot);
         }
 
@@ -6992,7 +6992,7 @@ pc.extend(pc, function () {
         var clipper = this.clipper;
         var slotRangeStart = -1, slotRangeEnd = -1;
         var inRange = false;
-        if (slotRangeStart == -1)
+        if (slotRangeStart === -1)
             inRange = true;
 
         var drawOrder = this.skeleton.drawOrder;
@@ -7007,7 +7007,7 @@ pc.extend(pc, function () {
                 }
             }
 
-            if (slotRangeStart >= 0 && slotRangeStart == slot.data.index) {
+            if (slotRangeStart >= 0 && slotRangeStart === slot.data.index) {
                 inRange = true;
             }
 
@@ -7016,7 +7016,7 @@ pc.extend(pc, function () {
                 continue;
             }
 
-            if (slotRangeEnd >= 0 && slotRangeEnd == slot.data.index) {
+            if (slotRangeEnd >= 0 && slotRangeEnd === slot.data.index) {
                 inRange = false;
             }
 
@@ -7544,6 +7544,7 @@ pc.extend(pc, function () {
 (function () {
     if (pc.Application.registerPlugin) {
         var register = function (app) {
+            // eslint-disable-next-line no-new
             new pc.SpineComponentSystem(app);
         };
         pc.Application.registerPlugin("spine", register);
