@@ -1,2 +1,7 @@
-node_modules
 *.DS_Store
+.idea/
+.vscode/
+coverage
+node_modules
+npm-debug.log
+.npmrc
