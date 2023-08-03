@@ -28,6 +28,7 @@
     }
   },
   "devDependencies": {
+    "@esotericsoftware/spine-ts": "^4.2.13",
     "@playcanvas/eslint-config": "^1.5.0",
     "eslint": "^8.46.0",
     "grunt": "^1.6.1",
