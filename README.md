@@ -2,6 +2,8 @@
 
 A [Spine](http://esotericsoftware.com/) plugin for the PlayCanvas Engine.
 
+[![CI][ci-badge]][ci-url]
+
 ![](images/spine-man.gif)
 
 Examples such as the Hero above can be found in the `examples` folder. To run them, start a local web server and go to `http://localhost/path/to/examples/hero.html` (the path will depend on your file serving root directory).
@@ -36,3 +38,7 @@ Prebuilt versions of the PlayCanvas Spine library can be found in the `lib` fold
 Then, to build do:
 
 `npm run build`
+
+
+[ci-badge]: https://github.com/playcanvas/playcanvas-spine/actions/workflows/ci.yml/badge.svg
+[ci-url]: https://github.com/playcanvas/playcanvas-spine/actions/workflows/ci.yml
