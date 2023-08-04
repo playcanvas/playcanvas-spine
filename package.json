@@ -43,6 +43,6 @@
   "scripts": {
     "build": "grunt",
     "lint": "eslint src",
-    "serve": "./node_modules/.bin/http-server ./ -a localhost"
+    "serve": "http-server ./ -a localhost"
   }
 }
