@@ -27,9 +27,14 @@
       "spine": "readonly"
     }
   },
+  "eslintIgnore": [
+    "build/",
+    "contrib/"
+  ],
   "devDependencies": {
-    "@playcanvas/eslint-config": "^1.3.0",
-    "eslint": "^8.37.0",
+    "@esotericsoftware/spine-ts": "^4.2.13",
+    "@playcanvas/eslint-config": "^1.5.0",
+    "eslint": "^8.46.0",
     "grunt": "^1.6.1",
     "grunt-contrib-concat": "^2.1.0",
     "grunt-contrib-uglify": "^5.2.2",
