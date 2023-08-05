@@ -97,9 +97,12 @@ pc.extend(pc, function () {
 
         getImage: function () {
             return this._image;
+        },
+
+        dispose: function () {
+            this.pcTexture.destroy();
         }
     };
-
 
     /**
      * @name spine
@@ -127,12 +130,28 @@ pc.extend(pc, function () {
 
         this._position = new pc.Vec3();
 
-        var atlas = new spine.TextureAtlas(atlasData, function (path) {
-            return new SpineTextureWrapper(textureData[path]);
-        });
-        var json = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(atlas));
-        json.scale *= 0.01;
-        var _skeletonData = json.readSkeletonData(skeletonData);
+        // create the atlas
+        var atlas = new spine.TextureAtlas(atlasData);
+
+        // load required texture for each page
+        for (const page of atlas.pages) {
+            // todo: handle aliases
+
+            // set the textures
+            page.setTexture(new SpineTextureWrapper(textureData[page.name]));
+        }
+
+        // Create a AtlasAttachmentLoader that resolves region, mesh, boundingbox and path attachments
+        var atlasLoader = new spine.AtlasAttachmentLoader(atlas);
+
+        // Create a SkeletonJson instance for parsing the .json file.
+        var skeletonJson = new spine.SkeletonJson(atlasLoader);
+
+        // Set the scale to apply during parsing, parse the file, and create a new skeleton.
+        skeletonJson.scale *= 0.01;
+        var _skeletonData = skeletonJson.readSkeletonData(skeletonData);
+
+        // Compatibility queries
         this.skeletonVersion = _skeletonData.version;
         this._spine_3_6_0 = versionCompare(this.skeletonVersion, "3.6.0") <= 0;
         this._spine_3_7_99 = versionCompare(this.skeletonVersion, "3.7.99") <= 0;
@@ -332,7 +351,7 @@ pc.extend(pc, function () {
         // convert vertices to world space
         slot.positions.length = 0;
         if (attachment instanceof spine.RegionAttachment) {
-            attachment.computeWorldVertices(slot.bone, slot.positions, 0, 2);
+            attachment.computeWorldVertices(slot, slot.positions, 0, 2);
         } else if (attachment instanceof spine.MeshAttachment) {
             attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, slot.positions, 0, 2);
         }
@@ -541,7 +560,7 @@ pc.extend(pc, function () {
 
     Spine.prototype.SubmitBatch = function (indexBase, indexCount, materialKey) {
         if (indexCount > 0) {
-            var mesh = new pc.Mesh();
+            var mesh = new pc.Mesh(this._app.graphicsDevice);
             mesh.vertexBuffer = this._vertexBuffer;
             mesh.indexBuffer[0] = this._indexBuffer;
             mesh.primitive[0].type = pc.PRIMITIVE_TRIANGLES;
