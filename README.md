@@ -18,9 +18,11 @@ Add the plugin matching the Spine version used to export the animations, i.e `bu
 | ------------ | ----------------- |
 | 3.6          | Up to 1.65        |
 | 3.8          | Up to 1.65        |
-| 4.1          | 1.57 and later    |
+| 4.1          | 1.27 and later    |
 
 Create an entity with a script component and add the script `spine` to it. Upload your exported spine resources (atlas, skeleton json file, textures) and attach them to the spine script on your entity.
+
+Ensure the plugin file is listed before the Playcanvas script in the [Scripts Loading Order](https://developer.playcanvas.com/en/user-manual/scripting/loading-order/).
 
 ### Engine-only
 
