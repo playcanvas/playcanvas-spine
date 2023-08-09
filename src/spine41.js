@@ -153,9 +153,9 @@ pc.extend(pc, function () {
 
         // Compatibility queries
         this.skeletonVersion = _skeletonData.version;
-        this._spine_3_6_0 = versionCompare(this.skeletonVersion, "3.6.0") <= 0;
-        this._spine_3_7_99 = versionCompare(this.skeletonVersion, "3.7.99") <= 0;
-        this._spine_3_7_99 = versionCompare(this.skeletonVersion, "4.1.23") <= 0;
+        this._spine_3_6_0 = versionCompare(this.skeletonVersion, "3.6.0") <= 0; // version 3.6.0 or below
+        this._spine_3_7_99 = versionCompare(this.skeletonVersion, "3.7.99") <= 0; // version 3.7.99 or below
+        this._spine_4_1_X = semver.satisfies(semver.valid(semver.coerce(this.skeletonVersion)), '~4.1.23'); // version 4.1 family
 
         this.skeleton = new spine.Skeleton(_skeletonData);
         this.skeleton.updateWorldTransform();
