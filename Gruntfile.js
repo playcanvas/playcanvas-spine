@@ -15,6 +15,7 @@ module.exports = function (grunt) {
     ].concat(srcCommon);
     const src41 = [
         'contrib/spine-ts/build/4.1/spine-core.js',
+        'contrib/semver/iife/semver.js',
         'src/spine41.js'
     ].concat(srcCommon);
 
