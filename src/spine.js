@@ -98,8 +98,8 @@ pc.extend(pc, function () {
         getImage: function () {
             return this._image;
         },
-
         dispose: function () {
+            // spine 4.1
             this.pcTexture.destroy();
         }
     };
@@ -130,26 +130,31 @@ pc.extend(pc, function () {
 
         this._position = new pc.Vec3();
 
-        // create the atlas
-        var atlas = new spine.TextureAtlas(atlasData);
+        var atlas;
 
-        // load required texture for each page
-        for (const page of atlas.pages) {
-            // todo: handle aliases
-
-            // set the textures
-            page.setTexture(new SpineTextureWrapper(textureData[page.name]));
+        // EP: As instructed: https://github.com/playcanvas/playcanvas-spine/pull/73
+        //
+        // API differs before we can know which which file version this is supposed to support.
+        // The data file opened will determine which code paths are used.  This file may
+        // or may not be concatenated with the spine library that supports it.
+        //
+        // use the length of the function signatures to guess which library has been concatenated.
+        if (spine.TextureAtlas.length === 1) {
+            // spine 4.1
+            atlas = new spine.TextureAtlas(atlasData);
+            for (const page of atlas.pages) {
+                page.setTexture(new SpineTextureWrapper(textureData[page.name]));
+            }
+        } else {
+            // spine 3.6 and 3.8
+            atlas = new spine.TextureAtlas(atlasData, function (path) {
+                return new SpineTextureWrapper(textureData[path]);
+            });
         }
 
-        // Create a AtlasAttachmentLoader that resolves region, mesh, boundingbox and path attachments
-        var atlasLoader = new spine.AtlasAttachmentLoader(atlas);
-
-        // Create a SkeletonJson instance for parsing the .json file.
-        var skeletonJson = new spine.SkeletonJson(atlasLoader);
-
-        // Set the scale to apply during parsing, parse the file, and create a new skeleton.
-        skeletonJson.scale *= 0.01;
-        var _skeletonData = skeletonJson.readSkeletonData(skeletonData);
+        var json = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(atlas));
+        json.scale *= 0.01;
+        var _skeletonData = json.readSkeletonData(skeletonData);
 
         // Compatibility queries
         this.skeletonVersion = _skeletonData.version;
@@ -351,7 +356,11 @@ pc.extend(pc, function () {
         // convert vertices to world space
         slot.positions.length = 0;
         if (attachment instanceof spine.RegionAttachment) {
-            attachment.computeWorldVertices(slot, slot.positions, 0, 2);
+            if (this._spine_4_1_X) {
+                attachment.computeWorldVertices(slot, slot.positions, 0, 2);
+            } else {
+                attachment.computeWorldVertices(slot.bone, slot.positions, 0, 2);
+            }
         } else if (attachment instanceof spine.MeshAttachment) {
             attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, slot.positions, 0, 2);
         }
@@ -406,7 +415,7 @@ pc.extend(pc, function () {
 
     Spine.prototype.updateSkeleton = function (dt) {
 
-        // count verticies and triangles
+        // count vertices and triangles
         this._renderCounts.vertexCount = 0;
         this._renderCounts.indexCount = 0;
 
@@ -560,7 +569,9 @@ pc.extend(pc, function () {
 
     Spine.prototype.SubmitBatch = function (indexBase, indexCount, materialKey) {
         if (indexCount > 0) {
+            // assumes Engine version 1.27+
             var mesh = new pc.Mesh(this._app.graphicsDevice);
+
             mesh.vertexBuffer = this._vertexBuffer;
             mesh.indexBuffer[0] = this._indexBuffer;
             mesh.primitive[0].type = pc.PRIMITIVE_TRIANGLES;
