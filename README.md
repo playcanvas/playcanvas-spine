@@ -12,7 +12,7 @@ Examples such as the Hero above can be found in the `examples` folder. To run th
 
 ### Editor
 
-Add the plugin matching the Spine version used to export the animations, i.e `build/playcanvas-spine.X.X.min.js` and the Playcanvas script `build/spine.js` to your project. The following plugins are available:
+Add the plugin matching the Spine version used to export the animations, i.e `build/playcanvas-spine.X.X.min.js` and the PlayCanvas script `build/spine.js` to your project. The following plugins are available:
 
 | Spine Editor | PlayCanvas Engine |
 | ------------ | ----------------- |
