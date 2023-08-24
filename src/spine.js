@@ -98,6 +98,7 @@ pc.extend(pc, function () {
         getImage: function () {
             return this._image;
         },
+
         dispose: function () {
             // spine 4.1
             this.pcTexture.destroy();
