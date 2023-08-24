@@ -24,7 +24,8 @@
     "extends": "@playcanvas/eslint-config",
     "globals": {
       "pc": "readonly",
-      "spine": "readonly"
+      "spine": "readonly",
+      "semver": "readonly"
     }
   },
   "eslintIgnore": [
@@ -32,17 +33,21 @@
     "contrib/"
   ],
   "devDependencies": {
-    "@esotericsoftware/spine-ts": "^4.2.13",
+    "@esotericsoftware/spine-core": "4.1.36",
     "@playcanvas/eslint-config": "^1.5.0",
+    "esbuild": "^0.19.0",
     "eslint": "^8.46.0",
     "grunt": "^1.6.1",
     "grunt-contrib-concat": "^2.1.0",
     "grunt-contrib-uglify": "^5.2.2",
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "semver": "^7.5.4"
   },
   "scripts": {
     "build": "grunt",
+    "build:full-semver": "npx esbuild --bundle node_modules/semver/index.js --target=es6 --sourcemap --outfile=contrib/semver/iife/semver.js --format=iife --global-name=semver",
+    "build:semver": "npx esbuild --bundle src/semver/index.js --target=es6 --sourcemap --outfile=contrib/semver/iife/semver.js --format=iife --global-name=semver",
     "lint": "eslint src",
-    "serve": "./node_modules/.bin/http-server ./ -a localhost"
+    "serve": "http-server ./ -a localhost"
   }
 }

@@ -1,10 +1,11 @@
 module.exports = function (grunt) {
     const srcCommon = [
-        'src/spine.js',
         'src/component/spine-component-system.js',
         'src/component/spine-component.js',
         'src/component/spine-component-data.js',
-        'src/spine-plugin.js'
+        'contrib/semver/iife/semver.js',
+        'src/spine-plugin.js',
+        'src/spine.js'
     ];
     const src36 = [
         'contrib/spine-ts/build/3.6/spine-core.js'
@@ -12,8 +13,11 @@ module.exports = function (grunt) {
     const src38 = [
         'contrib/spine-ts/build/3.8/spine-core.js'
     ].concat(srcCommon);
+    const src41 = [
+        'contrib/spine-ts/build/4.1/spine-core.js'
+    ].concat(srcCommon);
 
-    const banner = '/* Copyright 2015-2021 PlayCanvas Ltd */\n';
+    const banner = `/* Copyright 2015-${new Date().getFullYear()} PlayCanvas Ltd */\n`;
 
     grunt.initConfig({
         concat: {
@@ -32,13 +36,22 @@ module.exports = function (grunt) {
                 },
                 src: src38,
                 dest: 'build/playcanvas-spine.3.8.js'
+            },
+            spine41: {
+                options: {
+                    banner: banner,
+                    separator: '\n'
+                },
+                src: src41,
+                dest: 'build/playcanvas-spine.4.1.js'
             }
         },
         uglify: {
             build: {
                 files: {
                     'build/playcanvas-spine.3.6.min.js': src36,
-                    'build/playcanvas-spine.3.8.min.js': src38
+                    'build/playcanvas-spine.3.8.min.js': src38,
+                    'build/playcanvas-spine.4.1.min.js': src41
                 }
             },
             options: {

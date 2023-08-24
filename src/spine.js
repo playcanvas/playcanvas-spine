@@ -1,50 +1,4 @@
 pc.extend(pc, function () {
-    // Compare semantic versions
-    function versionCompare(v1, v2, options) {
-        var lexicographical = options && options.lexicographical,
-            zeroExtend = options && options.zeroExtend,
-            v1parts = v1.split('.'),
-            v2parts = v2.split('.');
-
-        function isValidPart(x) {
-            return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
-        }
-
-        if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
-            return NaN;
-        }
-
-        if (zeroExtend) {
-            while (v1parts.length < v2parts.length) v1parts.push("0");
-            while (v2parts.length < v1parts.length) v2parts.push("0");
-        }
-
-        if (!lexicographical) {
-            v1parts = v1parts.map(Number);
-            v2parts = v2parts.map(Number);
-        }
-
-        for (var i = 0; i < v1parts.length; ++i) {
-            if (v2parts.length === i) {
-                return 1;
-            }
-
-            if (v1parts[i] === v2parts[i]) {
-                continue;
-            } else if (v1parts[i] > v2parts[i]) {
-                return 1;
-            } else {
-                return -1;
-            }
-        }
-
-        if (v1parts.length !== v2parts.length) {
-            return -1;
-        }
-
-        return 0;
-    }
-
     var ATTACHMENT_TYPE = {
         NULL: 0,
         MESH: 1,
@@ -97,9 +51,13 @@ pc.extend(pc, function () {
 
         getImage: function () {
             return this._image;
+        },
+
+        dispose: function () {
+            // spine 4.1
+            this.pcTexture.destroy();
         }
     };
-
 
     /**
      * @name spine
@@ -127,15 +85,37 @@ pc.extend(pc, function () {
 
         this._position = new pc.Vec3();
 
-        var atlas = new spine.TextureAtlas(atlasData, function (path) {
-            return new SpineTextureWrapper(textureData[path]);
-        });
+        var atlas;
+
+        // EP: As instructed: https://github.com/playcanvas/playcanvas-spine/pull/73
+        //
+        // API differs before we can know which which file version this is supposed to support.
+        // The data file opened will determine which code paths are used.  This file may
+        // or may not be concatenated with the spine library that supports it.
+        //
+        // use the length of the function signatures to guess which library has been concatenated.
+        if (spine.TextureAtlas.length === 1) {
+            // spine 4.1
+            atlas = new spine.TextureAtlas(atlasData);
+            for (const page of atlas.pages) {
+                page.setTexture(new SpineTextureWrapper(textureData[page.name]));
+            }
+        } else {
+            // spine 3.6 and 3.8
+            atlas = new spine.TextureAtlas(atlasData, function (path) {
+                return new SpineTextureWrapper(textureData[path]);
+            });
+        }
+
         var json = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(atlas));
         json.scale *= 0.01;
         var _skeletonData = json.readSkeletonData(skeletonData);
-        this.skeletonVersion = _skeletonData.version;
-        this._spine_3_6_0 = versionCompare(this.skeletonVersion, "3.6.0") <= 0;
-        this._spine_3_7_99 = versionCompare(this.skeletonVersion, "3.7.99") <= 0;
+
+        // Compatibility queries
+        this.skeletonVersion = semver.valid(semver.coerce(_skeletonData.version));
+        this._spine_3_6_0 = semver.satisfies(this.skeletonVersion, '<=3.6.0'); // version 3.6.0 or below
+        this._spine_3_7_99 = semver.satisfies(this.skeletonVersion, '<=3.7.99'); // version 3.7.99 or below
+        this._spine_4_1_X = semver.satisfies(this.skeletonVersion, '~4.1.23'); // version 4.1 family
 
         this.skeleton = new spine.Skeleton(_skeletonData);
         this.skeleton.updateWorldTransform();
@@ -331,7 +311,11 @@ pc.extend(pc, function () {
         // convert vertices to world space
         slot.positions.length = 0;
         if (attachment instanceof spine.RegionAttachment) {
-            attachment.computeWorldVertices(slot.bone, slot.positions, 0, 2);
+            if (this._spine_4_1_X) {
+                attachment.computeWorldVertices(slot, slot.positions, 0, 2);
+            } else {
+                attachment.computeWorldVertices(slot.bone, slot.positions, 0, 2);
+            }
         } else if (attachment instanceof spine.MeshAttachment) {
             attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, slot.positions, 0, 2);
         }
@@ -386,7 +370,7 @@ pc.extend(pc, function () {
 
     Spine.prototype.updateSkeleton = function (dt) {
 
-        // count verticies and triangles
+        // count vertices and triangles
         this._renderCounts.vertexCount = 0;
         this._renderCounts.indexCount = 0;
 
@@ -540,7 +524,8 @@ pc.extend(pc, function () {
 
     Spine.prototype.SubmitBatch = function (indexBase, indexCount, materialKey) {
         if (indexCount > 0) {
-            var mesh = new pc.Mesh();
+            var mesh = new pc.Mesh(this._app.graphicsDevice);
+
             mesh.vertexBuffer = this._vertexBuffer;
             mesh.indexBuffer[0] = this._indexBuffer;
             mesh.primitive[0].type = pc.PRIMITIVE_TRIANGLES;

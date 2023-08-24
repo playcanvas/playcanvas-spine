@@ -12,13 +12,21 @@ Examples such as the Hero above can be found in the `examples` folder. To run th
 
 ### Editor
 
-Add the files `lib/playcanvas-spine.3.6.min.js` and `lib/spine.js` to your project. Note that a 3.8 version of the library is available too.
+Add the plugin matching the Spine version used to export the animations, i.e `build/playcanvas-spine.X.X.min.js` and the PlayCanvas script `build/spine.js` to your project. The following plugins are available:
+
+| Spine Editor | PlayCanvas Engine |
+| ------------ | ----------------- |
+| 3.6          | Up to 1.65        |
+| 3.8          | Up to 1.65        |
+| 4.1          | 1.27 and later    |
 
 Create an entity with a script component and add the script `spine` to it. Upload your exported spine resources (atlas, skeleton json file, textures) and attach them to the spine script on your entity.
 
+Ensure the plugin file is listed before the PlayCanvas script in the [Scripts Loading Order](https://developer.playcanvas.com/en/user-manual/scripting/loading-order/).
+
 ### Engine-only
 
-Load the library script `lib/playcanvas-spine.3.6.min.js`. Then, add spine components to your entities as follows:
+Load the required library script, i.e. `build/playcanvas-spine.X.X.min.js`. Then, add spine components to your entities as follows:
 
 ```javascript
 var entity = new pc.Entity();
