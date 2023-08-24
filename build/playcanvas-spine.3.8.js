@@ -10327,8 +10327,8 @@ pc.extend(pc, function () {
 
         // Compatibility queries
         this.skeletonVersion = semver.valid(semver.coerce(_skeletonData.version));
-        this._spine_3_6_0 = semver.satisfies(this.skeletonVersion, '<3.6.0'); // version 3.6.0 or below
-        this._spine_3_7_99 = semver.satisfies(this.skeletonVersion, '<3.8.0'); // version 3.7.99 or below
+        this._spine_3_6_0 = semver.satisfies(this.skeletonVersion, '<=3.6.0'); // version 3.6.0 or below
+        this._spine_3_7_99 = semver.satisfies(this.skeletonVersion, '<=3.7.99'); // version 3.7.99 or below
         this._spine_4_1_X = semver.satisfies(this.skeletonVersion, '~4.1.23'); // version 4.1 family
 
         this.skeleton = new spine.Skeleton(_skeletonData);
