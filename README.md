@@ -26,7 +26,7 @@ Ensure the plugin file is listed before the PlayCanvas script in the [Scripts Lo
 
 ### Engine-only
 
-Load the required library script, i.e `build/playcanvas-spine.X.X.min.js`. Then, add spine components to your entities as follows:
+Load the required library script, i.e. `build/playcanvas-spine.X.X.min.js`. Then, add spine components to your entities as follows:
 
 ```javascript
 var entity = new pc.Entity();
