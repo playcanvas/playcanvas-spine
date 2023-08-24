@@ -570,7 +570,6 @@ pc.extend(pc, function () {
 
     Spine.prototype.SubmitBatch = function (indexBase, indexCount, materialKey) {
         if (indexCount > 0) {
-            // assumes Engine version 1.27+
             var mesh = new pc.Mesh(this._app.graphicsDevice);
 
             mesh.vertexBuffer = this._vertexBuffer;
