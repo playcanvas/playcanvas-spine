@@ -1,50 +1,4 @@
 pc.extend(pc, function () {
-    // Compare semantic versions
-    function versionCompare(v1, v2, options) {
-        var lexicographical = options && options.lexicographical,
-            zeroExtend = options && options.zeroExtend,
-            v1parts = v1.split('.'),
-            v2parts = v2.split('.');
-
-        function isValidPart(x) {
-            return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x);
-        }
-
-        if (!v1parts.every(isValidPart) || !v2parts.every(isValidPart)) {
-            return NaN;
-        }
-
-        if (zeroExtend) {
-            while (v1parts.length < v2parts.length) v1parts.push("0");
-            while (v2parts.length < v1parts.length) v2parts.push("0");
-        }
-
-        if (!lexicographical) {
-            v1parts = v1parts.map(Number);
-            v2parts = v2parts.map(Number);
-        }
-
-        for (var i = 0; i < v1parts.length; ++i) {
-            if (v2parts.length === i) {
-                return 1;
-            }
-
-            if (v1parts[i] === v2parts[i]) {
-                continue;
-            } else if (v1parts[i] > v2parts[i]) {
-                return 1;
-            } else {
-                return -1;
-            }
-        }
-
-        if (v1parts.length !== v2parts.length) {
-            return -1;
-        }
-
-        return 0;
-    }
-
     var ATTACHMENT_TYPE = {
         NULL: 0,
         MESH: 1,
@@ -158,10 +112,10 @@ pc.extend(pc, function () {
         var _skeletonData = json.readSkeletonData(skeletonData);
 
         // Compatibility queries
-        this.skeletonVersion = _skeletonData.version;
-        this._spine_3_6_0 = versionCompare(this.skeletonVersion, "3.6.0") <= 0; // version 3.6.0 or below
-        this._spine_3_7_99 = versionCompare(this.skeletonVersion, "3.7.99") <= 0; // version 3.7.99 or below
-        this._spine_4_1_X = semver.satisfies(semver.valid(semver.coerce(this.skeletonVersion)), '~4.1.23'); // version 4.1 family
+        this.skeletonVersion = semver.valid(semver.coerce(_skeletonData.version));
+        this._spine_3_6_0 = semver.satisfies(this.skeletonVersion, '<3.6.0'); // version 3.6.0 or below
+        this._spine_3_7_99 = semver.satisfies(this.skeletonVersion, '<3.8.0'); // version 3.7.99 or below
+        this._spine_4_1_X = semver.satisfies(this.skeletonVersion, '~4.1.23'); // version 4.1 family
 
         this.skeleton = new spine.Skeleton(_skeletonData);
         this.skeleton.updateWorldTransform();
