@@ -1,4 +1,4 @@
-/* Copyright 2015-2021 PlayCanvas Ltd */
+/* Copyright 2015-2023 PlayCanvas Ltd */
 "use strict";
 var spine = (() => {
   var __defProp = Object.defineProperty;
