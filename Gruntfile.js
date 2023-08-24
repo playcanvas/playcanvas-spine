@@ -4,19 +4,17 @@ module.exports = function (grunt) {
         'src/component/spine-component.js',
         'src/component/spine-component-data.js',
         'contrib/semver/iife/semver.js',
-        'src/spine-plugin.js'
+        'src/spine-plugin.js',
+        'src/spine.js'
     ];
     const src36 = [
-        'contrib/spine-ts/build/3.6/spine-core.js',
-        'src/spine.js'
+        'contrib/spine-ts/build/3.6/spine-core.js'
     ].concat(srcCommon);
     const src38 = [
-        'contrib/spine-ts/build/3.8/spine-core.js',
-        'src/spine.js'
+        'contrib/spine-ts/build/3.8/spine-core.js'
     ].concat(srcCommon);
     const src41 = [
-        'contrib/spine-ts/build/4.1/spine-core.js',
-        'src/spine.js'
+        'contrib/spine-ts/build/4.1/spine-core.js'
     ].concat(srcCommon);
 
     const banner = '/* Copyright 2015-2021 PlayCanvas Ltd */\n';
