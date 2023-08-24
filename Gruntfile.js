@@ -17,7 +17,7 @@ module.exports = function (grunt) {
         'contrib/spine-ts/build/4.1/spine-core.js'
     ].concat(srcCommon);
 
-    const banner = '/* Copyright 2015-2021 PlayCanvas Ltd */\n';
+    const banner = '/* Copyright 2015-2023 PlayCanvas Ltd */\n';
 
     grunt.initConfig({
         concat: {
