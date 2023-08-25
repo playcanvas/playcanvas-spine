@@ -1,3 +1,7 @@
+// ./wrapper.js will be aliased to other versions during builds
+import { spine } from './wrapper.js';
+import * as semver from './semver/index.js';
+
 pc.extend(pc, function () {
     var ATTACHMENT_TYPE = {
         NULL: 0,
