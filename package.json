@@ -40,20 +40,16 @@
     "@rollup/plugin-terser": "^0.4.3",
     "esbuild": "^0.19.0",
     "eslint": "^8.46.0",
-    "grunt": "^1.6.1",
-    "grunt-contrib-concat": "^2.1.0",
-    "grunt-contrib-uglify": "^5.2.2",
     "http-server": "^14.1.1",
     "rollup": "^3.28.1",
     "semver": "^7.5.4",
     "spine41": "npm:@esotericsoftware/spine-core@4.1"
   },
   "scripts": {
-    "build": "grunt",
+    "build": "rollup --config",
     "build:full-semver": "npx esbuild --bundle node_modules/semver/index.js --target=es6 --sourcemap --outfile=contrib/semver/iife/semver.js --format=iife --global-name=semver",
     "build:semver": "npx esbuild --bundle src/semver/index.js --target=es6 --sourcemap --outfile=contrib/semver/iife/semver.js --format=iife --global-name=semver",
     "lint": "eslint src",
-    "serve": "http-server ./ -a localhost",
-    "rollup": "rollup --config"
+    "serve": "http-server ./ -a localhost"
   }
 }
