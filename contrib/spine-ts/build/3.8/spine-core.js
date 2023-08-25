@@ -8206,3 +8206,5 @@ var spine;
 	spine.SwirlEffect = SwirlEffect;
 })(spine || (spine = {}));
 //# sourceMappingURL=spine-core.js.map
+
+export { spine };
