@@ -7,6 +7,13 @@ import alias from '@rollup/plugin-alias';
 
 const banner = `/* Copyright 2015-${new Date().getFullYear()} PlayCanvas Ltd */\n`;
 
+/**
+ * @example
+ * {
+ *     name: 'playcanvas-spine.4.0',
+ *     lib: 'spine40' // replacement for import alias
+ * }
+ */
 const builds = [
     {
         name: 'playcanvas-spine.3.6',
@@ -16,10 +23,6 @@ const builds = [
         name: 'playcanvas-spine.3.8',
         lib: 'contrib/spine-ts/build/3.8/spine-core.js'
     },
-    // {
-    //     name: 'playcanvas-spine.4.0',
-    //     lib: 'spine40' // may require wrapper or adjustment
-    // },
     {
         name: 'playcanvas-spine.4.1',
         lib: 'src/wrapper.js'
