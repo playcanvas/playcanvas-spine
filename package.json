@@ -47,8 +47,6 @@
   },
   "scripts": {
     "build": "rollup --config",
-    "build:full-semver": "npx esbuild --bundle node_modules/semver/index.js --target=es6 --sourcemap --outfile=contrib/semver/iife/semver.js --format=iife --global-name=semver",
-    "build:semver": "npx esbuild --bundle src/semver/index.js --target=es6 --sourcemap --outfile=contrib/semver/iife/semver.js --format=iife --global-name=semver",
     "lint": "eslint src",
     "serve": "http-server ./ -a localhost"
   }
