@@ -46,7 +46,7 @@
     "spine41": "npm:@esotericsoftware/spine-core@4.1"
   },
   "scripts": {
-    "build": "rollup --config",
+    "build": "rollup -c",
     "lint": "eslint src",
     "serve": "http-server ./ -a localhost"
   }
