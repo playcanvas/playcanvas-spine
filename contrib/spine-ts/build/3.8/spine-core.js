@@ -2,10 +2,12 @@ var __extends = (this && this.__extends) || (function () {
 	var extendStatics = function (d, b) {
 		extendStatics = Object.setPrototypeOf ||
 			({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-			function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+			function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
 		return extendStatics(d, b);
 	};
 	return function (d, b) {
+		if (typeof b !== "function" && b !== null)
+			throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
 		extendStatics(d, b);
 		function __() { this.constructor = d; }
 		d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -675,17 +677,15 @@ var spine;
 			var slot = skeleton.slots[this.slotIndex];
 			if (!slot.bone.active)
 				return;
-			if (direction == MixDirection.mixOut && blend == MixBlend.setup) {
-				var attachmentName_1 = slot.data.attachmentName;
-				slot.setAttachment(attachmentName_1 == null ? null : skeleton.getAttachment(this.slotIndex, attachmentName_1));
+			if (direction == MixDirection.mixOut) {
+				if (blend == MixBlend.setup)
+					this.setAttachment(skeleton, slot, slot.data.attachmentName);
 				return;
 			}
 			var frames = this.frames;
 			if (time < frames[0]) {
-				if (blend == MixBlend.setup || blend == MixBlend.first) {
-					var attachmentName_2 = slot.data.attachmentName;
-					slot.setAttachment(attachmentName_2 == null ? null : skeleton.getAttachment(this.slotIndex, attachmentName_2));
-				}
+				if (blend == MixBlend.setup || blend == MixBlend.first)
+					this.setAttachment(skeleton, slot, slot.data.attachmentName);
 				return;
 			}
 			var frameIndex = 0;
@@ -696,6 +696,9 @@ var spine;
 			var attachmentName = this.attachmentNames[frameIndex];
 			skeleton.slots[this.slotIndex]
 				.setAttachment(attachmentName == null ? null : skeleton.getAttachment(this.slotIndex, attachmentName));
+		};
+		AttachmentTimeline.prototype.setAttachment = function (skeleton, slot, attachmentName) {
+			slot.setAttachment(attachmentName == null ? null : skeleton.getAttachment(this.slotIndex, attachmentName));
 		};
 		return AttachmentTimeline;
 	}());
@@ -955,8 +958,9 @@ var spine;
 		DrawOrderTimeline.prototype.apply = function (skeleton, lastTime, time, firedEvents, alpha, blend, direction) {
 			var drawOrder = skeleton.drawOrder;
 			var slots = skeleton.slots;
-			if (direction == MixDirection.mixOut && blend == MixBlend.setup) {
-				spine.Utils.arrayCopy(skeleton.slots, 0, skeleton.drawOrder, 0, skeleton.slots.length);
+			if (direction == MixDirection.mixOut) {
+				if (blend == MixBlend.setup)
+					spine.Utils.arrayCopy(skeleton.slots, 0, skeleton.drawOrder, 0, skeleton.slots.length);
 				return;
 			}
 			var frames = this.frames;
@@ -1348,6 +1352,7 @@ var spine;
 		function AnimationState(data) {
 			this.tracks = new Array();
 			this.timeScale = 1;
+			this.unkeyedState = 0;
 			this.events = new Array();
 			this.listeners = new Array();
 			this.queue = new EventQueue(this);
@@ -1437,12 +1442,12 @@ var spine;
 			var events = this.events;
 			var tracks = this.tracks;
 			var applied = false;
-			for (var i = 0, n = tracks.length; i < n; i++) {
-				var current = tracks[i];
+			for (var i_16 = 0, n_1 = tracks.length; i_16 < n_1; i_16++) {
+				var current = tracks[i_16];
 				if (current == null || current.delay > 0)
 					continue;
 				applied = true;
-				var blend = i == 0 ? spine.MixBlend.first : current.mixBlend;
+				var blend = i_16 == 0 ? spine.MixBlend.first : current.mixBlend;
 				var mix = current.alpha;
 				if (current.mixingFrom != null)
 					mix *= this.applyMixingFrom(current, skeleton, blend);
@@ -1451,10 +1456,14 @@ var spine;
 				var animationLast = current.animationLast, animationTime = current.getAnimationTime();
 				var timelineCount = current.animation.timelines.length;
 				var timelines = current.animation.timelines;
-				if ((i == 0 && mix == 1) || blend == spine.MixBlend.add) {
+				if ((i_16 == 0 && mix == 1) || blend == spine.MixBlend.add) {
 					for (var ii = 0; ii < timelineCount; ii++) {
 						spine.Utils.webkit602BugfixHelper(mix, blend);
-						timelines[ii].apply(skeleton, animationLast, animationTime, events, mix, blend, spine.MixDirection.mixIn);
+						var timeline = timelines[ii];
+						if (timeline instanceof spine.AttachmentTimeline)
+							this.applyAttachmentTimeline(timeline, skeleton, animationTime, blend, true);
+						else
+							timeline.apply(skeleton, animationLast, animationTime, events, mix, blend, spine.MixDirection.mixIn);
 					}
 				}
 				else {
@@ -1464,14 +1473,17 @@ var spine;
 						spine.Utils.setArraySize(current.timelinesRotation, timelineCount << 1, null);
 					var timelinesRotation = current.timelinesRotation;
 					for (var ii = 0; ii < timelineCount; ii++) {
-						var timeline = timelines[ii];
-						var timelineBlend = (timelineMode[ii] & (AnimationState.NOT_LAST - 1)) == AnimationState.SUBSEQUENT ? blend : spine.MixBlend.setup;
-						if (timeline instanceof spine.RotateTimeline) {
-							this.applyRotateTimeline(timeline, skeleton, animationTime, mix, timelineBlend, timelinesRotation, ii << 1, firstFrame);
+						var timeline_1 = timelines[ii];
+						var timelineBlend = timelineMode[ii] == AnimationState.SUBSEQUENT ? blend : spine.MixBlend.setup;
+						if (timeline_1 instanceof spine.RotateTimeline) {
+							this.applyRotateTimeline(timeline_1, skeleton, animationTime, mix, timelineBlend, timelinesRotation, ii << 1, firstFrame);
+						}
+						else if (timeline_1 instanceof spine.AttachmentTimeline) {
+							this.applyAttachmentTimeline(timeline_1, skeleton, animationTime, blend, true);
 						}
 						else {
 							spine.Utils.webkit602BugfixHelper(mix, blend);
-							timeline.apply(skeleton, animationLast, animationTime, events, mix, timelineBlend, spine.MixDirection.mixIn);
+							timeline_1.apply(skeleton, animationLast, animationTime, events, mix, timelineBlend, spine.MixDirection.mixIn);
 						}
 					}
 				}
@@ -1480,6 +1492,16 @@ var spine;
 				current.nextAnimationLast = animationTime;
 				current.nextTrackLast = current.trackTime;
 			}
+			var setupState = this.unkeyedState + AnimationState.SETUP;
+			var slots = skeleton.slots;
+			for (var i = 0, n = skeleton.slots.length; i < n; i++) {
+				var slot = slots[i];
+				if (slot.attachmentState == setupState) {
+					var attachmentName = slot.data.attachmentName;
+					slot.setAttachment(attachmentName == null ? null : skeleton.getAttachment(slot.data.index, attachmentName));
+				}
+			}
+			this.unkeyedState += 2;
 			this.queue.drain();
 			return applied;
 		};
@@ -1523,23 +1545,22 @@ var spine;
 					var direction = spine.MixDirection.mixOut;
 					var timelineBlend = void 0;
 					var alpha = 0;
-					switch (timelineMode[i] & (AnimationState.NOT_LAST - 1)) {
+					switch (timelineMode[i]) {
 						case AnimationState.SUBSEQUENT:
-							timelineBlend = blend;
-							if (!attachments && timeline instanceof spine.AttachmentTimeline) {
-								if ((timelineMode[i] & AnimationState.NOT_LAST) == AnimationState.NOT_LAST)
-									continue;
-								timelineBlend = spine.MixBlend.setup;
-							}
 							if (!drawOrder && timeline instanceof spine.DrawOrderTimeline)
 								continue;
+							timelineBlend = blend;
 							alpha = alphaMix;
 							break;
 						case AnimationState.FIRST:
 							timelineBlend = spine.MixBlend.setup;
 							alpha = alphaMix;
 							break;
-						case AnimationState.HOLD:
+						case AnimationState.HOLD_SUBSEQUENT:
+							timelineBlend = blend;
+							alpha = alphaHold;
+							break;
+						case AnimationState.HOLD_FIRST:
 							timelineBlend = spine.MixBlend.setup;
 							alpha = alphaHold;
 							break;
@@ -1552,18 +1573,12 @@ var spine;
 					from.totalAlpha += alpha;
 					if (timeline instanceof spine.RotateTimeline)
 						this.applyRotateTimeline(timeline, skeleton, animationTime, alpha, timelineBlend, timelinesRotation, i << 1, firstFrame);
+					else if (timeline instanceof spine.AttachmentTimeline)
+						this.applyAttachmentTimeline(timeline, skeleton, animationTime, timelineBlend, attachments);
 					else {
 						spine.Utils.webkit602BugfixHelper(alpha, blend);
-						if (timelineBlend == spine.MixBlend.setup) {
-							if (timeline instanceof spine.AttachmentTimeline) {
-								if (attachments || (timelineMode[i] & AnimationState.NOT_LAST) == AnimationState.NOT_LAST)
-									direction = spine.MixDirection.mixIn;
-							}
-							else if (timeline instanceof spine.DrawOrderTimeline) {
-								if (drawOrder)
-									direction = spine.MixDirection.mixIn;
-							}
-						}
+						if (drawOrder && timeline instanceof spine.DrawOrderTimeline && timelineBlend == spine.MixBlend.setup)
+							direction = spine.MixDirection.mixIn;
 						timeline.apply(skeleton, animationLast, animationTime, events, alpha, timelineBlend, direction);
 					}
 				}
@@ -1574,6 +1589,31 @@ var spine;
 			from.nextAnimationLast = animationTime;
 			from.nextTrackLast = from.trackTime;
 			return mix;
+		};
+		AnimationState.prototype.applyAttachmentTimeline = function (timeline, skeleton, time, blend, attachments) {
+			var slot = skeleton.slots[timeline.slotIndex];
+			if (!slot.bone.active)
+				return;
+			var frames = timeline.frames;
+			if (time < frames[0]) {
+				if (blend == spine.MixBlend.setup || blend == spine.MixBlend.first)
+					this.setAttachment(skeleton, slot, slot.data.attachmentName, attachments);
+			}
+			else {
+				var frameIndex;
+				if (time >= frames[frames.length - 1])
+					frameIndex = frames.length - 1;
+				else
+					frameIndex = spine.Animation.binarySearch(frames, time) - 1;
+				this.setAttachment(skeleton, slot, timeline.attachmentNames[frameIndex], attachments);
+			}
+			if (slot.attachmentState <= this.unkeyedState)
+				slot.attachmentState = this.unkeyedState + AnimationState.SETUP;
+		};
+		AnimationState.prototype.setAttachment = function (skeleton, slot, attachmentName, attachments) {
+			slot.setAttachment(attachmentName == null ? null : skeleton.getAttachment(slot.data.index, attachmentName));
+			if (attachments)
+				slot.attachmentState = this.unkeyedState + AnimationState.CURRENT;
 		};
 		AnimationState.prototype.applyRotateTimeline = function (timeline, skeleton, time, alpha, blend, timelinesRotation, i, firstFrame) {
 			if (firstFrame)
@@ -1863,14 +1903,6 @@ var spine;
 					entry = entry.mixingTo;
 				} while (entry != null);
 			}
-			this.propertyIDs.clear();
-			for (var i = this.tracks.length - 1; i >= 0; i--) {
-				var entry = this.tracks[i];
-				while (entry != null) {
-					this.computeNotLast(entry);
-					entry = entry.mixingFrom;
-				}
-			}
 		};
 		AnimationState.prototype.computeHold = function (entry) {
 			var to = entry.mixingTo;
@@ -1882,8 +1914,7 @@ var spine;
 			var propertyIDs = this.propertyIDs;
 			if (to != null && to.holdPrevious) {
 				for (var i = 0; i < timelinesCount; i++) {
-					propertyIDs.add(timelines[i].getPropertyId());
-					timelineMode[i] = AnimationState.HOLD;
+					timelineMode[i] = propertyIDs.add(timelines[i].getPropertyId()) ? AnimationState.HOLD_FIRST : AnimationState.HOLD_SUBSEQUENT;
 				}
 				return;
 			}
@@ -1907,20 +1938,7 @@ var spine;
 						}
 						break;
 					}
-					timelineMode[i] = AnimationState.HOLD;
-				}
-			}
-		};
-		AnimationState.prototype.computeNotLast = function (entry) {
-			var timelines = entry.animation.timelines;
-			var timelinesCount = entry.animation.timelines.length;
-			var timelineMode = entry.timelineMode;
-			var propertyIDs = this.propertyIDs;
-			for (var i = 0; i < timelinesCount; i++) {
-				if (timelines[i] instanceof spine.AttachmentTimeline) {
-					var timeline = timelines[i];
-					if (!propertyIDs.add(timeline.slotIndex))
-						timelineMode[i] |= AnimationState.NOT_LAST;
+					timelineMode[i] = AnimationState.HOLD_FIRST;
 				}
 			}
 		};
@@ -1948,9 +1966,11 @@ var spine;
 		AnimationState.emptyAnimation = new spine.Animation("<empty>", [], 0);
 		AnimationState.SUBSEQUENT = 0;
 		AnimationState.FIRST = 1;
-		AnimationState.HOLD = 2;
-		AnimationState.HOLD_MIX = 3;
-		AnimationState.NOT_LAST = 4;
+		AnimationState.HOLD_SUBSEQUENT = 2;
+		AnimationState.HOLD_FIRST = 3;
+		AnimationState.HOLD_MIX = 4;
+		AnimationState.SETUP = 1;
+		AnimationState.CURRENT = 2;
 		return AnimationState;
 	}());
 	spine.AnimationState = AnimationState;
@@ -2550,6 +2570,8 @@ var spine;
 					var prx = 0;
 					if (s > 0.0001) {
 						s = Math.abs(pa * pd - pb * pc) / s;
+						pa /= this.skeleton.scaleX;
+						pc /= this.skeleton.scaleY;
 						pb = pc * s;
 						pd = pa * s;
 						prx = Math.atan2(pc, pa) * spine.MathUtils.radDeg;
@@ -2828,10 +2850,12 @@ var spine;
 					ty = targetY - bone.worldY;
 					break;
 				case spine.TransformMode.NoRotationOrReflection:
-					rotationIK += Math.atan2(pc, pa) * spine.MathUtils.radDeg;
-					var ps = Math.abs(pa * pd - pb * pc) / (pa * pa + pc * pc);
-					pb = -pc * ps;
-					pd = pa * ps;
+					var s = Math.abs(pa * pd - pb * pc) / (pa * pa + pc * pc);
+					var sa = pa / bone.skeleton.scaleX;
+					var sc = pc / bone.skeleton.scaleY;
+					pb = -sc * s * bone.skeleton.scaleX;
+					pd = sa * s * bone.skeleton.scaleY;
+					rotationIK += Math.atan2(sc, sa) * spine.MathUtils.radDeg;
 				default:
 					var x = targetX - p.worldX, y = targetY - p.worldY;
 					var d = pa * pd - pb * pc;
@@ -3550,15 +3574,35 @@ var spine;
 			path = this.pathPrefix + path;
 			if (!this.queueAsset(clientId, textureLoader, path))
 				return;
-			var img = new Image();
-			img.crossOrigin = "anonymous";
-			img.onload = function (ev) {
-				_this.rawAssets[path] = img;
-			};
-			img.onerror = function (ev) {
-				_this.errors[path] = "Couldn't load image " + path;
-			};
-			img.src = path;
+			var isBrowser = !!(typeof window !== 'undefined' && typeof navigator !== 'undefined' && window.document);
+			var isWebWorker = !isBrowser && typeof importScripts !== 'undefined';
+			if (isWebWorker) {
+				var options = { mode: "cors" };
+				fetch(path, options).then(function (response) {
+					if (!response.ok) {
+						_this.errors[path] = "Couldn't load image " + path;
+					}
+					return response.blob();
+				}).then(function (blob) {
+					return createImageBitmap(blob, {
+						premultiplyAlpha: 'none',
+						colorSpaceConversion: 'none'
+					});
+				}).then(function (bitmap) {
+					_this.rawAssets[path] = bitmap;
+				});
+			}
+			else {
+				var img_1 = new Image();
+				img_1.crossOrigin = "anonymous";
+				img_1.onload = function (ev) {
+					_this.rawAssets[path] = img_1;
+				};
+				img_1.onerror = function (ev) {
+					_this.errors[path] = "Couldn't load image " + path;
+				};
+				img_1.src = path;
+			}
 		};
 		SharedAssetManager.prototype.get = function (clientId, path) {
 			path = this.pathPrefix + path;
@@ -3568,6 +3612,8 @@ var spine;
 			return clientAssets.assets[path];
 		};
 		SharedAssetManager.prototype.updateClientAssets = function (clientAssets) {
+			var isBrowser = !!(typeof window !== 'undefined' && typeof navigator !== 'undefined' && window.document);
+			var isWebWorker = !isBrowser && typeof importScripts !== 'undefined';
 			for (var i = 0; i < clientAssets.toLoad.length; i++) {
 				var path = clientAssets.toLoad[i];
 				var asset = clientAssets.assets[path];
@@ -3575,11 +3621,21 @@ var spine;
 					var rawAsset = this.rawAssets[path];
 					if (rawAsset === null || rawAsset === undefined)
 						continue;
-					if (rawAsset instanceof HTMLImageElement) {
-						clientAssets.assets[path] = clientAssets.textureLoader(rawAsset);
+					if (isWebWorker) {
+						if (rawAsset instanceof ImageBitmap) {
+							clientAssets.assets[path] = clientAssets.textureLoader(rawAsset);
+						}
+						else {
+							clientAssets.assets[path] = rawAsset;
+						}
 					}
 					else {
-						clientAssets.assets[path] = rawAsset;
+						if (rawAsset instanceof HTMLImageElement) {
+							clientAssets.assets[path] = clientAssets.textureLoader(rawAsset);
+						}
+						else {
+							clientAssets.assets[path] = rawAsset;
+						}
 					}
 				}
 			}
@@ -5074,7 +5130,7 @@ var spine;
 			var clippingPolygon = this.clippingPolygon;
 			SkeletonClipping.makeClockwise(clippingPolygon);
 			var clippingPolygons = this.clippingPolygons = this.triangulator.decompose(clippingPolygon, this.triangulator.triangulate(clippingPolygon));
-			for (var i = 0, n_1 = clippingPolygons.length; i < n_1; i++) {
+			for (var i = 0, n_2 = clippingPolygons.length; i < n_2; i++) {
 				var polygon = clippingPolygons[i];
 				SkeletonClipping.makeClockwise(polygon);
 				polygon.push(polygon[0]);
@@ -7490,9 +7546,7 @@ var spine;
 		};
 		Pool.prototype.freeAll = function (items) {
 			for (var i = 0; i < items.length; i++) {
-				if (items[i].reset)
-					items[i].reset();
-				this.items[i] = items[i];
+				this.free(items[i]);
 			}
 		};
 		Pool.prototype.clear = function () {
@@ -7729,7 +7783,7 @@ var spine;
 			return _this;
 		}
 		BoundingBoxAttachment.prototype.copy = function () {
-			var copy = new BoundingBoxAttachment(name);
+			var copy = new BoundingBoxAttachment(this.name);
 			this.copyTo(copy);
 			copy.color.setFromColor(this.color);
 			return copy;
@@ -7748,7 +7802,7 @@ var spine;
 			return _this;
 		}
 		ClippingAttachment.prototype.copy = function () {
-			var copy = new ClippingAttachment(name);
+			var copy = new ClippingAttachment(this.name);
 			this.copyTo(copy);
 			copy.endSlot = this.endSlot;
 			copy.color.setFromColor(this.color);
@@ -7892,7 +7946,7 @@ var spine;
 			return _this;
 		}
 		PathAttachment.prototype.copy = function () {
-			var copy = new PathAttachment(name);
+			var copy = new PathAttachment(this.name);
 			this.copyTo(copy);
 			copy.lengths = new Array(this.lengths.length);
 			spine.Utils.arrayCopy(this.lengths, 0, copy.lengths, 0, this.lengths.length);
@@ -7926,7 +7980,7 @@ var spine;
 			return Math.atan2(y, x) * spine.MathUtils.radDeg;
 		};
 		PointAttachment.prototype.copy = function () {
-			var copy = new PointAttachment(name);
+			var copy = new PointAttachment(this.name);
 			copy.x = this.x;
 			copy.y = this.y;
 			copy.rotation = this.rotation;
@@ -8034,7 +8088,7 @@ var spine;
 			worldVertices[offset + 1] = offsetX * c + offsetY * d + y;
 		};
 		RegionAttachment.prototype.copy = function () {
-			var copy = new RegionAttachment(name);
+			var copy = new RegionAttachment(this.name);
 			copy.region = this.region;
 			copy.rendererObject = this.rendererObject;
 			copy.path = this.path;
@@ -8152,3 +8206,5 @@ var spine;
 	spine.SwirlEffect = SwirlEffect;
 })(spine || (spine = {}));
 //# sourceMappingURL=spine-core.js.map
+
+export { spine };
