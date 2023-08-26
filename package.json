@@ -38,7 +38,6 @@
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-node-resolve": "^15.2.1",
     "@rollup/plugin-terser": "^0.4.3",
-    "esbuild": "^0.19.2",
     "eslint": "^8.48.0",
     "http-server": "^14.1.1",
     "rollup": "^3.28.1",
