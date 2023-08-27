@@ -1918,7 +1918,7 @@ var spine = (function (pc) {
 	          _this.loaded++;
 	          return;
 	        }
-	        var _loop_1 = function (atlasPage) {
+	        var _loop_1 = function _loop_1(atlasPage) {
 	          var pageLoadError = false;
 	          _this.loadTexture(atlasPage, function (imagePath, image) {
 	            pagesLoaded.count++;
@@ -6318,7 +6318,557 @@ var spine = (function (pc) {
 	  spine.SwirlEffect = SwirlEffect;
 	})(spine$1 || (spine$1 = {}));
 
-	const TO_TEXTURE_FILTER = {
+	function _iterableToArrayLimit(r, l) {
+	  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+	  if (null != t) {
+	    var e,
+	      n,
+	      i,
+	      u,
+	      a = [],
+	      f = !0,
+	      o = !1;
+	    try {
+	      if (i = (t = t.call(r)).next, 0 === l) {
+	        if (Object(t) !== t) return;
+	        f = !1;
+	      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+	    } catch (r) {
+	      o = !0, n = r;
+	    } finally {
+	      try {
+	        if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
+	      } finally {
+	        if (o) throw n;
+	      }
+	    }
+	    return a;
+	  }
+	}
+	function _regeneratorRuntime() {
+	  _regeneratorRuntime = function () {
+	    return e;
+	  };
+	  var t,
+	    e = {},
+	    r = Object.prototype,
+	    n = r.hasOwnProperty,
+	    o = Object.defineProperty || function (t, e, r) {
+	      t[e] = r.value;
+	    },
+	    i = "function" == typeof Symbol ? Symbol : {},
+	    a = i.iterator || "@@iterator",
+	    c = i.asyncIterator || "@@asyncIterator",
+	    u = i.toStringTag || "@@toStringTag";
+	  function define(t, e, r) {
+	    return Object.defineProperty(t, e, {
+	      value: r,
+	      enumerable: !0,
+	      configurable: !0,
+	      writable: !0
+	    }), t[e];
+	  }
+	  try {
+	    define({}, "");
+	  } catch (t) {
+	    define = function (t, e, r) {
+	      return t[e] = r;
+	    };
+	  }
+	  function wrap(t, e, r, n) {
+	    var i = e && e.prototype instanceof Generator ? e : Generator,
+	      a = Object.create(i.prototype),
+	      c = new Context(n || []);
+	    return o(a, "_invoke", {
+	      value: makeInvokeMethod(t, r, c)
+	    }), a;
+	  }
+	  function tryCatch(t, e, r) {
+	    try {
+	      return {
+	        type: "normal",
+	        arg: t.call(e, r)
+	      };
+	    } catch (t) {
+	      return {
+	        type: "throw",
+	        arg: t
+	      };
+	    }
+	  }
+	  e.wrap = wrap;
+	  var h = "suspendedStart",
+	    l = "suspendedYield",
+	    f = "executing",
+	    s = "completed",
+	    y = {};
+	  function Generator() {}
+	  function GeneratorFunction() {}
+	  function GeneratorFunctionPrototype() {}
+	  var p = {};
+	  define(p, a, function () {
+	    return this;
+	  });
+	  var d = Object.getPrototypeOf,
+	    v = d && d(d(values([])));
+	  v && v !== r && n.call(v, a) && (p = v);
+	  var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p);
+	  function defineIteratorMethods(t) {
+	    ["next", "throw", "return"].forEach(function (e) {
+	      define(t, e, function (t) {
+	        return this._invoke(e, t);
+	      });
+	    });
+	  }
+	  function AsyncIterator(t, e) {
+	    function invoke(r, o, i, a) {
+	      var c = tryCatch(t[r], t, o);
+	      if ("throw" !== c.type) {
+	        var u = c.arg,
+	          h = u.value;
+	        return h && "object" == typeof h && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) {
+	          invoke("next", t, i, a);
+	        }, function (t) {
+	          invoke("throw", t, i, a);
+	        }) : e.resolve(h).then(function (t) {
+	          u.value = t, i(u);
+	        }, function (t) {
+	          return invoke("throw", t, i, a);
+	        });
+	      }
+	      a(c.arg);
+	    }
+	    var r;
+	    o(this, "_invoke", {
+	      value: function (t, n) {
+	        function callInvokeWithMethodAndArg() {
+	          return new e(function (e, r) {
+	            invoke(t, n, e, r);
+	          });
+	        }
+	        return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
+	      }
+	    });
+	  }
+	  function makeInvokeMethod(e, r, n) {
+	    var o = h;
+	    return function (i, a) {
+	      if (o === f) throw new Error("Generator is already running");
+	      if (o === s) {
+	        if ("throw" === i) throw a;
+	        return {
+	          value: t,
+	          done: !0
+	        };
+	      }
+	      for (n.method = i, n.arg = a;;) {
+	        var c = n.delegate;
+	        if (c) {
+	          var u = maybeInvokeDelegate(c, n);
+	          if (u) {
+	            if (u === y) continue;
+	            return u;
+	          }
+	        }
+	        if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) {
+	          if (o === h) throw o = s, n.arg;
+	          n.dispatchException(n.arg);
+	        } else "return" === n.method && n.abrupt("return", n.arg);
+	        o = f;
+	        var p = tryCatch(e, r, n);
+	        if ("normal" === p.type) {
+	          if (o = n.done ? s : l, p.arg === y) continue;
+	          return {
+	            value: p.arg,
+	            done: n.done
+	          };
+	        }
+	        "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg);
+	      }
+	    };
+	  }
+	  function maybeInvokeDelegate(e, r) {
+	    var n = r.method,
+	      o = e.iterator[n];
+	    if (o === t) return r.delegate = null, "throw" === n && e.iterator.return && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y;
+	    var i = tryCatch(o, e.iterator, r.arg);
+	    if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y;
+	    var a = i.arg;
+	    return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y);
+	  }
+	  function pushTryEntry(t) {
+	    var e = {
+	      tryLoc: t[0]
+	    };
+	    1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e);
+	  }
+	  function resetTryEntry(t) {
+	    var e = t.completion || {};
+	    e.type = "normal", delete e.arg, t.completion = e;
+	  }
+	  function Context(t) {
+	    this.tryEntries = [{
+	      tryLoc: "root"
+	    }], t.forEach(pushTryEntry, this), this.reset(!0);
+	  }
+	  function values(e) {
+	    if (e || "" === e) {
+	      var r = e[a];
+	      if (r) return r.call(e);
+	      if ("function" == typeof e.next) return e;
+	      if (!isNaN(e.length)) {
+	        var o = -1,
+	          i = function next() {
+	            for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next;
+	            return next.value = t, next.done = !0, next;
+	          };
+	        return i.next = i;
+	      }
+	    }
+	    throw new TypeError(typeof e + " is not iterable");
+	  }
+	  return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", {
+	    value: GeneratorFunctionPrototype,
+	    configurable: !0
+	  }), o(GeneratorFunctionPrototype, "constructor", {
+	    value: GeneratorFunction,
+	    configurable: !0
+	  }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) {
+	    var e = "function" == typeof t && t.constructor;
+	    return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name));
+	  }, e.mark = function (t) {
+	    return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t;
+	  }, e.awrap = function (t) {
+	    return {
+	      __await: t
+	    };
+	  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () {
+	    return this;
+	  }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) {
+	    void 0 === i && (i = Promise);
+	    var a = new AsyncIterator(wrap(t, r, n, o), i);
+	    return e.isGeneratorFunction(r) ? a : a.next().then(function (t) {
+	      return t.done ? t.value : a.next();
+	    });
+	  }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () {
+	    return this;
+	  }), define(g, "toString", function () {
+	    return "[object Generator]";
+	  }), e.keys = function (t) {
+	    var e = Object(t),
+	      r = [];
+	    for (var n in e) r.push(n);
+	    return r.reverse(), function next() {
+	      for (; r.length;) {
+	        var t = r.pop();
+	        if (t in e) return next.value = t, next.done = !1, next;
+	      }
+	      return next.done = !0, next;
+	    };
+	  }, e.values = values, Context.prototype = {
+	    constructor: Context,
+	    reset: function (e) {
+	      if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t);
+	    },
+	    stop: function () {
+	      this.done = !0;
+	      var t = this.tryEntries[0].completion;
+	      if ("throw" === t.type) throw t.arg;
+	      return this.rval;
+	    },
+	    dispatchException: function (e) {
+	      if (this.done) throw e;
+	      var r = this;
+	      function handle(n, o) {
+	        return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o;
+	      }
+	      for (var o = this.tryEntries.length - 1; o >= 0; --o) {
+	        var i = this.tryEntries[o],
+	          a = i.completion;
+	        if ("root" === i.tryLoc) return handle("end");
+	        if (i.tryLoc <= this.prev) {
+	          var c = n.call(i, "catchLoc"),
+	            u = n.call(i, "finallyLoc");
+	          if (c && u) {
+	            if (this.prev < i.catchLoc) return handle(i.catchLoc, !0);
+	            if (this.prev < i.finallyLoc) return handle(i.finallyLoc);
+	          } else if (c) {
+	            if (this.prev < i.catchLoc) return handle(i.catchLoc, !0);
+	          } else {
+	            if (!u) throw new Error("try statement without catch or finally");
+	            if (this.prev < i.finallyLoc) return handle(i.finallyLoc);
+	          }
+	        }
+	      }
+	    },
+	    abrupt: function (t, e) {
+	      for (var r = this.tryEntries.length - 1; r >= 0; --r) {
+	        var o = this.tryEntries[r];
+	        if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) {
+	          var i = o;
+	          break;
+	        }
+	      }
+	      i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null);
+	      var a = i ? i.completion : {};
+	      return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a);
+	    },
+	    complete: function (t, e) {
+	      if ("throw" === t.type) throw t.arg;
+	      return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y;
+	    },
+	    finish: function (t) {
+	      for (var e = this.tryEntries.length - 1; e >= 0; --e) {
+	        var r = this.tryEntries[e];
+	        if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y;
+	      }
+	    },
+	    catch: function (t) {
+	      for (var e = this.tryEntries.length - 1; e >= 0; --e) {
+	        var r = this.tryEntries[e];
+	        if (r.tryLoc === t) {
+	          var n = r.completion;
+	          if ("throw" === n.type) {
+	            var o = n.arg;
+	            resetTryEntry(r);
+	          }
+	          return o;
+	        }
+	      }
+	      throw new Error("illegal catch attempt");
+	    },
+	    delegateYield: function (e, r, n) {
+	      return this.delegate = {
+	        iterator: values(e),
+	        resultName: r,
+	        nextLoc: n
+	      }, "next" === this.method && (this.arg = t), y;
+	    }
+	  }, e;
+	}
+	function _typeof(o) {
+	  "@babel/helpers - typeof";
+
+	  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
+	    return typeof o;
+	  } : function (o) {
+	    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+	  }, _typeof(o);
+	}
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError("Cannot call a class as a function");
+	  }
+	}
+	function _defineProperties(target, props) {
+	  for (var i = 0; i < props.length; i++) {
+	    var descriptor = props[i];
+	    descriptor.enumerable = descriptor.enumerable || false;
+	    descriptor.configurable = true;
+	    if ("value" in descriptor) descriptor.writable = true;
+	    Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor);
+	  }
+	}
+	function _createClass(Constructor, protoProps, staticProps) {
+	  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+	  if (staticProps) _defineProperties(Constructor, staticProps);
+	  Object.defineProperty(Constructor, "prototype", {
+	    writable: false
+	  });
+	  return Constructor;
+	}
+	function _inherits(subClass, superClass) {
+	  if (typeof superClass !== "function" && superClass !== null) {
+	    throw new TypeError("Super expression must either be null or a function");
+	  }
+	  subClass.prototype = Object.create(superClass && superClass.prototype, {
+	    constructor: {
+	      value: subClass,
+	      writable: true,
+	      configurable: true
+	    }
+	  });
+	  Object.defineProperty(subClass, "prototype", {
+	    writable: false
+	  });
+	  if (superClass) _setPrototypeOf(subClass, superClass);
+	}
+	function _getPrototypeOf(o) {
+	  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) {
+	    return o.__proto__ || Object.getPrototypeOf(o);
+	  };
+	  return _getPrototypeOf(o);
+	}
+	function _setPrototypeOf(o, p) {
+	  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
+	    o.__proto__ = p;
+	    return o;
+	  };
+	  return _setPrototypeOf(o, p);
+	}
+	function _isNativeReflectConstruct() {
+	  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	  if (Reflect.construct.sham) return false;
+	  if (typeof Proxy === "function") return true;
+	  try {
+	    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    return true;
+	  } catch (e) {
+	    return false;
+	  }
+	}
+	function _assertThisInitialized(self) {
+	  if (self === void 0) {
+	    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	  }
+	  return self;
+	}
+	function _possibleConstructorReturn(self, call) {
+	  if (call && (typeof call === "object" || typeof call === "function")) {
+	    return call;
+	  } else if (call !== void 0) {
+	    throw new TypeError("Derived constructors may only return object or undefined");
+	  }
+	  return _assertThisInitialized(self);
+	}
+	function _createSuper(Derived) {
+	  var hasNativeReflectConstruct = _isNativeReflectConstruct();
+	  return function _createSuperInternal() {
+	    var Super = _getPrototypeOf(Derived),
+	      result;
+	    if (hasNativeReflectConstruct) {
+	      var NewTarget = _getPrototypeOf(this).constructor;
+	      result = Reflect.construct(Super, arguments, NewTarget);
+	    } else {
+	      result = Super.apply(this, arguments);
+	    }
+	    return _possibleConstructorReturn(this, result);
+	  };
+	}
+	function _superPropBase(object, property) {
+	  while (!Object.prototype.hasOwnProperty.call(object, property)) {
+	    object = _getPrototypeOf(object);
+	    if (object === null) break;
+	  }
+	  return object;
+	}
+	function _get$1() {
+	  if (typeof Reflect !== "undefined" && Reflect.get) {
+	    _get$1 = Reflect.get.bind();
+	  } else {
+	    _get$1 = function _get(target, property, receiver) {
+	      var base = _superPropBase(target, property);
+	      if (!base) return;
+	      var desc = Object.getOwnPropertyDescriptor(base, property);
+	      if (desc.get) {
+	        return desc.get.call(arguments.length < 3 ? target : receiver);
+	      }
+	      return desc.value;
+	    };
+	  }
+	  return _get$1.apply(this, arguments);
+	}
+	function _slicedToArray(arr, i) {
+	  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+	}
+	function _toConsumableArray(arr) {
+	  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+	}
+	function _arrayWithoutHoles(arr) {
+	  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+	}
+	function _arrayWithHoles(arr) {
+	  if (Array.isArray(arr)) return arr;
+	}
+	function _iterableToArray(iter) {
+	  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+	}
+	function _unsupportedIterableToArray(o, minLen) {
+	  if (!o) return;
+	  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+	  var n = Object.prototype.toString.call(o).slice(8, -1);
+	  if (n === "Object" && o.constructor) n = o.constructor.name;
+	  if (n === "Map" || n === "Set") return Array.from(o);
+	  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+	}
+	function _arrayLikeToArray(arr, len) {
+	  if (len == null || len > arr.length) len = arr.length;
+	  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+	  return arr2;
+	}
+	function _nonIterableSpread() {
+	  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+	}
+	function _nonIterableRest() {
+	  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+	}
+	function _createForOfIteratorHelper(o, allowArrayLike) {
+	  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
+	  if (!it) {
+	    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+	      if (it) o = it;
+	      var i = 0;
+	      var F = function () {};
+	      return {
+	        s: F,
+	        n: function () {
+	          if (i >= o.length) return {
+	            done: true
+	          };
+	          return {
+	            done: false,
+	            value: o[i++]
+	          };
+	        },
+	        e: function (e) {
+	          throw e;
+	        },
+	        f: F
+	      };
+	    }
+	    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+	  }
+	  var normalCompletion = true,
+	    didErr = false,
+	    err;
+	  return {
+	    s: function () {
+	      it = it.call(o);
+	    },
+	    n: function () {
+	      var step = it.next();
+	      normalCompletion = step.done;
+	      return step;
+	    },
+	    e: function (e) {
+	      didErr = true;
+	      err = e;
+	    },
+	    f: function () {
+	      try {
+	        if (!normalCompletion && it.return != null) it.return();
+	      } finally {
+	        if (didErr) throw err;
+	      }
+	    }
+	  };
+	}
+	function _toPrimitive(input, hint) {
+	  if (typeof input !== "object" || input === null) return input;
+	  var prim = input[Symbol.toPrimitive];
+	  if (prim !== undefined) {
+	    var res = prim.call(input, hint || "default");
+	    if (typeof res !== "object") return res;
+	    throw new TypeError("@@toPrimitive must return a primitive value.");
+	  }
+	  return (hint === "string" ? String : Number)(input);
+	}
+	function _toPropertyKey(arg) {
+	  var key = _toPrimitive(arg, "string");
+	  return typeof key === "symbol" ? key : String(key);
+	}
+
+	var TO_TEXTURE_FILTER = {
 	  9728: pc.FILTER_NEAREST,
 	  9729: pc.FILTER_LINEAR,
 	  9984: pc.FILTER_NEAREST_MIPMAP_NEAREST,
@@ -6326,276 +6876,203 @@ var spine = (function (pc) {
 	  9986: pc.FILTER_NEAREST_MIPMAP_LINEAR,
 	  9987: pc.FILTER_LINEAR_MIPMAP_LINEAR
 	};
-	const TO_UV_WRAP_MODE = {
+	var TO_UV_WRAP_MODE = {
 	  33648: pc.ADDRESS_MIRRORED_REPEAT,
 	  33071: pc.ADDRESS_CLAMP_TO_EDGE,
 	  10487: pc.ADDRESS_REPEAT
 	};
-	class SpineTextureWrapper {
-	  constructor(texture) {
+	var SpineTextureWrapper = function () {
+	  function SpineTextureWrapper(texture) {
+	    _classCallCheck(this, SpineTextureWrapper);
 	    this._image = {
 	      width: texture.width,
 	      height: texture.height
 	    };
 	    this.pcTexture = texture;
 	  }
-	  setFilters(minFilter, magFilter) {
-	    this.pcTexture.minFilter = TO_TEXTURE_FILTER[minFilter];
-	    this.pcTexture.magFilter = TO_TEXTURE_FILTER[magFilter];
-	  }
-	  setWraps(uWrap, vWrap) {
-	    this.pcTexture.addressU = TO_UV_WRAP_MODE[uWrap];
-	    this.pcTexture.addressV = TO_UV_WRAP_MODE[vWrap];
-	  }
-	  getImage() {
-	    return this._image;
-	  }
-	  dispose() {
-	    // spine 4.1
-	    this.pcTexture.destroy();
-	  }
-	}
+	  _createClass(SpineTextureWrapper, [{
+	    key: "setFilters",
+	    value: function setFilters(minFilter, magFilter) {
+	      this.pcTexture.minFilter = TO_TEXTURE_FILTER[minFilter];
+	      this.pcTexture.magFilter = TO_TEXTURE_FILTER[magFilter];
+	    }
+	  }, {
+	    key: "setWraps",
+	    value: function setWraps(uWrap, vWrap) {
+	      this.pcTexture.addressU = TO_UV_WRAP_MODE[uWrap];
+	      this.pcTexture.addressV = TO_UV_WRAP_MODE[vWrap];
+	    }
+	  }, {
+	    key: "getImage",
+	    value: function getImage() {
+	      return this._image;
+	    }
+	  }, {
+	    key: "dispose",
+	    value: function dispose() {
+	      this.pcTexture.destroy();
+	    }
+	  }]);
+	  return SpineTextureWrapper;
+	}();
 
 	function getDefaultExportFromCjs (x) {
 		return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 	}
 
-	// Note: this is the semver.org version of the spec that it implements
-	// Not necessarily the package version of this code.
-	const SEMVER_SPEC_VERSION = '2.0.0';
-	const MAX_LENGTH$1 = 256;
-	const MAX_SAFE_INTEGER$1 = Number.MAX_SAFE_INTEGER || /* istanbul ignore next */9007199254740991;
-
-	// Max safe segment length for coercion.
-	const MAX_SAFE_COMPONENT_LENGTH = 16;
-
-	// Max safe length for a build identifier. The max length minus 6 characters for
-	// the shortest version with a build 0.0.0+BUILD.
-	const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH$1 - 6;
-	const RELEASE_TYPES = ['major', 'premajor', 'minor', 'preminor', 'patch', 'prepatch', 'prerelease'];
+	var SEMVER_SPEC_VERSION = '2.0.0';
+	var MAX_LENGTH$1 = 256;
+	var MAX_SAFE_INTEGER$1 = Number.MAX_SAFE_INTEGER || 9007199254740991;
+	var MAX_SAFE_COMPONENT_LENGTH = 16;
+	var MAX_SAFE_BUILD_LENGTH = MAX_LENGTH$1 - 6;
+	var RELEASE_TYPES = ['major', 'premajor', 'minor', 'preminor', 'patch', 'prepatch', 'prerelease'];
 	var constants = {
 	  MAX_LENGTH: MAX_LENGTH$1,
-	  MAX_SAFE_COMPONENT_LENGTH,
-	  MAX_SAFE_BUILD_LENGTH,
+	  MAX_SAFE_COMPONENT_LENGTH: MAX_SAFE_COMPONENT_LENGTH,
+	  MAX_SAFE_BUILD_LENGTH: MAX_SAFE_BUILD_LENGTH,
 	  MAX_SAFE_INTEGER: MAX_SAFE_INTEGER$1,
-	  RELEASE_TYPES,
-	  SEMVER_SPEC_VERSION,
-	  FLAG_INCLUDE_PRERELEASE: 0b001,
-	  FLAG_LOOSE: 0b010
+	  RELEASE_TYPES: RELEASE_TYPES,
+	  SEMVER_SPEC_VERSION: SEMVER_SPEC_VERSION,
+	  FLAG_INCLUDE_PRERELEASE: 1,
+	  FLAG_LOOSE: 2
 	};
-	var constants$1 = /*@__PURE__*/getDefaultExportFromCjs(constants);
+	var constants$1 = getDefaultExportFromCjs(constants);
 
-	const debug$1 = typeof process === 'object' && process.env && process.env.NODE_DEBUG && /\bsemver\b/i.test(process.env.NODE_DEBUG) ? (...args) => console.error('SEMVER', ...args) : () => {};
+	var debug$1 = (typeof process === "undefined" ? "undefined" : _typeof(process)) === 'object' && process.env && process.env.NODE_DEBUG && /\bsemver\b/i.test(process.env.NODE_DEBUG) ? function () {
+	  var _console;
+	  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+	    args[_key] = arguments[_key];
+	  }
+	  return (_console = console).error.apply(_console, ['SEMVER'].concat(args));
+	} : function () {};
 	var debug_1 = debug$1;
+	getDefaultExportFromCjs(debug_1);
 
 	var re$2 = {exports: {}};
 
 	(function (module, exports) {
-	  const {
-	    MAX_SAFE_COMPONENT_LENGTH,
-	    MAX_SAFE_BUILD_LENGTH,
-	    MAX_LENGTH
-	  } = constants;
-	  const debug = debug_1;
+	  var MAX_SAFE_COMPONENT_LENGTH = constants.MAX_SAFE_COMPONENT_LENGTH,
+	    MAX_SAFE_BUILD_LENGTH = constants.MAX_SAFE_BUILD_LENGTH,
+	    MAX_LENGTH = constants.MAX_LENGTH;
+	  var debug = debug_1;
 	  exports = module.exports = {};
-
-	  // The actual regexps go on exports.re
-	  const re = exports.re = [];
-	  const safeRe = exports.safeRe = [];
-	  const src = exports.src = [];
-	  const t = exports.t = {};
-	  let R = 0;
-	  const LETTERDASHNUMBER = '[a-zA-Z0-9-]';
-
-	  // Replace some greedy regex tokens to prevent regex dos issues. These regex are
-	  // used internally via the safeRe object since all inputs in this library get
-	  // normalized first to trim and collapse all extra whitespace. The original
-	  // regexes are exported for userland consumption and lower level usage. A
-	  // future breaking change could export the safer regex only with a note that
-	  // all input should have extra whitespace removed.
-	  const safeRegexReplacements = [['\\s', 1], ['\\d', MAX_LENGTH], [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH]];
-	  const makeSafeRegex = value => {
-	    for (const [token, max] of safeRegexReplacements) {
-	      value = value.split(`${token}*`).join(`${token}{0,${max}}`).split(`${token}+`).join(`${token}{1,${max}}`);
+	  var re = exports.re = [];
+	  var safeRe = exports.safeRe = [];
+	  var src = exports.src = [];
+	  var t = exports.t = {};
+	  var R = 0;
+	  var LETTERDASHNUMBER = '[a-zA-Z0-9-]';
+	  var safeRegexReplacements = [['\\s', 1], ['\\d', MAX_LENGTH], [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH]];
+	  var makeSafeRegex = function makeSafeRegex(value) {
+	    for (var _i = 0, _safeRegexReplacement = safeRegexReplacements; _i < _safeRegexReplacement.length; _i++) {
+	      var _safeRegexReplacement2 = _slicedToArray(_safeRegexReplacement[_i], 2),
+	        token = _safeRegexReplacement2[0],
+	        max = _safeRegexReplacement2[1];
+	      value = value.split("".concat(token, "*")).join("".concat(token, "{0,").concat(max, "}")).split("".concat(token, "+")).join("".concat(token, "{1,").concat(max, "}"));
 	    }
 	    return value;
 	  };
-	  const createToken = (name, value, isGlobal) => {
-	    const safe = makeSafeRegex(value);
-	    const index = R++;
+	  var createToken = function createToken(name, value, isGlobal) {
+	    var safe = makeSafeRegex(value);
+	    var index = R++;
 	    debug(name, index, value);
 	    t[name] = index;
 	    src[index] = value;
 	    re[index] = new RegExp(value, isGlobal ? 'g' : undefined);
 	    safeRe[index] = new RegExp(safe, isGlobal ? 'g' : undefined);
 	  };
-
-	  // The following Regular Expressions can be used for tokenizing,
-	  // validating, and parsing SemVer version strings.
-
-	  // ## Numeric Identifier
-	  // A single `0`, or a non-zero digit followed by zero or more digits.
-
 	  createToken('NUMERICIDENTIFIER', '0|[1-9]\\d*');
 	  createToken('NUMERICIDENTIFIERLOOSE', '\\d+');
-
-	  // ## Non-numeric Identifier
-	  // Zero or more digits, followed by a letter or hyphen, and then zero or
-	  // more letters, digits, or hyphens.
-
-	  createToken('NONNUMERICIDENTIFIER', `\\d*[a-zA-Z-]${LETTERDASHNUMBER}*`);
-
-	  // ## Main Version
-	  // Three dot-separated numeric identifiers.
-
-	  createToken('MAINVERSION', `(${src[t.NUMERICIDENTIFIER]})\\.` + `(${src[t.NUMERICIDENTIFIER]})\\.` + `(${src[t.NUMERICIDENTIFIER]})`);
-	  createToken('MAINVERSIONLOOSE', `(${src[t.NUMERICIDENTIFIERLOOSE]})\\.` + `(${src[t.NUMERICIDENTIFIERLOOSE]})\\.` + `(${src[t.NUMERICIDENTIFIERLOOSE]})`);
-
-	  // ## Pre-release Version Identifier
-	  // A numeric identifier, or a non-numeric identifier.
-
-	  createToken('PRERELEASEIDENTIFIER', `(?:${src[t.NUMERICIDENTIFIER]}|${src[t.NONNUMERICIDENTIFIER]})`);
-	  createToken('PRERELEASEIDENTIFIERLOOSE', `(?:${src[t.NUMERICIDENTIFIERLOOSE]}|${src[t.NONNUMERICIDENTIFIER]})`);
-
-	  // ## Pre-release Version
-	  // Hyphen, followed by one or more dot-separated pre-release version
-	  // identifiers.
-
-	  createToken('PRERELEASE', `(?:-(${src[t.PRERELEASEIDENTIFIER]}(?:\\.${src[t.PRERELEASEIDENTIFIER]})*))`);
-	  createToken('PRERELEASELOOSE', `(?:-?(${src[t.PRERELEASEIDENTIFIERLOOSE]}(?:\\.${src[t.PRERELEASEIDENTIFIERLOOSE]})*))`);
-
-	  // ## Build Metadata Identifier
-	  // Any combination of digits, letters, or hyphens.
-
-	  createToken('BUILDIDENTIFIER', `${LETTERDASHNUMBER}+`);
-
-	  // ## Build Metadata
-	  // Plus sign, followed by one or more period-separated build metadata
-	  // identifiers.
-
-	  createToken('BUILD', `(?:\\+(${src[t.BUILDIDENTIFIER]}(?:\\.${src[t.BUILDIDENTIFIER]})*))`);
-
-	  // ## Full Version String
-	  // A main version, followed optionally by a pre-release version and
-	  // build metadata.
-
-	  // Note that the only major, minor, patch, and pre-release sections of
-	  // the version string are capturing groups.  The build metadata is not a
-	  // capturing group, because it should not ever be used in version
-	  // comparison.
-
-	  createToken('FULLPLAIN', `v?${src[t.MAINVERSION]}${src[t.PRERELEASE]}?${src[t.BUILD]}?`);
-	  createToken('FULL', `^${src[t.FULLPLAIN]}$`);
-
-	  // like full, but allows v1.2.3 and =1.2.3, which people do sometimes.
-	  // also, 1.0.0alpha1 (prerelease without the hyphen) which is pretty
-	  // common in the npm registry.
-	  createToken('LOOSEPLAIN', `[v=\\s]*${src[t.MAINVERSIONLOOSE]}${src[t.PRERELEASELOOSE]}?${src[t.BUILD]}?`);
-	  createToken('LOOSE', `^${src[t.LOOSEPLAIN]}$`);
+	  createToken('NONNUMERICIDENTIFIER', "\\d*[a-zA-Z-]".concat(LETTERDASHNUMBER, "*"));
+	  createToken('MAINVERSION', "(".concat(src[t.NUMERICIDENTIFIER], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIER], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIER], ")"));
+	  createToken('MAINVERSIONLOOSE', "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")"));
+	  createToken('PRERELEASEIDENTIFIER', "(?:".concat(src[t.NUMERICIDENTIFIER], "|").concat(src[t.NONNUMERICIDENTIFIER], ")"));
+	  createToken('PRERELEASEIDENTIFIERLOOSE', "(?:".concat(src[t.NUMERICIDENTIFIERLOOSE], "|").concat(src[t.NONNUMERICIDENTIFIER], ")"));
+	  createToken('PRERELEASE', "(?:-(".concat(src[t.PRERELEASEIDENTIFIER], "(?:\\.").concat(src[t.PRERELEASEIDENTIFIER], ")*))"));
+	  createToken('PRERELEASELOOSE', "(?:-?(".concat(src[t.PRERELEASEIDENTIFIERLOOSE], "(?:\\.").concat(src[t.PRERELEASEIDENTIFIERLOOSE], ")*))"));
+	  createToken('BUILDIDENTIFIER', "".concat(LETTERDASHNUMBER, "+"));
+	  createToken('BUILD', "(?:\\+(".concat(src[t.BUILDIDENTIFIER], "(?:\\.").concat(src[t.BUILDIDENTIFIER], ")*))"));
+	  createToken('FULLPLAIN', "v?".concat(src[t.MAINVERSION]).concat(src[t.PRERELEASE], "?").concat(src[t.BUILD], "?"));
+	  createToken('FULL', "^".concat(src[t.FULLPLAIN], "$"));
+	  createToken('LOOSEPLAIN', "[v=\\s]*".concat(src[t.MAINVERSIONLOOSE]).concat(src[t.PRERELEASELOOSE], "?").concat(src[t.BUILD], "?"));
+	  createToken('LOOSE', "^".concat(src[t.LOOSEPLAIN], "$"));
 	  createToken('GTLT', '((?:<|>)?=?)');
-
-	  // Something like "2.*" or "1.2.x".
-	  // Note that "x.x" is a valid xRange identifer, meaning "any version"
-	  // Only the first item is strictly required.
-	  createToken('XRANGEIDENTIFIERLOOSE', `${src[t.NUMERICIDENTIFIERLOOSE]}|x|X|\\*`);
-	  createToken('XRANGEIDENTIFIER', `${src[t.NUMERICIDENTIFIER]}|x|X|\\*`);
-	  createToken('XRANGEPLAIN', `[v=\\s]*(${src[t.XRANGEIDENTIFIER]})` + `(?:\\.(${src[t.XRANGEIDENTIFIER]})` + `(?:\\.(${src[t.XRANGEIDENTIFIER]})` + `(?:${src[t.PRERELEASE]})?${src[t.BUILD]}?` + `)?)?`);
-	  createToken('XRANGEPLAINLOOSE', `[v=\\s]*(${src[t.XRANGEIDENTIFIERLOOSE]})` + `(?:\\.(${src[t.XRANGEIDENTIFIERLOOSE]})` + `(?:\\.(${src[t.XRANGEIDENTIFIERLOOSE]})` + `(?:${src[t.PRERELEASELOOSE]})?${src[t.BUILD]}?` + `)?)?`);
-	  createToken('XRANGE', `^${src[t.GTLT]}\\s*${src[t.XRANGEPLAIN]}$`);
-	  createToken('XRANGELOOSE', `^${src[t.GTLT]}\\s*${src[t.XRANGEPLAINLOOSE]}$`);
-
-	  // Coercion.
-	  // Extract anything that could conceivably be a part of a valid semver
-	  createToken('COERCE', `${'(^|[^\\d])' + '(\\d{1,'}${MAX_SAFE_COMPONENT_LENGTH}})` + `(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?` + `(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?` + `(?:$|[^\\d])`);
+	  createToken('XRANGEIDENTIFIERLOOSE', "".concat(src[t.NUMERICIDENTIFIERLOOSE], "|x|X|\\*"));
+	  createToken('XRANGEIDENTIFIER', "".concat(src[t.NUMERICIDENTIFIER], "|x|X|\\*"));
+	  createToken('XRANGEPLAIN', "[v=\\s]*(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:".concat(src[t.PRERELEASE], ")?").concat(src[t.BUILD], "?") + ")?)?");
+	  createToken('XRANGEPLAINLOOSE', "[v=\\s]*(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:".concat(src[t.PRERELEASELOOSE], ")?").concat(src[t.BUILD], "?") + ")?)?");
+	  createToken('XRANGE', "^".concat(src[t.GTLT], "\\s*").concat(src[t.XRANGEPLAIN], "$"));
+	  createToken('XRANGELOOSE', "^".concat(src[t.GTLT], "\\s*").concat(src[t.XRANGEPLAINLOOSE], "$"));
+	  createToken('COERCE', "".concat('(^|[^\\d])' + '(\\d{1,').concat(MAX_SAFE_COMPONENT_LENGTH, "})") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?") + "(?:$|[^\\d])");
 	  createToken('COERCERTL', src[t.COERCE], true);
-
-	  // Tilde ranges.
-	  // Meaning is "reasonably at or greater than"
 	  createToken('LONETILDE', '(?:~>?)');
-	  createToken('TILDETRIM', `(\\s*)${src[t.LONETILDE]}\\s+`, true);
+	  createToken('TILDETRIM', "(\\s*)".concat(src[t.LONETILDE], "\\s+"), true);
 	  exports.tildeTrimReplace = '$1~';
-	  createToken('TILDE', `^${src[t.LONETILDE]}${src[t.XRANGEPLAIN]}$`);
-	  createToken('TILDELOOSE', `^${src[t.LONETILDE]}${src[t.XRANGEPLAINLOOSE]}$`);
-
-	  // Caret ranges.
-	  // Meaning is "at least and backwards compatible with"
+	  createToken('TILDE', "^".concat(src[t.LONETILDE]).concat(src[t.XRANGEPLAIN], "$"));
+	  createToken('TILDELOOSE', "^".concat(src[t.LONETILDE]).concat(src[t.XRANGEPLAINLOOSE], "$"));
 	  createToken('LONECARET', '(?:\\^)');
-	  createToken('CARETTRIM', `(\\s*)${src[t.LONECARET]}\\s+`, true);
+	  createToken('CARETTRIM', "(\\s*)".concat(src[t.LONECARET], "\\s+"), true);
 	  exports.caretTrimReplace = '$1^';
-	  createToken('CARET', `^${src[t.LONECARET]}${src[t.XRANGEPLAIN]}$`);
-	  createToken('CARETLOOSE', `^${src[t.LONECARET]}${src[t.XRANGEPLAINLOOSE]}$`);
-
-	  // A simple gt/lt/eq thing, or just "" to indicate "any version"
-	  createToken('COMPARATORLOOSE', `^${src[t.GTLT]}\\s*(${src[t.LOOSEPLAIN]})$|^$`);
-	  createToken('COMPARATOR', `^${src[t.GTLT]}\\s*(${src[t.FULLPLAIN]})$|^$`);
-
-	  // An expression to strip any whitespace between the gtlt and the thing
-	  // it modifies, so that `> 1.2.3` ==> `>1.2.3`
-	  createToken('COMPARATORTRIM', `(\\s*)${src[t.GTLT]}\\s*(${src[t.LOOSEPLAIN]}|${src[t.XRANGEPLAIN]})`, true);
+	  createToken('CARET', "^".concat(src[t.LONECARET]).concat(src[t.XRANGEPLAIN], "$"));
+	  createToken('CARETLOOSE', "^".concat(src[t.LONECARET]).concat(src[t.XRANGEPLAINLOOSE], "$"));
+	  createToken('COMPARATORLOOSE', "^".concat(src[t.GTLT], "\\s*(").concat(src[t.LOOSEPLAIN], ")$|^$"));
+	  createToken('COMPARATOR', "^".concat(src[t.GTLT], "\\s*(").concat(src[t.FULLPLAIN], ")$|^$"));
+	  createToken('COMPARATORTRIM', "(\\s*)".concat(src[t.GTLT], "\\s*(").concat(src[t.LOOSEPLAIN], "|").concat(src[t.XRANGEPLAIN], ")"), true);
 	  exports.comparatorTrimReplace = '$1$2$3';
-
-	  // Something like `1.2.3 - 1.2.4`
-	  // Note that these all use the loose form, because they'll be
-	  // checked against either the strict or loose comparator form
-	  // later.
-	  createToken('HYPHENRANGE', `^\\s*(${src[t.XRANGEPLAIN]})` + `\\s+-\\s+` + `(${src[t.XRANGEPLAIN]})` + `\\s*$`);
-	  createToken('HYPHENRANGELOOSE', `^\\s*(${src[t.XRANGEPLAINLOOSE]})` + `\\s+-\\s+` + `(${src[t.XRANGEPLAINLOOSE]})` + `\\s*$`);
-
-	  // Star ranges basically just allow anything at all.
+	  createToken('HYPHENRANGE', "^\\s*(".concat(src[t.XRANGEPLAIN], ")") + "\\s+-\\s+" + "(".concat(src[t.XRANGEPLAIN], ")") + "\\s*$");
+	  createToken('HYPHENRANGELOOSE', "^\\s*(".concat(src[t.XRANGEPLAINLOOSE], ")") + "\\s+-\\s+" + "(".concat(src[t.XRANGEPLAINLOOSE], ")") + "\\s*$");
 	  createToken('STAR', '(<|>)?=?\\s*\\*');
-	  // >=0.0.0 is like a star
 	  createToken('GTE0', '^\\s*>=\\s*0\\.0\\.0\\s*$');
 	  createToken('GTE0PRE', '^\\s*>=\\s*0\\.0\\.0-0\\s*$');
 	})(re$2, re$2.exports);
 	var reExports = re$2.exports;
+	getDefaultExportFromCjs(reExports);
 
-	// parse out just the options we care about
-	const looseOption = Object.freeze({
+	var looseOption = Object.freeze({
 	  loose: true
 	});
-	const emptyOpts = Object.freeze({});
-	const parseOptions$1 = options => {
+	var emptyOpts = Object.freeze({});
+	var parseOptions$1 = function parseOptions(options) {
 	  if (!options) {
 	    return emptyOpts;
 	  }
-	  if (typeof options !== 'object') {
+	  if (_typeof(options) !== 'object') {
 	    return looseOption;
 	  }
 	  return options;
 	};
 	var parseOptions_1 = parseOptions$1;
+	getDefaultExportFromCjs(parseOptions_1);
 
-	const numeric = /^[0-9]+$/;
-	const compareIdentifiers$1 = (a, b) => {
-	  const anum = numeric.test(a);
-	  const bnum = numeric.test(b);
+	var numeric = /^[0-9]+$/;
+	var compareIdentifiers$1 = function compareIdentifiers(a, b) {
+	  var anum = numeric.test(a);
+	  var bnum = numeric.test(b);
 	  if (anum && bnum) {
 	    a = +a;
 	    b = +b;
 	  }
 	  return a === b ? 0 : anum && !bnum ? -1 : bnum && !anum ? 1 : a < b ? -1 : 1;
 	};
-	const rcompareIdentifiers = (a, b) => compareIdentifiers$1(b, a);
+	var rcompareIdentifiers = function rcompareIdentifiers(a, b) {
+	  return compareIdentifiers$1(b, a);
+	};
 	var identifiers = {
 	  compareIdentifiers: compareIdentifiers$1,
-	  rcompareIdentifiers
+	  rcompareIdentifiers: rcompareIdentifiers
 	};
+	getDefaultExportFromCjs(identifiers);
 
-	const debug = debug_1;
-	const {
-	  MAX_LENGTH,
-	  MAX_SAFE_INTEGER
-	} = constants;
-	const {
-	  safeRe: re$1,
-	  t: t$1
-	} = reExports;
-	const parseOptions = parseOptions_1;
-	const {
-	  compareIdentifiers
-	} = identifiers;
-	let SemVer$3 = class SemVer {
-	  constructor(version, options) {
+	var debug = debug_1;
+	var MAX_LENGTH = constants.MAX_LENGTH,
+	  MAX_SAFE_INTEGER = constants.MAX_SAFE_INTEGER;
+	var re$1 = reExports.safeRe,
+	  t$1 = reExports.t;
+	var parseOptions = parseOptions_1;
+	var compareIdentifiers = identifiers.compareIdentifiers;
+	var SemVer$3 = function () {
+	  function SemVer(version, options) {
+	    _classCallCheck(this, SemVer);
 	    options = parseOptions(options);
 	    if (version instanceof SemVer) {
 	      if (version.loose === !!options.loose && version.includePrerelease === !!options.includePrerelease) {
@@ -6604,24 +7081,20 @@ var spine = (function (pc) {
 	        version = version.version;
 	      }
 	    } else if (typeof version !== 'string') {
-	      throw new TypeError(`Invalid version. Must be a string. Got type "${typeof version}".`);
+	      throw new TypeError("Invalid version. Must be a string. Got type \"".concat(_typeof(version), "\"."));
 	    }
 	    if (version.length > MAX_LENGTH) {
-	      throw new TypeError(`version is longer than ${MAX_LENGTH} characters`);
+	      throw new TypeError("version is longer than ".concat(MAX_LENGTH, " characters"));
 	    }
 	    debug('SemVer', version, options);
 	    this.options = options;
 	    this.loose = !!options.loose;
-	    // this isn't actually relevant for versions, but keep it so that we
-	    // don't run into trouble passing this.options around.
 	    this.includePrerelease = !!options.includePrerelease;
-	    const m = version.trim().match(options.loose ? re$1[t$1.LOOSE] : re$1[t$1.FULL]);
+	    var m = version.trim().match(options.loose ? re$1[t$1.LOOSE] : re$1[t$1.FULL]);
 	    if (!m) {
-	      throw new TypeError(`Invalid Version: ${version}`);
+	      throw new TypeError("Invalid Version: ".concat(version));
 	    }
 	    this.raw = version;
-
-	    // these are actually numbers
 	    this.major = +m[1];
 	    this.minor = +m[2];
 	    this.patch = +m[3];
@@ -6634,14 +7107,12 @@ var spine = (function (pc) {
 	    if (this.patch > MAX_SAFE_INTEGER || this.patch < 0) {
 	      throw new TypeError('Invalid patch version');
 	    }
-
-	    // numberify any prerelease numeric ids
 	    if (!m[4]) {
 	      this.prerelease = [];
 	    } else {
-	      this.prerelease = m[4].split('.').map(id => {
+	      this.prerelease = m[4].split('.').map(function (id) {
 	        if (/^[0-9]+$/.test(id)) {
-	          const num = +id;
+	          var num = +id;
 	          if (num >= 0 && num < MAX_SAFE_INTEGER) {
 	            return num;
 	          }
@@ -6652,212 +7123,203 @@ var spine = (function (pc) {
 	    this.build = m[5] ? m[5].split('.') : [];
 	    this.format();
 	  }
-	  format() {
-	    this.version = `${this.major}.${this.minor}.${this.patch}`;
-	    if (this.prerelease.length) {
-	      this.version += `-${this.prerelease.join('.')}`;
-	    }
-	    return this.version;
-	  }
-	  toString() {
-	    return this.version;
-	  }
-	  compare(other) {
-	    debug('SemVer.compare', this.version, this.options, other);
-	    if (!(other instanceof SemVer)) {
-	      if (typeof other === 'string' && other === this.version) {
-	        return 0;
+	  _createClass(SemVer, [{
+	    key: "format",
+	    value: function format() {
+	      this.version = "".concat(this.major, ".").concat(this.minor, ".").concat(this.patch);
+	      if (this.prerelease.length) {
+	        this.version += "-".concat(this.prerelease.join('.'));
 	      }
-	      other = new SemVer(other, this.options);
+	      return this.version;
 	    }
-	    if (other.version === this.version) {
-	      return 0;
+	  }, {
+	    key: "toString",
+	    value: function toString() {
+	      return this.version;
 	    }
-	    return this.compareMain(other) || this.comparePre(other);
-	  }
-	  compareMain(other) {
-	    if (!(other instanceof SemVer)) {
-	      other = new SemVer(other, this.options);
-	    }
-	    return compareIdentifiers(this.major, other.major) || compareIdentifiers(this.minor, other.minor) || compareIdentifiers(this.patch, other.patch);
-	  }
-	  comparePre(other) {
-	    if (!(other instanceof SemVer)) {
-	      other = new SemVer(other, this.options);
-	    }
-
-	    // NOT having a prerelease is > having one
-	    if (this.prerelease.length && !other.prerelease.length) {
-	      return -1;
-	    } else if (!this.prerelease.length && other.prerelease.length) {
-	      return 1;
-	    } else if (!this.prerelease.length && !other.prerelease.length) {
-	      return 0;
-	    }
-	    let i = 0;
-	    do {
-	      const a = this.prerelease[i];
-	      const b = other.prerelease[i];
-	      debug('prerelease compare', i, a, b);
-	      if (a === undefined && b === undefined) {
-	        return 0;
-	      } else if (b === undefined) {
-	        return 1;
-	      } else if (a === undefined) {
-	        return -1;
-	      } else if (a === b) {
-	        continue;
-	      } else {
-	        return compareIdentifiers(a, b);
-	      }
-	    } while (++i);
-	  }
-	  compareBuild(other) {
-	    if (!(other instanceof SemVer)) {
-	      other = new SemVer(other, this.options);
-	    }
-	    let i = 0;
-	    do {
-	      const a = this.build[i];
-	      const b = other.build[i];
-	      debug('prerelease compare', i, a, b);
-	      if (a === undefined && b === undefined) {
-	        return 0;
-	      } else if (b === undefined) {
-	        return 1;
-	      } else if (a === undefined) {
-	        return -1;
-	      } else if (a === b) {
-	        continue;
-	      } else {
-	        return compareIdentifiers(a, b);
-	      }
-	    } while (++i);
-	  }
-
-	  // preminor will bump the version up to the next minor release, and immediately
-	  // down to pre-release. premajor and prepatch work the same way.
-	  inc(release, identifier, identifierBase) {
-	    switch (release) {
-	      case 'premajor':
-	        this.prerelease.length = 0;
-	        this.patch = 0;
-	        this.minor = 0;
-	        this.major++;
-	        this.inc('pre', identifier, identifierBase);
-	        break;
-	      case 'preminor':
-	        this.prerelease.length = 0;
-	        this.patch = 0;
-	        this.minor++;
-	        this.inc('pre', identifier, identifierBase);
-	        break;
-	      case 'prepatch':
-	        // If this is already a prerelease, it will bump to the next version
-	        // drop any prereleases that might already exist, since they are not
-	        // relevant at this point.
-	        this.prerelease.length = 0;
-	        this.inc('patch', identifier, identifierBase);
-	        this.inc('pre', identifier, identifierBase);
-	        break;
-	      // If the input is a non-prerelease version, this acts the same as
-	      // prepatch.
-	      case 'prerelease':
-	        if (this.prerelease.length === 0) {
-	          this.inc('patch', identifier, identifierBase);
+	  }, {
+	    key: "compare",
+	    value: function compare(other) {
+	      debug('SemVer.compare', this.version, this.options, other);
+	      if (!(other instanceof SemVer)) {
+	        if (typeof other === 'string' && other === this.version) {
+	          return 0;
 	        }
-	        this.inc('pre', identifier, identifierBase);
-	        break;
-	      case 'major':
-	        // If this is a pre-major version, bump up to the same major version.
-	        // Otherwise increment major.
-	        // 1.0.0-5 bumps to 1.0.0
-	        // 1.1.0 bumps to 2.0.0
-	        if (this.minor !== 0 || this.patch !== 0 || this.prerelease.length === 0) {
+	        other = new SemVer(other, this.options);
+	      }
+	      if (other.version === this.version) {
+	        return 0;
+	      }
+	      return this.compareMain(other) || this.comparePre(other);
+	    }
+	  }, {
+	    key: "compareMain",
+	    value: function compareMain(other) {
+	      if (!(other instanceof SemVer)) {
+	        other = new SemVer(other, this.options);
+	      }
+	      return compareIdentifiers(this.major, other.major) || compareIdentifiers(this.minor, other.minor) || compareIdentifiers(this.patch, other.patch);
+	    }
+	  }, {
+	    key: "comparePre",
+	    value: function comparePre(other) {
+	      if (!(other instanceof SemVer)) {
+	        other = new SemVer(other, this.options);
+	      }
+	      if (this.prerelease.length && !other.prerelease.length) {
+	        return -1;
+	      } else if (!this.prerelease.length && other.prerelease.length) {
+	        return 1;
+	      } else if (!this.prerelease.length && !other.prerelease.length) {
+	        return 0;
+	      }
+	      var i = 0;
+	      do {
+	        var a = this.prerelease[i];
+	        var b = other.prerelease[i];
+	        debug('prerelease compare', i, a, b);
+	        if (a === undefined && b === undefined) {
+	          return 0;
+	        } else if (b === undefined) {
+	          return 1;
+	        } else if (a === undefined) {
+	          return -1;
+	        } else if (a === b) {
+	          continue;
+	        } else {
+	          return compareIdentifiers(a, b);
+	        }
+	      } while (++i);
+	    }
+	  }, {
+	    key: "compareBuild",
+	    value: function compareBuild(other) {
+	      if (!(other instanceof SemVer)) {
+	        other = new SemVer(other, this.options);
+	      }
+	      var i = 0;
+	      do {
+	        var a = this.build[i];
+	        var b = other.build[i];
+	        debug('prerelease compare', i, a, b);
+	        if (a === undefined && b === undefined) {
+	          return 0;
+	        } else if (b === undefined) {
+	          return 1;
+	        } else if (a === undefined) {
+	          return -1;
+	        } else if (a === b) {
+	          continue;
+	        } else {
+	          return compareIdentifiers(a, b);
+	        }
+	      } while (++i);
+	    }
+	  }, {
+	    key: "inc",
+	    value: function inc(release, identifier, identifierBase) {
+	      switch (release) {
+	        case 'premajor':
+	          this.prerelease.length = 0;
+	          this.patch = 0;
+	          this.minor = 0;
 	          this.major++;
-	        }
-	        this.minor = 0;
-	        this.patch = 0;
-	        this.prerelease = [];
-	        break;
-	      case 'minor':
-	        // If this is a pre-minor version, bump up to the same minor version.
-	        // Otherwise increment minor.
-	        // 1.2.0-5 bumps to 1.2.0
-	        // 1.2.1 bumps to 1.3.0
-	        if (this.patch !== 0 || this.prerelease.length === 0) {
+	          this.inc('pre', identifier, identifierBase);
+	          break;
+	        case 'preminor':
+	          this.prerelease.length = 0;
+	          this.patch = 0;
 	          this.minor++;
-	        }
-	        this.patch = 0;
-	        this.prerelease = [];
-	        break;
-	      case 'patch':
-	        // If this is not a pre-release version, it will increment the patch.
-	        // If it is a pre-release it will bump up to the same patch version.
-	        // 1.2.0-5 patches to 1.2.0
-	        // 1.2.0 patches to 1.2.1
-	        if (this.prerelease.length === 0) {
-	          this.patch++;
-	        }
-	        this.prerelease = [];
-	        break;
-	      // This probably shouldn't be used publicly.
-	      // 1.0.0 'pre' would become 1.0.0-0 which is the wrong direction.
-	      case 'pre':
-	        {
-	          const base = Number(identifierBase) ? 1 : 0;
-	          if (!identifier && identifierBase === false) {
-	            throw new Error('invalid increment argument: identifier is empty');
-	          }
+	          this.inc('pre', identifier, identifierBase);
+	          break;
+	        case 'prepatch':
+	          this.prerelease.length = 0;
+	          this.inc('patch', identifier, identifierBase);
+	          this.inc('pre', identifier, identifierBase);
+	          break;
+	        case 'prerelease':
 	          if (this.prerelease.length === 0) {
-	            this.prerelease = [base];
-	          } else {
-	            let i = this.prerelease.length;
-	            while (--i >= 0) {
-	              if (typeof this.prerelease[i] === 'number') {
-	                this.prerelease[i]++;
-	                i = -2;
-	              }
-	            }
-	            if (i === -1) {
-	              // didn't increment anything
-	              if (identifier === this.prerelease.join('.') && identifierBase === false) {
-	                throw new Error('invalid increment argument: identifier already exists');
-	              }
-	              this.prerelease.push(base);
-	            }
+	            this.inc('patch', identifier, identifierBase);
 	          }
-	          if (identifier) {
-	            // 1.2.0-beta.1 bumps to 1.2.0-beta.2,
-	            // 1.2.0-beta.fooblz or 1.2.0-beta bumps to 1.2.0-beta.0
-	            let prerelease = [identifier, base];
-	            if (identifierBase === false) {
-	              prerelease = [identifier];
+	          this.inc('pre', identifier, identifierBase);
+	          break;
+	        case 'major':
+	          if (this.minor !== 0 || this.patch !== 0 || this.prerelease.length === 0) {
+	            this.major++;
+	          }
+	          this.minor = 0;
+	          this.patch = 0;
+	          this.prerelease = [];
+	          break;
+	        case 'minor':
+	          if (this.patch !== 0 || this.prerelease.length === 0) {
+	            this.minor++;
+	          }
+	          this.patch = 0;
+	          this.prerelease = [];
+	          break;
+	        case 'patch':
+	          if (this.prerelease.length === 0) {
+	            this.patch++;
+	          }
+	          this.prerelease = [];
+	          break;
+	        case 'pre':
+	          {
+	            var base = Number(identifierBase) ? 1 : 0;
+	            if (!identifier && identifierBase === false) {
+	              throw new Error('invalid increment argument: identifier is empty');
 	            }
-	            if (compareIdentifiers(this.prerelease[0], identifier) === 0) {
-	              if (isNaN(this.prerelease[1])) {
+	            if (this.prerelease.length === 0) {
+	              this.prerelease = [base];
+	            } else {
+	              var i = this.prerelease.length;
+	              while (--i >= 0) {
+	                if (typeof this.prerelease[i] === 'number') {
+	                  this.prerelease[i]++;
+	                  i = -2;
+	                }
+	              }
+	              if (i === -1) {
+	                if (identifier === this.prerelease.join('.') && identifierBase === false) {
+	                  throw new Error('invalid increment argument: identifier already exists');
+	                }
+	                this.prerelease.push(base);
+	              }
+	            }
+	            if (identifier) {
+	              var prerelease = [identifier, base];
+	              if (identifierBase === false) {
+	                prerelease = [identifier];
+	              }
+	              if (compareIdentifiers(this.prerelease[0], identifier) === 0) {
+	                if (isNaN(this.prerelease[1])) {
+	                  this.prerelease = prerelease;
+	                }
+	              } else {
 	                this.prerelease = prerelease;
 	              }
-	            } else {
-	              this.prerelease = prerelease;
 	            }
+	            break;
 	          }
-	          break;
-	        }
-	      default:
-	        throw new Error(`invalid increment argument: ${release}`);
+	        default:
+	          throw new Error("invalid increment argument: ".concat(release));
+	      }
+	      this.raw = this.format();
+	      if (this.build.length) {
+	        this.raw += "+".concat(this.build.join('.'));
+	      }
+	      return this;
 	    }
-	    this.raw = this.format();
-	    if (this.build.length) {
-	      this.raw += `+${this.build.join('.')}`;
-	    }
-	    return this;
-	  }
-	};
+	  }]);
+	  return SemVer;
+	}();
 	var semver$1 = SemVer$3;
+	getDefaultExportFromCjs(semver$1);
 
-	const SemVer$2 = semver$1;
-	const parse$2 = (version, options, throwErrors = false) => {
+	var SemVer$2 = semver$1;
+	var parse$2 = function parse(version, options) {
+	  var throwErrors = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 	  if (version instanceof SemVer$2) {
 	    return version;
 	  }
@@ -6871,22 +7333,21 @@ var spine = (function (pc) {
 	  }
 	};
 	var parse_1 = parse$2;
+	getDefaultExportFromCjs(parse_1);
 
-	const parse$1 = parse_1;
-	const valid = (version, options) => {
-	  const v = parse$1(version, options);
+	var parse$1 = parse_1;
+	var valid = function valid(version, options) {
+	  var v = parse$1(version, options);
 	  return v ? v.version : null;
 	};
 	var valid_1 = valid;
-	var valid$1 = /*@__PURE__*/getDefaultExportFromCjs(valid_1);
+	var valid$1 = getDefaultExportFromCjs(valid_1);
 
-	const SemVer$1 = semver$1;
-	const parse = parse_1;
-	const {
-	  safeRe: re,
-	  t
-	} = reExports;
-	const coerce = (version, options) => {
+	var SemVer$1 = semver$1;
+	var parse = parse_1;
+	var re = reExports.safeRe,
+	  t = reExports.t;
+	var coerce = function coerce(version, options) {
 	  if (version instanceof SemVer$1) {
 	    return version;
 	  }
@@ -6897,47 +7358,56 @@ var spine = (function (pc) {
 	    return null;
 	  }
 	  options = options || {};
-	  let match = null;
+	  var match = null;
 	  if (!options.rtl) {
 	    match = version.match(re[t.COERCE]);
 	  } else {
-	    // Find the right-most coercible string that does not share
-	    // a terminus with a more left-ward coercible string.
-	    // Eg, '1.2.3.4' wants to coerce '2.3.4', not '3.4' or '4'
-	    //
-	    // Walk through the string checking with a /g regexp
-	    // Manually set the index so as to pick up overlapping matches.
-	    // Stop when we get a match that ends at the string end, since no
-	    // coercible string can be more right-ward without the same terminus.
-	    let next;
+	    var next;
 	    while ((next = re[t.COERCERTL].exec(version)) && (!match || match.index + match[0].length !== version.length)) {
 	      if (!match || next.index + next[0].length !== match.index + match[0].length) {
 	        match = next;
 	      }
 	      re[t.COERCERTL].lastIndex = next.index + next[1].length + next[2].length;
 	    }
-	    // leave it in a clean state
 	    re[t.COERCERTL].lastIndex = -1;
 	  }
 	  if (match === null) {
 	    return null;
 	  }
-	  return parse(`${match[2]}.${match[3] || '0'}.${match[4] || '0'}`, options);
+	  return parse("".concat(match[2], ".").concat(match[3] || '0', ".").concat(match[4] || '0'), options);
 	};
 	var coerce_1 = coerce;
-	var coerce$1 = /*@__PURE__*/getDefaultExportFromCjs(coerce_1);
+	var coerce$1 = getDefaultExportFromCjs(coerce_1);
 
 	var iterator;
 	var hasRequiredIterator;
 	function requireIterator() {
 	  if (hasRequiredIterator) return iterator;
 	  hasRequiredIterator = 1;
-	  iterator = function (Yallist) {
-	    Yallist.prototype[Symbol.iterator] = function* () {
-	      for (let walker = this.head; walker; walker = walker.next) {
-	        yield walker.value;
-	      }
-	    };
+	  iterator = function iterator(Yallist) {
+	    Yallist.prototype[Symbol.iterator] = _regeneratorRuntime().mark(function _callee() {
+	      var walker;
+	      return _regeneratorRuntime().wrap(function _callee$(_context) {
+	        while (1) switch (_context.prev = _context.next) {
+	          case 0:
+	            walker = this.head;
+	          case 1:
+	            if (!walker) {
+	              _context.next = 7;
+	              break;
+	            }
+	            _context.next = 4;
+	            return walker.value;
+	          case 4:
+	            walker = walker.next;
+	            _context.next = 1;
+	            break;
+	          case 7:
+	          case "end":
+	            return _context.stop();
+	        }
+	      }, _callee, this);
+	    });
 	  };
 	  return iterator;
 	}
@@ -7082,7 +7552,6 @@ var spine = (function (pc) {
 	};
 	Yallist$1.prototype.get = function (n) {
 	  for (var i = 0, walker = this.head; walker !== null && i < n; i++) {
-	    // abort out of the list early if we hit a cycle
 	    walker = walker.next;
 	  }
 	  if (i === n && walker !== null) {
@@ -7091,7 +7560,6 @@ var spine = (function (pc) {
 	};
 	Yallist$1.prototype.getReverse = function (n) {
 	  for (var i = 0, walker = this.tail; walker !== null && i < n; i++) {
-	    // abort out of the list early if we hit a cycle
 	    walker = walker.prev;
 	  }
 	  if (i === n && walker !== null) {
@@ -7220,7 +7688,7 @@ var spine = (function (pc) {
 	  }
 	  return ret;
 	};
-	Yallist$1.prototype.splice = function (start, deleteCount, ...nodes) {
+	Yallist$1.prototype.splice = function (start, deleteCount) {
 	  if (start > this.length) {
 	    start = this.length - 1;
 	  }
@@ -7241,8 +7709,8 @@ var spine = (function (pc) {
 	  if (walker !== this.head && walker !== this.tail) {
 	    walker = walker.prev;
 	  }
-	  for (var i = 0; i < nodes.length; i++) {
-	    walker = insert(this, walker, nodes[i]);
+	  for (var i = 0; i < (arguments.length <= 2 ? 0 : arguments.length - 2); i++) {
+	    walker = insert(this, walker, i + 2 < 2 || arguments.length <= i + 2 ? undefined : arguments[i + 2]);
 	  }
 	  return ret;
 	};
@@ -7303,42 +7771,34 @@ var spine = (function (pc) {
 	  }
 	}
 	try {
-	  // add if support for Symbol.iterator is present
 	  requireIterator()(Yallist$1);
 	} catch (er) {}
+	getDefaultExportFromCjs(yallist);
 
-	// A linked list to keep track of recently-used-ness
-	const Yallist = yallist;
-	const MAX = Symbol('max');
-	const LENGTH = Symbol('length');
-	const LENGTH_CALCULATOR = Symbol('lengthCalculator');
-	const ALLOW_STALE = Symbol('allowStale');
-	const MAX_AGE = Symbol('maxAge');
-	const DISPOSE = Symbol('dispose');
-	const NO_DISPOSE_ON_SET = Symbol('noDisposeOnSet');
-	const LRU_LIST = Symbol('lruList');
-	const CACHE = Symbol('cache');
-	const UPDATE_AGE_ON_GET = Symbol('updateAgeOnGet');
-	const naiveLength = () => 1;
-
-	// lruList is a yallist where the head is the youngest
-	// item, and the tail is the oldest.  the list contains the Hit
-	// objects as the entries.
-	// Each Hit object has a reference to its Yallist.Node.  This
-	// never changes.
-	//
-	// cache is a Map (or PseudoMap) that matches the keys to
-	// the Yallist.Node object.
-	class LRUCache {
-	  constructor(options) {
+	var Yallist = yallist;
+	var MAX = Symbol('max');
+	var LENGTH = Symbol('length');
+	var LENGTH_CALCULATOR = Symbol('lengthCalculator');
+	var ALLOW_STALE = Symbol('allowStale');
+	var MAX_AGE = Symbol('maxAge');
+	var DISPOSE = Symbol('dispose');
+	var NO_DISPOSE_ON_SET = Symbol('noDisposeOnSet');
+	var LRU_LIST = Symbol('lruList');
+	var CACHE = Symbol('cache');
+	var UPDATE_AGE_ON_GET = Symbol('updateAgeOnGet');
+	var naiveLength = function naiveLength() {
+	  return 1;
+	};
+	var LRUCache = function () {
+	  function LRUCache(options) {
+	    _classCallCheck(this, LRUCache);
 	    if (typeof options === 'number') options = {
 	      max: options
 	    };
 	    if (!options) options = {};
 	    if (options.max && (typeof options.max !== 'number' || options.max < 0)) throw new TypeError('max must be a non-negative number');
-	    // Kind of weird to have a default max of Infinity, but oh well.
 	    this[MAX] = options.max || Infinity;
-	    const lc = options.length || naiveLength;
+	    var lc = options.length || naiveLength;
 	    this[LENGTH_CALCULATOR] = typeof lc !== 'function' ? naiveLength : lc;
 	    this[ALLOW_STALE] = options.stale || false;
 	    if (options.maxAge && typeof options.maxAge !== 'number') throw new TypeError('maxAge must be a number');
@@ -7348,183 +7808,228 @@ var spine = (function (pc) {
 	    this[UPDATE_AGE_ON_GET] = options.updateAgeOnGet || false;
 	    this.reset();
 	  }
-
-	  // resize the cache when the max changes.
-	  set max(mL) {
-	    if (typeof mL !== 'number' || mL < 0) throw new TypeError('max must be a non-negative number');
-	    this[MAX] = mL || Infinity;
-	    trim(this);
-	  }
-	  get max() {
-	    return this[MAX];
-	  }
-	  set allowStale(allowStale) {
-	    this[ALLOW_STALE] = !!allowStale;
-	  }
-	  get allowStale() {
-	    return this[ALLOW_STALE];
-	  }
-	  set maxAge(mA) {
-	    if (typeof mA !== 'number') throw new TypeError('maxAge must be a non-negative number');
-	    this[MAX_AGE] = mA;
-	    trim(this);
-	  }
-	  get maxAge() {
-	    return this[MAX_AGE];
-	  }
-
-	  // resize the cache when the lengthCalculator changes.
-	  set lengthCalculator(lC) {
-	    if (typeof lC !== 'function') lC = naiveLength;
-	    if (lC !== this[LENGTH_CALCULATOR]) {
-	      this[LENGTH_CALCULATOR] = lC;
-	      this[LENGTH] = 0;
-	      this[LRU_LIST].forEach(hit => {
-	        hit.length = this[LENGTH_CALCULATOR](hit.value, hit.key);
-	        this[LENGTH] += hit.length;
+	  _createClass(LRUCache, [{
+	    key: "max",
+	    get: function get() {
+	      return this[MAX];
+	    },
+	    set: function set(mL) {
+	      if (typeof mL !== 'number' || mL < 0) throw new TypeError('max must be a non-negative number');
+	      this[MAX] = mL || Infinity;
+	      trim(this);
+	    }
+	  }, {
+	    key: "allowStale",
+	    get: function get() {
+	      return this[ALLOW_STALE];
+	    },
+	    set: function set(allowStale) {
+	      this[ALLOW_STALE] = !!allowStale;
+	    }
+	  }, {
+	    key: "maxAge",
+	    get: function get() {
+	      return this[MAX_AGE];
+	    },
+	    set: function set(mA) {
+	      if (typeof mA !== 'number') throw new TypeError('maxAge must be a non-negative number');
+	      this[MAX_AGE] = mA;
+	      trim(this);
+	    }
+	  }, {
+	    key: "lengthCalculator",
+	    get: function get() {
+	      return this[LENGTH_CALCULATOR];
+	    },
+	    set: function set(lC) {
+	      var _this = this;
+	      if (typeof lC !== 'function') lC = naiveLength;
+	      if (lC !== this[LENGTH_CALCULATOR]) {
+	        this[LENGTH_CALCULATOR] = lC;
+	        this[LENGTH] = 0;
+	        this[LRU_LIST].forEach(function (hit) {
+	          hit.length = _this[LENGTH_CALCULATOR](hit.value, hit.key);
+	          _this[LENGTH] += hit.length;
+	        });
+	      }
+	      trim(this);
+	    }
+	  }, {
+	    key: "length",
+	    get: function get() {
+	      return this[LENGTH];
+	    }
+	  }, {
+	    key: "itemCount",
+	    get: function get() {
+	      return this[LRU_LIST].length;
+	    }
+	  }, {
+	    key: "rforEach",
+	    value: function rforEach(fn, thisp) {
+	      thisp = thisp || this;
+	      for (var walker = this[LRU_LIST].tail; walker !== null;) {
+	        var prev = walker.prev;
+	        forEachStep(this, fn, walker, thisp);
+	        walker = prev;
+	      }
+	    }
+	  }, {
+	    key: "forEach",
+	    value: function forEach(fn, thisp) {
+	      thisp = thisp || this;
+	      for (var walker = this[LRU_LIST].head; walker !== null;) {
+	        var next = walker.next;
+	        forEachStep(this, fn, walker, thisp);
+	        walker = next;
+	      }
+	    }
+	  }, {
+	    key: "keys",
+	    value: function keys() {
+	      return this[LRU_LIST].toArray().map(function (k) {
+	        return k.key;
 	      });
 	    }
-	    trim(this);
-	  }
-	  get lengthCalculator() {
-	    return this[LENGTH_CALCULATOR];
-	  }
-	  get length() {
-	    return this[LENGTH];
-	  }
-	  get itemCount() {
-	    return this[LRU_LIST].length;
-	  }
-	  rforEach(fn, thisp) {
-	    thisp = thisp || this;
-	    for (let walker = this[LRU_LIST].tail; walker !== null;) {
-	      const prev = walker.prev;
-	      forEachStep(this, fn, walker, thisp);
-	      walker = prev;
+	  }, {
+	    key: "values",
+	    value: function values() {
+	      return this[LRU_LIST].toArray().map(function (k) {
+	        return k.value;
+	      });
 	    }
-	  }
-	  forEach(fn, thisp) {
-	    thisp = thisp || this;
-	    for (let walker = this[LRU_LIST].head; walker !== null;) {
-	      const next = walker.next;
-	      forEachStep(this, fn, walker, thisp);
-	      walker = next;
+	  }, {
+	    key: "reset",
+	    value: function reset() {
+	      var _this2 = this;
+	      if (this[DISPOSE] && this[LRU_LIST] && this[LRU_LIST].length) {
+	        this[LRU_LIST].forEach(function (hit) {
+	          return _this2[DISPOSE](hit.key, hit.value);
+	        });
+	      }
+	      this[CACHE] = new Map();
+	      this[LRU_LIST] = new Yallist();
+	      this[LENGTH] = 0;
 	    }
-	  }
-	  keys() {
-	    return this[LRU_LIST].toArray().map(k => k.key);
-	  }
-	  values() {
-	    return this[LRU_LIST].toArray().map(k => k.value);
-	  }
-	  reset() {
-	    if (this[DISPOSE] && this[LRU_LIST] && this[LRU_LIST].length) {
-	      this[LRU_LIST].forEach(hit => this[DISPOSE](hit.key, hit.value));
+	  }, {
+	    key: "dump",
+	    value: function dump() {
+	      var _this3 = this;
+	      return this[LRU_LIST].map(function (hit) {
+	        return isStale(_this3, hit) ? false : {
+	          k: hit.key,
+	          v: hit.value,
+	          e: hit.now + (hit.maxAge || 0)
+	        };
+	      }).toArray().filter(function (h) {
+	        return h;
+	      });
 	    }
-	    this[CACHE] = new Map(); // hash of items by key
-	    this[LRU_LIST] = new Yallist(); // list of items in order of use recency
-	    this[LENGTH] = 0; // length of items in the list
-	  }
-
-	  dump() {
-	    return this[LRU_LIST].map(hit => isStale(this, hit) ? false : {
-	      k: hit.key,
-	      v: hit.value,
-	      e: hit.now + (hit.maxAge || 0)
-	    }).toArray().filter(h => h);
-	  }
-	  dumpLru() {
-	    return this[LRU_LIST];
-	  }
-	  set(key, value, maxAge) {
-	    maxAge = maxAge || this[MAX_AGE];
-	    if (maxAge && typeof maxAge !== 'number') throw new TypeError('maxAge must be a number');
-	    const now = maxAge ? Date.now() : 0;
-	    const len = this[LENGTH_CALCULATOR](value, key);
-	    if (this[CACHE].has(key)) {
-	      if (len > this[MAX]) {
-	        del(this, this[CACHE].get(key));
+	  }, {
+	    key: "dumpLru",
+	    value: function dumpLru() {
+	      return this[LRU_LIST];
+	    }
+	  }, {
+	    key: "set",
+	    value: function set(key, value, maxAge) {
+	      maxAge = maxAge || this[MAX_AGE];
+	      if (maxAge && typeof maxAge !== 'number') throw new TypeError('maxAge must be a number');
+	      var now = maxAge ? Date.now() : 0;
+	      var len = this[LENGTH_CALCULATOR](value, key);
+	      if (this[CACHE].has(key)) {
+	        if (len > this[MAX]) {
+	          _del(this, this[CACHE].get(key));
+	          return false;
+	        }
+	        var node = this[CACHE].get(key);
+	        var item = node.value;
+	        if (this[DISPOSE]) {
+	          if (!this[NO_DISPOSE_ON_SET]) this[DISPOSE](key, item.value);
+	        }
+	        item.now = now;
+	        item.maxAge = maxAge;
+	        item.value = value;
+	        this[LENGTH] += len - item.length;
+	        item.length = len;
+	        this.get(key);
+	        trim(this);
+	        return true;
+	      }
+	      var hit = new Entry(key, value, len, now, maxAge);
+	      if (hit.length > this[MAX]) {
+	        if (this[DISPOSE]) this[DISPOSE](key, value);
 	        return false;
 	      }
-	      const node = this[CACHE].get(key);
-	      const item = node.value;
-
-	      // dispose of the old one before overwriting
-	      // split out into 2 ifs for better coverage tracking
-	      if (this[DISPOSE]) {
-	        if (!this[NO_DISPOSE_ON_SET]) this[DISPOSE](key, item.value);
-	      }
-	      item.now = now;
-	      item.maxAge = maxAge;
-	      item.value = value;
-	      this[LENGTH] += len - item.length;
-	      item.length = len;
-	      this.get(key);
+	      this[LENGTH] += hit.length;
+	      this[LRU_LIST].unshift(hit);
+	      this[CACHE].set(key, this[LRU_LIST].head);
 	      trim(this);
 	      return true;
 	    }
-	    const hit = new Entry(key, value, len, now, maxAge);
-
-	    // oversized objects fall out of cache automatically.
-	    if (hit.length > this[MAX]) {
-	      if (this[DISPOSE]) this[DISPOSE](key, value);
-	      return false;
+	  }, {
+	    key: "has",
+	    value: function has(key) {
+	      if (!this[CACHE].has(key)) return false;
+	      var hit = this[CACHE].get(key).value;
+	      return !isStale(this, hit);
 	    }
-	    this[LENGTH] += hit.length;
-	    this[LRU_LIST].unshift(hit);
-	    this[CACHE].set(key, this[LRU_LIST].head);
-	    trim(this);
-	    return true;
-	  }
-	  has(key) {
-	    if (!this[CACHE].has(key)) return false;
-	    const hit = this[CACHE].get(key).value;
-	    return !isStale(this, hit);
-	  }
-	  get(key) {
-	    return get(this, key, true);
-	  }
-	  peek(key) {
-	    return get(this, key, false);
-	  }
-	  pop() {
-	    const node = this[LRU_LIST].tail;
-	    if (!node) return null;
-	    del(this, node);
-	    return node.value;
-	  }
-	  del(key) {
-	    del(this, this[CACHE].get(key));
-	  }
-	  load(arr) {
-	    // reset the cache
-	    this.reset();
-	    const now = Date.now();
-	    // A previous serialized cache has the most recent items first
-	    for (let l = arr.length - 1; l >= 0; l--) {
-	      const hit = arr[l];
-	      const expiresAt = hit.e || 0;
-	      if (expiresAt === 0)
-	        // the item was created without expiration in a non aged cache
-	        this.set(hit.k, hit.v);else {
-	        const maxAge = expiresAt - now;
-	        // dont add already expired items
-	        if (maxAge > 0) {
-	          this.set(hit.k, hit.v, maxAge);
+	  }, {
+	    key: "get",
+	    value: function get(key) {
+	      return _get(this, key, true);
+	    }
+	  }, {
+	    key: "peek",
+	    value: function peek(key) {
+	      return _get(this, key, false);
+	    }
+	  }, {
+	    key: "pop",
+	    value: function pop() {
+	      var node = this[LRU_LIST].tail;
+	      if (!node) return null;
+	      _del(this, node);
+	      return node.value;
+	    }
+	  }, {
+	    key: "del",
+	    value: function del(key) {
+	      _del(this, this[CACHE].get(key));
+	    }
+	  }, {
+	    key: "load",
+	    value: function load(arr) {
+	      this.reset();
+	      var now = Date.now();
+	      for (var l = arr.length - 1; l >= 0; l--) {
+	        var hit = arr[l];
+	        var expiresAt = hit.e || 0;
+	        if (expiresAt === 0) this.set(hit.k, hit.v);else {
+	          var maxAge = expiresAt - now;
+	          if (maxAge > 0) {
+	            this.set(hit.k, hit.v, maxAge);
+	          }
 	        }
 	      }
 	    }
-	  }
-	  prune() {
-	    this[CACHE].forEach((value, key) => get(this, key, false));
-	  }
-	}
-	const get = (self, key, doUse) => {
-	  const node = self[CACHE].get(key);
+	  }, {
+	    key: "prune",
+	    value: function prune() {
+	      var _this4 = this;
+	      this[CACHE].forEach(function (value, key) {
+	        return _get(_this4, key, false);
+	      });
+	    }
+	  }]);
+	  return LRUCache;
+	}();
+	var _get = function _get(self, key, doUse) {
+	  var node = self[CACHE].get(key);
 	  if (node) {
-	    const hit = node.value;
+	    var hit = node.value;
 	    if (isStale(self, hit)) {
-	      del(self, node);
+	      _del(self, node);
 	      if (!self[ALLOW_STALE]) return undefined;
 	    } else {
 	      if (doUse) {
@@ -7535,100 +8040,118 @@ var spine = (function (pc) {
 	    return hit.value;
 	  }
 	};
-	const isStale = (self, hit) => {
+	var isStale = function isStale(self, hit) {
 	  if (!hit || !hit.maxAge && !self[MAX_AGE]) return false;
-	  const diff = Date.now() - hit.now;
+	  var diff = Date.now() - hit.now;
 	  return hit.maxAge ? diff > hit.maxAge : self[MAX_AGE] && diff > self[MAX_AGE];
 	};
-	const trim = self => {
+	var trim = function trim(self) {
 	  if (self[LENGTH] > self[MAX]) {
-	    for (let walker = self[LRU_LIST].tail; self[LENGTH] > self[MAX] && walker !== null;) {
-	      // We know that we're about to delete this one, and also
-	      // what the next least recently used key will be, so just
-	      // go ahead and set it now.
-	      const prev = walker.prev;
-	      del(self, walker);
+	    for (var walker = self[LRU_LIST].tail; self[LENGTH] > self[MAX] && walker !== null;) {
+	      var prev = walker.prev;
+	      _del(self, walker);
 	      walker = prev;
 	    }
 	  }
 	};
-	const del = (self, node) => {
+	var _del = function _del(self, node) {
 	  if (node) {
-	    const hit = node.value;
+	    var hit = node.value;
 	    if (self[DISPOSE]) self[DISPOSE](hit.key, hit.value);
 	    self[LENGTH] -= hit.length;
 	    self[CACHE].delete(hit.key);
 	    self[LRU_LIST].removeNode(node);
 	  }
 	};
-	class Entry {
-	  constructor(key, value, length, now, maxAge) {
-	    this.key = key;
-	    this.value = value;
-	    this.length = length;
-	    this.now = now;
-	    this.maxAge = maxAge || 0;
-	  }
-	}
-	const forEachStep = (self, fn, node, thisp) => {
-	  let hit = node.value;
+	var Entry = _createClass(function Entry(key, value, length, now, maxAge) {
+	  _classCallCheck(this, Entry);
+	  this.key = key;
+	  this.value = value;
+	  this.length = length;
+	  this.now = now;
+	  this.maxAge = maxAge || 0;
+	});
+	var forEachStep = function forEachStep(self, fn, node, thisp) {
+	  var hit = node.value;
 	  if (isStale(self, hit)) {
-	    del(self, node);
+	    _del(self, node);
 	    if (!self[ALLOW_STALE]) hit = undefined;
 	  }
 	  if (hit) fn.call(thisp, hit.value, hit.key, self);
 	};
 	var lruCache = LRUCache;
+	getDefaultExportFromCjs(lruCache);
 
-	const SemVer = semver$1;
-	const compare$6 = (a, b, loose) => new SemVer(a, loose).compare(new SemVer(b, loose));
+	var SemVer = semver$1;
+	var compare$6 = function compare(a, b, loose) {
+	  return new SemVer(a, loose).compare(new SemVer(b, loose));
+	};
 	var compare_1 = compare$6;
+	getDefaultExportFromCjs(compare_1);
 
-	const compare$5 = compare_1;
-	const eq$1 = (a, b, loose) => compare$5(a, b, loose) === 0;
+	var compare$5 = compare_1;
+	var eq$1 = function eq(a, b, loose) {
+	  return compare$5(a, b, loose) === 0;
+	};
 	var eq_1 = eq$1;
+	getDefaultExportFromCjs(eq_1);
 
-	const compare$4 = compare_1;
-	const neq$1 = (a, b, loose) => compare$4(a, b, loose) !== 0;
+	var compare$4 = compare_1;
+	var neq$1 = function neq(a, b, loose) {
+	  return compare$4(a, b, loose) !== 0;
+	};
 	var neq_1 = neq$1;
+	getDefaultExportFromCjs(neq_1);
 
-	const compare$3 = compare_1;
-	const gt$1 = (a, b, loose) => compare$3(a, b, loose) > 0;
+	var compare$3 = compare_1;
+	var gt$1 = function gt(a, b, loose) {
+	  return compare$3(a, b, loose) > 0;
+	};
 	var gt_1 = gt$1;
+	getDefaultExportFromCjs(gt_1);
 
-	const compare$2 = compare_1;
-	const gte$1 = (a, b, loose) => compare$2(a, b, loose) >= 0;
+	var compare$2 = compare_1;
+	var gte$1 = function gte(a, b, loose) {
+	  return compare$2(a, b, loose) >= 0;
+	};
 	var gte_1 = gte$1;
+	getDefaultExportFromCjs(gte_1);
 
-	const compare$1 = compare_1;
-	const lt$1 = (a, b, loose) => compare$1(a, b, loose) < 0;
+	var compare$1 = compare_1;
+	var lt$1 = function lt(a, b, loose) {
+	  return compare$1(a, b, loose) < 0;
+	};
 	var lt_1 = lt$1;
+	getDefaultExportFromCjs(lt_1);
 
-	const compare = compare_1;
-	const lte$1 = (a, b, loose) => compare(a, b, loose) <= 0;
+	var compare = compare_1;
+	var lte$1 = function lte(a, b, loose) {
+	  return compare(a, b, loose) <= 0;
+	};
 	var lte_1 = lte$1;
+	getDefaultExportFromCjs(lte_1);
 
-	const eq = eq_1;
-	const neq = neq_1;
-	const gt = gt_1;
-	const gte = gte_1;
-	const lt = lt_1;
-	const lte = lte_1;
-	const cmp = (a, op, b, loose) => {
+	var eq = eq_1;
+	var neq = neq_1;
+	var gt = gt_1;
+	var gte = gte_1;
+	var lt = lt_1;
+	var lte = lte_1;
+	var cmp = function cmp(a, op, b, loose) {
 	  switch (op) {
 	    case '===':
-	      if (typeof a === 'object') {
+	      if (_typeof(a) === 'object') {
 	        a = a.version;
 	      }
-	      if (typeof b === 'object') {
+	      if (_typeof(b) === 'object') {
 	        b = b.version;
 	      }
 	      return a === b;
 	    case '!==':
-	      if (typeof a === 'object') {
+	      if (_typeof(a) === 'object') {
 	        a = a.version;
 	      }
-	      if (typeof b === 'object') {
+	      if (_typeof(b) === 'object') {
 	        b = b.version;
 	      }
 	      return a !== b;
@@ -7647,23 +8170,21 @@ var spine = (function (pc) {
 	    case '<=':
 	      return lte(a, b, loose);
 	    default:
-	      throw new TypeError(`Invalid operator: ${op}`);
+	      throw new TypeError("Invalid operator: ".concat(op));
 	  }
 	};
 	var cmp_1 = cmp;
+	getDefaultExportFromCjs(cmp_1);
 
 	var comparator;
 	var hasRequiredComparator;
 	function requireComparator() {
 	  if (hasRequiredComparator) return comparator;
 	  hasRequiredComparator = 1;
-	  const ANY = Symbol('SemVer ANY');
-	  // hoisted class for cyclic dependency
-	  class Comparator {
-	    static get ANY() {
-	      return ANY;
-	    }
-	    constructor(comp, options) {
+	  var ANY = Symbol('SemVer ANY');
+	  var Comparator = function () {
+	    function Comparator(comp, options) {
+	      _classCallCheck(this, Comparator);
 	      options = parseOptions(options);
 	      if (comp instanceof Comparator) {
 	        if (comp.loose === !!options.loose) {
@@ -7684,99 +8205,102 @@ var spine = (function (pc) {
 	      }
 	      debug('comp', this);
 	    }
-	    parse(comp) {
-	      const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR];
-	      const m = comp.match(r);
-	      if (!m) {
-	        throw new TypeError(`Invalid comparator: ${comp}`);
+	    _createClass(Comparator, [{
+	      key: "parse",
+	      value: function parse(comp) {
+	        var r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR];
+	        var m = comp.match(r);
+	        if (!m) {
+	          throw new TypeError("Invalid comparator: ".concat(comp));
+	        }
+	        this.operator = m[1] !== undefined ? m[1] : '';
+	        if (this.operator === '=') {
+	          this.operator = '';
+	        }
+	        if (!m[2]) {
+	          this.semver = ANY;
+	        } else {
+	          this.semver = new SemVer(m[2], this.options.loose);
+	        }
 	      }
-	      this.operator = m[1] !== undefined ? m[1] : '';
-	      if (this.operator === '=') {
-	        this.operator = '';
+	    }, {
+	      key: "toString",
+	      value: function toString() {
+	        return this.value;
 	      }
-
-	      // if it literally is just '>' or '' then allow anything.
-	      if (!m[2]) {
-	        this.semver = ANY;
-	      } else {
-	        this.semver = new SemVer(m[2], this.options.loose);
+	    }, {
+	      key: "test",
+	      value: function test(version) {
+	        debug('Comparator.test', version, this.options.loose);
+	        if (this.semver === ANY || version === ANY) {
+	          return true;
+	        }
+	        if (typeof version === 'string') {
+	          try {
+	            version = new SemVer(version, this.options);
+	          } catch (er) {
+	            return false;
+	          }
+	        }
+	        return cmp(version, this.operator, this.semver, this.options);
 	      }
-	    }
-	    toString() {
-	      return this.value;
-	    }
-	    test(version) {
-	      debug('Comparator.test', version, this.options.loose);
-	      if (this.semver === ANY || version === ANY) {
-	        return true;
-	      }
-	      if (typeof version === 'string') {
-	        try {
-	          version = new SemVer(version, this.options);
-	        } catch (er) {
+	    }, {
+	      key: "intersects",
+	      value: function intersects(comp, options) {
+	        if (!(comp instanceof Comparator)) {
+	          throw new TypeError('a Comparator is required');
+	        }
+	        if (this.operator === '') {
+	          if (this.value === '') {
+	            return true;
+	          }
+	          return new Range(comp.value, options).test(this.value);
+	        } else if (comp.operator === '') {
+	          if (comp.value === '') {
+	            return true;
+	          }
+	          return new Range(this.value, options).test(comp.semver);
+	        }
+	        options = parseOptions(options);
+	        if (options.includePrerelease && (this.value === '<0.0.0-0' || comp.value === '<0.0.0-0')) {
 	          return false;
 	        }
-	      }
-	      return cmp(version, this.operator, this.semver, this.options);
-	    }
-	    intersects(comp, options) {
-	      if (!(comp instanceof Comparator)) {
-	        throw new TypeError('a Comparator is required');
-	      }
-	      if (this.operator === '') {
-	        if (this.value === '') {
+	        if (!options.includePrerelease && (this.value.startsWith('<0.0.0') || comp.value.startsWith('<0.0.0'))) {
+	          return false;
+	        }
+	        if (this.operator.startsWith('>') && comp.operator.startsWith('>')) {
 	          return true;
 	        }
-	        return new Range(comp.value, options).test(this.value);
-	      } else if (comp.operator === '') {
-	        if (comp.value === '') {
+	        if (this.operator.startsWith('<') && comp.operator.startsWith('<')) {
 	          return true;
 	        }
-	        return new Range(this.value, options).test(comp.semver);
-	      }
-	      options = parseOptions(options);
-
-	      // Special cases where nothing can possibly be lower
-	      if (options.includePrerelease && (this.value === '<0.0.0-0' || comp.value === '<0.0.0-0')) {
+	        if (this.semver.version === comp.semver.version && this.operator.includes('=') && comp.operator.includes('=')) {
+	          return true;
+	        }
+	        if (cmp(this.semver, '<', comp.semver, options) && this.operator.startsWith('>') && comp.operator.startsWith('<')) {
+	          return true;
+	        }
+	        if (cmp(this.semver, '>', comp.semver, options) && this.operator.startsWith('<') && comp.operator.startsWith('>')) {
+	          return true;
+	        }
 	        return false;
 	      }
-	      if (!options.includePrerelease && (this.value.startsWith('<0.0.0') || comp.value.startsWith('<0.0.0'))) {
-	        return false;
+	    }], [{
+	      key: "ANY",
+	      get: function get() {
+	        return ANY;
 	      }
-
-	      // Same direction increasing (> or >=)
-	      if (this.operator.startsWith('>') && comp.operator.startsWith('>')) {
-	        return true;
-	      }
-	      // Same direction decreasing (< or <=)
-	      if (this.operator.startsWith('<') && comp.operator.startsWith('<')) {
-	        return true;
-	      }
-	      // same SemVer and both sides are inclusive (<= or >=)
-	      if (this.semver.version === comp.semver.version && this.operator.includes('=') && comp.operator.includes('=')) {
-	        return true;
-	      }
-	      // opposite directions less than
-	      if (cmp(this.semver, '<', comp.semver, options) && this.operator.startsWith('>') && comp.operator.startsWith('<')) {
-	        return true;
-	      }
-	      // opposite directions greater than
-	      if (cmp(this.semver, '>', comp.semver, options) && this.operator.startsWith('<') && comp.operator.startsWith('>')) {
-	        return true;
-	      }
-	      return false;
-	    }
-	  }
+	    }]);
+	    return Comparator;
+	  }();
 	  comparator = Comparator;
-	  const parseOptions = parseOptions_1;
-	  const {
-	    safeRe: re,
-	    t
-	  } = reExports;
-	  const cmp = cmp_1;
-	  const debug = debug_1;
-	  const SemVer = semver$1;
-	  const Range = requireRange();
+	  var parseOptions = parseOptions_1;
+	  var re = reExports.safeRe,
+	    t = reExports.t;
+	  var cmp = cmp_1;
+	  var debug = debug_1;
+	  var SemVer = semver$1;
+	  var Range = requireRange();
 	  return comparator;
 	}
 
@@ -7785,9 +8309,10 @@ var spine = (function (pc) {
 	function requireRange() {
 	  if (hasRequiredRange) return range;
 	  hasRequiredRange = 1;
-	  // hoisted class for cyclic dependency
-	  class Range {
-	    constructor(range, options) {
+	  var Range = function () {
+	    function Range(range, options) {
+	      var _this = this;
+	      _classCallCheck(this, Range);
 	      options = parseOptions(options);
 	      if (range instanceof Range) {
 	        if (range.loose === !!options.loose && range.includePrerelease === !!options.includePrerelease) {
@@ -7797,7 +8322,6 @@ var spine = (function (pc) {
 	        }
 	      }
 	      if (range instanceof Comparator) {
-	        // just put it in the set and return
 	        this.raw = range.value;
 	        this.set = [[range]];
 	        this.format();
@@ -7806,187 +8330,187 @@ var spine = (function (pc) {
 	      this.options = options;
 	      this.loose = !!options.loose;
 	      this.includePrerelease = !!options.includePrerelease;
-
-	      // First reduce all whitespace as much as possible so we do not have to rely
-	      // on potentially slow regexes like \s*. This is then stored and used for
-	      // future error messages as well.
 	      this.raw = range.trim().split(/\s+/).join(' ');
-
-	      // First, split on ||
-	      this.set = this.raw.split('||')
-	      // map the range to a 2d array of comparators
-	      .map(r => this.parseRange(r.trim()))
-	      // throw out any comparator lists that are empty
-	      // this generally means that it was not a valid range, which is allowed
-	      // in loose mode, but will still throw if the WHOLE range is invalid.
-	      .filter(c => c.length);
+	      this.set = this.raw.split('||').map(function (r) {
+	        return _this.parseRange(r.trim());
+	      }).filter(function (c) {
+	        return c.length;
+	      });
 	      if (!this.set.length) {
-	        throw new TypeError(`Invalid SemVer Range: ${this.raw}`);
+	        throw new TypeError("Invalid SemVer Range: ".concat(this.raw));
 	      }
-
-	      // if we have any that are not the null set, throw out null sets.
 	      if (this.set.length > 1) {
-	        // keep the first one, in case they're all null sets
-	        const first = this.set[0];
-	        this.set = this.set.filter(c => !isNullSet(c[0]));
+	        var first = this.set[0];
+	        this.set = this.set.filter(function (c) {
+	          return !isNullSet(c[0]);
+	        });
 	        if (this.set.length === 0) {
 	          this.set = [first];
 	        } else if (this.set.length > 1) {
-	          // if we have any that are *, then the range is just *
-	          for (const c of this.set) {
-	            if (c.length === 1 && isAny(c[0])) {
-	              this.set = [c];
-	              break;
+	          var _iterator = _createForOfIteratorHelper(this.set),
+	            _step;
+	          try {
+	            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+	              var c = _step.value;
+	              if (c.length === 1 && isAny(c[0])) {
+	                this.set = [c];
+	                break;
+	              }
 	            }
+	          } catch (err) {
+	            _iterator.e(err);
+	          } finally {
+	            _iterator.f();
 	          }
 	        }
 	      }
 	      this.format();
 	    }
-	    format() {
-	      this.range = this.set.map(comps => comps.join(' ').trim()).join('||').trim();
-	      return this.range;
-	    }
-	    toString() {
-	      return this.range;
-	    }
-	    parseRange(range) {
-	      // memoize range parsing for performance.
-	      // this is a very hot path, and fully deterministic.
-	      const memoOpts = (this.options.includePrerelease && FLAG_INCLUDE_PRERELEASE) | (this.options.loose && FLAG_LOOSE);
-	      const memoKey = memoOpts + ':' + range;
-	      const cached = cache.get(memoKey);
-	      if (cached) {
-	        return cached;
+	    _createClass(Range, [{
+	      key: "format",
+	      value: function format() {
+	        this.range = this.set.map(function (comps) {
+	          return comps.join(' ').trim();
+	        }).join('||').trim();
+	        return this.range;
 	      }
-	      const loose = this.options.loose;
-	      // `1.2.3 - 1.2.4` => `>=1.2.3 <=1.2.4`
-	      const hr = loose ? re[t.HYPHENRANGELOOSE] : re[t.HYPHENRANGE];
-	      range = range.replace(hr, hyphenReplace(this.options.includePrerelease));
-	      debug('hyphen replace', range);
-
-	      // `> 1.2.3 < 1.2.5` => `>1.2.3 <1.2.5`
-	      range = range.replace(re[t.COMPARATORTRIM], comparatorTrimReplace);
-	      debug('comparator trim', range);
-
-	      // `~ 1.2.3` => `~1.2.3`
-	      range = range.replace(re[t.TILDETRIM], tildeTrimReplace);
-	      debug('tilde trim', range);
-
-	      // `^ 1.2.3` => `^1.2.3`
-	      range = range.replace(re[t.CARETTRIM], caretTrimReplace);
-	      debug('caret trim', range);
-
-	      // At this point, the range is completely trimmed and
-	      // ready to be split into comparators.
-
-	      let rangeList = range.split(' ').map(comp => parseComparator(comp, this.options)).join(' ').split(/\s+/)
-	      // >=0.0.0 is equivalent to *
-	      .map(comp => replaceGTE0(comp, this.options));
-	      if (loose) {
-	        // in loose mode, throw out any that are not valid comparators
-	        rangeList = rangeList.filter(comp => {
-	          debug('loose invalid filter', comp, this.options);
-	          return !!comp.match(re[t.COMPARATORLOOSE]);
-	        });
+	    }, {
+	      key: "toString",
+	      value: function toString() {
+	        return this.range;
 	      }
-	      debug('range list', rangeList);
-
-	      // if any comparators are the null set, then replace with JUST null set
-	      // if more than one comparator, remove any * comparators
-	      // also, don't include the same comparator more than once
-	      const rangeMap = new Map();
-	      const comparators = rangeList.map(comp => new Comparator(comp, this.options));
-	      for (const comp of comparators) {
-	        if (isNullSet(comp)) {
-	          return [comp];
+	    }, {
+	      key: "parseRange",
+	      value: function parseRange(range) {
+	        var _this2 = this;
+	        var memoOpts = (this.options.includePrerelease && FLAG_INCLUDE_PRERELEASE) | (this.options.loose && FLAG_LOOSE);
+	        var memoKey = memoOpts + ':' + range;
+	        var cached = cache.get(memoKey);
+	        if (cached) {
+	          return cached;
 	        }
-	        rangeMap.set(comp.value, comp);
+	        var loose = this.options.loose;
+	        var hr = loose ? re[t.HYPHENRANGELOOSE] : re[t.HYPHENRANGE];
+	        range = range.replace(hr, hyphenReplace(this.options.includePrerelease));
+	        debug('hyphen replace', range);
+	        range = range.replace(re[t.COMPARATORTRIM], comparatorTrimReplace);
+	        debug('comparator trim', range);
+	        range = range.replace(re[t.TILDETRIM], tildeTrimReplace);
+	        debug('tilde trim', range);
+	        range = range.replace(re[t.CARETTRIM], caretTrimReplace);
+	        debug('caret trim', range);
+	        var rangeList = range.split(' ').map(function (comp) {
+	          return parseComparator(comp, _this2.options);
+	        }).join(' ').split(/\s+/).map(function (comp) {
+	          return replaceGTE0(comp, _this2.options);
+	        });
+	        if (loose) {
+	          rangeList = rangeList.filter(function (comp) {
+	            debug('loose invalid filter', comp, _this2.options);
+	            return !!comp.match(re[t.COMPARATORLOOSE]);
+	          });
+	        }
+	        debug('range list', rangeList);
+	        var rangeMap = new Map();
+	        var comparators = rangeList.map(function (comp) {
+	          return new Comparator(comp, _this2.options);
+	        });
+	        var _iterator2 = _createForOfIteratorHelper(comparators),
+	          _step2;
+	        try {
+	          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+	            var comp = _step2.value;
+	            if (isNullSet(comp)) {
+	              return [comp];
+	            }
+	            rangeMap.set(comp.value, comp);
+	          }
+	        } catch (err) {
+	          _iterator2.e(err);
+	        } finally {
+	          _iterator2.f();
+	        }
+	        if (rangeMap.size > 1 && rangeMap.has('')) {
+	          rangeMap.delete('');
+	        }
+	        var result = _toConsumableArray(rangeMap.values());
+	        cache.set(memoKey, result);
+	        return result;
 	      }
-	      if (rangeMap.size > 1 && rangeMap.has('')) {
-	        rangeMap.delete('');
-	      }
-	      const result = [...rangeMap.values()];
-	      cache.set(memoKey, result);
-	      return result;
-	    }
-	    intersects(range, options) {
-	      if (!(range instanceof Range)) {
-	        throw new TypeError('a Range is required');
-	      }
-	      return this.set.some(thisComparators => {
-	        return isSatisfiable(thisComparators, options) && range.set.some(rangeComparators => {
-	          return isSatisfiable(rangeComparators, options) && thisComparators.every(thisComparator => {
-	            return rangeComparators.every(rangeComparator => {
-	              return thisComparator.intersects(rangeComparator, options);
+	    }, {
+	      key: "intersects",
+	      value: function intersects(range, options) {
+	        if (!(range instanceof Range)) {
+	          throw new TypeError('a Range is required');
+	        }
+	        return this.set.some(function (thisComparators) {
+	          return isSatisfiable(thisComparators, options) && range.set.some(function (rangeComparators) {
+	            return isSatisfiable(rangeComparators, options) && thisComparators.every(function (thisComparator) {
+	              return rangeComparators.every(function (rangeComparator) {
+	                return thisComparator.intersects(rangeComparator, options);
+	              });
 	            });
 	          });
 	        });
-	      });
-	    }
-
-	    // if ANY of the sets match ALL of its comparators, then pass
-	    test(version) {
-	      if (!version) {
-	        return false;
 	      }
-	      if (typeof version === 'string') {
-	        try {
-	          version = new SemVer(version, this.options);
-	        } catch (er) {
+	    }, {
+	      key: "test",
+	      value: function test(version) {
+	        if (!version) {
 	          return false;
 	        }
-	      }
-	      for (let i = 0; i < this.set.length; i++) {
-	        if (testSet(this.set[i], version, this.options)) {
-	          return true;
+	        if (typeof version === 'string') {
+	          try {
+	            version = new SemVer(version, this.options);
+	          } catch (er) {
+	            return false;
+	          }
 	        }
+	        for (var i = 0; i < this.set.length; i++) {
+	          if (testSet(this.set[i], version, this.options)) {
+	            return true;
+	          }
+	        }
+	        return false;
 	      }
-	      return false;
-	    }
-	  }
+	    }]);
+	    return Range;
+	  }();
 	  range = Range;
-	  const LRU = lruCache;
-	  const cache = new LRU({
+	  var LRU = lruCache;
+	  var cache = new LRU({
 	    max: 1000
 	  });
-	  const parseOptions = parseOptions_1;
-	  const Comparator = requireComparator();
-	  const debug = debug_1;
-	  const SemVer = semver$1;
-	  const {
-	    safeRe: re,
-	    t,
-	    comparatorTrimReplace,
-	    tildeTrimReplace,
-	    caretTrimReplace
-	  } = reExports;
-	  const {
-	    FLAG_INCLUDE_PRERELEASE,
-	    FLAG_LOOSE
-	  } = constants;
-	  const isNullSet = c => c.value === '<0.0.0-0';
-	  const isAny = c => c.value === '';
-
-	  // take a set of comparators and determine whether there
-	  // exists a version which can satisfy it
-	  const isSatisfiable = (comparators, options) => {
-	    let result = true;
-	    const remainingComparators = comparators.slice();
-	    let testComparator = remainingComparators.pop();
+	  var parseOptions = parseOptions_1;
+	  var Comparator = requireComparator();
+	  var debug = debug_1;
+	  var SemVer = semver$1;
+	  var re = reExports.safeRe,
+	    t = reExports.t,
+	    comparatorTrimReplace = reExports.comparatorTrimReplace,
+	    tildeTrimReplace = reExports.tildeTrimReplace,
+	    caretTrimReplace = reExports.caretTrimReplace;
+	  var FLAG_INCLUDE_PRERELEASE = constants.FLAG_INCLUDE_PRERELEASE,
+	    FLAG_LOOSE = constants.FLAG_LOOSE;
+	  var isNullSet = function isNullSet(c) {
+	    return c.value === '<0.0.0-0';
+	  };
+	  var isAny = function isAny(c) {
+	    return c.value === '';
+	  };
+	  var isSatisfiable = function isSatisfiable(comparators, options) {
+	    var result = true;
+	    var remainingComparators = comparators.slice();
+	    var testComparator = remainingComparators.pop();
 	    while (result && remainingComparators.length) {
-	      result = remainingComparators.every(otherComparator => {
+	      result = remainingComparators.every(function (otherComparator) {
 	        return testComparator.intersects(otherComparator, options);
 	      });
 	      testComparator = remainingComparators.pop();
 	    }
 	    return result;
 	  };
-
-	  // comprised of xranges, tildes, stars, and gtlt's at this point.
-	  // already replaced the hyphen ranges
-	  // turn into a set of JUST comparators.
-	  const parseComparator = (comp, options) => {
+	  var parseComparator = function parseComparator(comp, options) {
 	    debug('comp', comp, options);
 	    comp = replaceCarets(comp, options);
 	    debug('caret', comp);
@@ -7998,135 +8522,115 @@ var spine = (function (pc) {
 	    debug('stars', comp);
 	    return comp;
 	  };
-	  const isX = id => !id || id.toLowerCase() === 'x' || id === '*';
-
-	  // ~, ~> --> * (any, kinda silly)
-	  // ~2, ~2.x, ~2.x.x, ~>2, ~>2.x ~>2.x.x --> >=2.0.0 <3.0.0-0
-	  // ~2.0, ~2.0.x, ~>2.0, ~>2.0.x --> >=2.0.0 <2.1.0-0
-	  // ~1.2, ~1.2.x, ~>1.2, ~>1.2.x --> >=1.2.0 <1.3.0-0
-	  // ~1.2.3, ~>1.2.3 --> >=1.2.3 <1.3.0-0
-	  // ~1.2.0, ~>1.2.0 --> >=1.2.0 <1.3.0-0
-	  // ~0.0.1 --> >=0.0.1 <0.1.0-0
-	  const replaceTildes = (comp, options) => {
-	    return comp.trim().split(/\s+/).map(c => replaceTilde(c, options)).join(' ');
+	  var isX = function isX(id) {
+	    return !id || id.toLowerCase() === 'x' || id === '*';
 	  };
-	  const replaceTilde = (comp, options) => {
-	    const r = options.loose ? re[t.TILDELOOSE] : re[t.TILDE];
-	    return comp.replace(r, (_, M, m, p, pr) => {
+	  var replaceTildes = function replaceTildes(comp, options) {
+	    return comp.trim().split(/\s+/).map(function (c) {
+	      return replaceTilde(c, options);
+	    }).join(' ');
+	  };
+	  var replaceTilde = function replaceTilde(comp, options) {
+	    var r = options.loose ? re[t.TILDELOOSE] : re[t.TILDE];
+	    return comp.replace(r, function (_, M, m, p, pr) {
 	      debug('tilde', comp, _, M, m, p, pr);
-	      let ret;
+	      var ret;
 	      if (isX(M)) {
 	        ret = '';
 	      } else if (isX(m)) {
-	        ret = `>=${M}.0.0 <${+M + 1}.0.0-0`;
+	        ret = ">=".concat(M, ".0.0 <").concat(+M + 1, ".0.0-0");
 	      } else if (isX(p)) {
-	        // ~1.2 == >=1.2.0 <1.3.0-0
-	        ret = `>=${M}.${m}.0 <${M}.${+m + 1}.0-0`;
+	        ret = ">=".concat(M, ".").concat(m, ".0 <").concat(M, ".").concat(+m + 1, ".0-0");
 	      } else if (pr) {
 	        debug('replaceTilde pr', pr);
-	        ret = `>=${M}.${m}.${p}-${pr} <${M}.${+m + 1}.0-0`;
+	        ret = ">=".concat(M, ".").concat(m, ".").concat(p, "-").concat(pr, " <").concat(M, ".").concat(+m + 1, ".0-0");
 	      } else {
-	        // ~1.2.3 == >=1.2.3 <1.3.0-0
-	        ret = `>=${M}.${m}.${p} <${M}.${+m + 1}.0-0`;
+	        ret = ">=".concat(M, ".").concat(m, ".").concat(p, " <").concat(M, ".").concat(+m + 1, ".0-0");
 	      }
 	      debug('tilde return', ret);
 	      return ret;
 	    });
 	  };
-
-	  // ^ --> * (any, kinda silly)
-	  // ^2, ^2.x, ^2.x.x --> >=2.0.0 <3.0.0-0
-	  // ^2.0, ^2.0.x --> >=2.0.0 <3.0.0-0
-	  // ^1.2, ^1.2.x --> >=1.2.0 <2.0.0-0
-	  // ^1.2.3 --> >=1.2.3 <2.0.0-0
-	  // ^1.2.0 --> >=1.2.0 <2.0.0-0
-	  // ^0.0.1 --> >=0.0.1 <0.0.2-0
-	  // ^0.1.0 --> >=0.1.0 <0.2.0-0
-	  const replaceCarets = (comp, options) => {
-	    return comp.trim().split(/\s+/).map(c => replaceCaret(c, options)).join(' ');
+	  var replaceCarets = function replaceCarets(comp, options) {
+	    return comp.trim().split(/\s+/).map(function (c) {
+	      return replaceCaret(c, options);
+	    }).join(' ');
 	  };
-	  const replaceCaret = (comp, options) => {
+	  var replaceCaret = function replaceCaret(comp, options) {
 	    debug('caret', comp, options);
-	    const r = options.loose ? re[t.CARETLOOSE] : re[t.CARET];
-	    const z = options.includePrerelease ? '-0' : '';
-	    return comp.replace(r, (_, M, m, p, pr) => {
+	    var r = options.loose ? re[t.CARETLOOSE] : re[t.CARET];
+	    var z = options.includePrerelease ? '-0' : '';
+	    return comp.replace(r, function (_, M, m, p, pr) {
 	      debug('caret', comp, _, M, m, p, pr);
-	      let ret;
+	      var ret;
 	      if (isX(M)) {
 	        ret = '';
 	      } else if (isX(m)) {
-	        ret = `>=${M}.0.0${z} <${+M + 1}.0.0-0`;
+	        ret = ">=".concat(M, ".0.0").concat(z, " <").concat(+M + 1, ".0.0-0");
 	      } else if (isX(p)) {
 	        if (M === '0') {
-	          ret = `>=${M}.${m}.0${z} <${M}.${+m + 1}.0-0`;
+	          ret = ">=".concat(M, ".").concat(m, ".0").concat(z, " <").concat(M, ".").concat(+m + 1, ".0-0");
 	        } else {
-	          ret = `>=${M}.${m}.0${z} <${+M + 1}.0.0-0`;
+	          ret = ">=".concat(M, ".").concat(m, ".0").concat(z, " <").concat(+M + 1, ".0.0-0");
 	        }
 	      } else if (pr) {
 	        debug('replaceCaret pr', pr);
 	        if (M === '0') {
 	          if (m === '0') {
-	            ret = `>=${M}.${m}.${p}-${pr} <${M}.${m}.${+p + 1}-0`;
+	            ret = ">=".concat(M, ".").concat(m, ".").concat(p, "-").concat(pr, " <").concat(M, ".").concat(m, ".").concat(+p + 1, "-0");
 	          } else {
-	            ret = `>=${M}.${m}.${p}-${pr} <${M}.${+m + 1}.0-0`;
+	            ret = ">=".concat(M, ".").concat(m, ".").concat(p, "-").concat(pr, " <").concat(M, ".").concat(+m + 1, ".0-0");
 	          }
 	        } else {
-	          ret = `>=${M}.${m}.${p}-${pr} <${+M + 1}.0.0-0`;
+	          ret = ">=".concat(M, ".").concat(m, ".").concat(p, "-").concat(pr, " <").concat(+M + 1, ".0.0-0");
 	        }
 	      } else {
 	        debug('no pr');
 	        if (M === '0') {
 	          if (m === '0') {
-	            ret = `>=${M}.${m}.${p}${z} <${M}.${m}.${+p + 1}-0`;
+	            ret = ">=".concat(M, ".").concat(m, ".").concat(p).concat(z, " <").concat(M, ".").concat(m, ".").concat(+p + 1, "-0");
 	          } else {
-	            ret = `>=${M}.${m}.${p}${z} <${M}.${+m + 1}.0-0`;
+	            ret = ">=".concat(M, ".").concat(m, ".").concat(p).concat(z, " <").concat(M, ".").concat(+m + 1, ".0-0");
 	          }
 	        } else {
-	          ret = `>=${M}.${m}.${p} <${+M + 1}.0.0-0`;
+	          ret = ">=".concat(M, ".").concat(m, ".").concat(p, " <").concat(+M + 1, ".0.0-0");
 	        }
 	      }
 	      debug('caret return', ret);
 	      return ret;
 	    });
 	  };
-	  const replaceXRanges = (comp, options) => {
+	  var replaceXRanges = function replaceXRanges(comp, options) {
 	    debug('replaceXRanges', comp, options);
-	    return comp.split(/\s+/).map(c => replaceXRange(c, options)).join(' ');
+	    return comp.split(/\s+/).map(function (c) {
+	      return replaceXRange(c, options);
+	    }).join(' ');
 	  };
-	  const replaceXRange = (comp, options) => {
+	  var replaceXRange = function replaceXRange(comp, options) {
 	    comp = comp.trim();
-	    const r = options.loose ? re[t.XRANGELOOSE] : re[t.XRANGE];
-	    return comp.replace(r, (ret, gtlt, M, m, p, pr) => {
+	    var r = options.loose ? re[t.XRANGELOOSE] : re[t.XRANGE];
+	    return comp.replace(r, function (ret, gtlt, M, m, p, pr) {
 	      debug('xRange', comp, ret, gtlt, M, m, p, pr);
-	      const xM = isX(M);
-	      const xm = xM || isX(m);
-	      const xp = xm || isX(p);
-	      const anyX = xp;
+	      var xM = isX(M);
+	      var xm = xM || isX(m);
+	      var xp = xm || isX(p);
+	      var anyX = xp;
 	      if (gtlt === '=' && anyX) {
 	        gtlt = '';
 	      }
-
-	      // if we're including prereleases in the match, then we need
-	      // to fix this to -0, the lowest possible prerelease value
 	      pr = options.includePrerelease ? '-0' : '';
 	      if (xM) {
 	        if (gtlt === '>' || gtlt === '<') {
-	          // nothing is allowed
 	          ret = '<0.0.0-0';
 	        } else {
-	          // nothing is forbidden
 	          ret = '*';
 	        }
 	      } else if (gtlt && anyX) {
-	        // we know patch is an x, because we have any x at all.
-	        // replace X with 0
 	        if (xm) {
 	          m = 0;
 	        }
 	        p = 0;
 	        if (gtlt === '>') {
-	          // >1 => >=2.0.0
-	          // >1.2 => >=1.3.0
 	          gtlt = '>=';
 	          if (xm) {
 	            M = +M + 1;
@@ -8137,8 +8641,6 @@ var spine = (function (pc) {
 	            p = 0;
 	          }
 	        } else if (gtlt === '<=') {
-	          // <=0.7.x is actually <0.8.0, since any 0.7.x should
-	          // pass.  Similarly, <=7.x is actually <8.0.0, etc.
 	          gtlt = '<';
 	          if (xm) {
 	            M = +M + 1;
@@ -8149,87 +8651,72 @@ var spine = (function (pc) {
 	        if (gtlt === '<') {
 	          pr = '-0';
 	        }
-	        ret = `${gtlt + M}.${m}.${p}${pr}`;
+	        ret = "".concat(gtlt + M, ".").concat(m, ".").concat(p).concat(pr);
 	      } else if (xm) {
-	        ret = `>=${M}.0.0${pr} <${+M + 1}.0.0-0`;
+	        ret = ">=".concat(M, ".0.0").concat(pr, " <").concat(+M + 1, ".0.0-0");
 	      } else if (xp) {
-	        ret = `>=${M}.${m}.0${pr} <${M}.${+m + 1}.0-0`;
+	        ret = ">=".concat(M, ".").concat(m, ".0").concat(pr, " <").concat(M, ".").concat(+m + 1, ".0-0");
 	      }
 	      debug('xRange return', ret);
 	      return ret;
 	    });
 	  };
-
-	  // Because * is AND-ed with everything else in the comparator,
-	  // and '' means "any version", just remove the *s entirely.
-	  const replaceStars = (comp, options) => {
+	  var replaceStars = function replaceStars(comp, options) {
 	    debug('replaceStars', comp, options);
-	    // Looseness is ignored here.  star is always as loose as it gets!
 	    return comp.trim().replace(re[t.STAR], '');
 	  };
-	  const replaceGTE0 = (comp, options) => {
+	  var replaceGTE0 = function replaceGTE0(comp, options) {
 	    debug('replaceGTE0', comp, options);
 	    return comp.trim().replace(re[options.includePrerelease ? t.GTE0PRE : t.GTE0], '');
 	  };
-
-	  // This function is passed to string.replace(re[t.HYPHENRANGE])
-	  // M, m, patch, prerelease, build
-	  // 1.2 - 3.4.5 => >=1.2.0 <=3.4.5
-	  // 1.2.3 - 3.4 => >=1.2.0 <3.5.0-0 Any 3.4.x will do
-	  // 1.2 - 3.4 => >=1.2.0 <3.5.0-0
-	  const hyphenReplace = incPr => ($0, from, fM, fm, fp, fpr, fb, to, tM, tm, tp, tpr, tb) => {
-	    if (isX(fM)) {
-	      from = '';
-	    } else if (isX(fm)) {
-	      from = `>=${fM}.0.0${incPr ? '-0' : ''}`;
-	    } else if (isX(fp)) {
-	      from = `>=${fM}.${fm}.0${incPr ? '-0' : ''}`;
-	    } else if (fpr) {
-	      from = `>=${from}`;
-	    } else {
-	      from = `>=${from}${incPr ? '-0' : ''}`;
-	    }
-	    if (isX(tM)) {
-	      to = '';
-	    } else if (isX(tm)) {
-	      to = `<${+tM + 1}.0.0-0`;
-	    } else if (isX(tp)) {
-	      to = `<${tM}.${+tm + 1}.0-0`;
-	    } else if (tpr) {
-	      to = `<=${tM}.${tm}.${tp}-${tpr}`;
-	    } else if (incPr) {
-	      to = `<${tM}.${tm}.${+tp + 1}-0`;
-	    } else {
-	      to = `<=${to}`;
-	    }
-	    return `${from} ${to}`.trim();
+	  var hyphenReplace = function hyphenReplace(incPr) {
+	    return function ($0, from, fM, fm, fp, fpr, fb, to, tM, tm, tp, tpr, tb) {
+	      if (isX(fM)) {
+	        from = '';
+	      } else if (isX(fm)) {
+	        from = ">=".concat(fM, ".0.0").concat(incPr ? '-0' : '');
+	      } else if (isX(fp)) {
+	        from = ">=".concat(fM, ".").concat(fm, ".0").concat(incPr ? '-0' : '');
+	      } else if (fpr) {
+	        from = ">=".concat(from);
+	      } else {
+	        from = ">=".concat(from).concat(incPr ? '-0' : '');
+	      }
+	      if (isX(tM)) {
+	        to = '';
+	      } else if (isX(tm)) {
+	        to = "<".concat(+tM + 1, ".0.0-0");
+	      } else if (isX(tp)) {
+	        to = "<".concat(tM, ".").concat(+tm + 1, ".0-0");
+	      } else if (tpr) {
+	        to = "<=".concat(tM, ".").concat(tm, ".").concat(tp, "-").concat(tpr);
+	      } else if (incPr) {
+	        to = "<".concat(tM, ".").concat(tm, ".").concat(+tp + 1, "-0");
+	      } else {
+	        to = "<=".concat(to);
+	      }
+	      return "".concat(from, " ").concat(to).trim();
+	    };
 	  };
-	  const testSet = (set, version, options) => {
-	    for (let i = 0; i < set.length; i++) {
+	  var testSet = function testSet(set, version, options) {
+	    for (var i = 0; i < set.length; i++) {
 	      if (!set[i].test(version)) {
 	        return false;
 	      }
 	    }
 	    if (version.prerelease.length && !options.includePrerelease) {
-	      // Find the set of versions that are allowed to have prereleases
-	      // For example, ^1.2.3-pr.1 desugars to >=1.2.3-pr.1 <2.0.0
-	      // That should allow `1.2.3-pr.2` to pass.
-	      // However, `1.2.4-alpha.notready` should NOT be allowed,
-	      // even though it's within the range set by the comparators.
-	      for (let i = 0; i < set.length; i++) {
-	        debug(set[i].semver);
-	        if (set[i].semver === Comparator.ANY) {
+	      for (var _i = 0; _i < set.length; _i++) {
+	        debug(set[_i].semver);
+	        if (set[_i].semver === Comparator.ANY) {
 	          continue;
 	        }
-	        if (set[i].semver.prerelease.length > 0) {
-	          const allowed = set[i].semver;
+	        if (set[_i].semver.prerelease.length > 0) {
+	          var allowed = set[_i].semver;
 	          if (allowed.major === version.major && allowed.minor === version.minor && allowed.patch === version.patch) {
 	            return true;
 	          }
 	        }
 	      }
-
-	      // Version has a -pre, but it's not one of the ones we like.
 	      return false;
 	    }
 	    return true;
@@ -8237,8 +8724,8 @@ var spine = (function (pc) {
 	  return range;
 	}
 
-	const Range = requireRange();
-	const satisfies = (version, range, options) => {
+	var Range = requireRange();
+	var satisfies = function satisfies(version, range, options) {
 	  try {
 	    range = new Range(range, options);
 	  } catch (er) {
@@ -8247,9 +8734,7 @@ var spine = (function (pc) {
 	  return range.test(version);
 	};
 	var satisfies_1 = satisfies;
-	var satisfies$1 = /*@__PURE__*/getDefaultExportFromCjs(satisfies_1);
-
-	// custom semver export as described in semver readme
+	var satisfies$1 = getDefaultExportFromCjs(satisfies_1);
 
 	var semver = {
 	  valid: valid$1,
@@ -8258,70 +8743,44 @@ var spine = (function (pc) {
 	  SEMVER_SPEC_VERSION: constants$1.SEMVER_SPEC_VERSION
 	};
 
-	/* eslint-disable operator-linebreak */
-	const ATTACHMENT_TYPE = {
+	var ATTACHMENT_TYPE = {
 	  NULL: 0,
 	  MESH: 1,
 	  REGION: 2
 	};
-
-	// index data for region (quad) type of attachment
-	const QUAD_TRIANGLES = [0, 1, 2, 2, 3, 0];
-
-	/**
-	 * @class
-	 * @name pc.Spine
-	 * @classdesc  A Spine animation object.
-	 * @description Contains the skeleton and animation states as detailed in the Spine Runtime documentation.
-	 * @param {pc.Application} app - The application that will manage this Spine object.
-	 * @param {string} atlasData - Text data loaded from the atlas file.
-	 * @param {object} skeletonData - JSON data loaded from the skeleton file.
-	 * @param {object} textureData - Texture initialization data. An object where the key is the texture filename and the value is the pc.Texture resource.
-	 * @property {spine.Skeleton} skeleton The Skeleton object.
-	 * @property {spine.AnimationState} state The first AnimationState object. There is always one AnimationState.
-	 * @property {spine.AnimationState[]} states A list of all AnimationState objects.
-	 * @property {number} priority An integer value which determines when the spine mesh is rendered relative to other Spine meshes. Lower numbers are rendered first.
-	 * @property {boolean} autoUpdate Determines whether the Spine object calls skeleton.updateWorldTransform in the update loop. Default is true.
-	 */
-	class Spine {
-	  constructor(app, atlasData, skeletonData, textureData) {
+	var QUAD_TRIANGLES = [0, 1, 2, 2, 3, 0];
+	var Spine = function () {
+	  function Spine(app, atlasData, skeletonData, textureData) {
+	    _classCallCheck(this, Spine);
 	    this._app = app;
 	    this._position = new pc__namespace.Vec3();
-	    let atlas;
-
-	    // EP: As instructed: https://github.com/playcanvas/playcanvas-spine/pull/73
-	    //
-	    // API differs before we can know which which file version this is supposed to support.
-	    // The data file opened will determine which code paths are used.  This file may
-	    // or may not be concatenated with the spine library that supports it.
-	    //
-	    // use the length of the function signatures to guess which library has been concatenated.
+	    var atlas;
 	    if (spine$1.TextureAtlas.length === 1) {
-	      // spine 4.1
 	      atlas = new spine$1.TextureAtlas(atlasData);
-	      for (const page of atlas.pages) {
-	        page.setTexture(
-	        // @ts-ignore
-	        new SpineTextureWrapper(textureData[page.name]));
+	      var _iterator = _createForOfIteratorHelper(atlas.pages),
+	        _step;
+	      try {
+	        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+	          var page = _step.value;
+	          page.setTexture(new SpineTextureWrapper(textureData[page.name]));
+	        }
+	      } catch (err) {
+	        _iterator.e(err);
+	      } finally {
+	        _iterator.f();
 	      }
 	    } else {
-	      // spine 3.6 and 3.8
-	      atlas = new spine$1.TextureAtlas(atlasData,
-	      // @ts-ignore
-	      path => {
+	      atlas = new spine$1.TextureAtlas(atlasData, function (path) {
 	        return new SpineTextureWrapper(textureData[path]);
 	      });
 	    }
-	    const json = new spine$1.SkeletonJson(new spine$1.AtlasAttachmentLoader(atlas));
+	    var json = new spine$1.SkeletonJson(new spine$1.AtlasAttachmentLoader(atlas));
 	    json.scale *= 0.01;
-	    const _skeletonData = json.readSkeletonData(skeletonData);
-
-	    // Compatibility queries
+	    var _skeletonData = json.readSkeletonData(skeletonData);
 	    this.skeletonVersion = semver.valid(semver.coerce(_skeletonData.version));
-	    this._spine_3_6_0 = semver.satisfies(this.skeletonVersion, '<=3.6.0'); // version 3.6.0 or below
-	    this._spine_3_7_99 = semver.satisfies(this.skeletonVersion, '<=3.7.99'); // version 3.7.99 or below
-	    this._spine_4_1_X = semver.satisfies(this.skeletonVersion, '~4.1.23'); // version 4.1 family
-
+	    this._spine_3_6_0 = semver.satisfies(this.skeletonVersion, '<=3.6.0');
+	    this._spine_3_7_99 = semver.satisfies(this.skeletonVersion, '<=3.7.99');
+	    this._spine_4_1_X = semver.satisfies(this.skeletonVersion, '~4.1.23');
 	    this.skeleton = new spine$1.Skeleton(_skeletonData);
 	    this.skeleton.updateWorldTransform();
 	    this.stateData = new spine$1.AnimationStateData(this.skeleton.data);
@@ -8350,659 +8809,671 @@ var spine = (function (pc) {
 	    this.autoUpdate = true;
 	    this._hidden = false;
 	  }
-	  destroy() {
-	    this.removeFromLayers();
-	    for (let i = 0; i < this._meshInstances.length; i++) {
-	      this._meshInstances[i].mesh.vertexBuffer = null;
-	      this._meshInstances[i].mesh.indexBuffer.length = 0;
-	      this._meshInstances[i].material = null;
-	    }
-	    if (this._vertexBuffer) {
-	      this._vertexBuffer.destroy();
-	      this._vertexBuffer = null;
-	    }
-	    if (this._indexBuffer) {
-	      this._indexBuffer.destroy();
-	      this._indexBuffer = null;
-	    }
-	    this._meshInstances = [];
-	    this.skeleton = null;
-	    this.stateData = null;
-	    this._materials = {};
-	    this._node = null;
-	  }
-	  hide() {
-	    if (this._hidden) return;
-	    for (let i = 0, n = this._meshInstances.length; i < n; i++) {
-	      this._meshInstances[i].visible = false;
-	    }
-	    this._hidden = true;
-	  }
-	  show() {
-	    if (!this._hidden) return;
-	    for (let i = 0, n = this._meshInstances.length; i < n; i++) {
-	      this._meshInstances[i].visible = true;
-	    }
-	    this._hidden = false;
-	  }
-	  init() {
-	    // vertex format
-	    this._vertexFormat = new pc__namespace.VertexFormat(this._app.graphicsDevice, [{
-	      semantic: pc__namespace.SEMANTIC_POSITION,
-	      components: 2,
-	      type: pc__namespace.TYPE_FLOAT32
-	    }, {
-	      semantic: pc__namespace.SEMANTIC_NORMAL,
-	      components: 4,
-	      type: pc__namespace.TYPE_UINT8,
-	      normalize: true
-	    }, {
-	      semantic: pc__namespace.SEMANTIC_TEXCOORD0,
-	      components: 2,
-	      type: pc__namespace.TYPE_FLOAT32
-	    }, {
-	      semantic: pc__namespace.SEMANTIC_COLOR,
-	      components: 4,
-	      type: pc__namespace.TYPE_UINT8,
-	      normalize: true
-	    }]);
-
-	    // init slots
-	    const drawOrder = this.skeleton.drawOrder;
-	    for (let i = 0, n = drawOrder.length; i < n; i++) {
-	      this.initSlot(drawOrder[i]);
-	    }
-	  }
-	  initSlot(slot) {
-	    slot.positions = []; // vec2 world space positions
-	    slot.uvs = []; // vec2 uv coordinates
-	    slot.indices = []; // triangle indices
-	    slot.vertexColor = {}; // rgba color of the slot
-
-	    // last update name and type, used to detect when attachment changes on a slot
-	    slot._active = {
-	      name: '',
-	      type: ATTACHMENT_TYPE.NULL
-	    };
-	    this.initAttachment(slot);
-	  }
-	  createMaterial(texture) {
-	    const material = new pc__namespace.StandardMaterial();
-	    material.shadingModel = pc__namespace.SPECULAR_BLINN;
-	    material.diffuse = new pc__namespace.Color(1, 1, 1); // include diffuse component, this allows lights contribution
-
-	    material.emissiveMap = texture;
-	    material.emissiveMapChannel = 'rgb';
-	    material.emissiveVertexColor = true;
-	    material.emissiveVertexColorChannel = 'rgb';
-	    material.opacityMap = texture;
-	    material.opacityMapChannel = 'a';
-	    material.opacityVertexColor = true;
-	    material.opacityVertexColorChannel = 'a';
-	    material.depthWrite = false;
-	    material.cull = pc__namespace.CULLFACE_NONE;
-	    material.blendType = pc__namespace.BLEND_PREMULTIPLIED;
-	    if (this._spine_3_6_0) {
-	      // override premultiplied chunk because images are already premultiplied however the opacity is not premultiplied by slot alpha
-	      const alphaPremul = ['gl_FragColor.rgb *= vVertexColor.a;', 'gl_FragColor.a = dAlpha;'].join('\n');
-	      material.chunks.outputAlphaPremulPS = alphaPremul;
-	    }
-	    material.update();
-	    return material;
-	  }
-	  initAttachment(slot) {
-	    const attachment = slot.attachment;
-	    if (attachment) {
-	      slot._active.name = attachment.name;
-	      if (attachment instanceof spine$1.RegionAttachment) {
-	        slot._active.type = ATTACHMENT_TYPE.REGION;
-	      } else if (attachment instanceof spine$1.MeshAttachment) {
-	        slot._active.type = ATTACHMENT_TYPE.MESH;
+	  _createClass(Spine, [{
+	    key: "destroy",
+	    value: function destroy() {
+	      this.removeFromLayers();
+	      for (var i = 0; i < this._meshInstances.length; i++) {
+	        this._meshInstances[i].mesh.vertexBuffer = null;
+	        this._meshInstances[i].mesh.indexBuffer.length = 0;
+	        this._meshInstances[i].material = null;
 	      }
-
-	      // create / assign material
-	      if (attachment.region && attachment.region.texture) {
-	        const texture = attachment.region.texture.pcTexture;
-	        if (texture) {
-	          if (texture instanceof pc__namespace.StandardMaterial) {
-	            this._materials[texture.name] = texture;
-	            slot.material = texture.name;
-	          } else {
-	            // get a unique key for the texture
-	            let key = null;
-	            if (texture.name) {
-	              key = texture.name; // texture name might not be unique - should be resolved with content
-	            } else if (texture.getSource() instanceof Image) {
-	              key = texture.getSource().getAttribute('src');
-	            }
-	            if (key) {
-	              // create a new material if required
-	              if (this._materials[key] === undefined) {
-	                const material = this.createMaterial(texture);
-	                this._materials[key] = material;
+	      if (this._vertexBuffer) {
+	        this._vertexBuffer.destroy();
+	        this._vertexBuffer = null;
+	      }
+	      if (this._indexBuffer) {
+	        this._indexBuffer.destroy();
+	        this._indexBuffer = null;
+	      }
+	      this._meshInstances = [];
+	      this.skeleton = null;
+	      this.stateData = null;
+	      this._materials = {};
+	      this._node = null;
+	    }
+	  }, {
+	    key: "hide",
+	    value: function hide() {
+	      if (this._hidden) return;
+	      for (var i = 0, n = this._meshInstances.length; i < n; i++) {
+	        this._meshInstances[i].visible = false;
+	      }
+	      this._hidden = true;
+	    }
+	  }, {
+	    key: "show",
+	    value: function show() {
+	      if (!this._hidden) return;
+	      for (var i = 0, n = this._meshInstances.length; i < n; i++) {
+	        this._meshInstances[i].visible = true;
+	      }
+	      this._hidden = false;
+	    }
+	  }, {
+	    key: "init",
+	    value: function init() {
+	      this._vertexFormat = new pc__namespace.VertexFormat(this._app.graphicsDevice, [{
+	        semantic: pc__namespace.SEMANTIC_POSITION,
+	        components: 2,
+	        type: pc__namespace.TYPE_FLOAT32
+	      }, {
+	        semantic: pc__namespace.SEMANTIC_NORMAL,
+	        components: 4,
+	        type: pc__namespace.TYPE_UINT8,
+	        normalize: true
+	      }, {
+	        semantic: pc__namespace.SEMANTIC_TEXCOORD0,
+	        components: 2,
+	        type: pc__namespace.TYPE_FLOAT32
+	      }, {
+	        semantic: pc__namespace.SEMANTIC_COLOR,
+	        components: 4,
+	        type: pc__namespace.TYPE_UINT8,
+	        normalize: true
+	      }]);
+	      var drawOrder = this.skeleton.drawOrder;
+	      for (var i = 0, n = drawOrder.length; i < n; i++) {
+	        this.initSlot(drawOrder[i]);
+	      }
+	    }
+	  }, {
+	    key: "initSlot",
+	    value: function initSlot(slot) {
+	      slot.positions = [];
+	      slot.uvs = [];
+	      slot.indices = [];
+	      slot.vertexColor = {};
+	      slot._active = {
+	        name: '',
+	        type: ATTACHMENT_TYPE.NULL
+	      };
+	      this.initAttachment(slot);
+	    }
+	  }, {
+	    key: "createMaterial",
+	    value: function createMaterial(texture) {
+	      var material = new pc__namespace.StandardMaterial();
+	      material.shadingModel = pc__namespace.SPECULAR_BLINN;
+	      material.diffuse = new pc__namespace.Color(1, 1, 1);
+	      material.emissiveMap = texture;
+	      material.emissiveMapChannel = 'rgb';
+	      material.emissiveVertexColor = true;
+	      material.emissiveVertexColorChannel = 'rgb';
+	      material.opacityMap = texture;
+	      material.opacityMapChannel = 'a';
+	      material.opacityVertexColor = true;
+	      material.opacityVertexColorChannel = 'a';
+	      material.depthWrite = false;
+	      material.cull = pc__namespace.CULLFACE_NONE;
+	      material.blendType = pc__namespace.BLEND_PREMULTIPLIED;
+	      if (this._spine_3_6_0) {
+	        var alphaPremul = ['gl_FragColor.rgb *= vVertexColor.a;', 'gl_FragColor.a = dAlpha;'].join('\n');
+	        material.chunks.outputAlphaPremulPS = alphaPremul;
+	      }
+	      material.update();
+	      return material;
+	    }
+	  }, {
+	    key: "initAttachment",
+	    value: function initAttachment(slot) {
+	      var attachment = slot.attachment;
+	      if (attachment) {
+	        slot._active.name = attachment.name;
+	        if (attachment instanceof spine$1.RegionAttachment) {
+	          slot._active.type = ATTACHMENT_TYPE.REGION;
+	        } else if (attachment instanceof spine$1.MeshAttachment) {
+	          slot._active.type = ATTACHMENT_TYPE.MESH;
+	        }
+	        if (attachment.region && attachment.region.texture) {
+	          var texture = attachment.region.texture.pcTexture;
+	          if (texture) {
+	            if (texture instanceof pc__namespace.StandardMaterial) {
+	              this._materials[texture.name] = texture;
+	              slot.material = texture.name;
+	            } else {
+	              var key = null;
+	              if (texture.name) {
+	                key = texture.name;
+	              } else if (texture.getSource() instanceof Image) {
+	                key = texture.getSource().getAttribute('src');
 	              }
-	              slot.material = key;
+	              if (key) {
+	                if (this._materials[key] === undefined) {
+	                  var material = this.createMaterial(texture);
+	                  this._materials[key] = material;
+	                }
+	                slot.material = key;
+	              }
 	            }
 	          }
 	        }
 	      }
 	    }
-	  }
-	  updateSlot(slot, clipper) {
-	    const attachment = slot.attachment;
-	    const name = attachment.name;
-
-	    // attachment can change on the slot
-	    // prettier-ignore
-	    const type = attachment instanceof spine$1.RegionAttachment ? ATTACHMENT_TYPE.REGION : attachment instanceof spine$1.MeshAttachment ? ATTACHMENT_TYPE.MESH : ATTACHMENT_TYPE.NULL;
-	    if (slot._active.name !== name || slot._active.type !== type) {
-	      this.initAttachment(slot);
-	    }
-
-	    // convert vertices to world space
-	    slot.positions.length = 0;
-	    if (attachment instanceof spine$1.RegionAttachment) {
-	      if (this._spine_4_1_X) {
-	        attachment.computeWorldVertices(slot, slot.positions, 0, 2);
-	      } else {
-	        attachment.computeWorldVertices(slot.bone, slot.positions, 0, 2);
+	  }, {
+	    key: "updateSlot",
+	    value: function updateSlot(slot, clipper) {
+	      var attachment = slot.attachment;
+	      var name = attachment.name;
+	      var type = attachment instanceof spine$1.RegionAttachment ? ATTACHMENT_TYPE.REGION : attachment instanceof spine$1.MeshAttachment ? ATTACHMENT_TYPE.MESH : ATTACHMENT_TYPE.NULL;
+	      if (slot._active.name !== name || slot._active.type !== type) {
+	        this.initAttachment(slot);
 	      }
-	    } else if (attachment instanceof spine$1.MeshAttachment) {
-	      attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, slot.positions, 0, 2);
-	    }
-
-	    // mesh vertex color
-	    const tint = this._tint[name];
-	    slot.vertexColor = {
-	      r: Math.round(255 * slot.color.r * (tint ? tint.r : 1)),
-	      g: Math.round(255 * slot.color.g * (tint ? tint.g : 1)),
-	      b: Math.round(255 * slot.color.b * (tint ? tint.b : 1)),
-	      a: Math.round(255 * slot.color.a * (tint ? tint.a : 1))
-	    };
-
-	    // indices
-	    const srcTriangles = attachment.triangles || QUAD_TRIANGLES;
-	    let i;
-	    let count;
-	    if (clipper.isClipping()) {
-	      // clip triangles on CPU
-	      const twoColorTint = false;
-	      clipper.clipTriangles(slot.positions, 0, srcTriangles, srcTriangles.length, attachment.uvs, spine$1.Color.WHITE, spine$1.Color.WHITE, twoColorTint);
-
-	      // copy clipped vertex data
 	      slot.positions.length = 0;
-	      slot.uvs.length = 0;
-	      const vertexSize = 8; // clipper output format
-	      count = clipper.clippedVertices.length;
-	      for (i = 0; i < count; i += vertexSize) {
-	        slot.positions.push(clipper.clippedVertices[i], clipper.clippedVertices[i + 1]);
-	        slot.uvs.push(clipper.clippedVertices[i + 6], 1 - clipper.clippedVertices[i + 7]);
+	      if (attachment instanceof spine$1.RegionAttachment) {
+	        if (this._spine_4_1_X) {
+	          attachment.computeWorldVertices(slot, slot.positions, 0, 2);
+	        } else {
+	          attachment.computeWorldVertices(slot.bone, slot.positions, 0, 2);
+	        }
+	      } else if (attachment instanceof spine$1.MeshAttachment) {
+	        attachment.computeWorldVertices(slot, 0, attachment.worldVerticesLength, slot.positions, 0, 2);
 	      }
-
-	      // copy clipped index data
-	      slot.indices = clipper.clippedTriangles.slice();
-	    } else {
-	      // copy vertex data (uvs only, position was filled in already)
-	      slot.uvs.length = 0;
-	      count = slot.positions.length;
-	      for (i = 0; i < count; i += 2) {
-	        slot.uvs.push(attachment.uvs[i], 1 - attachment.uvs[i + 1]);
+	      var tint = this._tint[name];
+	      slot.vertexColor = {
+	        r: Math.round(255 * slot.color.r * (tint ? tint.r : 1)),
+	        g: Math.round(255 * slot.color.g * (tint ? tint.g : 1)),
+	        b: Math.round(255 * slot.color.b * (tint ? tint.b : 1)),
+	        a: Math.round(255 * slot.color.a * (tint ? tint.a : 1))
+	      };
+	      var srcTriangles = attachment.triangles || QUAD_TRIANGLES;
+	      var i;
+	      var count;
+	      if (clipper.isClipping()) {
+	        var twoColorTint = false;
+	        clipper.clipTriangles(slot.positions, 0, srcTriangles, srcTriangles.length, attachment.uvs, spine$1.Color.WHITE, spine$1.Color.WHITE, twoColorTint);
+	        slot.positions.length = 0;
+	        slot.uvs.length = 0;
+	        var vertexSize = twoColorTint ? 12 : 8;
+	        count = clipper.clippedVertices.length;
+	        for (i = 0; i < count; i += vertexSize) {
+	          slot.positions.push(clipper.clippedVertices[i], clipper.clippedVertices[i + 1]);
+	          slot.uvs.push(clipper.clippedVertices[i + 6], 1 - clipper.clippedVertices[i + 7]);
+	        }
+	        slot.indices = clipper.clippedTriangles.slice();
+	      } else {
+	        slot.uvs.length = 0;
+	        count = slot.positions.length;
+	        for (i = 0; i < count; i += 2) {
+	          slot.uvs.push(attachment.uvs[i], 1 - attachment.uvs[i + 1]);
+	        }
+	        slot.indices = srcTriangles;
 	      }
-
-	      // reference index data
-	      slot.indices = srcTriangles;
+	      this._renderCounts.vertexCount += slot.positions.length / 2;
+	      this._renderCounts.indexCount += slot.indices.length;
 	    }
-
-	    // update overall counts
-	    this._renderCounts.vertexCount += slot.positions.length / 2;
-	    this._renderCounts.indexCount += slot.indices.length;
-	  }
-	  updateSkeleton(dt) {
-	    // count vertices and triangles
-	    this._renderCounts.vertexCount = 0;
-	    this._renderCounts.indexCount = 0;
-
-	    // handle clipping start / end / range
-	    const clipper = this.clipper;
-	    let inRange = false;
-	    inRange = true;
-	    const drawOrder = this.skeleton.drawOrder;
-	    const count = drawOrder.length;
-	    for (let i = 0; i < count; i++) {
-	      const slot = drawOrder[i];
-	      if (!this._spine_3_7_99) {
-	        if (!slot.bone.active) {
+	  }, {
+	    key: "updateSkeleton",
+	    value: function updateSkeleton(dt) {
+	      this._renderCounts.vertexCount = 0;
+	      this._renderCounts.indexCount = 0;
+	      var clipper = this.clipper;
+	      var inRange = false;
+	      inRange = true;
+	      var drawOrder = this.skeleton.drawOrder;
+	      var count = drawOrder.length;
+	      for (var i = 0; i < count; i++) {
+	        var slot = drawOrder[i];
+	        if (!this._spine_3_7_99) {
+	          if (!slot.bone.active) {
+	            clipper.clipEndWithSlot(slot);
+	            continue;
+	          }
+	        }
+	        if (!inRange) {
 	          clipper.clipEndWithSlot(slot);
 	          continue;
 	        }
+	        var attachment = slot.getAttachment();
+	        if (attachment instanceof spine$1.ClippingAttachment) {
+	          clipper.clipStart(slot, attachment);
+	          continue;
+	        } else if (!(attachment instanceof spine$1.RegionAttachment) && !(attachment instanceof spine$1.MeshAttachment)) {
+	          if (!this._spine_3_7_99) clipper.clipEndWithSlot(slot);
+	          continue;
+	        }
+	        this.updateSlot(slot, clipper);
 	      }
-	      if (!inRange) {
-	        clipper.clipEndWithSlot(slot);
-	        continue;
-	      }
-	      const attachment = slot.getAttachment();
-	      if (attachment instanceof spine$1.ClippingAttachment) {
-	        clipper.clipStart(slot, attachment);
-	        continue;
-	      } else if (!(attachment instanceof spine$1.RegionAttachment) && !(attachment instanceof spine$1.MeshAttachment)) {
-	        if (!this._spine_3_7_99) clipper.clipEndWithSlot(slot);
-	        continue;
-	      }
-
-	      // update slot geometry
-	      this.updateSlot(slot, clipper);
 	    }
-	  }
-	  render() {
-	    // remove materials from meshInstances as they keep references to meshInstances not allowing them to be GC'd
-	    this._meshInstances.forEach(instance => {
-	      instance.material = null;
-	    });
-	    this.removeFromLayers();
-	    this._meshes = [];
-	    this._meshInstances.length = 0;
-
-	    // any vertices / triangles to render
-	    if (this._renderCounts.indexCount > 0 && this._renderCounts.vertexCount > 0) {
-	      // update aabb
-	      this.skeleton.getBounds(this._aabbTempOffset, this._aabbTempSize, this._aabbTempArray);
-	      this._aabb.center = new pc__namespace.Vec3(this._aabbTempOffset.x, this._aabbTempOffset.y, 0);
-	      this._aabb.halfExtents = new pc__namespace.Vec3(0.5 * this._aabbTempSize.x, 0.5 * this._aabbTempSize.y, 0);
-
-	      // make vertex buffer at least required size
-	      if (!this._vertexBuffer || this._vertexBuffer.getNumVertices() < this._renderCounts.vertexCount) {
-	        if (this._vertexBuffer) this._vertexBuffer.destroy();
-	        this._vertexBuffer = new pc__namespace.VertexBuffer(this._app.graphicsDevice, this._vertexFormat, this._renderCounts.vertexCount);
-	      }
-
-	      // make index buffer at least required size
-	      if (!this._indexBuffer || this._indexBuffer.getNumIndices() < this._renderCounts.indexCount) {
-	        if (this._indexBuffer) this._indexBuffer.destroy();
-	        this._indexBuffer = new pc__namespace.IndexBuffer(this._app.graphicsDevice, pc__namespace.INDEXFORMAT_UINT16, this._renderCounts.indexCount);
-	      }
-
-	      // batching start
-	      let currentMaterialKey = null;
-	      let batchStartIndex = 0;
-	      let batchIndexCount = 0;
-
-	      // vertex / index buffer access
-	      const dstVertices = new pc__namespace.VertexIterator(this._vertexBuffer);
-	      const dstIndices = new Uint16Array(this._indexBuffer.lock());
-	      let dstIndexOffset = 0;
-	      let dstVertexOffset = 0;
-	      const drawOrder = this.skeleton.drawOrder;
-	      const count = drawOrder.length;
-	      for (let i = 0; i < count; i++) {
-	        const slot = drawOrder[i];
-	        if (slot.attachment && slot.material && slot.positions.length > 0 && slot.indices.length > 0) {
-	          // material switch
-	          if (currentMaterialKey && currentMaterialKey !== slot.material) {
-	            this.SubmitBatch(batchStartIndex, batchIndexCount, currentMaterialKey);
-
-	            // prepare next batch
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      this._meshInstances.forEach(function (instance) {
+	        instance.material = null;
+	      });
+	      this.removeFromLayers();
+	      this._meshes = [];
+	      this._meshInstances.length = 0;
+	      if (this._renderCounts.indexCount > 0 && this._renderCounts.vertexCount > 0) {
+	        this.skeleton.getBounds(this._aabbTempOffset, this._aabbTempSize, this._aabbTempArray);
+	        this._aabb.center = new pc__namespace.Vec3(this._aabbTempOffset.x, this._aabbTempOffset.y, 0);
+	        this._aabb.halfExtents = new pc__namespace.Vec3(0.5 * this._aabbTempSize.x, 0.5 * this._aabbTempSize.y, 0);
+	        if (!this._vertexBuffer || this._vertexBuffer.getNumVertices() < this._renderCounts.vertexCount) {
+	          if (this._vertexBuffer) this._vertexBuffer.destroy();
+	          this._vertexBuffer = new pc__namespace.VertexBuffer(this._app.graphicsDevice, this._vertexFormat, this._renderCounts.vertexCount);
+	        }
+	        if (!this._indexBuffer || this._indexBuffer.getNumIndices() < this._renderCounts.indexCount) {
+	          if (this._indexBuffer) this._indexBuffer.destroy();
+	          this._indexBuffer = new pc__namespace.IndexBuffer(this._app.graphicsDevice, pc__namespace.INDEXFORMAT_UINT16, this._renderCounts.indexCount);
+	        }
+	        var currentMaterialKey = null;
+	        var batchStartIndex = 0;
+	        var batchIndexCount = 0;
+	        var dstVertices = new pc__namespace.VertexIterator(this._vertexBuffer);
+	        var dstIndices = new Uint16Array(this._indexBuffer.lock());
+	        var dstIndexOffset = 0;
+	        var dstVertexOffset = 0;
+	        var drawOrder = this.skeleton.drawOrder;
+	        var count = drawOrder.length;
+	        for (var i = 0; i < count; i++) {
+	          var slot = drawOrder[i];
+	          if (slot.attachment && slot.material && slot.positions.length > 0 && slot.indices.length > 0) {
+	            if (currentMaterialKey && currentMaterialKey !== slot.material) {
+	              this.SubmitBatch(batchStartIndex, batchIndexCount, currentMaterialKey);
+	              currentMaterialKey = slot.material;
+	              batchStartIndex = dstIndexOffset;
+	              batchIndexCount = 0;
+	            }
 	            currentMaterialKey = slot.material;
-	            batchStartIndex = dstIndexOffset;
-	            batchIndexCount = 0;
+	            var positions = slot.positions;
+	            var r = slot.vertexColor.r;
+	            var g = slot.vertexColor.g;
+	            var b = slot.vertexColor.b;
+	            var a = slot.vertexColor.a;
+	            var uvs = slot.uvs;
+	            var j = void 0;
+	            var posCount = positions.length / 2;
+	            for (j = 0; j < posCount; j++) {
+	              dstVertices.element[pc__namespace.SEMANTIC_POSITION].set(positions[j * 2], positions[j * 2 + 1]);
+	              dstVertices.element[pc__namespace.SEMANTIC_NORMAL].set(0, 255, 0, 0);
+	              dstVertices.element[pc__namespace.SEMANTIC_COLOR].set(r, g, b, a);
+	              dstVertices.element[pc__namespace.SEMANTIC_TEXCOORD0].set(uvs[j * 2], 1.0 - uvs[j * 2 + 1]);
+	              dstVertices.next();
+	            }
+	            var indices = slot.indices;
+	            var indCount = indices.length;
+	            for (j = 0; j < indCount; j++) dstIndices[dstIndexOffset + j] = indices[j] + dstVertexOffset;
+	            batchIndexCount += indCount;
+	            dstIndexOffset += indCount;
+	            dstVertexOffset += posCount;
 	          }
-	          currentMaterialKey = slot.material;
-
-	          // write vertex data
-	          const positions = slot.positions;
-	          const r = slot.vertexColor.r;
-	          const g = slot.vertexColor.g;
-	          const b = slot.vertexColor.b;
-	          const a = slot.vertexColor.a;
-	          const uvs = slot.uvs;
-	          let j;
-	          const posCount = positions.length / 2;
-	          for (j = 0; j < posCount; j++) {
-	            dstVertices.element[pc__namespace.SEMANTIC_POSITION].set(positions[j * 2], positions[j * 2 + 1]);
-	            dstVertices.element[pc__namespace.SEMANTIC_NORMAL].set(0, 255, 0, 0); // 0,1,0 normal stored in 8 bit per component
-	            dstVertices.element[pc__namespace.SEMANTIC_COLOR].set(r, g, b, a);
-	            dstVertices.element[pc__namespace.SEMANTIC_TEXCOORD0].set(uvs[j * 2], 1.0 - uvs[j * 2 + 1]);
-	            dstVertices.next();
-	          }
-
-	          // write index data
-	          const indices = slot.indices;
-	          const indCount = indices.length;
-	          for (j = 0; j < indCount; j++) dstIndices[dstIndexOffset + j] = indices[j] + dstVertexOffset;
-	          batchIndexCount += indCount;
-	          dstIndexOffset += indCount;
-	          dstVertexOffset += posCount;
+	        }
+	        dstVertices.end();
+	        this._indexBuffer.unlock();
+	        this.SubmitBatch(batchStartIndex, batchIndexCount, currentMaterialKey);
+	      }
+	      this.addToLayers();
+	    }
+	  }, {
+	    key: "SubmitBatch",
+	    value: function SubmitBatch(indexBase, indexCount, materialKey) {
+	      if (indexCount > 0) {
+	        var mesh = new pc__namespace.Mesh(this._app.graphicsDevice);
+	        mesh.vertexBuffer = this._vertexBuffer;
+	        mesh.indexBuffer[0] = this._indexBuffer;
+	        mesh.primitive[0].type = pc__namespace.PRIMITIVE_TRIANGLES;
+	        mesh.primitive[0].base = indexBase;
+	        mesh.primitive[0].count = indexCount;
+	        mesh.primitive[0].indexed = true;
+	        mesh.aabb = this._aabb;
+	        this._meshes.push(mesh);
+	        var mi = new pc__namespace.MeshInstance(this._node, mesh, this._materials[materialKey]);
+	        mi.drawOrder = this.priority + this._meshInstances.length;
+	        mi.visible = !this._hidden;
+	        this._meshInstances.push(mi);
+	      }
+	    }
+	  }, {
+	    key: "update",
+	    value: function update(dt) {
+	      if (this._hidden) return;
+	      dt *= this._timeScale;
+	      var i;
+	      var n = this.states.length;
+	      for (i = 0; i < n; i++) {
+	        this.states[i].update(dt);
+	      }
+	      for (i = 0; i < n; i++) {
+	        this.states[i].apply(this.skeleton);
+	      }
+	      if (this.autoUpdate) {
+	        this.skeleton.updateWorldTransform();
+	      }
+	      this.updateSkeleton();
+	      this.render();
+	    }
+	  }, {
+	    key: "setPosition",
+	    value: function setPosition(p) {
+	      this._position.copy(p);
+	    }
+	  }, {
+	    key: "setTint",
+	    value: function setTint(name, color) {
+	      this._tint[name] = color;
+	    }
+	  }, {
+	    key: "removeFromLayers",
+	    value: function removeFromLayers() {
+	      if (this._meshInstances.length) {
+	        for (var i = 0; i < this._layers.length; i++) {
+	          var layer = this._app.scene.layers.getLayerById(this._layers[i]);
+	          if (layer) layer.removeMeshInstances(this._meshInstances);
 	        }
 	      }
-	      dstVertices.end();
-	      this._indexBuffer.unlock();
+	    }
+	  }, {
+	    key: "addToLayers",
+	    value: function addToLayers() {
+	      if (this._meshInstances.length) {
+	        for (var i = 0; i < this._layers.length; i++) {
+	          var layer = this._app.scene.layers.getLayerById(this._layers[i]);
+	          if (layer) layer.addMeshInstances(this._meshInstances);
+	        }
+	      }
+	    }
+	  }, {
+	    key: "state",
+	    get: function get() {
+	      return this.states[0];
+	    }
+	  }, {
+	    key: "priority",
+	    get: function get() {
+	      return this._priority;
+	    },
+	    set: function set(value) {
+	      this._priority = value;
+	    }
+	  }, {
+	    key: "timeScale",
+	    get: function get() {
+	      return this._timeScale;
+	    },
+	    set: function set(value) {
+	      this._timeScale = value;
+	    }
+	  }, {
+	    key: "layers",
+	    get: function get() {
+	      return this._layers;
+	    },
+	    set: function set(value) {
+	      this.removeFromLayers();
+	      this._layers = value || [];
+	      this.addToLayers();
+	    }
+	  }]);
+	  return Spine;
+	}();
 
-	      // final batch
-	      this.SubmitBatch(batchStartIndex, batchIndexCount, currentMaterialKey);
-	    }
-
-	    // add all instances to layers
-	    this.addToLayers();
+	var SpineComponent = function (_Component) {
+	  _inherits(SpineComponent, _Component);
+	  var _super = _createSuper(SpineComponent);
+	  function SpineComponent(system, entity) {
+	    var _this;
+	    _classCallCheck(this, SpineComponent);
+	    _this = _super.call(this, system, entity);
+	    _this.on('set_atlasAsset', _this.onSetAsset, _assertThisInitialized(_this));
+	    _this.on('set_textureAssets', _this.onSetAssets, _assertThisInitialized(_this));
+	    _this.on('set_skeletonAsset', _this.onSetAsset, _assertThisInitialized(_this));
+	    _this.on('set_atlasData', _this.onSetResource, _assertThisInitialized(_this));
+	    _this.on('set_textures', _this.onSetResource, _assertThisInitialized(_this));
+	    _this.on('set_skeletonData', _this.onSetResource, _assertThisInitialized(_this));
+	    return _this;
 	  }
-	  SubmitBatch(indexBase, indexCount, materialKey) {
-	    if (indexCount > 0) {
-	      const mesh = new pc__namespace.Mesh(this._app.graphicsDevice);
-	      mesh.vertexBuffer = this._vertexBuffer;
-	      mesh.indexBuffer[0] = this._indexBuffer;
-	      mesh.primitive[0].type = pc__namespace.PRIMITIVE_TRIANGLES;
-	      mesh.primitive[0].base = indexBase;
-	      mesh.primitive[0].count = indexCount;
-	      mesh.primitive[0].indexed = true;
-	      mesh.aabb = this._aabb;
-	      this._meshes.push(mesh);
-	      const mi = new pc__namespace.MeshInstance(this._node, mesh, this._materials[materialKey]);
-	      mi.drawOrder = this.priority + this._meshInstances.length;
-	      mi.visible = !this._hidden;
-	      this._meshInstances.push(mi);
+	  _createClass(SpineComponent, [{
+	    key: "_createSpine",
+	    value: function _createSpine() {
+	      if (this.data.spine) {
+	        this.data.spine.destroy();
+	        this.data.spine = null;
+	      }
+	      var textureData = {};
+	      for (var i = 0, n = this.textureAssets.length; i < n; i++) {
+	        var asset = this.system.app.assets.get(this.textureAssets[i]);
+	        var path = asset.name ? asset.name : asset.file ? asset.file.filename : null;
+	        if (!path) {
+	          path = pc.path.getBasename(asset.file.url);
+	        }
+	        var query = path.indexOf('?');
+	        if (query !== -1) path = path.substring(0, query);
+	        textureData[path] = asset.resource;
+	      }
+	      this.data.spine = new Spine(this.system.app, this.atlasData, this.skeletonData, textureData);
+	      this.state = this.data.spine.state;
+	      this.states = this.data.spine.states;
+	      this.skeleton = this.data.spine.skeleton;
+	      this.entity.addChild(this.data.spine._node);
 	    }
-	  }
-	  update(dt) {
-	    if (this._hidden) return;
-	    dt *= this._timeScale;
-	    let i;
-	    const n = this.states.length;
-	    for (i = 0; i < n; i++) {
-	      this.states[i].update(dt);
-	    }
-	    for (i = 0; i < n; i++) {
-	      this.states[i].apply(this.skeleton);
-	    }
-	    if (this.autoUpdate) {
-	      this.skeleton.updateWorldTransform();
-	    }
-	    this.updateSkeleton();
-	    this.render();
-	  }
-	  setPosition(p) {
-	    this._position.copy(p);
-	  }
-	  setTint(name, color) {
-	    this._tint[name] = color;
-	  }
-	  removeFromLayers() {
-	    if (this._meshInstances.length) {
-	      for (let i = 0; i < this._layers.length; i++) {
-	        const layer = this._app.scene.layers.getLayerById(this._layers[i]);
-	        if (layer) layer.removeMeshInstances(this._meshInstances);
+	  }, {
+	    key: "_onAssetReady",
+	    value: function _onAssetReady(_ref) {
+	      var type = _ref.type,
+	        resource = _ref.resource;
+	      if (type === 'texture') {
+	        this.textures.push(resource);
+	      }
+	      if (type === 'json') {
+	        this.skeletonData = resource;
+	      }
+	      if (type === 'text') {
+	        this.atlasData = resource;
 	      }
 	    }
-	  }
-	  addToLayers() {
-	    if (this._meshInstances.length) {
-	      for (let i = 0; i < this._layers.length; i++) {
-	        const layer = this._app.scene.layers.getLayerById(this._layers[i]);
-	        if (layer) layer.addMeshInstances(this._meshInstances);
+	  }, {
+	    key: "_onAssetAdd",
+	    value: function _onAssetAdd(asset) {
+	      asset.off('change', this.onAssetChanged, this);
+	      asset.on('change', this.onAssetChanged, this);
+	      asset.off('remove', this.onAssetRemoved, this);
+	      asset.on('remove', this.onAssetRemoved, this);
+	      asset.ready(this._onAssetReady, this);
+	      this.system.app.assets.load(asset);
+	    }
+	  }, {
+	    key: "onSetResource",
+	    value: function onSetResource() {
+	      if (this.data.atlasData && this.data.textures.length && this.data.skeletonData) {
+	        this._createSpine();
 	      }
 	    }
-	  }
-	  get state() {
-	    return this.states[0];
-	  }
-	  set priority(value) {
-	    this._priority = value;
-	  }
-	  get priority() {
-	    return this._priority;
-	  }
-	  set timeScale(value) {
-	    this._timeScale = value;
-	  }
-	  get timeScale() {
-	    return this._timeScale;
-	  }
-	  set layers(value) {
-	    this.removeFromLayers();
-	    this._layers = value || [];
-	    this.addToLayers();
-	  }
-	  get layers() {
-	    return this._layers;
-	  }
-	}
-
-	/* eslint-disable operator-linebreak */
-	class SpineComponent extends pc.Component {
-	  constructor(system, entity) {
-	    super(system, entity);
-	    this.on('set_atlasAsset', this.onSetAsset, this);
-	    this.on('set_textureAssets', this.onSetAssets, this);
-	    this.on('set_skeletonAsset', this.onSetAsset, this);
-	    this.on('set_atlasData', this.onSetResource, this);
-	    this.on('set_textures', this.onSetResource, this);
-	    this.on('set_skeletonData', this.onSetResource, this);
-	  }
-	  _createSpine() {
-	    if (this.data.spine) {
-	      this.data.spine.destroy();
-	      this.data.spine = null;
-	    }
-	    const textureData = {};
-	    for (let i = 0, n = this.textureAssets.length; i < n; i++) {
-	      const asset = this.system.app.assets.get(this.textureAssets[i]);
-	      let path = asset.name ? asset.name : asset.file ? asset.file.filename : null;
-
-	      // Fallback if filename doesn't exist
-	      if (!path) {
-	        path = pc.path.getBasename(asset.file.url);
-	      }
-	      const query = path.indexOf('?');
-	      if (query !== -1) path = path.substring(0, query);
-	      textureData[path] = asset.resource;
-	    }
-	    this.data.spine = new Spine(this.system.app, this.atlasData, this.skeletonData, textureData);
-	    this.state = this.data.spine.state;
-	    this.states = this.data.spine.states;
-	    this.skeleton = this.data.spine.skeleton;
-	    this.entity.addChild(this.data.spine._node);
-	  }
-	  _onAssetReady({
-	    type,
-	    resource
-	  }) {
-	    if (type === 'texture') {
-	      this.textures.push(resource);
-	    }
-	    if (type === 'json') {
-	      this.skeletonData = resource;
-	    }
-	    if (type === 'text') {
-	      this.atlasData = resource;
-	    }
-	  }
-	  _onAssetAdd(asset) {
-	    asset.off('change', this.onAssetChanged, this);
-	    asset.on('change', this.onAssetChanged, this);
-	    asset.off('remove', this.onAssetRemoved, this);
-	    asset.on('remove', this.onAssetRemoved, this);
-	    asset.ready(this._onAssetReady, this);
-	    this.system.app.assets.load(asset);
-	  }
-	  onSetResource() {
-	    if (this.data.atlasData && this.data.textures.length && this.data.skeletonData) {
-	      this._createSpine();
-	    }
-	  }
-	  onSetAsset(name, oldValue, newValue) {
-	    const registry = this.system.app.assets;
-	    let asset = null;
-	    if (oldValue) {
-	      asset = registry.get(oldValue);
-	      if (asset) {
-	        asset.off('change', this.onAssetChanged);
-	        asset.off('remove', this.onAssetRemoved);
-	      }
-	    }
-	    if (newValue) {
-	      let id = newValue;
-	      if (newValue instanceof pc.Asset) {
-	        id = newValue.id;
-	        this.data[name] = id;
-	      }
-	      asset = registry.get(id);
-	      if (asset) {
-	        this._onAssetAdd(asset);
-	      } else {
-	        registry.on(`add:${id}`);
-	      }
-	    }
-	  }
-	  onSetAssets(name, oldValue, newValue) {
-	    const registry = this.system.app.assets;
-	    let asset = null;
-	    let i;
-	    let n;
-	    if (oldValue.length) {
-	      for (i = 0, n = oldValue.length; i < n; i++) {
-	        asset = registry.get(oldValue[i]);
+	  }, {
+	    key: "onSetAsset",
+	    value: function onSetAsset(name, oldValue, newValue) {
+	      var registry = this.system.app.assets;
+	      var asset = null;
+	      if (oldValue) {
+	        asset = registry.get(oldValue);
 	        if (asset) {
 	          asset.off('change', this.onAssetChanged);
 	          asset.off('remove', this.onAssetRemoved);
 	        }
 	      }
-	    }
-	    if (newValue && newValue.length) {
-	      const ids = newValue.map(v => {
-	        if (v instanceof pc.Asset) {
-	          return v.id;
+	      if (newValue) {
+	        var id = newValue;
+	        if (newValue instanceof pc.Asset) {
+	          id = newValue.id;
+	          this.data[name] = id;
 	        }
-	        return v;
-	      });
-	      for (i = 0, n = newValue.length; i < n; i++) {
-	        asset = registry.get(ids[i]);
+	        asset = registry.get(id);
 	        if (asset) {
 	          this._onAssetAdd(asset);
 	        } else {
-	          registry.on(`add:${ids[i]}`);
+	          registry.on("add:".concat(id));
 	        }
 	      }
 	    }
-	  }
-	  onAssetChanged(asset, attribute, newValue, oldValue) {}
-	  onAssetRemoved(asset) {}
-	  onEnable() {
-	    pc.Component.prototype.onEnable.call(this);
-	    const spine = this.data.spine;
-	    if (spine) {
-	      spine.addToLayers();
-	    }
-	  }
-	  onDisable() {
-	    pc.Component.prototype.onDisable.call(this);
-	    const spine = this.data.spine;
-	    if (spine) {
-	      spine.removeFromLayers();
-	    }
-	  }
-	  hide() {
-	    if (this.data.spine) {
-	      this.data.spine.hide();
-	    }
-	  }
-	  show() {
-	    if (this.data.spine) {
-	      this.data.spine.show();
-	    }
-	  }
-	  removeComponent() {
-	    let asset;
-	    if (this.atlasAsset) {
-	      asset = this.system.app.assets.get(this.atlasAsset);
-	      if (asset) {
-	        asset.off('change', this.onAssetChanged);
-	        asset.off('remove', this.onAssetRemoved);
+	  }, {
+	    key: "onSetAssets",
+	    value: function onSetAssets(name, oldValue, newValue) {
+	      var registry = this.system.app.assets;
+	      var asset = null;
+	      var i;
+	      var n;
+	      if (oldValue.length) {
+	        for (i = 0, n = oldValue.length; i < n; i++) {
+	          asset = registry.get(oldValue[i]);
+	          if (asset) {
+	            asset.off('change', this.onAssetChanged);
+	            asset.off('remove', this.onAssetRemoved);
+	          }
+	        }
+	      }
+	      if (newValue && newValue.length) {
+	        var ids = newValue.map(function (v) {
+	          if (v instanceof pc.Asset) {
+	            return v.id;
+	          }
+	          return v;
+	        });
+	        for (i = 0, n = newValue.length; i < n; i++) {
+	          asset = registry.get(ids[i]);
+	          if (asset) {
+	            this._onAssetAdd(asset);
+	          } else {
+	            registry.on("add:".concat(ids[i]));
+	          }
+	        }
 	      }
 	    }
-	    if (this.skeletonAsset) {
-	      asset = this.system.app.assets.get(this.skeletonAsset);
-	      if (asset) {
-	        asset.off('change', this.onAssetChanged);
-	        asset.off('remove', this.onAssetRemoved);
+	  }, {
+	    key: "onAssetChanged",
+	    value: function onAssetChanged(asset, attribute, newValue, oldValue) {}
+	  }, {
+	    key: "onAssetRemoved",
+	    value: function onAssetRemoved(asset) {}
+	  }, {
+	    key: "onEnable",
+	    value: function onEnable() {
+	      pc.Component.prototype.onEnable.call(this);
+	      var spine = this.data.spine;
+	      if (spine) {
+	        spine.addToLayers();
 	      }
 	    }
-	    if (this.textureAssets && this.textureAssets.length) {
-	      for (let i = 0; i < this.textureAssets.length; i++) {
-	        asset = this.system.app.assets.get(this.textureAssets[i]);
+	  }, {
+	    key: "onDisable",
+	    value: function onDisable() {
+	      pc.Component.prototype.onDisable.call(this);
+	      var spine = this.data.spine;
+	      if (spine) {
+	        spine.removeFromLayers();
+	      }
+	    }
+	  }, {
+	    key: "hide",
+	    value: function hide() {
+	      if (this.data.spine) {
+	        this.data.spine.hide();
+	      }
+	    }
+	  }, {
+	    key: "show",
+	    value: function show() {
+	      if (this.data.spine) {
+	        this.data.spine.show();
+	      }
+	    }
+	  }, {
+	    key: "removeComponent",
+	    value: function removeComponent() {
+	      var asset;
+	      if (this.atlasAsset) {
+	        asset = this.system.app.assets.get(this.atlasAsset);
 	        if (asset) {
 	          asset.off('change', this.onAssetChanged);
 	          asset.off('remove', this.onAssetRemoved);
 	        }
 	      }
-	    }
-	  }
-	}
-
-	class SpineComponentData {
-	  constructor() {
-	    // serialized
-	    this.enabled = true;
-	    this.atlasAsset = null;
-	    this.textureAssets = [];
-	    this.skeletonAsset = null;
-	    this.speed = 1;
-
-	    // non-serialized
-	    this.spine = null;
-	    this.atlasData = null;
-	    this.textures = [];
-	    this.skeletonData = null;
-	  }
-	}
-
-	class SpineComponentSystem extends pc.ComponentSystem {
-	  constructor(app) {
-	    super(app);
-	    this.id = 'spine';
-	    this.ComponentType = SpineComponent;
-	    this.DataType = SpineComponentData;
-	    this.schema = ['enabled', 'atlasAsset', 'textureAssets', 'skeletonAsset', 'atlasData', 'textures', 'skeletonData', 'speed', 'spine'];
-	    this.on('beforeremove', this.onBeforeRemove, this);
-	    this.app.systems.on('update', this.onUpdate, this);
-	  }
-	  initializeComponentData(component, data, properties) {
-	    properties = ['enabled', 'atlasAsset', 'textureAssets', 'skeletonAsset', 'atlasData', 'textures', 'skeletonData', 'spine'];
-	    super.initializeComponentData(component, data, properties);
-	  }
-
-	  /**
-	   * @param {pc.Entity} entity - The entity with spine script attached.
-	   * @param {pc.Component} component - The pc component
-	   */
-	  onBeforeRemove(entity, component) {
-	    const data = entity.spine.data;
-	    if (data.spine) {
-	      data.spine.destroy();
-	    }
-	    entity.spine.removeComponent();
-	  }
-
-	  /**
-	   * @param {Number} dt - delta time
-	   */
-	  onUpdate(dt) {
-	    const components = this.store;
-	    for (const id in components) {
-	      if (components.hasOwnProperty(id)) {
-	        const component = components[id];
-	        const componentData = component.data;
-	        if (componentData.enabled && component.entity.enabled) {
-	          if (componentData.spine) {
-	            componentData.spine.setPosition(component.entity.getPosition());
-	            componentData.spine.update(componentData.speed * dt);
+	      if (this.skeletonAsset) {
+	        asset = this.system.app.assets.get(this.skeletonAsset);
+	        if (asset) {
+	          asset.off('change', this.onAssetChanged);
+	          asset.off('remove', this.onAssetRemoved);
+	        }
+	      }
+	      if (this.textureAssets && this.textureAssets.length) {
+	        for (var i = 0; i < this.textureAssets.length; i++) {
+	          asset = this.system.app.assets.get(this.textureAssets[i]);
+	          if (asset) {
+	            asset.off('change', this.onAssetChanged);
+	            asset.off('remove', this.onAssetRemoved);
 	          }
 	        }
 	      }
 	    }
+	  }]);
+	  return SpineComponent;
+	}(pc.Component);
+
+	var SpineComponentData = _createClass(function SpineComponentData() {
+	  _classCallCheck(this, SpineComponentData);
+	  this.enabled = true;
+	  this.atlasAsset = null;
+	  this.textureAssets = [];
+	  this.skeletonAsset = null;
+	  this.speed = 1;
+	  this.spine = null;
+	  this.atlasData = null;
+	  this.textures = [];
+	  this.skeletonData = null;
+	});
+
+	var SpineComponentSystem = function (_ComponentSystem) {
+	  _inherits(SpineComponentSystem, _ComponentSystem);
+	  var _super = _createSuper(SpineComponentSystem);
+	  function SpineComponentSystem(app) {
+	    var _this;
+	    _classCallCheck(this, SpineComponentSystem);
+	    _this = _super.call(this, app);
+	    _this.id = 'spine';
+	    _this.ComponentType = SpineComponent;
+	    _this.DataType = SpineComponentData;
+	    _this.schema = ['enabled', 'atlasAsset', 'textureAssets', 'skeletonAsset', 'atlasData', 'textures', 'skeletonData', 'speed', 'spine'];
+	    _this.on('beforeremove', _this.onBeforeRemove, _assertThisInitialized(_this));
+	    _this.app.systems.on('update', _this.onUpdate, _assertThisInitialized(_this));
+	    return _this;
 	  }
-	}
+	  _createClass(SpineComponentSystem, [{
+	    key: "initializeComponentData",
+	    value: function initializeComponentData(component, data, properties) {
+	      properties = ['enabled', 'atlasAsset', 'textureAssets', 'skeletonAsset', 'atlasData', 'textures', 'skeletonData', 'spine'];
+	      _get$1(_getPrototypeOf(SpineComponentSystem.prototype), "initializeComponentData", this).call(this, component, data, properties);
+	    }
+	  }, {
+	    key: "onBeforeRemove",
+	    value: function onBeforeRemove(entity, component) {
+	      var data = entity.spine.data;
+	      if (data.spine) {
+	        data.spine.destroy();
+	      }
+	      entity.spine.removeComponent();
+	    }
+	  }, {
+	    key: "onUpdate",
+	    value: function onUpdate(dt) {
+	      var components = this.store;
+	      for (var id in components) {
+	        if (components.hasOwnProperty(id)) {
+	          var component = components[id];
+	          var componentData = component.data;
+	          if (componentData.enabled && component.entity.enabled) {
+	            if (componentData.spine) {
+	              componentData.spine.setPosition(component.entity.getPosition());
+	              componentData.spine.update(componentData.speed * dt);
+	            }
+	          }
+	        }
+	      }
+	    }
+	  }]);
+	  return SpineComponentSystem;
+	}(pc.ComponentSystem);
 
 	(function () {
 	  if (pc__namespace.Application.registerPlugin) {
-	    var register = function (app) {
-	      // eslint-disable-next-line no-new
+	    var register = function register(app) {
 	      new SpineComponentSystem(app);
 	    };
 	    pc__namespace.Application.registerPlugin("spine", register);

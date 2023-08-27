@@ -28,7 +28,9 @@
       "semver": "readonly"
     },
     "settings": {
-      "import/core-modules": [ "spine-core-import" ]
+      "import/core-modules": [
+        "spine-core-import"
+      ]
     }
   },
   "eslintIgnore": [
@@ -36,6 +38,7 @@
     "contrib/"
   ],
   "devDependencies": {
+    "@babel/preset-env": "^7.22.10",
     "@playcanvas/eslint-config": "^1.7.0",
     "@rollup/plugin-alias": "^5.0.0",
     "@rollup/plugin-babel": "^6.0.3",

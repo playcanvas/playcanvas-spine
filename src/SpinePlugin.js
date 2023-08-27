@@ -2,6 +2,15 @@ import * as pc from 'playcanvas';
 import { spine } from 'spine-core-import';
 import { SpineComponentSystem } from './component/SpineComponentSystem.js';
 
+/**
+ * This plugin provides a Component System to PlayCanvas Engine
+ * and a spine-core runtime to user scripts as global called spine.
+ *
+ * For users following spine examples, this plugin is equivalent to
+ * the including the standard spine-core iife runtime in the editor.
+ */
+
+// register the plugin with playcanvas
 (function () {
     if (pc.Application.registerPlugin) {
         var register = function (app) {

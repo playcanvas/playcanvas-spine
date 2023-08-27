@@ -6,6 +6,11 @@ import terser from '@rollup/plugin-terser';
 import alias from '@rollup/plugin-alias';
 import { babel } from '@rollup/plugin-babel';
 
+/** @typedef {import('rollup').RollupOptions} RollupOptions */
+/** @typedef {import('rollup').Plugin} Plugin */
+/** @typedef {import('rollup').OutputOptions} OutputOptions */
+/** @typedef {import('@rollup/plugin-babel').RollupBabelInputPluginOptions} RollupBabelInputPluginOptions */
+
 const banner = `/* Copyright 2015-${new Date().getFullYear()} PlayCanvas Ltd */\n`;
 
 /**
@@ -31,9 +36,33 @@ const builds = [
 ];
 
 /**
+ * The ES5 options for babel(...) plugin.
+ *
+ * @param {'debug'|'release'|'profiler'|'min'} buildType - Use 'debug' for comments
+ * @returns {RollupBabelInputPluginOptions} The babel options.
+ */
+const es5Options = buildType => ({
+    babelHelpers: 'bundled',
+    babelrc: false,
+    comments: buildType === 'debug',
+    compact: false,
+    minified: false,
+    presets: [
+        [
+            '@babel/preset-env', {
+                modules: false,
+                targets: {
+                    ie: '11'
+                }
+            }
+        ]
+    ]
+});
+
+/**
  * Return all the build targets.
  *
- * @returns {import('rollup').RollupOptions | import('rollup').RollupOptions[]} Build targets.
+ * @returns {RollupOptions | RollupOptions[]} Build targets.
  */
 export default [
     ...builds.map(buildDefinition => buildTarget(buildDefinition))
@@ -43,7 +72,7 @@ export default [
  * Return a target that rollup is supposed to build.
  *
  * @param {{ name, lib }} buildDefinition - The build definition.
- * @returns {import('rollup').RollupOptions} One rollup target.
+ * @returns {RollupOptions} One rollup target.
  */
 function buildTarget({ name, lib }) {
 
@@ -59,7 +88,7 @@ function buildTarget({ name, lib }) {
     };
 
     const entries = { 'spine-core-import': lib };
-    const buildPlugins = [alias({ entries }), commonjs(), nodeResolve(), babel({ babelHelpers: 'bundled' })];
+    const buildPlugins = [alias({ entries }), commonjs(), nodeResolve(), babel(es5Options('release'))];
 
     return {
         external: ['playcanvas'],
@@ -71,6 +100,8 @@ function buildTarget({ name, lib }) {
                 format: 'iife',
                 name: 'spine',
                 banner: banner,
+                indent: '\t',
+                preserveModules: false,
                 globals: outputGlobals,
                 generatedCode: 'es5', // refers to rollup wrappers
                 plugins: outputPlugins.release
@@ -80,6 +111,7 @@ function buildTarget({ name, lib }) {
                 format: 'iife',
                 name: 'spine',
                 banner: banner,
+                preserveModules: false,
                 globals: outputGlobals,
                 generatedCode: 'es5', // refers to rollup wrappers
                 plugins: outputPlugins.min
