@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PlayCanvas Spine - Dragon</title>
+    <title>PlayCanvas Spine - SpineBoy</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="shortcut icon" href="#" />
@@ -38,10 +38,10 @@
         });
 
         var assets = [
-            new pc.Asset("playcanvas-spine.3.6.js", "script", { url: "../../build/playcanvas-spine.3.6.js" }),
-            new pc.Asset("alien-pma.atlas", "text", { url: "../assets/spine36/alien-pma.atlas" }),
-            new pc.Asset("alien.json", "json", { url: "../assets/spine36/alien.json" }),
-            new pc.Asset("alien-pma.png", "texture", { url: "../assets/spine36/alien-pma.png" })
+            new pc.Asset("playcanvas-spine.3.8.js", "script", { url: "../build/playcanvas-spine.3.8.js" }),
+            new pc.Asset("spineboy-pro.atlas", "text", { url: "./assets/spine38/spineboy-pro.atlas" }),
+            new pc.Asset("spineboy-pro.json", "json", { url: "./assets/spine38/spineboy-pro.json" }),
+            new pc.Asset("spineboy-pro.png", "texture", { url: "./assets/spine38/spineboy-pro.png" })
         ];
 
         var preload = function (assets, callback) {
@@ -68,7 +68,7 @@
             });
             app.root.addChild(alien);
 
-            alien.spine.state.setAnimation(0, "death", true);
+            alien.spine.state.setAnimation(0, "portal", true);
 
             // Create a camera to render the scene
             var camera = new pc.Entity();

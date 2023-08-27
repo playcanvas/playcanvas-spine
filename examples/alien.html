@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PlayCanvas Spine 4.1 - Raptor</title>
+    <title>PlayCanvas Spine - Dragon</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="shortcut icon" href="#" />
@@ -38,10 +38,10 @@
         });
 
         var assets = [
-            new pc.Asset("playcanvas-spine.4.1.js", "script", { url: "../../build/playcanvas-spine.4.1.js" }),
-            new pc.Asset("raptor.atlas", "text", { url: "../assets/spine41/raptor.atlas" }),
-            new pc.Asset("raptor-pro.json", "json", { url: "../assets/spine41/raptor-pro.json" }),
-            new pc.Asset("raptor.png", "texture", { url: "../assets/spine41/raptor.png" })
+            new pc.Asset("playcanvas-spine.3.6.js", "script", { url: "../build/playcanvas-spine.3.6.js" }),
+            new pc.Asset("alien-pma.atlas", "text", { url: "./assets/spine36/alien-pma.atlas" }),
+            new pc.Asset("alien.json", "json", { url: "./assets/spine36/alien.json" }),
+            new pc.Asset("alien-pma.png", "texture", { url: "./assets/spine36/alien-pma.png" })
         ];
 
         var preload = function (assets, callback) {
@@ -60,15 +60,15 @@
         };
 
         preload(assets, function () {
-            var raptor = new pc.Entity();
-            raptor.addComponent("spine", {
+            var alien = new pc.Entity();
+            alien.addComponent("spine", {
                 atlasAsset: assets[1].id,
                 skeletonAsset: assets[2].id,
                 textureAssets: [ assets[3].id ]
             });
-            app.root.addChild(raptor);
+            app.root.addChild(alien);
 
-            raptor.spine.state.setAnimation(0, "walk", true);
+            alien.spine.state.setAnimation(0, "death", true);
 
             // Create a camera to render the scene
             var camera = new pc.Entity();
