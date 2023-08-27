@@ -4,6 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import alias from '@rollup/plugin-alias';
+import { babel } from '@rollup/plugin-babel';
 
 const banner = `/* Copyright 2015-${new Date().getFullYear()} PlayCanvas Ltd */\n`;
 
@@ -32,7 +33,7 @@ const builds = [
 /**
  * Return all the build targets.
  *
- * @returns {RollupOptions | RollupOptions[]} Build targets.
+ * @returns {import('rollup').RollupOptions | import('rollup').RollupOptions[]} Build targets.
  */
 export default [
     ...builds.map(buildDefinition => buildTarget(buildDefinition))
@@ -42,7 +43,7 @@ export default [
  * Return a target that rollup is supposed to build.
  *
  * @param {{ name, lib }} buildDefinition - The build definition.
- * @returns {RollupOptions} One rollup target.
+ * @returns {import('rollup').RollupOptions} One rollup target.
  */
 function buildTarget({ name, lib }) {
 
@@ -53,23 +54,34 @@ function buildTarget({ name, lib }) {
         min: [terser()]
     };
 
-    const entries = { './wrapper.js': lib };
-    const buildPlugins = [alias({ entries }), commonjs(), nodeResolve()];
+    const outputGlobals = {
+        playcanvas: 'pc'
+    };
+
+    const entries = { 'spine-core-import': lib };
+    const buildPlugins = [alias({ entries }), commonjs(), nodeResolve(), babel({ babelHelpers: 'bundled' })];
 
     return {
-        input: 'src/plugin.js',
+        external: ['playcanvas'],
+        input: 'src/SpinePlugin.js',
         context: 'this', // remove when using ESM libs
         output: [
             {
                 file: `${outputDir + name}.js`,
-                format: 'cjs',
+                format: 'iife',
+                name: 'spine',
                 banner: banner,
+                globals: outputGlobals,
+                generatedCode: 'es5', // refers to rollup wrappers
                 plugins: outputPlugins.release
             },
             {
                 file: `${outputDir + name}.min.js`,
-                format: 'cjs',
+                format: 'iife',
+                name: 'spine',
                 banner: banner,
+                globals: outputGlobals,
+                generatedCode: 'es5', // refers to rollup wrappers
                 plugins: outputPlugins.min
             }
         ],

@@ -1,0 +1,42 @@
+{
+    "compilerOptions": {
+        /* Language and Environment */
+        "target": "ES2022",
+        "lib": ["esnext", "dom"],
+        "jsx": "preserve",
+
+        /* Modules */
+        "module": "ES2022",
+        "rootDir": ".",
+        "moduleResolution": "bundler",
+        "baseUrl": ".",
+        "resolveJsonModule": true,
+        "paths": {
+            "spine-core-import": ["./src/wrapper.js"]
+        },
+
+        /* JavaScript Support */
+        "allowJs": true,
+        "checkJs": true,
+        "maxNodeModuleJsDepth": 3,
+
+        /* Emit */
+        "outDir": "temp",
+        "removeComments": false,
+        "sourceMap": false,
+        "newLine": "lf",
+
+        /* Interop Constraints */
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+
+        /* Type Checking */
+        "noImplicitThis": true,
+
+        /* Completeness */
+        "skipLibCheck": true
+    },
+    "input": ["src", "rollup.config.mjs"],
+    "exclude": ["node_modules", "**/node_modules/*", "build"]
+}

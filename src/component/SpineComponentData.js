@@ -1,5 +1,5 @@
-pc.extend(pc, function () {
-    var SpineComponentData = function () {
+class SpineComponentData {
+    constructor() {
         // serialized
         this.enabled = true;
         this.atlasAsset = null;
@@ -12,9 +12,7 @@ pc.extend(pc, function () {
         this.atlasData = null;
         this.textures = [];
         this.skeletonData = null;
-    };
+    }
+}
 
-    return {
-        SpineComponentData: SpineComponentData
-    };
-}());
+export { SpineComponentData };
