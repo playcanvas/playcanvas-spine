@@ -1,6 +1,6 @@
 /* eslint-disable operator-linebreak */
 import * as pc from 'playcanvas';
-import { spine } from 'spine-core-import';
+import { spine } from 'spine-core-import'; // spine-core-import is an alias
 import { SpineTextureWrapper } from './SpineTextureWrapper.js';
 import semver from './semver/index.js';
 

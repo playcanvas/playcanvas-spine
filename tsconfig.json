@@ -12,7 +12,7 @@
         "baseUrl": ".",
         "resolveJsonModule": true,
         "paths": {
-            "spine-core-import": ["./src/wrapper.js"]
+            "spine-core-import": ["src/wrapper41.js"]
         },
 
         /* JavaScript Support */

@@ -1,5 +1,5 @@
 import * as pc from 'playcanvas';
-import { spine } from 'spine-core-import';
+import { spine } from 'spine-core-import'; // spine-core-import is an alias
 import { SpineComponentSystem } from './component/SpineComponentSystem.js';
 
 /**

@@ -31,7 +31,7 @@ const builds = [
     },
     {
         name: 'playcanvas-spine.4.1',
-        lib: 'src/wrapper.js'
+        lib: 'src/wrapper41.js'
     }
 ];
 
@@ -87,7 +87,9 @@ function buildTarget({ name, lib }) {
         playcanvas: 'pc'
     };
 
+    // spine-core-import is an alias
     const entries = { 'spine-core-import': lib };
+
     const buildPlugins = [alias({ entries }), commonjs(), nodeResolve(), babel(es5Options('release'))];
 
     return {
