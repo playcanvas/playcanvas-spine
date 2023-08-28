@@ -12,17 +12,9 @@ import { SpineComponentSystem } from './component/SpineComponentSystem.js';
 
 // register the plugin with playcanvas
 (function () {
-    if (pc.Application.registerPlugin) {
-        var register = function (app) {
-            // eslint-disable-next-line no-new
-            new SpineComponentSystem(app);
-        };
-        pc.Application.registerPlugin("spine", register);
-    } else {
-        var app = pc.Application.getApplication();
-        var system = new SpineComponentSystem(app);
-        app.systems.add(system);
-    }
+    const app = pc.Application.getApplication();
+    const system = new SpineComponentSystem(app);
+    app.systems.add(system);
 }());
 
 // we export spine for compatibility and to allow developers
