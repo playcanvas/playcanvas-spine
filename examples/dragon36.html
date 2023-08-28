@@ -38,10 +38,11 @@
         });
 
         var assets = [
-            new pc.Asset("playcanvas-spine.3.6.js", "script", { url: "../../build/playcanvas-spine.3.6.js" }),
-            new pc.Asset("alien-pma.atlas", "text", { url: "../assets/spine/alien-pma.atlas" }),
-            new pc.Asset("alien.json", "json", { url: "../assets/spine/alien.json" }),
-            new pc.Asset("alien-pma.png", "texture", { url: "../assets/spine/alien-pma.png" })
+            new pc.Asset("playcanvas-spine.3.6.js", "script", { url: "../build/playcanvas-spine.3.6.js" }),
+            new pc.Asset("dragon-pma.atlas", "text", { url: "./assets/spine36/dragon-pma.atlas" }),
+            new pc.Asset("dragon.json", "json", { url: "./assets/spine36/dragon.json" }),
+            new pc.Asset("dragon-pma.png", "texture", { url: "./assets/spine36/dragon-pma.png" }),
+            new pc.Asset("dragon-pma2.png", "texture", { url: "./assets/spine36/dragon-pma2.png" })
         ];
 
         var preload = function (assets, callback) {
@@ -60,20 +61,21 @@
         };
 
         preload(assets, function () {
-            var alien = new pc.Entity();
-            alien.addComponent("spine", {
+            // Create the dragon
+            var dragon = new pc.Entity();
+            dragon.addComponent("spine", {
                 atlasAsset: assets[1].id,
                 skeletonAsset: assets[2].id,
-                textureAssets: [ assets[3].id ]
+                textureAssets: [ assets[3].id, assets[4].id ]
             });
-            app.root.addChild(alien);
+            app.root.addChild(dragon);
 
-            alien.spine.state.setAnimation(0, "death", true);
+            dragon.spine.state.setAnimation(0, "flying", true);
 
             // Create a camera to render the scene
             var camera = new pc.Entity();
             camera.addComponent("camera");
-            camera.translateLocal(0, 7, 20);
+            camera.translateLocal(0, 1, 10);
             app.root.addChild(camera);
         });
     </script>

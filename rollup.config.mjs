@@ -4,6 +4,12 @@ import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import alias from '@rollup/plugin-alias';
+import { babel } from '@rollup/plugin-babel';
+
+/** @typedef {import('rollup').RollupOptions} RollupOptions */
+/** @typedef {import('rollup').Plugin} Plugin */
+/** @typedef {import('rollup').OutputOptions} OutputOptions */
+/** @typedef {import('@rollup/plugin-babel').RollupBabelInputPluginOptions} RollupBabelInputPluginOptions */
 
 const banner = `/* Copyright 2015-${new Date().getFullYear()} PlayCanvas Ltd */\n`;
 
@@ -25,9 +31,33 @@ const builds = [
     },
     {
         name: 'playcanvas-spine.4.1',
-        lib: 'src/wrapper.js'
+        lib: 'src/wrapper41.js'
     }
 ];
+
+/**
+ * The ES5 options for babel(...) plugin.
+ *
+ * @param {'debug'|'release'|'profiler'|'min'} buildType - Use 'debug' for comments
+ * @returns {RollupBabelInputPluginOptions} The babel options.
+ */
+const es5Options = buildType => ({
+    babelHelpers: 'bundled',
+    babelrc: false,
+    comments: buildType === 'debug',
+    compact: false,
+    minified: false,
+    presets: [
+        [
+            '@babel/preset-env', {
+                modules: false,
+                targets: {
+                    ie: '11'
+                }
+            }
+        ]
+    ]
+});
 
 /**
  * Return all the build targets.
@@ -53,23 +83,39 @@ function buildTarget({ name, lib }) {
         min: [terser()]
     };
 
-    const entries = { './wrapper.js': lib };
-    const buildPlugins = [alias({ entries }), commonjs(), nodeResolve()];
+    const outputGlobals = {
+        playcanvas: 'pc'
+    };
+
+    // spine-core-import is an alias
+    const entries = { 'spine-core-import': lib };
+
+    const buildPlugins = [alias({ entries }), commonjs(), nodeResolve(), babel(es5Options('release'))];
 
     return {
-        input: 'src/plugin.js',
+        external: ['playcanvas'],
+        input: 'src/SpinePlugin.js',
         context: 'this', // remove when using ESM libs
         output: [
             {
                 file: `${outputDir + name}.js`,
-                format: 'cjs',
+                format: 'iife',
+                name: 'spine',
                 banner: banner,
+                indent: '\t',
+                preserveModules: false,
+                globals: outputGlobals,
+                generatedCode: 'es5', // refers to rollup wrappers
                 plugins: outputPlugins.release
             },
             {
                 file: `${outputDir + name}.min.js`,
-                format: 'cjs',
+                format: 'iife',
+                name: 'spine',
                 banner: banner,
+                preserveModules: false,
+                globals: outputGlobals,
+                generatedCode: 'es5', // refers to rollup wrappers
                 plugins: outputPlugins.min
             }
         ],
