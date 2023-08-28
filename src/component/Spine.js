@@ -42,7 +42,8 @@ class Spine {
      * @param {pc.AppBase} app - The application that will manage this Spine object.
      * @param {string} atlasData - Text data loaded from the atlas file.
      * @param {object} skeletonData - JSON data loaded from the skeleton file.
-     * @param {object} textureData - Texture initialization data. An object where the key is the texture filename and the value is the pc.Texture resource.
+     * @param {object} textureData - Texture initialization data. An object where the key is the
+     * texture filename and the value is the pc.Texture resource.
      */
     constructor(app, atlasData, skeletonData, textureData) {
         this._app = app;
