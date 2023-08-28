@@ -219,18 +219,12 @@ class Spine {
 
     createMaterial(texture) {
         const material = new pc.StandardMaterial();
-        material.shadingModel = pc.SPECULAR_BLINN;
-        material.diffuse = new pc.Color(1, 1, 1); // include diffuse component, this allows lights contribution
 
         material.emissiveMap = texture;
-        material.emissiveMapChannel = 'rgb';
         material.emissiveVertexColor = true;
-        material.emissiveVertexColorChannel = 'rgb';
 
         material.opacityMap = texture;
-        material.opacityMapChannel = 'a';
         material.opacityVertexColor = true;
-        material.opacityVertexColorChannel = 'a';
 
         material.depthWrite = false;
         material.cull = pc.CULLFACE_NONE;

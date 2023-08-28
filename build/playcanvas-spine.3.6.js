@@ -8910,16 +8910,10 @@ var spine = (function (pc) {
 	    key: "createMaterial",
 	    value: function createMaterial(texture) {
 	      var material = new pc__namespace.StandardMaterial();
-	      material.shadingModel = pc__namespace.SPECULAR_BLINN;
-	      material.diffuse = new pc__namespace.Color(1, 1, 1);
 	      material.emissiveMap = texture;
-	      material.emissiveMapChannel = 'rgb';
 	      material.emissiveVertexColor = true;
-	      material.emissiveVertexColorChannel = 'rgb';
 	      material.opacityMap = texture;
-	      material.opacityMapChannel = 'a';
 	      material.opacityVertexColor = true;
-	      material.opacityVertexColorChannel = 'a';
 	      material.depthWrite = false;
 	      material.cull = pc__namespace.CULLFACE_NONE;
 	      material.blendType = pc__namespace.BLEND_PREMULTIPLIED;
