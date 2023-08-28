@@ -22,21 +22,12 @@
   },
   "eslintConfig": {
     "extends": "@playcanvas/eslint-config",
-    "globals": {
-      "pc": "readonly",
-      "spine": "readonly",
-      "semver": "readonly"
-    },
     "settings": {
       "import/core-modules": [
         "spine-core-import"
       ]
     }
   },
-  "eslintIgnore": [
-    "build/",
-    "contrib/"
-  ],
   "devDependencies": {
     "@babel/preset-env": "^7.22.10",
     "@playcanvas/eslint-config": "^1.7.0",
