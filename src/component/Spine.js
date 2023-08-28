@@ -35,7 +35,7 @@ class Spine {
      * @type {spine.AnimationState[]}
      */
     states;
-   
+
     /**
      * Contains the skeleton and animation states as detailed in the Spine Runtime documentation.
      *
