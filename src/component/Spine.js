@@ -13,21 +13,38 @@ const ATTACHMENT_TYPE = {
 const QUAD_TRIANGLES = [0, 1, 2, 2, 3, 0];
 
 /**
- * @class
- * @name pc.Spine
- * @classdesc  A Spine animation object.
- * @description Contains the skeleton and animation states as detailed in the Spine Runtime documentation.
- * @param {pc.Application} app - The application that will manage this Spine object.
- * @param {string} atlasData - Text data loaded from the atlas file.
- * @param {object} skeletonData - JSON data loaded from the skeleton file.
- * @param {object} textureData - Texture initialization data. An object where the key is the texture filename and the value is the pc.Texture resource.
- * @property {spine.Skeleton} skeleton The Skeleton object.
- * @property {spine.AnimationState} state The first AnimationState object. There is always one AnimationState.
- * @property {spine.AnimationState[]} states A list of all AnimationState objects.
- * @property {number} priority An integer value which determines when the spine mesh is rendered relative to other Spine meshes. Lower numbers are rendered first.
- * @property {boolean} autoUpdate Determines whether the Spine object calls skeleton.updateWorldTransform in the update loop. Default is true.
+ * A Spine animation object.
  */
 class Spine {
+    /**
+     * Determines whether the Spine object calls skeleton.updateWorldTransform in the update loop.
+     * Default is true.
+     */
+    autoUpdate = true;
+
+    /**
+     * The Skeleton object.
+     *
+     * @type {spine.Skeleton}
+     */
+    skeleton;
+
+    /**
+     * A list of all AnimationState objects.
+     *
+     * @type {spine.AnimationState[]}
+     */
+    states;
+
+    /**
+     * Contains the skeleton and animation states as detailed in the Spine Runtime documentation.
+     *
+     * @param {pc.AppBase} app - The application that will manage this Spine object.
+     * @param {string} atlasData - Text data loaded from the atlas file.
+     * @param {object} skeletonData - JSON data loaded from the skeleton file.
+     * @param {object} textureData - Texture initialization data. An object where the key is the
+     * texture filename and the value is the pc.Texture resource.
+     */
     constructor(app, atlasData, skeletonData, textureData) {
         this._app = app;
 
@@ -105,7 +122,6 @@ class Spine {
 
         this.init();
 
-        this.autoUpdate = true;
         this._hidden = false;
     }
 
@@ -604,9 +620,9 @@ class Spine {
             this._meshes.push(mesh);
 
             const mi = new pc.MeshInstance(
-                this._node,
                 mesh,
-                this._materials[materialKey]
+                this._materials[materialKey],
+                this._node
             );
             mi.drawOrder = this.priority + this._meshInstances.length;
             mi.visible = !this._hidden;
@@ -667,10 +683,21 @@ class Spine {
         }
     }
 
+    /**
+     * The first AnimationState object. There is always one AnimationState.
+     *
+     * @type {spine.AnimationState}
+     */
     get state() {
         return this.states[0];
     }
 
+    /**
+     * An integer value which determines when the spine mesh is rendered relative to other Spine
+     * meshes. Lower numbers are rendered first.
+     *
+     * @type {number}
+     */
     set priority(value) {
         this._priority = value;
     }

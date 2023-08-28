@@ -8185,6 +8185,20 @@ var spine = (function (pc) {
 	  });
 	  return Constructor;
 	}
+	function _defineProperty(obj, key, value) {
+	  key = _toPropertyKey(key);
+	  if (key in obj) {
+	    Object.defineProperty(obj, key, {
+	      value: value,
+	      enumerable: true,
+	      configurable: true,
+	      writable: true
+	    });
+	  } else {
+	    obj[key] = value;
+	  }
+	  return obj;
+	}
 	function _inherits(subClass, superClass) {
 	  if (typeof superClass !== "function" && superClass !== null) {
 	    throw new TypeError("Super expression must either be null or a function");
@@ -10260,6 +10274,9 @@ var spine = (function (pc) {
 	var Spine = function () {
 	  function Spine(app, atlasData, skeletonData, textureData) {
 	    _classCallCheck(this, Spine);
+	    _defineProperty(this, "autoUpdate", true);
+	    _defineProperty(this, "skeleton", void 0);
+	    _defineProperty(this, "states", void 0);
 	    this._app = app;
 	    this._position = new pc__namespace.Vec3();
 	    var atlas;
@@ -10314,7 +10331,6 @@ var spine = (function (pc) {
 	    this._timeScale = 1;
 	    this._layers = [pc__namespace.LAYERID_UI];
 	    this.init();
-	    this.autoUpdate = true;
 	    this._hidden = false;
 	  }
 	  _createClass(Spine, [{
@@ -10625,7 +10641,7 @@ var spine = (function (pc) {
 	        mesh.primitive[0].indexed = true;
 	        mesh.aabb = this._aabb;
 	        this._meshes.push(mesh);
-	        var mi = new pc__namespace.MeshInstance(this._node, mesh, this._materials[materialKey]);
+	        var mi = new pc__namespace.MeshInstance(mesh, this._materials[materialKey], this._node);
 	        mi.drawOrder = this.priority + this._meshInstances.length;
 	        mi.visible = !this._hidden;
 	        this._meshInstances.push(mi);
@@ -10980,16 +10996,9 @@ var spine = (function (pc) {
 	}(pc.ComponentSystem);
 
 	(function () {
-	  if (pc__namespace.Application.registerPlugin) {
-	    var register = function register(app) {
-	      new SpineComponentSystem(app);
-	    };
-	    pc__namespace.Application.registerPlugin("spine", register);
-	  } else {
-	    var app = pc__namespace.Application.getApplication();
-	    var system = new SpineComponentSystem(app);
-	    app.systems.add(system);
-	  }
+	  var app = pc__namespace.Application.getApplication();
+	  var system = new SpineComponentSystem(app);
+	  app.systems.add(system);
 	})();
 	var spine = spine$1;
 
