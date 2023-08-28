@@ -1,4 +1,3 @@
-/* eslint-disable operator-linebreak */
 import * as pc from 'playcanvas';
 import { spine } from 'spine-core-import'; // spine-core-import is an alias
 import { SpineTextureWrapper } from './SpineTextureWrapper.js';
@@ -280,11 +279,11 @@ class Spine {
         // attachment can change on the slot
         // prettier-ignore
         const type =
-            attachment instanceof spine.RegionAttachment
-                ? ATTACHMENT_TYPE.REGION
-                : attachment instanceof spine.MeshAttachment
-                    ? ATTACHMENT_TYPE.MESH
-                    : ATTACHMENT_TYPE.NULL;
+            attachment instanceof spine.RegionAttachment ?
+                ATTACHMENT_TYPE.REGION :
+                attachment instanceof spine.MeshAttachment ?
+                    ATTACHMENT_TYPE.MESH :
+                    ATTACHMENT_TYPE.NULL;
 
         if (slot._active.name !== name || slot._active.type !== type) {
             this.initAttachment(slot);
