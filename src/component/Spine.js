@@ -91,6 +91,7 @@ class Spine {
         );
         this._spine_3_6_0 = semver.satisfies(this.skeletonVersion, '<=3.6.0'); // version 3.6.0 or below
         this._spine_3_7_99 = semver.satisfies(this.skeletonVersion, '<=3.7.99'); // version 3.7.99 or below
+        this._spine_4_0_X = semver.satisfies(this.skeletonVersion, '~4.0.0'); // version 4.0 family (4.0.31 - 4.0.79-beta)
         this._spine_4_1_X = semver.satisfies(this.skeletonVersion, '~4.1.23'); // version 4.1 family
 
         this.skeleton = new spine.Skeleton(_skeletonData);
