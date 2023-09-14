@@ -64,6 +64,9 @@
         var clientMouseX = window.innerWidth / 2, clientMouseY = window.innerHeight / 2;
         var owl;
 
+        var skeleton;
+        var state;
+
         preload(assets, function () {
             owl = new pc.Entity();
             owl.addComponent("spine", {
@@ -79,14 +82,19 @@
 
             state.setAnimation(0, "idle", true);
             state.setAnimation(1, "blink", true);
+
             left = state.setAnimation(2, "left", true);
             right = state.setAnimation(3, "right", true);
             up = state.setAnimation(4, "up", true);
             down = state.setAnimation(5, "down", true);
+
+            // blend animations
             left.mixBlend = spine.MixBlend.add;
             right.mixBlend = spine.MixBlend.add;
             up.mixBlend = spine.MixBlend.add;
             down.mixBlend = spine.MixBlend.add;
+
+            // blend animation amount
             left.alpha = 0;
             right.alpha = 0;
             up.alpha = 0;
