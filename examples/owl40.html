@@ -60,14 +60,18 @@
             }
         };
 
+        var left, right, up, down;
+        var clientMouseX = window.innerWidth / 2, clientMouseY = window.innerHeight / 2;
+        var owl;
+
         preload(assets, function () {
-            var owl = new pc.Entity();
+            owl = new pc.Entity();
             owl.addComponent("spine", {
                 atlasAsset: assets[1].id,
                 skeletonAsset: assets[2].id,
                 textureAssets: [assets[3].id]
             });
-            
+
             app.root.addChild(owl);
 
             skeleton = owl.spine.skeleton;
@@ -100,9 +104,31 @@
             // Create a camera to render the scene
             var camera = new pc.Entity();
             camera.addComponent("camera");
-            camera.translateLocal(0, 5, 20);
+            camera.translateLocal(cameraPosX, cameraPosY, 20);
             app.root.addChild(camera);
+
+            document.addEventListener("mousemove", function (event) {
+                clientMouseX = event.clientX;
+                clientMouseY = event.clientY;
+            });
+
+            // make the owl stare at mouse position
+            app.on('update', function (dt) {
+                if (owl) {
+                    calculateBlend(clientMouseX, clientMouseY, true);
+                }
+            });
         });
+
+        function calculateBlend(x, y, isPageCoords) {
+            var canvasBounds = canvas.getBoundingClientRect();
+            var centerX = canvasBounds.x + canvasBounds.width / 2;
+            var centerY = canvasBounds.y + canvasBounds.height / 2;
+            right.alpha = x < centerX ? 1 - x / centerX : 0;
+            left.alpha = x > centerX ? (x - centerX) / (window.innerWidth - centerX) : 0;
+            up.alpha = y < centerY ? 1 - y / centerY : 0;
+            down.alpha = y > centerY ? (y - centerY) / (window.innerHeight - centerY) : 0;
+        }
     </script>
 </body>
 
