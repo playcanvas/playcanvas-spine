@@ -30,6 +30,10 @@ const builds = [
         lib: 'contrib/spine-ts/build/3.8/spine-core.js'
     },
     {
+        name: 'playcanvas-spine.4.0',
+        lib: 'src/wrapper40.js'
+    },
+    {
         name: 'playcanvas-spine.4.1',
         lib: 'src/wrapper41.js'
     }

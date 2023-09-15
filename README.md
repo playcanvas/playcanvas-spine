@@ -10,15 +10,22 @@ Examples such as the Hero above can be found in the `examples` folder. To run th
 
 ## Usage
 
-### Editor
+### Versions
 
-Add the plugin matching the Spine version used to export the animations, i.e `build/playcanvas-spine.X.X.min.js` and the PlayCanvas script `build/spine.js` to your project. The following plugins are available:
+The following plugins are available:
 
 | Spine Editor | PlayCanvas Engine |
 | ------------ | ----------------- |
 | 3.6          | Up to 1.65        |
 | 3.8          | Up to 1.65        |
+| 4.0          | 1.27 and later    |
 | 4.1          | 1.27 and later    |
+
+Each plugin provides both a Component System to PlayCanvas Engine and the corresponding `spine-core` runtime to your scripts as global variable called `spine`.  This allows developers to leverage the full spine library.
+
+### Editor
+
+Add the plugin matching the Spine version used to export the animations, i.e `build/playcanvas-spine.X.X.min.js` and the PlayCanvas script `build/spine.js` to your project.
 
 Create an entity with a script component and add the script `spine` to it. Upload your exported spine resources (atlas, skeleton json file, textures) and attach them to the spine script on your entity.
 

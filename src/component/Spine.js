@@ -91,6 +91,7 @@ class Spine {
         );
         this._spine_3_6_0 = semver.satisfies(this.skeletonVersion, '<=3.6.0'); // version 3.6.0 or below
         this._spine_3_7_99 = semver.satisfies(this.skeletonVersion, '<=3.7.99'); // version 3.7.99 or below
+        this._spine_4_0_X = semver.satisfies(this.skeletonVersion, '~4.0.0'); // version 4.0 family (4.0.31 - 4.0.79-beta)
         this._spine_4_1_X = semver.satisfies(this.skeletonVersion, '~4.1.23'); // version 4.1 family
 
         this.skeleton = new spine.Skeleton(_skeletonData);
@@ -253,29 +254,38 @@ class Spine {
                 slot._active.type = ATTACHMENT_TYPE.MESH;
             }
 
+            let texture = null;
+
+            // search for texture property if it exists
+            if (attachment.region) {
+                if (attachment.region.texture) {
+                    texture = attachment.region.texture.pcTexture;
+                }
+                if (attachment.region.page && attachment.region.page.texture) {
+                    texture = attachment.region.page.texture.pcTexture;
+                }
+            }
+
             // create / assign material
-            if (attachment.region && attachment.region.texture) {
-                const texture = attachment.region.texture.pcTexture;
-                if (texture) {
-                    if (texture instanceof pc.StandardMaterial) {
-                        this._materials[texture.name] = texture;
-                        slot.material = texture.name;
-                    } else {
-                        // get a unique key for the texture
-                        let key = null;
-                        if (texture.name) {
-                            key = texture.name; // texture name might not be unique - should be resolved with content
-                        } else if (texture.getSource() instanceof Image) {
-                            key = texture.getSource().getAttribute('src');
+            if (texture) {
+                if (texture instanceof pc.StandardMaterial) {
+                    this._materials[texture.name] = texture;
+                    slot.material = texture.name;
+                } else {
+                    // get a unique key for the texture
+                    let key = null;
+                    if (texture.name) {
+                        key = texture.name; // texture name might not be unique - should be resolved with content
+                    } else if (texture.getSource() instanceof Image) {
+                        key = texture.getSource().getAttribute('src');
+                    }
+                    if (key) {
+                        // create a new material if required
+                        if (this._materials[key] === undefined) {
+                            const material = this.createMaterial(texture);
+                            this._materials[key] = material;
                         }
-                        if (key) {
-                            // create a new material if required
-                            if (this._materials[key] === undefined) {
-                                const material = this.createMaterial(texture);
-                                this._materials[key] = material;
-                            }
-                            slot.material = key;
-                        }
+                        slot.material = key;
                     }
                 }
             }
