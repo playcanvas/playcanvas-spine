@@ -8797,6 +8797,7 @@ var spine = (function (pc) {
 	    this.skeletonVersion = semver.valid(semver.coerce(_skeletonData.version));
 	    this._spine_3_6_0 = semver.satisfies(this.skeletonVersion, '<=3.6.0');
 	    this._spine_3_7_99 = semver.satisfies(this.skeletonVersion, '<=3.7.99');
+	    this._spine_4_0_X = semver.satisfies(this.skeletonVersion, '~4.0.0');
 	    this._spine_4_1_X = semver.satisfies(this.skeletonVersion, '~4.1.23');
 	    this.skeleton = new spine$1.Skeleton(_skeletonData);
 	    this.skeleton.updateWorldTransform();
@@ -8935,26 +8936,32 @@ var spine = (function (pc) {
 	        } else if (attachment instanceof spine$1.MeshAttachment) {
 	          slot._active.type = ATTACHMENT_TYPE.MESH;
 	        }
-	        if (attachment.region && attachment.region.texture) {
-	          var texture = attachment.region.texture.pcTexture;
-	          if (texture) {
-	            if (texture instanceof pc__namespace.StandardMaterial) {
-	              this._materials[texture.name] = texture;
-	              slot.material = texture.name;
-	            } else {
-	              var key = null;
-	              if (texture.name) {
-	                key = texture.name;
-	              } else if (texture.getSource() instanceof Image) {
-	                key = texture.getSource().getAttribute('src');
+	        var texture = null;
+	        if (attachment.region) {
+	          if (attachment.region.texture) {
+	            texture = attachment.region.texture.pcTexture;
+	          }
+	          if (attachment.region.page && attachment.region.page.texture) {
+	            texture = attachment.region.page.texture.pcTexture;
+	          }
+	        }
+	        if (texture) {
+	          if (texture instanceof pc__namespace.StandardMaterial) {
+	            this._materials[texture.name] = texture;
+	            slot.material = texture.name;
+	          } else {
+	            var key = null;
+	            if (texture.name) {
+	              key = texture.name;
+	            } else if (texture.getSource() instanceof Image) {
+	              key = texture.getSource().getAttribute('src');
+	            }
+	            if (key) {
+	              if (this._materials[key] === undefined) {
+	                var material = this.createMaterial(texture);
+	                this._materials[key] = material;
 	              }
-	              if (key) {
-	                if (this._materials[key] === undefined) {
-	                  var material = this.createMaterial(texture);
-	                  this._materials[key] = material;
-	                }
-	                slot.material = key;
-	              }
+	              slot.material = key;
 	            }
 	          }
 	        }
