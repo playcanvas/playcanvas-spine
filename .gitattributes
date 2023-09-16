@@ -27,6 +27,7 @@
 *.babelrc text
 
 # Denote all files that are truly binary and should therefore not be modified.
+*.webp binary
 *.png binary
 *.jpg binary
 *.glb binary
