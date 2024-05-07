@@ -1,4 +1,4 @@
-/* Copyright 2015-2023 PlayCanvas Ltd */
+/* Copyright 2015-2024 PlayCanvas Ltd */
 
 var spine = (function (pc) {
 	'use strict';
@@ -33,10 +33,7 @@ var spine = (function (pc) {
 	      f = !0,
 	      o = !1;
 	    try {
-	      if (i = (t = t.call(r)).next, 0 === l) {
-	        if (Object(t) !== t) return;
-	        f = !1;
-	      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+	      if (i = (t = t.call(r)).next, 0 === l) ; else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
 	    } catch (r) {
 	      o = !0, n = r;
 	    } finally {
@@ -48,307 +45,6 @@ var spine = (function (pc) {
 	    }
 	    return a;
 	  }
-	}
-	function _regeneratorRuntime() {
-	  _regeneratorRuntime = function () {
-	    return e;
-	  };
-	  var t,
-	    e = {},
-	    r = Object.prototype,
-	    n = r.hasOwnProperty,
-	    o = Object.defineProperty || function (t, e, r) {
-	      t[e] = r.value;
-	    },
-	    i = "function" == typeof Symbol ? Symbol : {},
-	    a = i.iterator || "@@iterator",
-	    c = i.asyncIterator || "@@asyncIterator",
-	    u = i.toStringTag || "@@toStringTag";
-	  function define(t, e, r) {
-	    return Object.defineProperty(t, e, {
-	      value: r,
-	      enumerable: !0,
-	      configurable: !0,
-	      writable: !0
-	    }), t[e];
-	  }
-	  try {
-	    define({}, "");
-	  } catch (t) {
-	    define = function (t, e, r) {
-	      return t[e] = r;
-	    };
-	  }
-	  function wrap(t, e, r, n) {
-	    var i = e && e.prototype instanceof Generator ? e : Generator,
-	      a = Object.create(i.prototype),
-	      c = new Context(n || []);
-	    return o(a, "_invoke", {
-	      value: makeInvokeMethod(t, r, c)
-	    }), a;
-	  }
-	  function tryCatch(t, e, r) {
-	    try {
-	      return {
-	        type: "normal",
-	        arg: t.call(e, r)
-	      };
-	    } catch (t) {
-	      return {
-	        type: "throw",
-	        arg: t
-	      };
-	    }
-	  }
-	  e.wrap = wrap;
-	  var h = "suspendedStart",
-	    l = "suspendedYield",
-	    f = "executing",
-	    s = "completed",
-	    y = {};
-	  function Generator() {}
-	  function GeneratorFunction() {}
-	  function GeneratorFunctionPrototype() {}
-	  var p = {};
-	  define(p, a, function () {
-	    return this;
-	  });
-	  var d = Object.getPrototypeOf,
-	    v = d && d(d(values([])));
-	  v && v !== r && n.call(v, a) && (p = v);
-	  var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p);
-	  function defineIteratorMethods(t) {
-	    ["next", "throw", "return"].forEach(function (e) {
-	      define(t, e, function (t) {
-	        return this._invoke(e, t);
-	      });
-	    });
-	  }
-	  function AsyncIterator(t, e) {
-	    function invoke(r, o, i, a) {
-	      var c = tryCatch(t[r], t, o);
-	      if ("throw" !== c.type) {
-	        var u = c.arg,
-	          h = u.value;
-	        return h && "object" == typeof h && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) {
-	          invoke("next", t, i, a);
-	        }, function (t) {
-	          invoke("throw", t, i, a);
-	        }) : e.resolve(h).then(function (t) {
-	          u.value = t, i(u);
-	        }, function (t) {
-	          return invoke("throw", t, i, a);
-	        });
-	      }
-	      a(c.arg);
-	    }
-	    var r;
-	    o(this, "_invoke", {
-	      value: function (t, n) {
-	        function callInvokeWithMethodAndArg() {
-	          return new e(function (e, r) {
-	            invoke(t, n, e, r);
-	          });
-	        }
-	        return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
-	      }
-	    });
-	  }
-	  function makeInvokeMethod(e, r, n) {
-	    var o = h;
-	    return function (i, a) {
-	      if (o === f) throw new Error("Generator is already running");
-	      if (o === s) {
-	        if ("throw" === i) throw a;
-	        return {
-	          value: t,
-	          done: !0
-	        };
-	      }
-	      for (n.method = i, n.arg = a;;) {
-	        var c = n.delegate;
-	        if (c) {
-	          var u = maybeInvokeDelegate(c, n);
-	          if (u) {
-	            if (u === y) continue;
-	            return u;
-	          }
-	        }
-	        if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) {
-	          if (o === h) throw o = s, n.arg;
-	          n.dispatchException(n.arg);
-	        } else "return" === n.method && n.abrupt("return", n.arg);
-	        o = f;
-	        var p = tryCatch(e, r, n);
-	        if ("normal" === p.type) {
-	          if (o = n.done ? s : l, p.arg === y) continue;
-	          return {
-	            value: p.arg,
-	            done: n.done
-	          };
-	        }
-	        "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg);
-	      }
-	    };
-	  }
-	  function maybeInvokeDelegate(e, r) {
-	    var n = r.method,
-	      o = e.iterator[n];
-	    if (o === t) return r.delegate = null, "throw" === n && e.iterator.return && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y;
-	    var i = tryCatch(o, e.iterator, r.arg);
-	    if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y;
-	    var a = i.arg;
-	    return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y);
-	  }
-	  function pushTryEntry(t) {
-	    var e = {
-	      tryLoc: t[0]
-	    };
-	    1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e);
-	  }
-	  function resetTryEntry(t) {
-	    var e = t.completion || {};
-	    e.type = "normal", delete e.arg, t.completion = e;
-	  }
-	  function Context(t) {
-	    this.tryEntries = [{
-	      tryLoc: "root"
-	    }], t.forEach(pushTryEntry, this), this.reset(!0);
-	  }
-	  function values(e) {
-	    if (e || "" === e) {
-	      var r = e[a];
-	      if (r) return r.call(e);
-	      if ("function" == typeof e.next) return e;
-	      if (!isNaN(e.length)) {
-	        var o = -1,
-	          i = function next() {
-	            for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next;
-	            return next.value = t, next.done = !0, next;
-	          };
-	        return i.next = i;
-	      }
-	    }
-	    throw new TypeError(typeof e + " is not iterable");
-	  }
-	  return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", {
-	    value: GeneratorFunctionPrototype,
-	    configurable: !0
-	  }), o(GeneratorFunctionPrototype, "constructor", {
-	    value: GeneratorFunction,
-	    configurable: !0
-	  }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) {
-	    var e = "function" == typeof t && t.constructor;
-	    return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name));
-	  }, e.mark = function (t) {
-	    return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t;
-	  }, e.awrap = function (t) {
-	    return {
-	      __await: t
-	    };
-	  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () {
-	    return this;
-	  }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) {
-	    void 0 === i && (i = Promise);
-	    var a = new AsyncIterator(wrap(t, r, n, o), i);
-	    return e.isGeneratorFunction(r) ? a : a.next().then(function (t) {
-	      return t.done ? t.value : a.next();
-	    });
-	  }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () {
-	    return this;
-	  }), define(g, "toString", function () {
-	    return "[object Generator]";
-	  }), e.keys = function (t) {
-	    var e = Object(t),
-	      r = [];
-	    for (var n in e) r.push(n);
-	    return r.reverse(), function next() {
-	      for (; r.length;) {
-	        var t = r.pop();
-	        if (t in e) return next.value = t, next.done = !1, next;
-	      }
-	      return next.done = !0, next;
-	    };
-	  }, e.values = values, Context.prototype = {
-	    constructor: Context,
-	    reset: function (e) {
-	      if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t);
-	    },
-	    stop: function () {
-	      this.done = !0;
-	      var t = this.tryEntries[0].completion;
-	      if ("throw" === t.type) throw t.arg;
-	      return this.rval;
-	    },
-	    dispatchException: function (e) {
-	      if (this.done) throw e;
-	      var r = this;
-	      function handle(n, o) {
-	        return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o;
-	      }
-	      for (var o = this.tryEntries.length - 1; o >= 0; --o) {
-	        var i = this.tryEntries[o],
-	          a = i.completion;
-	        if ("root" === i.tryLoc) return handle("end");
-	        if (i.tryLoc <= this.prev) {
-	          var c = n.call(i, "catchLoc"),
-	            u = n.call(i, "finallyLoc");
-	          if (c && u) {
-	            if (this.prev < i.catchLoc) return handle(i.catchLoc, !0);
-	            if (this.prev < i.finallyLoc) return handle(i.finallyLoc);
-	          } else if (c) {
-	            if (this.prev < i.catchLoc) return handle(i.catchLoc, !0);
-	          } else {
-	            if (!u) throw new Error("try statement without catch or finally");
-	            if (this.prev < i.finallyLoc) return handle(i.finallyLoc);
-	          }
-	        }
-	      }
-	    },
-	    abrupt: function (t, e) {
-	      for (var r = this.tryEntries.length - 1; r >= 0; --r) {
-	        var o = this.tryEntries[r];
-	        if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) {
-	          var i = o;
-	          break;
-	        }
-	      }
-	      i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null);
-	      var a = i ? i.completion : {};
-	      return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a);
-	    },
-	    complete: function (t, e) {
-	      if ("throw" === t.type) throw t.arg;
-	      return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y;
-	    },
-	    finish: function (t) {
-	      for (var e = this.tryEntries.length - 1; e >= 0; --e) {
-	        var r = this.tryEntries[e];
-	        if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y;
-	      }
-	    },
-	    catch: function (t) {
-	      for (var e = this.tryEntries.length - 1; e >= 0; --e) {
-	        var r = this.tryEntries[e];
-	        if (r.tryLoc === t) {
-	          var n = r.completion;
-	          if ("throw" === n.type) {
-	            var o = n.arg;
-	            resetTryEntry(r);
-	          }
-	          return o;
-	        }
-	      }
-	      throw new Error("illegal catch attempt");
-	    },
-	    delegateYield: function (e, r, n) {
-	      return this.delegate = {
-	        iterator: values(e),
-	        resultName: r,
-	        nextLoc: n
-	      }, "next" === this.method && (this.arg = t), y;
-	    }
-	  }, e;
 	}
 	function _typeof(o) {
 	  "@babel/helpers - typeof";
@@ -424,17 +120,6 @@ var spine = (function (pc) {
 	  };
 	  return _setPrototypeOf(o, p);
 	}
-	function _isNativeReflectConstruct() {
-	  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-	  if (Reflect.construct.sham) return false;
-	  if (typeof Proxy === "function") return true;
-	  try {
-	    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
-	    return true;
-	  } catch (e) {
-	    return false;
-	  }
-	}
 	function _assertThisInitialized(self) {
 	  if (self === void 0) {
 	    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -449,20 +134,6 @@ var spine = (function (pc) {
 	  }
 	  return _assertThisInitialized(self);
 	}
-	function _createSuper(Derived) {
-	  var hasNativeReflectConstruct = _isNativeReflectConstruct();
-	  return function _createSuperInternal() {
-	    var Super = _getPrototypeOf(Derived),
-	      result;
-	    if (hasNativeReflectConstruct) {
-	      var NewTarget = _getPrototypeOf(this).constructor;
-	      result = Reflect.construct(Super, arguments, NewTarget);
-	    } else {
-	      result = Super.apply(this, arguments);
-	    }
-	    return _possibleConstructorReturn(this, result);
-	  };
-	}
 	function _superPropBase(object, property) {
 	  while (!Object.prototype.hasOwnProperty.call(object, property)) {
 	    object = _getPrototypeOf(object);
@@ -470,11 +141,11 @@ var spine = (function (pc) {
 	  }
 	  return object;
 	}
-	function _get$1() {
+	function _get() {
 	  if (typeof Reflect !== "undefined" && Reflect.get) {
-	    _get$1 = Reflect.get.bind();
+	    _get = Reflect.get.bind();
 	  } else {
-	    _get$1 = function _get(target, property, receiver) {
+	    _get = function _get(target, property, receiver) {
 	      var base = _superPropBase(target, property);
 	      if (!base) return;
 	      var desc = Object.getOwnPropertyDescriptor(base, property);
@@ -484,7 +155,7 @@ var spine = (function (pc) {
 	      return desc.value;
 	    };
 	  }
-	  return _get$1.apply(this, arguments);
+	  return _get.apply(this, arguments);
 	}
 	function _slicedToArray(arr, i) {
 	  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
@@ -523,7 +194,7 @@ var spine = (function (pc) {
 	function _createForOfIteratorHelper(o, allowArrayLike) {
 	  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
 	  if (!it) {
-	    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+	    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike  ) {
 	      if (it) o = it;
 	      var i = 0;
 	      var F = function () {};
@@ -575,23 +246,37 @@ var spine = (function (pc) {
 	  if (typeof input !== "object" || input === null) return input;
 	  var prim = input[Symbol.toPrimitive];
 	  if (prim !== undefined) {
-	    var res = prim.call(input, hint || "default");
+	    var res = prim.call(input, hint );
 	    if (typeof res !== "object") return res;
 	    throw new TypeError("@@toPrimitive must return a primitive value.");
 	  }
-	  return (hint === "string" ? String : Number)(input);
+	  return (String )(input);
 	}
 	function _toPropertyKey(arg) {
 	  var key = _toPrimitive(arg, "string");
 	  return typeof key === "symbol" ? key : String(key);
 	}
 
+	function _callSuper$f(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
+	  }
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
 	var IntSet = function () {
 	  function IntSet() {
 	    _classCallCheck(this, IntSet);
 	    this.array = new Array();
 	  }
-	  _createClass(IntSet, [{
+	  return _createClass(IntSet, [{
 	    key: "add",
 	    value: function add(value) {
 	      var contains = this.contains(value);
@@ -614,7 +299,6 @@ var spine = (function (pc) {
 	      this.array.length = 0;
 	    }
 	  }]);
-	  return IntSet;
 	}();
 	var StringSet = function () {
 	  function StringSet() {
@@ -622,7 +306,7 @@ var spine = (function (pc) {
 	    this.entries = {};
 	    this.size = 0;
 	  }
-	  _createClass(StringSet, [{
+	  return _createClass(StringSet, [{
 	    key: "add",
 	    value: function add(value) {
 	      var contains = this.entries[value];
@@ -652,7 +336,6 @@ var spine = (function (pc) {
 	      this.size = 0;
 	    }
 	  }]);
-	  return StringSet;
 	}();
 	var Color = function () {
 	  function Color() {
@@ -666,7 +349,7 @@ var spine = (function (pc) {
 	    this.b = b;
 	    this.a = a;
 	  }
-	  _createClass(Color, [{
+	  return _createClass(Color, [{
 	    key: "set",
 	    value: function set(r, g, b, a) {
 	      this.r = r;
@@ -733,7 +416,6 @@ var spine = (function (pc) {
 	      return new Color().setFromString(hex);
 	    }
 	  }]);
-	  return Color;
 	}();
 	Color.WHITE = new Color(1, 1, 1, 1);
 	Color.RED = new Color(1, 0, 0, 1);
@@ -744,7 +426,7 @@ var spine = (function (pc) {
 	  function MathUtils() {
 	    _classCallCheck(this, MathUtils);
 	  }
-	  _createClass(MathUtils, null, [{
+	  return _createClass(MathUtils, null, [{
 	    key: "clamp",
 	    value: function clamp(value, min, max) {
 	      if (value < min) return min;
@@ -796,7 +478,6 @@ var spine = (function (pc) {
 	      return value && (value & value - 1) === 0;
 	    }
 	  }]);
-	  return MathUtils;
 	}();
 	MathUtils.PI = 3.1415927;
 	MathUtils.PI2 = MathUtils.PI * 2;
@@ -808,54 +489,49 @@ var spine = (function (pc) {
 	  function Interpolation() {
 	    _classCallCheck(this, Interpolation);
 	  }
-	  _createClass(Interpolation, [{
+	  return _createClass(Interpolation, [{
 	    key: "apply",
 	    value: function apply(start, end, a) {
 	      return start + (end - start) * this.applyInternal(a);
 	    }
 	  }]);
-	  return Interpolation;
 	}();
 	var Pow = function (_Interpolation) {
-	  _inherits(Pow, _Interpolation);
-	  var _super = _createSuper(Pow);
 	  function Pow(power) {
-	    var _this;
+	    var _this2;
 	    _classCallCheck(this, Pow);
-	    _this = _super.call(this);
-	    _this.power = 2;
-	    _this.power = power;
-	    return _this;
+	    _this2 = _callSuper$f(this, Pow);
+	    _this2.power = 2;
+	    _this2.power = power;
+	    return _this2;
 	  }
-	  _createClass(Pow, [{
+	  _inherits(Pow, _Interpolation);
+	  return _createClass(Pow, [{
 	    key: "applyInternal",
 	    value: function applyInternal(a) {
 	      if (a <= 0.5) return Math.pow(a * 2, this.power) / 2;
 	      return Math.pow((a - 1) * 2, this.power) / (this.power % 2 == 0 ? -2 : 2) + 1;
 	    }
 	  }]);
-	  return Pow;
 	}(Interpolation);
 	var PowOut = function (_Pow) {
-	  _inherits(PowOut, _Pow);
-	  var _super2 = _createSuper(PowOut);
 	  function PowOut(power) {
 	    _classCallCheck(this, PowOut);
-	    return _super2.call(this, power);
+	    return _callSuper$f(this, PowOut, [power]);
 	  }
-	  _createClass(PowOut, [{
+	  _inherits(PowOut, _Pow);
+	  return _createClass(PowOut, [{
 	    key: "applyInternal",
 	    value: function applyInternal(a) {
 	      return Math.pow(a - 1, this.power) * (this.power % 2 == 0 ? -1 : 1) + 1;
 	    }
 	  }]);
-	  return PowOut;
 	}(Pow);
 	var Utils = function () {
 	  function Utils() {
 	    _classCallCheck(this, Utils);
 	  }
-	  _createClass(Utils, null, [{
+	  return _createClass(Utils, null, [{
 	    key: "arrayCopy",
 	    value: function arrayCopy(source, sourceStart, dest, destStart, numElements) {
 	      for (var i = sourceStart, j = destStart; i < sourceStart + numElements; i++, j++) {
@@ -936,14 +612,13 @@ var spine = (function (pc) {
 	      return type[name[0].toUpperCase() + name.slice(1)];
 	    }
 	  }]);
-	  return Utils;
 	}();
 	Utils.SUPPORTS_TYPED_ARRAYS = typeof Float32Array !== "undefined";
 	var DebugUtils = function () {
 	  function DebugUtils() {
 	    _classCallCheck(this, DebugUtils);
 	  }
-	  _createClass(DebugUtils, null, [{
+	  return _createClass(DebugUtils, null, [{
 	    key: "logBones",
 	    value: function logBones(skeleton) {
 	      for (var i = 0; i < skeleton.bones.length; i++) {
@@ -952,7 +627,6 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return DebugUtils;
 	}();
 	var Pool = function () {
 	  function Pool(instantiator) {
@@ -960,7 +634,7 @@ var spine = (function (pc) {
 	    this.items = new Array();
 	    this.instantiator = instantiator;
 	  }
-	  _createClass(Pool, [{
+	  return _createClass(Pool, [{
 	    key: "obtain",
 	    value: function obtain() {
 	      return this.items.length > 0 ? this.items.pop() : this.instantiator();
@@ -982,7 +656,6 @@ var spine = (function (pc) {
 	      this.items.length = 0;
 	    }
 	  }]);
-	  return Pool;
 	}();
 	var Vector2 = function () {
 	  function Vector2() {
@@ -992,7 +665,7 @@ var spine = (function (pc) {
 	    this.x = x;
 	    this.y = y;
 	  }
-	  _createClass(Vector2, [{
+	  return _createClass(Vector2, [{
 	    key: "set",
 	    value: function set(x, y) {
 	      this.x = x;
@@ -1017,7 +690,6 @@ var spine = (function (pc) {
 	      return this;
 	    }
 	  }]);
-	  return Vector2;
 	}();
 	var TimeKeeper = function () {
 	  function TimeKeeper() {
@@ -1030,7 +702,7 @@ var spine = (function (pc) {
 	    this.frameCount = 0;
 	    this.frameTime = 0;
 	  }
-	  _createClass(TimeKeeper, [{
+	  return _createClass(TimeKeeper, [{
 	    key: "update",
 	    value: function update() {
 	      var now = Date.now() / 1000;
@@ -1047,7 +719,6 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return TimeKeeper;
 	}();
 	var WindowedMean = function () {
 	  function WindowedMean() {
@@ -1059,7 +730,7 @@ var spine = (function (pc) {
 	    this.dirty = true;
 	    this.values = new Array(windowSize);
 	  }
-	  _createClass(WindowedMean, [{
+	  return _createClass(WindowedMean, [{
 	    key: "hasEnoughData",
 	    value: function hasEnoughData() {
 	      return this.addedValues >= this.values.length;
@@ -1087,29 +758,41 @@ var spine = (function (pc) {
 	      return 0;
 	    }
 	  }]);
-	  return WindowedMean;
 	}();
 
+	function _callSuper$e(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
+	  }
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
 	var Attachment = _createClass(function Attachment(name) {
 	  _classCallCheck(this, Attachment);
 	  if (!name) throw new Error("name cannot be null.");
 	  this.name = name;
 	});
 	var VertexAttachment = function (_Attachment) {
-	  _inherits(VertexAttachment, _Attachment);
-	  var _super = _createSuper(VertexAttachment);
 	  function VertexAttachment(name) {
-	    var _this;
+	    var _this2;
 	    _classCallCheck(this, VertexAttachment);
-	    _this = _super.call(this, name);
-	    _this.id = VertexAttachment.nextID++;
-	    _this.bones = null;
-	    _this.vertices = [];
-	    _this.worldVerticesLength = 0;
-	    _this.timelineAttachment = _assertThisInitialized(_this);
-	    return _this;
+	    _this2 = _callSuper$e(this, VertexAttachment, [name]);
+	    _this2.id = VertexAttachment.nextID++;
+	    _this2.bones = null;
+	    _this2.vertices = [];
+	    _this2.worldVerticesLength = 0;
+	    _this2.timelineAttachment = _this2;
+	    return _this2;
 	  }
-	  _createClass(VertexAttachment, [{
+	  _inherits(VertexAttachment, _Attachment);
+	  return _createClass(VertexAttachment, [{
 	    key: "computeWorldVertices",
 	    value: function computeWorldVertices(slot, start, count, worldVertices, offset, stride) {
 	      count = offset + (count >> 1) * stride;
@@ -1194,7 +877,6 @@ var spine = (function (pc) {
 	      attachment.timelineAttachment = this.timelineAttachment;
 	    }
 	  }]);
-	  return VertexAttachment;
 	}(Attachment);
 	VertexAttachment.nextID = 0;
 
@@ -1207,7 +889,7 @@ var spine = (function (pc) {
 	    this.setupIndex = 0;
 	    this.regions = new Array(count);
 	  }
-	  _createClass(Sequence, [{
+	  return _createClass(Sequence, [{
 	    key: "copy",
 	    value: function copy() {
 	      var copy = new Sequence(this.regions.length);
@@ -1244,7 +926,6 @@ var spine = (function (pc) {
 	      return Sequence._nextID++;
 	    }
 	  }]);
-	  return Sequence;
 	}();
 	Sequence._nextID = 0;
 	var SequenceMode;
@@ -1259,6 +940,20 @@ var spine = (function (pc) {
 	})(SequenceMode || (SequenceMode = {}));
 	var SequenceModeValues = [SequenceMode.hold, SequenceMode.once, SequenceMode.loop, SequenceMode.pingpong, SequenceMode.onceReverse, SequenceMode.loopReverse, SequenceMode.pingpongReverse];
 
+	function _callSuper$d(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
+	  }
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
 	var Animation = function () {
 	  function Animation(name, timelines, duration) {
 	    _classCallCheck(this, Animation);
@@ -1269,7 +964,7 @@ var spine = (function (pc) {
 	    this.setTimelines(timelines);
 	    this.duration = duration;
 	  }
-	  _createClass(Animation, [{
+	  return _createClass(Animation, [{
 	    key: "setTimelines",
 	    value: function setTimelines(timelines) {
 	      if (!timelines) throw new Error("timelines cannot be null.");
@@ -1295,7 +990,6 @@ var spine = (function (pc) {
 	      for (var i = 0, n = timelines.length; i < n; i++) timelines[i].apply(skeleton, lastTime, time, events, alpha, blend, direction);
 	    }
 	  }]);
-	  return Animation;
 	}();
 	var MixBlend;
 	(function (MixBlend) {
@@ -1337,7 +1031,7 @@ var spine = (function (pc) {
 	    this.propertyIds = propertyIds;
 	    this.frames = Utils.newFloatArray(frameCount * this.getFrameEntries());
 	  }
-	  _createClass(Timeline, [{
+	  return _createClass(Timeline, [{
 	    key: "getPropertyIds",
 	    value: function getPropertyIds() {
 	      return this.propertyIds;
@@ -1372,20 +1066,18 @@ var spine = (function (pc) {
 	      return n - step;
 	    }
 	  }]);
-	  return Timeline;
 	}();
 	var CurveTimeline = function (_Timeline) {
-	  _inherits(CurveTimeline, _Timeline);
-	  var _super = _createSuper(CurveTimeline);
 	  function CurveTimeline(frameCount, bezierCount, propertyIds) {
-	    var _this;
+	    var _this2;
 	    _classCallCheck(this, CurveTimeline);
-	    _this = _super.call(this, frameCount, propertyIds);
-	    _this.curves = Utils.newFloatArray(frameCount + bezierCount * 18);
-	    _this.curves[frameCount - 1] = 1;
-	    return _this;
+	    _this2 = _callSuper$d(this, CurveTimeline, [frameCount, propertyIds]);
+	    _this2.curves = Utils.newFloatArray(frameCount + bezierCount * 18);
+	    _this2.curves[frameCount - 1] = 1;
+	    return _this2;
 	  }
-	  _createClass(CurveTimeline, [{
+	  _inherits(CurveTimeline, _Timeline);
+	  return _createClass(CurveTimeline, [{
 	    key: "setLinear",
 	    value: function setLinear(frame) {
 	      this.curves[frame] = 0;
@@ -1455,16 +1147,14 @@ var spine = (function (pc) {
 	      return y + (time - x) / (this.frames[frameIndex] - x) * (this.frames[frameIndex + valueOffset] - y);
 	    }
 	  }]);
-	  return CurveTimeline;
 	}(Timeline);
 	var CurveTimeline1 = function (_CurveTimeline) {
-	  _inherits(CurveTimeline1, _CurveTimeline);
-	  var _super2 = _createSuper(CurveTimeline1);
 	  function CurveTimeline1(frameCount, bezierCount, propertyId) {
 	    _classCallCheck(this, CurveTimeline1);
-	    return _super2.call(this, frameCount, bezierCount, [propertyId]);
+	    return _callSuper$d(this, CurveTimeline1, [frameCount, bezierCount, [propertyId]]);
 	  }
-	  _createClass(CurveTimeline1, [{
+	  _inherits(CurveTimeline1, _CurveTimeline);
+	  return _createClass(CurveTimeline1, [{
 	    key: "getFrameEntries",
 	    value: function getFrameEntries() {
 	      return 2;
@@ -1499,16 +1189,14 @@ var spine = (function (pc) {
 	      return this.getBezierValue(time, i, 1, curveType - 2);
 	    }
 	  }]);
-	  return CurveTimeline1;
 	}(CurveTimeline);
 	var CurveTimeline2 = function (_CurveTimeline2) {
-	  _inherits(CurveTimeline2, _CurveTimeline2);
-	  var _super3 = _createSuper(CurveTimeline2);
 	  function CurveTimeline2(frameCount, bezierCount, propertyId1, propertyId2) {
 	    _classCallCheck(this, CurveTimeline2);
-	    return _super3.call(this, frameCount, bezierCount, [propertyId1, propertyId2]);
+	    return _callSuper$d(this, CurveTimeline2, [frameCount, bezierCount, [propertyId1, propertyId2]]);
 	  }
-	  _createClass(CurveTimeline2, [{
+	  _inherits(CurveTimeline2, _CurveTimeline2);
+	  return _createClass(CurveTimeline2, [{
 	    key: "getFrameEntries",
 	    value: function getFrameEntries() {
 	      return 3;
@@ -1522,20 +1210,18 @@ var spine = (function (pc) {
 	      this.frames[frame + 2] = value2;
 	    }
 	  }]);
-	  return CurveTimeline2;
 	}(CurveTimeline);
 	var RotateTimeline = function (_CurveTimeline3) {
-	  _inherits(RotateTimeline, _CurveTimeline3);
-	  var _super4 = _createSuper(RotateTimeline);
 	  function RotateTimeline(frameCount, bezierCount, boneIndex) {
-	    var _this2;
+	    var _this3;
 	    _classCallCheck(this, RotateTimeline);
-	    _this2 = _super4.call(this, frameCount, bezierCount, Property.rotate + "|" + boneIndex);
-	    _this2.boneIndex = 0;
-	    _this2.boneIndex = boneIndex;
-	    return _this2;
+	    _this3 = _callSuper$d(this, RotateTimeline, [frameCount, bezierCount, Property.rotate + "|" + boneIndex]);
+	    _this3.boneIndex = 0;
+	    _this3.boneIndex = boneIndex;
+	    return _this3;
 	  }
-	  _createClass(RotateTimeline, [{
+	  _inherits(RotateTimeline, _CurveTimeline3);
+	  return _createClass(RotateTimeline, [{
 	    key: "apply",
 	    value: function apply(skeleton, lastTime, time, events, alpha, blend, direction) {
 	      var bone = skeleton.bones[this.boneIndex];
@@ -1564,20 +1250,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return RotateTimeline;
 	}(CurveTimeline1);
 	var TranslateTimeline = function (_CurveTimeline4) {
-	  _inherits(TranslateTimeline, _CurveTimeline4);
-	  var _super5 = _createSuper(TranslateTimeline);
 	  function TranslateTimeline(frameCount, bezierCount, boneIndex) {
-	    var _this3;
+	    var _this4;
 	    _classCallCheck(this, TranslateTimeline);
-	    _this3 = _super5.call(this, frameCount, bezierCount, Property.x + "|" + boneIndex, Property.y + "|" + boneIndex);
-	    _this3.boneIndex = 0;
-	    _this3.boneIndex = boneIndex;
-	    return _this3;
+	    _this4 = _callSuper$d(this, TranslateTimeline, [frameCount, bezierCount, Property.x + "|" + boneIndex, Property.y + "|" + boneIndex]);
+	    _this4.boneIndex = 0;
+	    _this4.boneIndex = boneIndex;
+	    return _this4;
 	  }
-	  _createClass(TranslateTimeline, [{
+	  _inherits(TranslateTimeline, _CurveTimeline4);
+	  return _createClass(TranslateTimeline, [{
 	    key: "apply",
 	    value: function apply(skeleton, lastTime, time, events, alpha, blend, direction) {
 	      var bone = skeleton.bones[this.boneIndex];
@@ -1632,20 +1316,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return TranslateTimeline;
 	}(CurveTimeline2);
 	var TranslateXTimeline = function (_CurveTimeline5) {
-	  _inherits(TranslateXTimeline, _CurveTimeline5);
-	  var _super6 = _createSuper(TranslateXTimeline);
 	  function TranslateXTimeline(frameCount, bezierCount, boneIndex) {
-	    var _this4;
+	    var _this5;
 	    _classCallCheck(this, TranslateXTimeline);
-	    _this4 = _super6.call(this, frameCount, bezierCount, Property.x + "|" + boneIndex);
-	    _this4.boneIndex = 0;
-	    _this4.boneIndex = boneIndex;
-	    return _this4;
+	    _this5 = _callSuper$d(this, TranslateXTimeline, [frameCount, bezierCount, Property.x + "|" + boneIndex]);
+	    _this5.boneIndex = 0;
+	    _this5.boneIndex = boneIndex;
+	    return _this5;
 	  }
-	  _createClass(TranslateXTimeline, [{
+	  _inherits(TranslateXTimeline, _CurveTimeline5);
+	  return _createClass(TranslateXTimeline, [{
 	    key: "apply",
 	    value: function apply(skeleton, lastTime, time, events, alpha, blend, direction) {
 	      var bone = skeleton.bones[this.boneIndex];
@@ -1675,20 +1357,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return TranslateXTimeline;
 	}(CurveTimeline1);
 	var TranslateYTimeline = function (_CurveTimeline6) {
-	  _inherits(TranslateYTimeline, _CurveTimeline6);
-	  var _super7 = _createSuper(TranslateYTimeline);
 	  function TranslateYTimeline(frameCount, bezierCount, boneIndex) {
-	    var _this5;
+	    var _this6;
 	    _classCallCheck(this, TranslateYTimeline);
-	    _this5 = _super7.call(this, frameCount, bezierCount, Property.y + "|" + boneIndex);
-	    _this5.boneIndex = 0;
-	    _this5.boneIndex = boneIndex;
-	    return _this5;
+	    _this6 = _callSuper$d(this, TranslateYTimeline, [frameCount, bezierCount, Property.y + "|" + boneIndex]);
+	    _this6.boneIndex = 0;
+	    _this6.boneIndex = boneIndex;
+	    return _this6;
 	  }
-	  _createClass(TranslateYTimeline, [{
+	  _inherits(TranslateYTimeline, _CurveTimeline6);
+	  return _createClass(TranslateYTimeline, [{
 	    key: "apply",
 	    value: function apply(skeleton, lastTime, time, events, alpha, blend, direction) {
 	      var bone = skeleton.bones[this.boneIndex];
@@ -1718,20 +1398,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return TranslateYTimeline;
 	}(CurveTimeline1);
 	var ScaleTimeline = function (_CurveTimeline7) {
-	  _inherits(ScaleTimeline, _CurveTimeline7);
-	  var _super8 = _createSuper(ScaleTimeline);
 	  function ScaleTimeline(frameCount, bezierCount, boneIndex) {
-	    var _this6;
+	    var _this7;
 	    _classCallCheck(this, ScaleTimeline);
-	    _this6 = _super8.call(this, frameCount, bezierCount, Property.scaleX + "|" + boneIndex, Property.scaleY + "|" + boneIndex);
-	    _this6.boneIndex = 0;
-	    _this6.boneIndex = boneIndex;
-	    return _this6;
+	    _this7 = _callSuper$d(this, ScaleTimeline, [frameCount, bezierCount, Property.scaleX + "|" + boneIndex, Property.scaleY + "|" + boneIndex]);
+	    _this7.boneIndex = 0;
+	    _this7.boneIndex = boneIndex;
+	    return _this7;
 	  }
-	  _createClass(ScaleTimeline, [{
+	  _inherits(ScaleTimeline, _CurveTimeline7);
+	  return _createClass(ScaleTimeline, [{
 	    key: "apply",
 	    value: function apply(skeleton, lastTime, time, events, alpha, blend, direction) {
 	      var bone = skeleton.bones[this.boneIndex];
@@ -1824,20 +1502,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return ScaleTimeline;
 	}(CurveTimeline2);
 	var ScaleXTimeline = function (_CurveTimeline8) {
-	  _inherits(ScaleXTimeline, _CurveTimeline8);
-	  var _super9 = _createSuper(ScaleXTimeline);
 	  function ScaleXTimeline(frameCount, bezierCount, boneIndex) {
-	    var _this7;
+	    var _this8;
 	    _classCallCheck(this, ScaleXTimeline);
-	    _this7 = _super9.call(this, frameCount, bezierCount, Property.scaleX + "|" + boneIndex);
-	    _this7.boneIndex = 0;
-	    _this7.boneIndex = boneIndex;
-	    return _this7;
+	    _this8 = _callSuper$d(this, ScaleXTimeline, [frameCount, bezierCount, Property.scaleX + "|" + boneIndex]);
+	    _this8.boneIndex = 0;
+	    _this8.boneIndex = boneIndex;
+	    return _this8;
 	  }
-	  _createClass(ScaleXTimeline, [{
+	  _inherits(ScaleXTimeline, _CurveTimeline8);
+	  return _createClass(ScaleXTimeline, [{
 	    key: "apply",
 	    value: function apply(skeleton, lastTime, time, events, alpha, blend, direction) {
 	      var bone = skeleton.bones[this.boneIndex];
@@ -1890,20 +1566,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return ScaleXTimeline;
 	}(CurveTimeline1);
 	var ScaleYTimeline = function (_CurveTimeline9) {
-	  _inherits(ScaleYTimeline, _CurveTimeline9);
-	  var _super10 = _createSuper(ScaleYTimeline);
 	  function ScaleYTimeline(frameCount, bezierCount, boneIndex) {
-	    var _this8;
+	    var _this9;
 	    _classCallCheck(this, ScaleYTimeline);
-	    _this8 = _super10.call(this, frameCount, bezierCount, Property.scaleY + "|" + boneIndex);
-	    _this8.boneIndex = 0;
-	    _this8.boneIndex = boneIndex;
-	    return _this8;
+	    _this9 = _callSuper$d(this, ScaleYTimeline, [frameCount, bezierCount, Property.scaleY + "|" + boneIndex]);
+	    _this9.boneIndex = 0;
+	    _this9.boneIndex = boneIndex;
+	    return _this9;
 	  }
-	  _createClass(ScaleYTimeline, [{
+	  _inherits(ScaleYTimeline, _CurveTimeline9);
+	  return _createClass(ScaleYTimeline, [{
 	    key: "apply",
 	    value: function apply(skeleton, lastTime, time, events, alpha, blend, direction) {
 	      var bone = skeleton.bones[this.boneIndex];
@@ -1956,20 +1630,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return ScaleYTimeline;
 	}(CurveTimeline1);
 	var ShearTimeline = function (_CurveTimeline10) {
-	  _inherits(ShearTimeline, _CurveTimeline10);
-	  var _super11 = _createSuper(ShearTimeline);
 	  function ShearTimeline(frameCount, bezierCount, boneIndex) {
-	    var _this9;
+	    var _this10;
 	    _classCallCheck(this, ShearTimeline);
-	    _this9 = _super11.call(this, frameCount, bezierCount, Property.shearX + "|" + boneIndex, Property.shearY + "|" + boneIndex);
-	    _this9.boneIndex = 0;
-	    _this9.boneIndex = boneIndex;
-	    return _this9;
+	    _this10 = _callSuper$d(this, ShearTimeline, [frameCount, bezierCount, Property.shearX + "|" + boneIndex, Property.shearY + "|" + boneIndex]);
+	    _this10.boneIndex = 0;
+	    _this10.boneIndex = boneIndex;
+	    return _this10;
 	  }
-	  _createClass(ShearTimeline, [{
+	  _inherits(ShearTimeline, _CurveTimeline10);
+	  return _createClass(ShearTimeline, [{
 	    key: "apply",
 	    value: function apply(skeleton, lastTime, time, events, alpha, blend, direction) {
 	      var bone = skeleton.bones[this.boneIndex];
@@ -2024,20 +1696,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return ShearTimeline;
 	}(CurveTimeline2);
 	var ShearXTimeline = function (_CurveTimeline11) {
-	  _inherits(ShearXTimeline, _CurveTimeline11);
-	  var _super12 = _createSuper(ShearXTimeline);
 	  function ShearXTimeline(frameCount, bezierCount, boneIndex) {
-	    var _this10;
+	    var _this11;
 	    _classCallCheck(this, ShearXTimeline);
-	    _this10 = _super12.call(this, frameCount, bezierCount, Property.shearX + "|" + boneIndex);
-	    _this10.boneIndex = 0;
-	    _this10.boneIndex = boneIndex;
-	    return _this10;
+	    _this11 = _callSuper$d(this, ShearXTimeline, [frameCount, bezierCount, Property.shearX + "|" + boneIndex]);
+	    _this11.boneIndex = 0;
+	    _this11.boneIndex = boneIndex;
+	    return _this11;
 	  }
-	  _createClass(ShearXTimeline, [{
+	  _inherits(ShearXTimeline, _CurveTimeline11);
+	  return _createClass(ShearXTimeline, [{
 	    key: "apply",
 	    value: function apply(skeleton, lastTime, time, events, alpha, blend, direction) {
 	      var bone = skeleton.bones[this.boneIndex];
@@ -2067,20 +1737,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return ShearXTimeline;
 	}(CurveTimeline1);
 	var ShearYTimeline = function (_CurveTimeline12) {
-	  _inherits(ShearYTimeline, _CurveTimeline12);
-	  var _super13 = _createSuper(ShearYTimeline);
 	  function ShearYTimeline(frameCount, bezierCount, boneIndex) {
-	    var _this11;
+	    var _this12;
 	    _classCallCheck(this, ShearYTimeline);
-	    _this11 = _super13.call(this, frameCount, bezierCount, Property.shearY + "|" + boneIndex);
-	    _this11.boneIndex = 0;
-	    _this11.boneIndex = boneIndex;
-	    return _this11;
+	    _this12 = _callSuper$d(this, ShearYTimeline, [frameCount, bezierCount, Property.shearY + "|" + boneIndex]);
+	    _this12.boneIndex = 0;
+	    _this12.boneIndex = boneIndex;
+	    return _this12;
 	  }
-	  _createClass(ShearYTimeline, [{
+	  _inherits(ShearYTimeline, _CurveTimeline12);
+	  return _createClass(ShearYTimeline, [{
 	    key: "apply",
 	    value: function apply(skeleton, lastTime, time, events, alpha, blend, direction) {
 	      var bone = skeleton.bones[this.boneIndex];
@@ -2110,20 +1778,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return ShearYTimeline;
 	}(CurveTimeline1);
 	var RGBATimeline = function (_CurveTimeline13) {
-	  _inherits(RGBATimeline, _CurveTimeline13);
-	  var _super14 = _createSuper(RGBATimeline);
 	  function RGBATimeline(frameCount, bezierCount, slotIndex) {
-	    var _this12;
+	    var _this13;
 	    _classCallCheck(this, RGBATimeline);
-	    _this12 = _super14.call(this, frameCount, bezierCount, [Property.rgb + "|" + slotIndex, Property.alpha + "|" + slotIndex]);
-	    _this12.slotIndex = 0;
-	    _this12.slotIndex = slotIndex;
-	    return _this12;
+	    _this13 = _callSuper$d(this, RGBATimeline, [frameCount, bezierCount, [Property.rgb + "|" + slotIndex, Property.alpha + "|" + slotIndex]]);
+	    _this13.slotIndex = 0;
+	    _this13.slotIndex = slotIndex;
+	    return _this13;
 	  }
-	  _createClass(RGBATimeline, [{
+	  _inherits(RGBATimeline, _CurveTimeline13);
+	  return _createClass(RGBATimeline, [{
 	    key: "getFrameEntries",
 	    value: function getFrameEntries() {
 	      return 5;
@@ -2193,20 +1859,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return RGBATimeline;
 	}(CurveTimeline);
 	var RGBTimeline = function (_CurveTimeline14) {
-	  _inherits(RGBTimeline, _CurveTimeline14);
-	  var _super15 = _createSuper(RGBTimeline);
 	  function RGBTimeline(frameCount, bezierCount, slotIndex) {
-	    var _this13;
+	    var _this14;
 	    _classCallCheck(this, RGBTimeline);
-	    _this13 = _super15.call(this, frameCount, bezierCount, [Property.rgb + "|" + slotIndex]);
-	    _this13.slotIndex = 0;
-	    _this13.slotIndex = slotIndex;
-	    return _this13;
+	    _this14 = _callSuper$d(this, RGBTimeline, [frameCount, bezierCount, [Property.rgb + "|" + slotIndex]]);
+	    _this14.slotIndex = 0;
+	    _this14.slotIndex = slotIndex;
+	    return _this14;
 	  }
-	  _createClass(RGBTimeline, [{
+	  _inherits(RGBTimeline, _CurveTimeline14);
+	  return _createClass(RGBTimeline, [{
 	    key: "getFrameEntries",
 	    value: function getFrameEntries() {
 	      return 4;
@@ -2285,20 +1949,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return RGBTimeline;
 	}(CurveTimeline);
 	var AlphaTimeline = function (_CurveTimeline15) {
-	  _inherits(AlphaTimeline, _CurveTimeline15);
-	  var _super16 = _createSuper(AlphaTimeline);
 	  function AlphaTimeline(frameCount, bezierCount, slotIndex) {
-	    var _this14;
+	    var _this15;
 	    _classCallCheck(this, AlphaTimeline);
-	    _this14 = _super16.call(this, frameCount, bezierCount, Property.alpha + "|" + slotIndex);
-	    _this14.slotIndex = 0;
-	    _this14.slotIndex = slotIndex;
-	    return _this14;
+	    _this15 = _callSuper$d(this, AlphaTimeline, [frameCount, bezierCount, Property.alpha + "|" + slotIndex]);
+	    _this15.slotIndex = 0;
+	    _this15.slotIndex = slotIndex;
+	    return _this15;
 	  }
-	  _createClass(AlphaTimeline, [{
+	  _inherits(AlphaTimeline, _CurveTimeline15);
+	  return _createClass(AlphaTimeline, [{
 	    key: "apply",
 	    value: function apply(skeleton, lastTime, time, events, alpha, blend, direction) {
 	      var slot = skeleton.slots[this.slotIndex];
@@ -2322,20 +1984,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return AlphaTimeline;
 	}(CurveTimeline1);
 	var RGBA2Timeline = function (_CurveTimeline16) {
-	  _inherits(RGBA2Timeline, _CurveTimeline16);
-	  var _super17 = _createSuper(RGBA2Timeline);
 	  function RGBA2Timeline(frameCount, bezierCount, slotIndex) {
-	    var _this15;
+	    var _this16;
 	    _classCallCheck(this, RGBA2Timeline);
-	    _this15 = _super17.call(this, frameCount, bezierCount, [Property.rgb + "|" + slotIndex, Property.alpha + "|" + slotIndex, Property.rgb2 + "|" + slotIndex]);
-	    _this15.slotIndex = 0;
-	    _this15.slotIndex = slotIndex;
-	    return _this15;
+	    _this16 = _callSuper$d(this, RGBA2Timeline, [frameCount, bezierCount, [Property.rgb + "|" + slotIndex, Property.alpha + "|" + slotIndex, Property.rgb2 + "|" + slotIndex]]);
+	    _this16.slotIndex = 0;
+	    _this16.slotIndex = slotIndex;
+	    return _this16;
 	  }
-	  _createClass(RGBA2Timeline, [{
+	  _inherits(RGBA2Timeline, _CurveTimeline16);
+	  return _createClass(RGBA2Timeline, [{
 	    key: "getFrameEntries",
 	    value: function getFrameEntries() {
 	      return 8;
@@ -2445,20 +2105,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return RGBA2Timeline;
 	}(CurveTimeline);
 	var RGB2Timeline = function (_CurveTimeline17) {
-	  _inherits(RGB2Timeline, _CurveTimeline17);
-	  var _super18 = _createSuper(RGB2Timeline);
 	  function RGB2Timeline(frameCount, bezierCount, slotIndex) {
-	    var _this16;
+	    var _this17;
 	    _classCallCheck(this, RGB2Timeline);
-	    _this16 = _super18.call(this, frameCount, bezierCount, [Property.rgb + "|" + slotIndex, Property.rgb2 + "|" + slotIndex]);
-	    _this16.slotIndex = 0;
-	    _this16.slotIndex = slotIndex;
-	    return _this16;
+	    _this17 = _callSuper$d(this, RGB2Timeline, [frameCount, bezierCount, [Property.rgb + "|" + slotIndex, Property.rgb2 + "|" + slotIndex]]);
+	    _this17.slotIndex = 0;
+	    _this17.slotIndex = slotIndex;
+	    return _this17;
 	  }
-	  _createClass(RGB2Timeline, [{
+	  _inherits(RGB2Timeline, _CurveTimeline17);
+	  return _createClass(RGB2Timeline, [{
 	    key: "getFrameEntries",
 	    value: function getFrameEntries() {
 	      return 7;
@@ -2573,21 +2231,19 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return RGB2Timeline;
 	}(CurveTimeline);
 	var AttachmentTimeline = function (_Timeline2) {
-	  _inherits(AttachmentTimeline, _Timeline2);
-	  var _super19 = _createSuper(AttachmentTimeline);
 	  function AttachmentTimeline(frameCount, slotIndex) {
-	    var _this17;
+	    var _this18;
 	    _classCallCheck(this, AttachmentTimeline);
-	    _this17 = _super19.call(this, frameCount, [Property.attachment + "|" + slotIndex]);
-	    _this17.slotIndex = 0;
-	    _this17.slotIndex = slotIndex;
-	    _this17.attachmentNames = new Array(frameCount);
-	    return _this17;
+	    _this18 = _callSuper$d(this, AttachmentTimeline, [frameCount, [Property.attachment + "|" + slotIndex]]);
+	    _this18.slotIndex = 0;
+	    _this18.slotIndex = slotIndex;
+	    _this18.attachmentNames = new Array(frameCount);
+	    return _this18;
 	  }
-	  _createClass(AttachmentTimeline, [{
+	  _inherits(AttachmentTimeline, _Timeline2);
+	  return _createClass(AttachmentTimeline, [{
 	    key: "getFrameCount",
 	    value: function getFrameCount() {
 	      return this.frames.length;
@@ -2619,22 +2275,20 @@ var spine = (function (pc) {
 	      slot.setAttachment(!attachmentName ? null : skeleton.getAttachment(this.slotIndex, attachmentName));
 	    }
 	  }]);
-	  return AttachmentTimeline;
 	}(Timeline);
 	var DeformTimeline = function (_CurveTimeline18) {
-	  _inherits(DeformTimeline, _CurveTimeline18);
-	  var _super20 = _createSuper(DeformTimeline);
 	  function DeformTimeline(frameCount, bezierCount, slotIndex, attachment) {
-	    var _this18;
+	    var _this19;
 	    _classCallCheck(this, DeformTimeline);
-	    _this18 = _super20.call(this, frameCount, bezierCount, [Property.deform + "|" + slotIndex + "|" + attachment.id]);
-	    _this18.slotIndex = 0;
-	    _this18.slotIndex = slotIndex;
-	    _this18.attachment = attachment;
-	    _this18.vertices = new Array(frameCount);
-	    return _this18;
+	    _this19 = _callSuper$d(this, DeformTimeline, [frameCount, bezierCount, [Property.deform + "|" + slotIndex + "|" + attachment.id]]);
+	    _this19.slotIndex = 0;
+	    _this19.slotIndex = slotIndex;
+	    _this19.attachment = attachment;
+	    _this19.vertices = new Array(frameCount);
+	    return _this19;
 	  }
-	  _createClass(DeformTimeline, [{
+	  _inherits(DeformTimeline, _CurveTimeline18);
+	  return _createClass(DeformTimeline, [{
 	    key: "getFrameCount",
 	    value: function getFrameCount() {
 	      return this.frames.length;
@@ -2851,19 +2505,17 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return DeformTimeline;
 	}(CurveTimeline);
 	var EventTimeline = function (_Timeline3) {
-	  _inherits(EventTimeline, _Timeline3);
-	  var _super21 = _createSuper(EventTimeline);
 	  function EventTimeline(frameCount) {
-	    var _this19;
+	    var _this20;
 	    _classCallCheck(this, EventTimeline);
-	    _this19 = _super21.call(this, frameCount, EventTimeline.propertyIds);
-	    _this19.events = new Array(frameCount);
-	    return _this19;
+	    _this20 = _callSuper$d(this, EventTimeline, [frameCount, EventTimeline.propertyIds]);
+	    _this20.events = new Array(frameCount);
+	    return _this20;
 	  }
-	  _createClass(EventTimeline, [{
+	  _inherits(EventTimeline, _Timeline3);
+	  return _createClass(EventTimeline, [{
 	    key: "getFrameCount",
 	    value: function getFrameCount() {
 	      return this.frames.length;
@@ -2897,20 +2549,18 @@ var spine = (function (pc) {
 	      for (; i < frameCount && time >= frames[i]; i++) firedEvents.push(this.events[i]);
 	    }
 	  }]);
-	  return EventTimeline;
 	}(Timeline);
 	EventTimeline.propertyIds = ["" + Property.event];
 	var DrawOrderTimeline = function (_Timeline4) {
-	  _inherits(DrawOrderTimeline, _Timeline4);
-	  var _super22 = _createSuper(DrawOrderTimeline);
 	  function DrawOrderTimeline(frameCount) {
-	    var _this20;
+	    var _this21;
 	    _classCallCheck(this, DrawOrderTimeline);
-	    _this20 = _super22.call(this, frameCount, DrawOrderTimeline.propertyIds);
-	    _this20.drawOrders = new Array(frameCount);
-	    return _this20;
+	    _this21 = _callSuper$d(this, DrawOrderTimeline, [frameCount, DrawOrderTimeline.propertyIds]);
+	    _this21.drawOrders = new Array(frameCount);
+	    return _this21;
 	  }
-	  _createClass(DrawOrderTimeline, [{
+	  _inherits(DrawOrderTimeline, _Timeline4);
+	  return _createClass(DrawOrderTimeline, [{
 	    key: "getFrameCount",
 	    value: function getFrameCount() {
 	      return this.frames.length;
@@ -2941,21 +2591,19 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return DrawOrderTimeline;
 	}(Timeline);
 	DrawOrderTimeline.propertyIds = ["" + Property.drawOrder];
 	var IkConstraintTimeline = function (_CurveTimeline19) {
-	  _inherits(IkConstraintTimeline, _CurveTimeline19);
-	  var _super23 = _createSuper(IkConstraintTimeline);
 	  function IkConstraintTimeline(frameCount, bezierCount, ikConstraintIndex) {
-	    var _this21;
+	    var _this22;
 	    _classCallCheck(this, IkConstraintTimeline);
-	    _this21 = _super23.call(this, frameCount, bezierCount, [Property.ikConstraint + "|" + ikConstraintIndex]);
-	    _this21.ikConstraintIndex = 0;
-	    _this21.ikConstraintIndex = ikConstraintIndex;
-	    return _this21;
+	    _this22 = _callSuper$d(this, IkConstraintTimeline, [frameCount, bezierCount, [Property.ikConstraint + "|" + ikConstraintIndex]]);
+	    _this22.ikConstraintIndex = 0;
+	    _this22.ikConstraintIndex = ikConstraintIndex;
+	    return _this22;
 	  }
-	  _createClass(IkConstraintTimeline, [{
+	  _inherits(IkConstraintTimeline, _CurveTimeline19);
+	  return _createClass(IkConstraintTimeline, [{
 	    key: "getFrameEntries",
 	    value: function getFrameEntries() {
 	      return 6;
@@ -3039,20 +2687,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return IkConstraintTimeline;
 	}(CurveTimeline);
 	var TransformConstraintTimeline = function (_CurveTimeline20) {
-	  _inherits(TransformConstraintTimeline, _CurveTimeline20);
-	  var _super24 = _createSuper(TransformConstraintTimeline);
 	  function TransformConstraintTimeline(frameCount, bezierCount, transformConstraintIndex) {
-	    var _this22;
+	    var _this23;
 	    _classCallCheck(this, TransformConstraintTimeline);
-	    _this22 = _super24.call(this, frameCount, bezierCount, [Property.transformConstraint + "|" + transformConstraintIndex]);
-	    _this22.transformConstraintIndex = 0;
-	    _this22.transformConstraintIndex = transformConstraintIndex;
-	    return _this22;
+	    _this23 = _callSuper$d(this, TransformConstraintTimeline, [frameCount, bezierCount, [Property.transformConstraint + "|" + transformConstraintIndex]]);
+	    _this23.transformConstraintIndex = 0;
+	    _this23.transformConstraintIndex = transformConstraintIndex;
+	    return _this23;
 	  }
-	  _createClass(TransformConstraintTimeline, [{
+	  _inherits(TransformConstraintTimeline, _CurveTimeline20);
+	  return _createClass(TransformConstraintTimeline, [{
 	    key: "getFrameEntries",
 	    value: function getFrameEntries() {
 	      return 7;
@@ -3151,20 +2797,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return TransformConstraintTimeline;
 	}(CurveTimeline);
 	var PathConstraintPositionTimeline = function (_CurveTimeline21) {
-	  _inherits(PathConstraintPositionTimeline, _CurveTimeline21);
-	  var _super25 = _createSuper(PathConstraintPositionTimeline);
 	  function PathConstraintPositionTimeline(frameCount, bezierCount, pathConstraintIndex) {
-	    var _this23;
+	    var _this24;
 	    _classCallCheck(this, PathConstraintPositionTimeline);
-	    _this23 = _super25.call(this, frameCount, bezierCount, Property.pathConstraintPosition + "|" + pathConstraintIndex);
-	    _this23.pathConstraintIndex = 0;
-	    _this23.pathConstraintIndex = pathConstraintIndex;
-	    return _this23;
+	    _this24 = _callSuper$d(this, PathConstraintPositionTimeline, [frameCount, bezierCount, Property.pathConstraintPosition + "|" + pathConstraintIndex]);
+	    _this24.pathConstraintIndex = 0;
+	    _this24.pathConstraintIndex = pathConstraintIndex;
+	    return _this24;
 	  }
-	  _createClass(PathConstraintPositionTimeline, [{
+	  _inherits(PathConstraintPositionTimeline, _CurveTimeline21);
+	  return _createClass(PathConstraintPositionTimeline, [{
 	    key: "apply",
 	    value: function apply(skeleton, lastTime, time, firedEvents, alpha, blend, direction) {
 	      var constraint = skeleton.pathConstraints[this.pathConstraintIndex];
@@ -3184,20 +2828,18 @@ var spine = (function (pc) {
 	      if (blend == MixBlend.setup) constraint.position = constraint.data.position + (position - constraint.data.position) * alpha;else constraint.position += (position - constraint.position) * alpha;
 	    }
 	  }]);
-	  return PathConstraintPositionTimeline;
 	}(CurveTimeline1);
 	var PathConstraintSpacingTimeline = function (_CurveTimeline22) {
-	  _inherits(PathConstraintSpacingTimeline, _CurveTimeline22);
-	  var _super26 = _createSuper(PathConstraintSpacingTimeline);
 	  function PathConstraintSpacingTimeline(frameCount, bezierCount, pathConstraintIndex) {
-	    var _this24;
+	    var _this25;
 	    _classCallCheck(this, PathConstraintSpacingTimeline);
-	    _this24 = _super26.call(this, frameCount, bezierCount, Property.pathConstraintSpacing + "|" + pathConstraintIndex);
-	    _this24.pathConstraintIndex = 0;
-	    _this24.pathConstraintIndex = pathConstraintIndex;
-	    return _this24;
+	    _this25 = _callSuper$d(this, PathConstraintSpacingTimeline, [frameCount, bezierCount, Property.pathConstraintSpacing + "|" + pathConstraintIndex]);
+	    _this25.pathConstraintIndex = 0;
+	    _this25.pathConstraintIndex = pathConstraintIndex;
+	    return _this25;
 	  }
-	  _createClass(PathConstraintSpacingTimeline, [{
+	  _inherits(PathConstraintSpacingTimeline, _CurveTimeline22);
+	  return _createClass(PathConstraintSpacingTimeline, [{
 	    key: "apply",
 	    value: function apply(skeleton, lastTime, time, firedEvents, alpha, blend, direction) {
 	      var constraint = skeleton.pathConstraints[this.pathConstraintIndex];
@@ -3217,20 +2859,18 @@ var spine = (function (pc) {
 	      if (blend == MixBlend.setup) constraint.spacing = constraint.data.spacing + (spacing - constraint.data.spacing) * alpha;else constraint.spacing += (spacing - constraint.spacing) * alpha;
 	    }
 	  }]);
-	  return PathConstraintSpacingTimeline;
 	}(CurveTimeline1);
 	var PathConstraintMixTimeline = function (_CurveTimeline23) {
-	  _inherits(PathConstraintMixTimeline, _CurveTimeline23);
-	  var _super27 = _createSuper(PathConstraintMixTimeline);
 	  function PathConstraintMixTimeline(frameCount, bezierCount, pathConstraintIndex) {
-	    var _this25;
+	    var _this26;
 	    _classCallCheck(this, PathConstraintMixTimeline);
-	    _this25 = _super27.call(this, frameCount, bezierCount, [Property.pathConstraintMix + "|" + pathConstraintIndex]);
-	    _this25.pathConstraintIndex = 0;
-	    _this25.pathConstraintIndex = pathConstraintIndex;
-	    return _this25;
+	    _this26 = _callSuper$d(this, PathConstraintMixTimeline, [frameCount, bezierCount, [Property.pathConstraintMix + "|" + pathConstraintIndex]]);
+	    _this26.pathConstraintIndex = 0;
+	    _this26.pathConstraintIndex = pathConstraintIndex;
+	    return _this26;
 	  }
-	  _createClass(PathConstraintMixTimeline, [{
+	  _inherits(PathConstraintMixTimeline, _CurveTimeline23);
+	  return _createClass(PathConstraintMixTimeline, [{
 	    key: "getFrameEntries",
 	    value: function getFrameEntries() {
 	      return 4;
@@ -3301,20 +2941,18 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return PathConstraintMixTimeline;
 	}(CurveTimeline);
 	var SequenceTimeline = function (_Timeline5) {
-	  _inherits(SequenceTimeline, _Timeline5);
-	  var _super28 = _createSuper(SequenceTimeline);
 	  function SequenceTimeline(frameCount, slotIndex, attachment) {
-	    var _this26;
+	    var _this27;
 	    _classCallCheck(this, SequenceTimeline);
-	    _this26 = _super28.call(this, frameCount, [Property.sequence + "|" + slotIndex + "|" + attachment.sequence.id]);
-	    _this26.slotIndex = slotIndex;
-	    _this26.attachment = attachment;
-	    return _this26;
+	    _this27 = _callSuper$d(this, SequenceTimeline, [frameCount, [Property.sequence + "|" + slotIndex + "|" + attachment.sequence.id]]);
+	    _this27.slotIndex = slotIndex;
+	    _this27.attachment = attachment;
+	    return _this27;
 	  }
-	  _createClass(SequenceTimeline, [{
+	  _inherits(SequenceTimeline, _Timeline5);
+	  return _createClass(SequenceTimeline, [{
 	    key: "getFrameEntries",
 	    value: function getFrameEntries() {
 	      return SequenceTimeline.ENTRIES;
@@ -3394,7 +3032,6 @@ var spine = (function (pc) {
 	      slot.sequenceIndex = index;
 	    }
 	  }]);
-	  return SequenceTimeline;
 	}(Timeline);
 	SequenceTimeline.ENTRIES = 3;
 	SequenceTimeline.MODE = 1;
@@ -3416,7 +3053,7 @@ var spine = (function (pc) {
 	    });
 	    this.data = data;
 	  }
-	  _createClass(AnimationState, [{
+	  return _createClass(AnimationState, [{
 	    key: "update",
 	    value: function update(delta) {
 	      delta *= this.timeScale;
@@ -4001,7 +3638,6 @@ var spine = (function (pc) {
 	      return AnimationState._emptyAnimation;
 	    }
 	  }]);
-	  return AnimationState;
 	}();
 	AnimationState._emptyAnimation = new Animation("<empty>", [], 0);
 	var TrackEntry = function () {
@@ -4041,7 +3677,7 @@ var spine = (function (pc) {
 	    this.timelineHoldMix = new Array();
 	    this.timelinesRotation = new Array();
 	  }
-	  _createClass(TrackEntry, [{
+	  return _createClass(TrackEntry, [{
 	    key: "reset",
 	    value: function reset() {
 	      this.next = null;
@@ -4091,7 +3727,6 @@ var spine = (function (pc) {
 	      return this.trackTime;
 	    }
 	  }]);
-	  return TrackEntry;
 	}();
 	var EventQueue = function () {
 	  function EventQueue(animState) {
@@ -4100,7 +3735,7 @@ var spine = (function (pc) {
 	    this.drainDisabled = false;
 	    this.animState = animState;
 	  }
-	  _createClass(EventQueue, [{
+	  return _createClass(EventQueue, [{
 	    key: "start",
 	    value: function start(entry) {
 	      this.objects.push(EventType.start);
@@ -4204,7 +3839,6 @@ var spine = (function (pc) {
 	      this.objects.length = 0;
 	    }
 	  }]);
-	  return EventQueue;
 	}();
 	var EventType;
 	(function (EventType) {
@@ -4219,7 +3853,7 @@ var spine = (function (pc) {
 	  function AnimationStateAdapter() {
 	    _classCallCheck(this, AnimationStateAdapter);
 	  }
-	  _createClass(AnimationStateAdapter, [{
+	  return _createClass(AnimationStateAdapter, [{
 	    key: "start",
 	    value: function start(entry) {}
 	  }, {
@@ -4238,7 +3872,6 @@ var spine = (function (pc) {
 	    key: "event",
 	    value: function event(entry, _event3) {}
 	  }]);
-	  return AnimationStateAdapter;
 	}();
 	var SUBSEQUENT = 0;
 	var FIRST = 1;
@@ -4256,7 +3889,7 @@ var spine = (function (pc) {
 	    if (!skeletonData) throw new Error("skeletonData cannot be null.");
 	    this.skeletonData = skeletonData;
 	  }
-	  _createClass(AnimationStateData, [{
+	  return _createClass(AnimationStateData, [{
 	    key: "setMix",
 	    value: function setMix(fromName, toName, duration) {
 	      var from = this.skeletonData.findAnimation(fromName);
@@ -4281,20 +3914,32 @@ var spine = (function (pc) {
 	      return value === undefined ? this.defaultMix : value;
 	    }
 	  }]);
-	  return AnimationStateData;
 	}();
 
-	var BoundingBoxAttachment = function (_VertexAttachment) {
-	  _inherits(BoundingBoxAttachment, _VertexAttachment);
-	  var _super = _createSuper(BoundingBoxAttachment);
-	  function BoundingBoxAttachment(name) {
-	    var _this;
-	    _classCallCheck(this, BoundingBoxAttachment);
-	    _this = _super.call(this, name);
-	    _this.color = new Color(1, 1, 1, 1);
-	    return _this;
+	function _callSuper$c(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
 	  }
-	  _createClass(BoundingBoxAttachment, [{
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
+	var BoundingBoxAttachment = function (_VertexAttachment) {
+	  function BoundingBoxAttachment(name) {
+	    var _this2;
+	    _classCallCheck(this, BoundingBoxAttachment);
+	    _this2 = _callSuper$c(this, BoundingBoxAttachment, [name]);
+	    _this2.color = new Color(1, 1, 1, 1);
+	    return _this2;
+	  }
+	  _inherits(BoundingBoxAttachment, _VertexAttachment);
+	  return _createClass(BoundingBoxAttachment, [{
 	    key: "copy",
 	    value: function copy() {
 	      var copy = new BoundingBoxAttachment(this.name);
@@ -4303,21 +3948,33 @@ var spine = (function (pc) {
 	      return copy;
 	    }
 	  }]);
-	  return BoundingBoxAttachment;
 	}(VertexAttachment);
 
-	var ClippingAttachment = function (_VertexAttachment) {
-	  _inherits(ClippingAttachment, _VertexAttachment);
-	  var _super = _createSuper(ClippingAttachment);
-	  function ClippingAttachment(name) {
-	    var _this;
-	    _classCallCheck(this, ClippingAttachment);
-	    _this = _super.call(this, name);
-	    _this.endSlot = null;
-	    _this.color = new Color(0.2275, 0.2275, 0.8078, 1);
-	    return _this;
+	function _callSuper$b(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
 	  }
-	  _createClass(ClippingAttachment, [{
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
+	var ClippingAttachment = function (_VertexAttachment) {
+	  function ClippingAttachment(name) {
+	    var _this2;
+	    _classCallCheck(this, ClippingAttachment);
+	    _this2 = _callSuper$b(this, ClippingAttachment, [name]);
+	    _this2.endSlot = null;
+	    _this2.color = new Color(0.2275, 0.2275, 0.8078, 1);
+	    return _this2;
+	  }
+	  _inherits(ClippingAttachment, _VertexAttachment);
+	  return _createClass(ClippingAttachment, [{
 	    key: "copy",
 	    value: function copy() {
 	      var copy = new ClippingAttachment(this.name);
@@ -4327,21 +3984,33 @@ var spine = (function (pc) {
 	      return copy;
 	    }
 	  }]);
-	  return ClippingAttachment;
 	}(VertexAttachment);
 
+	function _callSuper$a(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
+	  }
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
 	var Texture = function () {
 	  function Texture(image) {
 	    _classCallCheck(this, Texture);
 	    this._image = image;
 	  }
-	  _createClass(Texture, [{
+	  return _createClass(Texture, [{
 	    key: "getImage",
 	    value: function getImage() {
 	      return this._image;
 	    }
 	  }]);
-	  return Texture;
 	}();
 	var TextureFilter;
 	(function (TextureFilter) {
@@ -4374,13 +4043,12 @@ var spine = (function (pc) {
 	  this.originalHeight = 0;
 	});
 	var FakeTexture = function (_Texture) {
-	  _inherits(FakeTexture, _Texture);
-	  var _super = _createSuper(FakeTexture);
 	  function FakeTexture() {
 	    _classCallCheck(this, FakeTexture);
-	    return _super.apply(this, arguments);
+	    return _callSuper$a(this, FakeTexture, arguments);
 	  }
-	  _createClass(FakeTexture, [{
+	  _inherits(FakeTexture, _Texture);
+	  return _createClass(FakeTexture, [{
 	    key: "setFilters",
 	    value: function setFilters(minFilter, magFilter) {}
 	  }, {
@@ -4390,9 +4058,22 @@ var spine = (function (pc) {
 	    key: "dispose",
 	    value: function dispose() {}
 	  }]);
-	  return FakeTexture;
 	}(Texture);
 
+	function _callSuper$9(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
+	  }
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
 	var TextureAtlas = function () {
 	  function TextureAtlas(atlasText) {
 	    _classCallCheck(this, TextureAtlas);
@@ -4514,7 +4195,7 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }
-	  _createClass(TextureAtlas, [{
+	  return _createClass(TextureAtlas, [{
 	    key: "findRegion",
 	    value: function findRegion(name) {
 	      for (var i = 0; i < this.regions.length; i++) {
@@ -4550,7 +4231,6 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return TextureAtlas;
 	}();
 	var TextureAtlasReader = function () {
 	  function TextureAtlasReader(text) {
@@ -4558,7 +4238,7 @@ var spine = (function (pc) {
 	    this.index = 0;
 	    this.lines = text.split(/\r\n|\r|\n/);
 	  }
-	  _createClass(TextureAtlasReader, [{
+	  return _createClass(TextureAtlasReader, [{
 	    key: "readLine",
 	    value: function readLine() {
 	      if (this.index >= this.lines.length) return null;
@@ -4585,7 +4265,6 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return TextureAtlasReader;
 	}();
 	var TextureAtlasPage = function () {
 	  function TextureAtlasPage(name) {
@@ -4601,7 +4280,7 @@ var spine = (function (pc) {
 	    this.regions = new Array();
 	    this.name = name;
 	  }
-	  _createClass(TextureAtlasPage, [{
+	  return _createClass(TextureAtlasPage, [{
 	    key: "setTexture",
 	    value: function setTexture(texture) {
 	      this.texture = texture;
@@ -4621,56 +4300,67 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return TextureAtlasPage;
 	}();
 	var TextureAtlasRegion = function (_TextureRegion) {
-	  _inherits(TextureAtlasRegion, _TextureRegion);
-	  var _super = _createSuper(TextureAtlasRegion);
 	  function TextureAtlasRegion(page, name) {
-	    var _this;
+	    var _this2;
 	    _classCallCheck(this, TextureAtlasRegion);
-	    _this = _super.call(this);
-	    _this.x = 0;
-	    _this.y = 0;
-	    _this.offsetX = 0;
-	    _this.offsetY = 0;
-	    _this.originalWidth = 0;
-	    _this.originalHeight = 0;
-	    _this.index = 0;
-	    _this.degrees = 0;
-	    _this.names = null;
-	    _this.values = null;
-	    _this.page = page;
-	    _this.name = name;
-	    page.regions.push(_assertThisInitialized(_this));
-	    return _this;
+	    _this2 = _callSuper$9(this, TextureAtlasRegion);
+	    _this2.x = 0;
+	    _this2.y = 0;
+	    _this2.offsetX = 0;
+	    _this2.offsetY = 0;
+	    _this2.originalWidth = 0;
+	    _this2.originalHeight = 0;
+	    _this2.index = 0;
+	    _this2.degrees = 0;
+	    _this2.names = null;
+	    _this2.values = null;
+	    _this2.page = page;
+	    _this2.name = name;
+	    page.regions.push(_this2);
+	    return _this2;
 	  }
+	  _inherits(TextureAtlasRegion, _TextureRegion);
 	  return _createClass(TextureAtlasRegion);
 	}(TextureRegion);
 
-	var MeshAttachment = function (_VertexAttachment) {
-	  _inherits(MeshAttachment, _VertexAttachment);
-	  var _super = _createSuper(MeshAttachment);
-	  function MeshAttachment(name, path) {
-	    var _this;
-	    _classCallCheck(this, MeshAttachment);
-	    _this = _super.call(this, name);
-	    _this.region = null;
-	    _this.regionUVs = [];
-	    _this.uvs = [];
-	    _this.triangles = [];
-	    _this.color = new Color(1, 1, 1, 1);
-	    _this.width = 0;
-	    _this.height = 0;
-	    _this.hullLength = 0;
-	    _this.edges = [];
-	    _this.parentMesh = null;
-	    _this.sequence = null;
-	    _this.tempColor = new Color(0, 0, 0, 0);
-	    _this.path = path;
-	    return _this;
+	function _callSuper$8(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
 	  }
-	  _createClass(MeshAttachment, [{
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
+	var MeshAttachment = function (_VertexAttachment) {
+	  function MeshAttachment(name, path) {
+	    var _this2;
+	    _classCallCheck(this, MeshAttachment);
+	    _this2 = _callSuper$8(this, MeshAttachment, [name]);
+	    _this2.region = null;
+	    _this2.regionUVs = [];
+	    _this2.uvs = [];
+	    _this2.triangles = [];
+	    _this2.color = new Color(1, 1, 1, 1);
+	    _this2.width = 0;
+	    _this2.height = 0;
+	    _this2.hullLength = 0;
+	    _this2.edges = [];
+	    _this2.parentMesh = null;
+	    _this2.sequence = null;
+	    _this2.tempColor = new Color(0, 0, 0, 0);
+	    _this2.path = path;
+	    return _this2;
+	  }
+	  _inherits(MeshAttachment, _VertexAttachment);
+	  return _createClass(MeshAttachment, [{
 	    key: "updateRegion",
 	    value: function updateRegion() {
 	      if (!this.region) throw new Error("Region not set.");
@@ -4782,7 +4472,7 @@ var spine = (function (pc) {
 	    key: "computeWorldVertices",
 	    value: function computeWorldVertices(slot, start, count, worldVertices, offset, stride) {
 	      if (this.sequence != null) this.sequence.apply(slot, this);
-	      _get$1(_getPrototypeOf(MeshAttachment.prototype), "computeWorldVertices", this).call(this, slot, start, count, worldVertices, offset, stride);
+	      _get(_getPrototypeOf(MeshAttachment.prototype), "computeWorldVertices", this).call(this, slot, start, count, worldVertices, offset, stride);
 	    }
 	  }, {
 	    key: "newLinkedMesh",
@@ -4796,23 +4486,35 @@ var spine = (function (pc) {
 	      return copy;
 	    }
 	  }]);
-	  return MeshAttachment;
 	}(VertexAttachment);
 
-	var PathAttachment = function (_VertexAttachment) {
-	  _inherits(PathAttachment, _VertexAttachment);
-	  var _super = _createSuper(PathAttachment);
-	  function PathAttachment(name) {
-	    var _this;
-	    _classCallCheck(this, PathAttachment);
-	    _this = _super.call(this, name);
-	    _this.lengths = [];
-	    _this.closed = false;
-	    _this.constantSpeed = false;
-	    _this.color = new Color(1, 1, 1, 1);
-	    return _this;
+	function _callSuper$7(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
 	  }
-	  _createClass(PathAttachment, [{
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
+	var PathAttachment = function (_VertexAttachment) {
+	  function PathAttachment(name) {
+	    var _this2;
+	    _classCallCheck(this, PathAttachment);
+	    _this2 = _callSuper$7(this, PathAttachment, [name]);
+	    _this2.lengths = [];
+	    _this2.closed = false;
+	    _this2.constantSpeed = false;
+	    _this2.color = new Color(1, 1, 1, 1);
+	    return _this2;
+	  }
+	  _inherits(PathAttachment, _VertexAttachment);
+	  return _createClass(PathAttachment, [{
 	    key: "copy",
 	    value: function copy() {
 	      var copy = new PathAttachment(this.name);
@@ -4825,23 +4527,35 @@ var spine = (function (pc) {
 	      return copy;
 	    }
 	  }]);
-	  return PathAttachment;
 	}(VertexAttachment);
 
-	var PointAttachment = function (_VertexAttachment) {
-	  _inherits(PointAttachment, _VertexAttachment);
-	  var _super = _createSuper(PointAttachment);
-	  function PointAttachment(name) {
-	    var _this;
-	    _classCallCheck(this, PointAttachment);
-	    _this = _super.call(this, name);
-	    _this.x = 0;
-	    _this.y = 0;
-	    _this.rotation = 0;
-	    _this.color = new Color(0.38, 0.94, 0, 1);
-	    return _this;
+	function _callSuper$6(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
 	  }
-	  _createClass(PointAttachment, [{
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
+	var PointAttachment = function (_VertexAttachment) {
+	  function PointAttachment(name) {
+	    var _this2;
+	    _classCallCheck(this, PointAttachment);
+	    _this2 = _callSuper$6(this, PointAttachment, [name]);
+	    _this2.x = 0;
+	    _this2.y = 0;
+	    _this2.rotation = 0;
+	    _this2.color = new Color(0.38, 0.94, 0, 1);
+	    return _this2;
+	  }
+	  _inherits(PointAttachment, _VertexAttachment);
+	  return _createClass(PointAttachment, [{
 	    key: "computeWorldPosition",
 	    value: function computeWorldPosition(bone, point) {
 	      point.x = this.x * bone.a + this.y * bone.b + bone.worldX;
@@ -4868,33 +4582,45 @@ var spine = (function (pc) {
 	      return copy;
 	    }
 	  }]);
-	  return PointAttachment;
 	}(VertexAttachment);
 
-	var RegionAttachment = function (_Attachment) {
-	  _inherits(RegionAttachment, _Attachment);
-	  var _super = _createSuper(RegionAttachment);
-	  function RegionAttachment(name, path) {
-	    var _this;
-	    _classCallCheck(this, RegionAttachment);
-	    _this = _super.call(this, name);
-	    _this.x = 0;
-	    _this.y = 0;
-	    _this.scaleX = 1;
-	    _this.scaleY = 1;
-	    _this.rotation = 0;
-	    _this.width = 0;
-	    _this.height = 0;
-	    _this.color = new Color(1, 1, 1, 1);
-	    _this.region = null;
-	    _this.sequence = null;
-	    _this.offset = Utils.newFloatArray(8);
-	    _this.uvs = Utils.newFloatArray(8);
-	    _this.tempColor = new Color(1, 1, 1, 1);
-	    _this.path = path;
-	    return _this;
+	function _callSuper$5(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
 	  }
-	  _createClass(RegionAttachment, [{
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
+	var RegionAttachment = function (_Attachment) {
+	  function RegionAttachment(name, path) {
+	    var _this2;
+	    _classCallCheck(this, RegionAttachment);
+	    _this2 = _callSuper$5(this, RegionAttachment, [name]);
+	    _this2.x = 0;
+	    _this2.y = 0;
+	    _this2.scaleX = 1;
+	    _this2.scaleY = 1;
+	    _this2.rotation = 0;
+	    _this2.width = 0;
+	    _this2.height = 0;
+	    _this2.color = new Color(1, 1, 1, 1);
+	    _this2.region = null;
+	    _this2.sequence = null;
+	    _this2.offset = Utils.newFloatArray(8);
+	    _this2.uvs = Utils.newFloatArray(8);
+	    _this2.tempColor = new Color(1, 1, 1, 1);
+	    _this2.path = path;
+	    return _this2;
+	  }
+	  _inherits(RegionAttachment, _Attachment);
+	  return _createClass(RegionAttachment, [{
 	    key: "updateRegion",
 	    value: function updateRegion() {
 	      if (!this.region) throw new Error("Region not set.");
@@ -5012,7 +4738,6 @@ var spine = (function (pc) {
 	      return copy;
 	    }
 	  }]);
-	  return RegionAttachment;
 	}(Attachment);
 	RegionAttachment.X1 = 0;
 	RegionAttachment.Y1 = 1;
@@ -5052,7 +4777,7 @@ var spine = (function (pc) {
 	    _classCallCheck(this, AtlasAttachmentLoader);
 	    this.atlas = atlas;
 	  }
-	  _createClass(AtlasAttachmentLoader, [{
+	  return _createClass(AtlasAttachmentLoader, [{
 	    key: "loadSequence",
 	    value: function loadSequence(name, basePath, sequence) {
 	      var regions = sequence.regions;
@@ -5110,7 +4835,6 @@ var spine = (function (pc) {
 	      return new ClippingAttachment(name);
 	    }
 	  }]);
-	  return AtlasAttachmentLoader;
 	}();
 
 	var BoneData = _createClass(function BoneData(index, name, parent) {
@@ -5177,7 +4901,7 @@ var spine = (function (pc) {
 	    this.parent = parent;
 	    this.setToSetupPose();
 	  }
-	  _createClass(Bone, [{
+	  return _createClass(Bone, [{
 	    key: "isActive",
 	    value: function isActive() {
 	      return this.active;
@@ -5431,7 +5155,6 @@ var spine = (function (pc) {
 	      this.d = sin * b + cos * d;
 	    }
 	  }]);
-	  return Bone;
 	}();
 
 	var ConstraintData = _createClass(function ConstraintData(name, order, skinRequired) {
@@ -5455,7 +5178,7 @@ var spine = (function (pc) {
 	    this.pathPrefix = pathPrefix;
 	    this.downloader = downloader;
 	  }
-	  _createClass(AssetManagerBase, [{
+	  return _createClass(AssetManagerBase, [{
 	    key: "start",
 	    value: function start(path) {
 	      this.toLoad++;
@@ -5682,7 +5405,6 @@ var spine = (function (pc) {
 	      return this.errors;
 	    }
 	  }]);
-	  return AssetManagerBase;
 	}();
 	var Downloader = function () {
 	  function Downloader() {
@@ -5690,7 +5412,7 @@ var spine = (function (pc) {
 	    this.callbacks = {};
 	    this.rawDataUris = {};
 	  }
-	  _createClass(Downloader, [{
+	  return _createClass(Downloader, [{
 	    key: "dataUriToString",
 	    value: function dataUriToString(dataUri) {
 	      if (!dataUri.startsWith("data:")) {
@@ -5803,7 +5525,6 @@ var spine = (function (pc) {
 	      for (var i = args.length - 1, n = callbacks.length; i < n; i += 2) callbacks[i].apply(null, args);
 	    }
 	  }]);
-	  return Downloader;
 	}();
 
 	var Event = _createClass(function Event(time, data) {
@@ -5857,7 +5578,7 @@ var spine = (function (pc) {
 	    if (!target) throw new Error("Couldn't find bone ".concat(data.target.name));
 	    this.target = target;
 	  }
-	  _createClass(IkConstraint, [{
+	  return _createClass(IkConstraint, [{
 	    key: "isActive",
 	    value: function isActive() {
 	      return this.active;
@@ -6108,27 +5829,39 @@ var spine = (function (pc) {
 	      child.updateWorldTransformWith(cx, cy, rotation + a2 * alpha, child.ascaleX, child.ascaleY, child.ashearX, child.ashearY);
 	    }
 	  }]);
-	  return IkConstraint;
 	}();
 
-	var IkConstraintData = function (_ConstraintData) {
-	  _inherits(IkConstraintData, _ConstraintData);
-	  var _super = _createSuper(IkConstraintData);
-	  function IkConstraintData(name) {
-	    var _this;
-	    _classCallCheck(this, IkConstraintData);
-	    _this = _super.call(this, name, 0, false);
-	    _this.bones = new Array();
-	    _this._target = null;
-	    _this.bendDirection = 1;
-	    _this.compress = false;
-	    _this.stretch = false;
-	    _this.uniform = false;
-	    _this.mix = 1;
-	    _this.softness = 0;
-	    return _this;
+	function _callSuper$4(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
 	  }
-	  _createClass(IkConstraintData, [{
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
+	var IkConstraintData = function (_ConstraintData) {
+	  function IkConstraintData(name) {
+	    var _this2;
+	    _classCallCheck(this, IkConstraintData);
+	    _this2 = _callSuper$4(this, IkConstraintData, [name, 0, false]);
+	    _this2.bones = new Array();
+	    _this2._target = null;
+	    _this2.bendDirection = 1;
+	    _this2.compress = false;
+	    _this2.stretch = false;
+	    _this2.uniform = false;
+	    _this2.mix = 1;
+	    _this2.softness = 0;
+	    return _this2;
+	  }
+	  _inherits(IkConstraintData, _ConstraintData);
+	  return _createClass(IkConstraintData, [{
 	    key: "target",
 	    get: function get() {
 	      if (!this._target) throw new Error("BoneData not set.");else return this._target;
@@ -6137,30 +5870,42 @@ var spine = (function (pc) {
 	      this._target = boneData;
 	    }
 	  }]);
-	  return IkConstraintData;
 	}(ConstraintData);
 
-	var PathConstraintData = function (_ConstraintData) {
-	  _inherits(PathConstraintData, _ConstraintData);
-	  var _super = _createSuper(PathConstraintData);
-	  function PathConstraintData(name) {
-	    var _this;
-	    _classCallCheck(this, PathConstraintData);
-	    _this = _super.call(this, name, 0, false);
-	    _this.bones = new Array();
-	    _this._target = null;
-	    _this.positionMode = PositionMode.Fixed;
-	    _this.spacingMode = SpacingMode.Fixed;
-	    _this.rotateMode = RotateMode.Chain;
-	    _this.offsetRotation = 0;
-	    _this.position = 0;
-	    _this.spacing = 0;
-	    _this.mixRotate = 0;
-	    _this.mixX = 0;
-	    _this.mixY = 0;
-	    return _this;
+	function _callSuper$3(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
 	  }
-	  _createClass(PathConstraintData, [{
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
+	var PathConstraintData = function (_ConstraintData) {
+	  function PathConstraintData(name) {
+	    var _this2;
+	    _classCallCheck(this, PathConstraintData);
+	    _this2 = _callSuper$3(this, PathConstraintData, [name, 0, false]);
+	    _this2.bones = new Array();
+	    _this2._target = null;
+	    _this2.positionMode = PositionMode.Fixed;
+	    _this2.spacingMode = SpacingMode.Fixed;
+	    _this2.rotateMode = RotateMode.Chain;
+	    _this2.offsetRotation = 0;
+	    _this2.position = 0;
+	    _this2.spacing = 0;
+	    _this2.mixRotate = 0;
+	    _this2.mixX = 0;
+	    _this2.mixY = 0;
+	    return _this2;
+	  }
+	  _inherits(PathConstraintData, _ConstraintData);
+	  return _createClass(PathConstraintData, [{
 	    key: "target",
 	    get: function get() {
 	      if (!this._target) throw new Error("SlotData not set.");else return this._target;
@@ -6169,7 +5914,6 @@ var spine = (function (pc) {
 	      this._target = slotData;
 	    }
 	  }]);
-	  return PathConstraintData;
 	}(ConstraintData);
 	var PositionMode;
 	(function (PositionMode) {
@@ -6223,7 +5967,7 @@ var spine = (function (pc) {
 	    this.mixX = data.mixX;
 	    this.mixY = data.mixY;
 	  }
-	  _createClass(PathConstraint, [{
+	  return _createClass(PathConstraint, [{
 	    key: "isActive",
 	    value: function isActive() {
 	      return this.active;
@@ -6635,7 +6379,6 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return PathConstraint;
 	}();
 	PathConstraint.NONE = -1;
 	PathConstraint.BEFORE = -2;
@@ -6658,7 +6401,7 @@ var spine = (function (pc) {
 	    this.darkColor = !data.darkColor ? null : new Color();
 	    this.setToSetupPose();
 	  }
-	  _createClass(Slot, [{
+	  return _createClass(Slot, [{
 	    key: "getSkeleton",
 	    value: function getSkeleton() {
 	      return this.bone.skeleton;
@@ -6689,7 +6432,6 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return Slot;
 	}();
 
 	var TransformConstraint = function () {
@@ -6722,7 +6464,7 @@ var spine = (function (pc) {
 	    if (!target) throw new Error("Couldn't find target bone ".concat(data.target.name, "."));
 	    this.target = target;
 	  }
-	  _createClass(TransformConstraint, [{
+	  return _createClass(TransformConstraint, [{
 	    key: "isActive",
 	    value: function isActive() {
 	      return this.active;
@@ -6929,7 +6671,6 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return TransformConstraint;
 	}();
 
 	var Skeleton = function () {
@@ -6981,7 +6722,7 @@ var spine = (function (pc) {
 	    this.color = new Color(1, 1, 1, 1);
 	    this.updateCache();
 	  }
-	  _createClass(Skeleton, [{
+	  return _createClass(Skeleton, [{
 	    key: "scaleY",
 	    get: function get() {
 	      return Skeleton.yDown ? -this._scaleY : this._scaleY;
@@ -7422,7 +7163,6 @@ var spine = (function (pc) {
 	      size.set(maxX - minX, maxY - minY);
 	    }
 	  }]);
-	  return Skeleton;
 	}();
 	Skeleton.yDown = false;
 
@@ -7449,7 +7189,7 @@ var spine = (function (pc) {
 	    this.imagesPath = null;
 	    this.audioPath = null;
 	  }
-	  _createClass(SkeletonData, [{
+	  return _createClass(SkeletonData, [{
 	    key: "findBone",
 	    value: function findBone(boneName) {
 	      if (!boneName) throw new Error("boneName cannot be null.");
@@ -7538,7 +7278,6 @@ var spine = (function (pc) {
 	      return null;
 	    }
 	  }]);
-	  return SkeletonData;
 	}();
 
 	var SkinEntry = _createClass(function SkinEntry() {
@@ -7559,7 +7298,7 @@ var spine = (function (pc) {
 	    if (!name) throw new Error("name cannot be null.");
 	    this.name = name;
 	  }
-	  _createClass(Skin, [{
+	  return _createClass(Skin, [{
 	    key: "setAttachment",
 	    value: function setAttachment(slotIndex, name, attachment) {
 	      if (!attachment) throw new Error("attachment cannot be null.");
@@ -7704,7 +7443,6 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return Skin;
 	}();
 
 	var SlotData = _createClass(function SlotData(index, name, boneData) {
@@ -7729,32 +7467,45 @@ var spine = (function (pc) {
 	  BlendMode[BlendMode["Screen"] = 3] = "Screen";
 	})(BlendMode || (BlendMode = {}));
 
-	var TransformConstraintData = function (_ConstraintData) {
-	  _inherits(TransformConstraintData, _ConstraintData);
-	  var _super = _createSuper(TransformConstraintData);
-	  function TransformConstraintData(name) {
-	    var _this;
-	    _classCallCheck(this, TransformConstraintData);
-	    _this = _super.call(this, name, 0, false);
-	    _this.bones = new Array();
-	    _this._target = null;
-	    _this.mixRotate = 0;
-	    _this.mixX = 0;
-	    _this.mixY = 0;
-	    _this.mixScaleX = 0;
-	    _this.mixScaleY = 0;
-	    _this.mixShearY = 0;
-	    _this.offsetRotation = 0;
-	    _this.offsetX = 0;
-	    _this.offsetY = 0;
-	    _this.offsetScaleX = 0;
-	    _this.offsetScaleY = 0;
-	    _this.offsetShearY = 0;
-	    _this.relative = false;
-	    _this.local = false;
-	    return _this;
+	function _callSuper$2(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
 	  }
-	  _createClass(TransformConstraintData, [{
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
+	var TransformConstraintData = function (_ConstraintData) {
+	  function TransformConstraintData(name) {
+	    var _this2;
+	    _classCallCheck(this, TransformConstraintData);
+	    _this2 = _callSuper$2(this, TransformConstraintData, [name, 0, false]);
+	    _this2.bones = new Array();
+	    _this2._target = null;
+	    _this2.mixRotate = 0;
+	    _this2.mixX = 0;
+	    _this2.mixY = 0;
+	    _this2.mixScaleX = 0;
+	    _this2.mixScaleY = 0;
+	    _this2.mixShearY = 0;
+	    _this2.offsetRotation = 0;
+	    _this2.offsetX = 0;
+	    _this2.offsetY = 0;
+	    _this2.offsetScaleX = 0;
+	    _this2.offsetScaleY = 0;
+	    _this2.offsetShearY = 0;
+	    _this2.relative = false;
+	    _this2.local = false;
+	    return _this2;
+	  }
+	  _inherits(TransformConstraintData, _ConstraintData);
+	  return _createClass(TransformConstraintData, [{
 	    key: "target",
 	    get: function get() {
 	      if (!this._target) throw new Error("BoneData not set.");else return this._target;
@@ -7763,7 +7514,6 @@ var spine = (function (pc) {
 	      this._target = boneData;
 	    }
 	  }]);
-	  return TransformConstraintData;
 	}(ConstraintData);
 
 	var SkeletonBinary = function () {
@@ -7773,7 +7523,7 @@ var spine = (function (pc) {
 	    this.linkedMeshes = new Array();
 	    this.attachmentLoader = attachmentLoader;
 	  }
-	  _createClass(SkeletonBinary, [{
+	  return _createClass(SkeletonBinary, [{
 	    key: "readSkeletonData",
 	    value: function readSkeletonData(binary) {
 	      var scale = this.scale;
@@ -8674,7 +8424,6 @@ var spine = (function (pc) {
 	      return new Animation(name, timelines, duration);
 	    }
 	  }]);
-	  return SkeletonBinary;
 	}();
 	var BinaryInput = function () {
 	  function BinaryInput(data) {
@@ -8686,7 +8435,7 @@ var spine = (function (pc) {
 	    this.index = index;
 	    this.buffer = buffer;
 	  }
-	  _createClass(BinaryInput, [{
+	  return _createClass(BinaryInput, [{
 	    key: "readByte",
 	    value: function readByte() {
 	      return this.buffer.getInt8(this.index++);
@@ -8783,7 +8532,6 @@ var spine = (function (pc) {
 	      return this.readByte() != 0;
 	    }
 	  }]);
-	  return BinaryInput;
 	}();
 	var LinkedMesh$1 = _createClass(function LinkedMesh(mesh, skin, slotIndex, parent, inheritDeform) {
 	  _classCallCheck(this, LinkedMesh);
@@ -8894,7 +8642,7 @@ var spine = (function (pc) {
 	      return Utils.newFloatArray(16);
 	    });
 	  }
-	  _createClass(SkeletonBounds, [{
+	  return _createClass(SkeletonBounds, [{
 	    key: "update",
 	    value: function update(skeleton, updateAabb) {
 	      if (!skeleton) throw new Error("skeleton cannot be null.");
@@ -9061,7 +8809,6 @@ var spine = (function (pc) {
 	      return this.maxY - this.minY;
 	    }
 	  }]);
-	  return SkeletonBounds;
 	}();
 
 	var Triangulator = function () {
@@ -9079,7 +8826,7 @@ var spine = (function (pc) {
 	      return new Array();
 	    });
 	  }
-	  _createClass(Triangulator, [{
+	  return _createClass(Triangulator, [{
 	    key: "triangulate",
 	    value: function triangulate(verticesArray) {
 	      var vertices = verticesArray;
@@ -9292,7 +9039,6 @@ var spine = (function (pc) {
 	      return p3x * py - p3y * px + px * p1y - p1x * py >= 0 ? 1 : -1;
 	    }
 	  }]);
-	  return Triangulator;
 	}();
 
 	var SkeletonClipping = function () {
@@ -9307,7 +9053,7 @@ var spine = (function (pc) {
 	    this.clipAttachment = null;
 	    this.clippingPolygons = null;
 	  }
-	  _createClass(SkeletonClipping, [{
+	  return _createClass(SkeletonClipping, [{
 	    key: "clipStart",
 	    value: function clipStart(slot, clip) {
 	      if (this.clipAttachment) return 0;
@@ -9610,7 +9356,6 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return SkeletonClipping;
 	}();
 
 	var SkeletonJson = function () {
@@ -9620,7 +9365,7 @@ var spine = (function (pc) {
 	    this.linkedMeshes = new Array();
 	    this.attachmentLoader = attachmentLoader;
 	  }
-	  _createClass(SkeletonJson, [{
+	  return _createClass(SkeletonJson, [{
 	    key: "readSkeletonData",
 	    value: function readSkeletonData(json) {
 	      var scale = this.scale;
@@ -10428,7 +10173,6 @@ var spine = (function (pc) {
 	      skeletonData.animations.push(new Animation(name, timelines, duration));
 	    }
 	  }]);
-	  return SkeletonJson;
 	}();
 	var LinkedMesh = _createClass(function LinkedMesh(mesh, skin, slotIndex, parent, inheritDeform) {
 	  _classCallCheck(this, LinkedMesh);
@@ -10643,7 +10387,7 @@ var spine = (function (pc) {
 	    };
 	    this.pcTexture = texture;
 	  }
-	  _createClass(SpineTextureWrapper, [{
+	  return _createClass(SpineTextureWrapper, [{
 	    key: "setFilters",
 	    value: function setFilters(minFilter, magFilter) {
 	      this.pcTexture.minFilter = TO_TEXTURE_FILTER[minFilter];
@@ -10666,7 +10410,6 @@ var spine = (function (pc) {
 	      this.pcTexture.destroy();
 	    }
 	  }]);
-	  return SpineTextureWrapper;
 	}();
 
 	function getDefaultExportFromCjs (x) {
@@ -10756,8 +10499,11 @@ var spine = (function (pc) {
 	  createToken('XRANGEPLAINLOOSE', "[v=\\s]*(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:".concat(src[t.PRERELEASELOOSE], ")?").concat(src[t.BUILD], "?") + ")?)?");
 	  createToken('XRANGE', "^".concat(src[t.GTLT], "\\s*").concat(src[t.XRANGEPLAIN], "$"));
 	  createToken('XRANGELOOSE', "^".concat(src[t.GTLT], "\\s*").concat(src[t.XRANGEPLAINLOOSE], "$"));
-	  createToken('COERCE', "".concat('(^|[^\\d])' + '(\\d{1,').concat(MAX_SAFE_COMPONENT_LENGTH, "})") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?") + "(?:$|[^\\d])");
+	  createToken('COERCEPLAIN', "".concat('(^|[^\\d])' + '(\\d{1,').concat(MAX_SAFE_COMPONENT_LENGTH, "})") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?"));
+	  createToken('COERCE', "".concat(src[t.COERCEPLAIN], "(?:$|[^\\d])"));
+	  createToken('COERCEFULL', src[t.COERCEPLAIN] + "(?:".concat(src[t.PRERELEASE], ")?") + "(?:".concat(src[t.BUILD], ")?") + "(?:$|[^\\d])");
 	  createToken('COERCERTL', src[t.COERCE], true);
+	  createToken('COERCERTLFULL', src[t.COERCEFULL], true);
 	  createToken('LONETILDE', '(?:~>?)');
 	  createToken('TILDETRIM', "(\\s*)".concat(src[t.LONETILDE], "\\s+"), true);
 	  exports.tildeTrimReplace = '$1~';
@@ -10876,7 +10622,7 @@ var spine = (function (pc) {
 	    this.build = m[5] ? m[5].split('.') : [];
 	    this.format();
 	  }
-	  _createClass(SemVer, [{
+	  return _createClass(SemVer, [{
 	    key: "format",
 	    value: function format() {
 	      this.version = "".concat(this.major, ".").concat(this.minor, ".").concat(this.patch);
@@ -10954,7 +10700,7 @@ var spine = (function (pc) {
 	      do {
 	        var a = this.build[i];
 	        var b = other.build[i];
-	        debug('prerelease compare', i, a, b);
+	        debug('build compare', i, a, b);
 	        if (a === undefined && b === undefined) {
 	          return 0;
 	        } else if (b === undefined) {
@@ -11065,7 +10811,6 @@ var spine = (function (pc) {
 	      return this;
 	    }
 	  }]);
-	  return SemVer;
 	}();
 	var semver$1 = SemVer$3;
 	getDefaultExportFromCjs(semver$1);
@@ -11113,727 +10858,76 @@ var spine = (function (pc) {
 	  options = options || {};
 	  var match = null;
 	  if (!options.rtl) {
-	    match = version.match(re[t.COERCE]);
+	    match = version.match(options.includePrerelease ? re[t.COERCEFULL] : re[t.COERCE]);
 	  } else {
+	    var coerceRtlRegex = options.includePrerelease ? re[t.COERCERTLFULL] : re[t.COERCERTL];
 	    var next;
-	    while ((next = re[t.COERCERTL].exec(version)) && (!match || match.index + match[0].length !== version.length)) {
+	    while ((next = coerceRtlRegex.exec(version)) && (!match || match.index + match[0].length !== version.length)) {
 	      if (!match || next.index + next[0].length !== match.index + match[0].length) {
 	        match = next;
 	      }
-	      re[t.COERCERTL].lastIndex = next.index + next[1].length + next[2].length;
+	      coerceRtlRegex.lastIndex = next.index + next[1].length + next[2].length;
 	    }
-	    re[t.COERCERTL].lastIndex = -1;
+	    coerceRtlRegex.lastIndex = -1;
 	  }
 	  if (match === null) {
 	    return null;
 	  }
-	  return parse("".concat(match[2], ".").concat(match[3] || '0', ".").concat(match[4] || '0'), options);
+	  var major = match[2];
+	  var minor = match[3] || '0';
+	  var patch = match[4] || '0';
+	  var prerelease = options.includePrerelease && match[5] ? "-".concat(match[5]) : '';
+	  var build = options.includePrerelease && match[6] ? "+".concat(match[6]) : '';
+	  return parse("".concat(major, ".").concat(minor, ".").concat(patch).concat(prerelease).concat(build), options);
 	};
 	var coerce_1 = coerce;
 	var coerce$1 = getDefaultExportFromCjs(coerce_1);
 
-	var iterator;
-	var hasRequiredIterator;
-	function requireIterator() {
-	  if (hasRequiredIterator) return iterator;
-	  hasRequiredIterator = 1;
-	  iterator = function iterator(Yallist) {
-	    Yallist.prototype[Symbol.iterator] = _regeneratorRuntime().mark(function _callee() {
-	      var walker;
-	      return _regeneratorRuntime().wrap(function _callee$(_context) {
-	        while (1) switch (_context.prev = _context.next) {
-	          case 0:
-	            walker = this.head;
-	          case 1:
-	            if (!walker) {
-	              _context.next = 7;
-	              break;
-	            }
-	            _context.next = 4;
-	            return walker.value;
-	          case 4:
-	            walker = walker.next;
-	            _context.next = 1;
-	            break;
-	          case 7:
-	          case "end":
-	            return _context.stop();
-	        }
-	      }, _callee, this);
-	    });
-	  };
-	  return iterator;
-	}
-
-	var yallist = Yallist$1;
-	Yallist$1.Node = Node;
-	Yallist$1.create = Yallist$1;
-	function Yallist$1(list) {
-	  var self = this;
-	  if (!(self instanceof Yallist$1)) {
-	    self = new Yallist$1();
-	  }
-	  self.tail = null;
-	  self.head = null;
-	  self.length = 0;
-	  if (list && typeof list.forEach === 'function') {
-	    list.forEach(function (item) {
-	      self.push(item);
-	    });
-	  } else if (arguments.length > 0) {
-	    for (var i = 0, l = arguments.length; i < l; i++) {
-	      self.push(arguments[i]);
-	    }
-	  }
-	  return self;
-	}
-	Yallist$1.prototype.removeNode = function (node) {
-	  if (node.list !== this) {
-	    throw new Error('removing node which does not belong to this list');
-	  }
-	  var next = node.next;
-	  var prev = node.prev;
-	  if (next) {
-	    next.prev = prev;
-	  }
-	  if (prev) {
-	    prev.next = next;
-	  }
-	  if (node === this.head) {
-	    this.head = next;
-	  }
-	  if (node === this.tail) {
-	    this.tail = prev;
-	  }
-	  node.list.length--;
-	  node.next = null;
-	  node.prev = null;
-	  node.list = null;
-	  return next;
-	};
-	Yallist$1.prototype.unshiftNode = function (node) {
-	  if (node === this.head) {
-	    return;
-	  }
-	  if (node.list) {
-	    node.list.removeNode(node);
-	  }
-	  var head = this.head;
-	  node.list = this;
-	  node.next = head;
-	  if (head) {
-	    head.prev = node;
-	  }
-	  this.head = node;
-	  if (!this.tail) {
-	    this.tail = node;
-	  }
-	  this.length++;
-	};
-	Yallist$1.prototype.pushNode = function (node) {
-	  if (node === this.tail) {
-	    return;
-	  }
-	  if (node.list) {
-	    node.list.removeNode(node);
-	  }
-	  var tail = this.tail;
-	  node.list = this;
-	  node.prev = tail;
-	  if (tail) {
-	    tail.next = node;
-	  }
-	  this.tail = node;
-	  if (!this.head) {
-	    this.head = node;
-	  }
-	  this.length++;
-	};
-	Yallist$1.prototype.push = function () {
-	  for (var i = 0, l = arguments.length; i < l; i++) {
-	    push(this, arguments[i]);
-	  }
-	  return this.length;
-	};
-	Yallist$1.prototype.unshift = function () {
-	  for (var i = 0, l = arguments.length; i < l; i++) {
-	    unshift(this, arguments[i]);
-	  }
-	  return this.length;
-	};
-	Yallist$1.prototype.pop = function () {
-	  if (!this.tail) {
-	    return undefined;
-	  }
-	  var res = this.tail.value;
-	  this.tail = this.tail.prev;
-	  if (this.tail) {
-	    this.tail.next = null;
-	  } else {
-	    this.head = null;
-	  }
-	  this.length--;
-	  return res;
-	};
-	Yallist$1.prototype.shift = function () {
-	  if (!this.head) {
-	    return undefined;
-	  }
-	  var res = this.head.value;
-	  this.head = this.head.next;
-	  if (this.head) {
-	    this.head.prev = null;
-	  } else {
-	    this.tail = null;
-	  }
-	  this.length--;
-	  return res;
-	};
-	Yallist$1.prototype.forEach = function (fn, thisp) {
-	  thisp = thisp || this;
-	  for (var walker = this.head, i = 0; walker !== null; i++) {
-	    fn.call(thisp, walker.value, i, this);
-	    walker = walker.next;
-	  }
-	};
-	Yallist$1.prototype.forEachReverse = function (fn, thisp) {
-	  thisp = thisp || this;
-	  for (var walker = this.tail, i = this.length - 1; walker !== null; i--) {
-	    fn.call(thisp, walker.value, i, this);
-	    walker = walker.prev;
-	  }
-	};
-	Yallist$1.prototype.get = function (n) {
-	  for (var i = 0, walker = this.head; walker !== null && i < n; i++) {
-	    walker = walker.next;
-	  }
-	  if (i === n && walker !== null) {
-	    return walker.value;
-	  }
-	};
-	Yallist$1.prototype.getReverse = function (n) {
-	  for (var i = 0, walker = this.tail; walker !== null && i < n; i++) {
-	    walker = walker.prev;
-	  }
-	  if (i === n && walker !== null) {
-	    return walker.value;
-	  }
-	};
-	Yallist$1.prototype.map = function (fn, thisp) {
-	  thisp = thisp || this;
-	  var res = new Yallist$1();
-	  for (var walker = this.head; walker !== null;) {
-	    res.push(fn.call(thisp, walker.value, this));
-	    walker = walker.next;
-	  }
-	  return res;
-	};
-	Yallist$1.prototype.mapReverse = function (fn, thisp) {
-	  thisp = thisp || this;
-	  var res = new Yallist$1();
-	  for (var walker = this.tail; walker !== null;) {
-	    res.push(fn.call(thisp, walker.value, this));
-	    walker = walker.prev;
-	  }
-	  return res;
-	};
-	Yallist$1.prototype.reduce = function (fn, initial) {
-	  var acc;
-	  var walker = this.head;
-	  if (arguments.length > 1) {
-	    acc = initial;
-	  } else if (this.head) {
-	    walker = this.head.next;
-	    acc = this.head.value;
-	  } else {
-	    throw new TypeError('Reduce of empty list with no initial value');
-	  }
-	  for (var i = 0; walker !== null; i++) {
-	    acc = fn(acc, walker.value, i);
-	    walker = walker.next;
-	  }
-	  return acc;
-	};
-	Yallist$1.prototype.reduceReverse = function (fn, initial) {
-	  var acc;
-	  var walker = this.tail;
-	  if (arguments.length > 1) {
-	    acc = initial;
-	  } else if (this.tail) {
-	    walker = this.tail.prev;
-	    acc = this.tail.value;
-	  } else {
-	    throw new TypeError('Reduce of empty list with no initial value');
-	  }
-	  for (var i = this.length - 1; walker !== null; i--) {
-	    acc = fn(acc, walker.value, i);
-	    walker = walker.prev;
-	  }
-	  return acc;
-	};
-	Yallist$1.prototype.toArray = function () {
-	  var arr = new Array(this.length);
-	  for (var i = 0, walker = this.head; walker !== null; i++) {
-	    arr[i] = walker.value;
-	    walker = walker.next;
-	  }
-	  return arr;
-	};
-	Yallist$1.prototype.toArrayReverse = function () {
-	  var arr = new Array(this.length);
-	  for (var i = 0, walker = this.tail; walker !== null; i++) {
-	    arr[i] = walker.value;
-	    walker = walker.prev;
-	  }
-	  return arr;
-	};
-	Yallist$1.prototype.slice = function (from, to) {
-	  to = to || this.length;
-	  if (to < 0) {
-	    to += this.length;
-	  }
-	  from = from || 0;
-	  if (from < 0) {
-	    from += this.length;
-	  }
-	  var ret = new Yallist$1();
-	  if (to < from || to < 0) {
-	    return ret;
-	  }
-	  if (from < 0) {
-	    from = 0;
-	  }
-	  if (to > this.length) {
-	    to = this.length;
-	  }
-	  for (var i = 0, walker = this.head; walker !== null && i < from; i++) {
-	    walker = walker.next;
-	  }
-	  for (; walker !== null && i < to; i++, walker = walker.next) {
-	    ret.push(walker.value);
-	  }
-	  return ret;
-	};
-	Yallist$1.prototype.sliceReverse = function (from, to) {
-	  to = to || this.length;
-	  if (to < 0) {
-	    to += this.length;
-	  }
-	  from = from || 0;
-	  if (from < 0) {
-	    from += this.length;
-	  }
-	  var ret = new Yallist$1();
-	  if (to < from || to < 0) {
-	    return ret;
-	  }
-	  if (from < 0) {
-	    from = 0;
-	  }
-	  if (to > this.length) {
-	    to = this.length;
-	  }
-	  for (var i = this.length, walker = this.tail; walker !== null && i > to; i--) {
-	    walker = walker.prev;
-	  }
-	  for (; walker !== null && i > from; i--, walker = walker.prev) {
-	    ret.push(walker.value);
-	  }
-	  return ret;
-	};
-	Yallist$1.prototype.splice = function (start, deleteCount) {
-	  if (start > this.length) {
-	    start = this.length - 1;
-	  }
-	  if (start < 0) {
-	    start = this.length + start;
-	  }
-	  for (var i = 0, walker = this.head; walker !== null && i < start; i++) {
-	    walker = walker.next;
-	  }
-	  var ret = [];
-	  for (var i = 0; walker && i < deleteCount; i++) {
-	    ret.push(walker.value);
-	    walker = this.removeNode(walker);
-	  }
-	  if (walker === null) {
-	    walker = this.tail;
-	  }
-	  if (walker !== this.head && walker !== this.tail) {
-	    walker = walker.prev;
-	  }
-	  for (var i = 0; i < (arguments.length <= 2 ? 0 : arguments.length - 2); i++) {
-	    walker = insert(this, walker, i + 2 < 2 || arguments.length <= i + 2 ? undefined : arguments[i + 2]);
-	  }
-	  return ret;
-	};
-	Yallist$1.prototype.reverse = function () {
-	  var head = this.head;
-	  var tail = this.tail;
-	  for (var walker = head; walker !== null; walker = walker.prev) {
-	    var p = walker.prev;
-	    walker.prev = walker.next;
-	    walker.next = p;
-	  }
-	  this.head = tail;
-	  this.tail = head;
-	  return this;
-	};
-	function insert(self, node, value) {
-	  var inserted = node === self.head ? new Node(value, null, node, self) : new Node(value, node, node.next, self);
-	  if (inserted.next === null) {
-	    self.tail = inserted;
-	  }
-	  if (inserted.prev === null) {
-	    self.head = inserted;
-	  }
-	  self.length++;
-	  return inserted;
-	}
-	function push(self, item) {
-	  self.tail = new Node(item, self.tail, null, self);
-	  if (!self.head) {
-	    self.head = self.tail;
-	  }
-	  self.length++;
-	}
-	function unshift(self, item) {
-	  self.head = new Node(item, null, self.head, self);
-	  if (!self.tail) {
-	    self.tail = self.head;
-	  }
-	  self.length++;
-	}
-	function Node(value, prev, next, list) {
-	  if (!(this instanceof Node)) {
-	    return new Node(value, prev, next, list);
-	  }
-	  this.list = list;
-	  this.value = value;
-	  if (prev) {
-	    prev.next = this;
-	    this.prev = prev;
-	  } else {
-	    this.prev = null;
-	  }
-	  if (next) {
-	    next.prev = this;
-	    this.next = next;
-	  } else {
-	    this.next = null;
-	  }
-	}
-	try {
-	  requireIterator()(Yallist$1);
-	} catch (er) {}
-	getDefaultExportFromCjs(yallist);
-
-	var Yallist = yallist;
-	var MAX = Symbol('max');
-	var LENGTH = Symbol('length');
-	var LENGTH_CALCULATOR = Symbol('lengthCalculator');
-	var ALLOW_STALE = Symbol('allowStale');
-	var MAX_AGE = Symbol('maxAge');
-	var DISPOSE = Symbol('dispose');
-	var NO_DISPOSE_ON_SET = Symbol('noDisposeOnSet');
-	var LRU_LIST = Symbol('lruList');
-	var CACHE = Symbol('cache');
-	var UPDATE_AGE_ON_GET = Symbol('updateAgeOnGet');
-	var naiveLength = function naiveLength() {
-	  return 1;
-	};
 	var LRUCache = function () {
-	  function LRUCache(options) {
+	  function LRUCache() {
 	    _classCallCheck(this, LRUCache);
-	    if (typeof options === 'number') options = {
-	      max: options
-	    };
-	    if (!options) options = {};
-	    if (options.max && (typeof options.max !== 'number' || options.max < 0)) throw new TypeError('max must be a non-negative number');
-	    this[MAX] = options.max || Infinity;
-	    var lc = options.length || naiveLength;
-	    this[LENGTH_CALCULATOR] = typeof lc !== 'function' ? naiveLength : lc;
-	    this[ALLOW_STALE] = options.stale || false;
-	    if (options.maxAge && typeof options.maxAge !== 'number') throw new TypeError('maxAge must be a number');
-	    this[MAX_AGE] = options.maxAge || 0;
-	    this[DISPOSE] = options.dispose;
-	    this[NO_DISPOSE_ON_SET] = options.noDisposeOnSet || false;
-	    this[UPDATE_AGE_ON_GET] = options.updateAgeOnGet || false;
-	    this.reset();
+	    this.max = 1000;
+	    this.map = new Map();
 	  }
-	  _createClass(LRUCache, [{
-	    key: "max",
-	    get: function get() {
-	      return this[MAX];
-	    },
-	    set: function set(mL) {
-	      if (typeof mL !== 'number' || mL < 0) throw new TypeError('max must be a non-negative number');
-	      this[MAX] = mL || Infinity;
-	      trim(this);
-	    }
-	  }, {
-	    key: "allowStale",
-	    get: function get() {
-	      return this[ALLOW_STALE];
-	    },
-	    set: function set(allowStale) {
-	      this[ALLOW_STALE] = !!allowStale;
-	    }
-	  }, {
-	    key: "maxAge",
-	    get: function get() {
-	      return this[MAX_AGE];
-	    },
-	    set: function set(mA) {
-	      if (typeof mA !== 'number') throw new TypeError('maxAge must be a non-negative number');
-	      this[MAX_AGE] = mA;
-	      trim(this);
-	    }
-	  }, {
-	    key: "lengthCalculator",
-	    get: function get() {
-	      return this[LENGTH_CALCULATOR];
-	    },
-	    set: function set(lC) {
-	      var _this = this;
-	      if (typeof lC !== 'function') lC = naiveLength;
-	      if (lC !== this[LENGTH_CALCULATOR]) {
-	        this[LENGTH_CALCULATOR] = lC;
-	        this[LENGTH] = 0;
-	        this[LRU_LIST].forEach(function (hit) {
-	          hit.length = _this[LENGTH_CALCULATOR](hit.value, hit.key);
-	          _this[LENGTH] += hit.length;
-	        });
-	      }
-	      trim(this);
-	    }
-	  }, {
-	    key: "length",
-	    get: function get() {
-	      return this[LENGTH];
-	    }
-	  }, {
-	    key: "itemCount",
-	    get: function get() {
-	      return this[LRU_LIST].length;
-	    }
-	  }, {
-	    key: "rforEach",
-	    value: function rforEach(fn, thisp) {
-	      thisp = thisp || this;
-	      for (var walker = this[LRU_LIST].tail; walker !== null;) {
-	        var prev = walker.prev;
-	        forEachStep(this, fn, walker, thisp);
-	        walker = prev;
+	  return _createClass(LRUCache, [{
+	    key: "get",
+	    value: function get(key) {
+	      var value = this.map.get(key);
+	      if (value === undefined) {
+	        return undefined;
+	      } else {
+	        this.map.delete(key);
+	        this.map.set(key, value);
+	        return value;
 	      }
 	    }
 	  }, {
-	    key: "forEach",
-	    value: function forEach(fn, thisp) {
-	      thisp = thisp || this;
-	      for (var walker = this[LRU_LIST].head; walker !== null;) {
-	        var next = walker.next;
-	        forEachStep(this, fn, walker, thisp);
-	        walker = next;
+	    key: "delete",
+	    value: function _delete(key) {
+	      if (this.map.has(key)) {
+	        this.map.delete(key);
+	        return true;
+	      } else {
+	        return false;
 	      }
-	    }
-	  }, {
-	    key: "keys",
-	    value: function keys() {
-	      return this[LRU_LIST].toArray().map(function (k) {
-	        return k.key;
-	      });
-	    }
-	  }, {
-	    key: "values",
-	    value: function values() {
-	      return this[LRU_LIST].toArray().map(function (k) {
-	        return k.value;
-	      });
-	    }
-	  }, {
-	    key: "reset",
-	    value: function reset() {
-	      var _this2 = this;
-	      if (this[DISPOSE] && this[LRU_LIST] && this[LRU_LIST].length) {
-	        this[LRU_LIST].forEach(function (hit) {
-	          return _this2[DISPOSE](hit.key, hit.value);
-	        });
-	      }
-	      this[CACHE] = new Map();
-	      this[LRU_LIST] = new Yallist();
-	      this[LENGTH] = 0;
-	    }
-	  }, {
-	    key: "dump",
-	    value: function dump() {
-	      var _this3 = this;
-	      return this[LRU_LIST].map(function (hit) {
-	        return isStale(_this3, hit) ? false : {
-	          k: hit.key,
-	          v: hit.value,
-	          e: hit.now + (hit.maxAge || 0)
-	        };
-	      }).toArray().filter(function (h) {
-	        return h;
-	      });
-	    }
-	  }, {
-	    key: "dumpLru",
-	    value: function dumpLru() {
-	      return this[LRU_LIST];
 	    }
 	  }, {
 	    key: "set",
-	    value: function set(key, value, maxAge) {
-	      maxAge = maxAge || this[MAX_AGE];
-	      if (maxAge && typeof maxAge !== 'number') throw new TypeError('maxAge must be a number');
-	      var now = maxAge ? Date.now() : 0;
-	      var len = this[LENGTH_CALCULATOR](value, key);
-	      if (this[CACHE].has(key)) {
-	        if (len > this[MAX]) {
-	          _del(this, this[CACHE].get(key));
-	          return false;
+	    value: function set(key, value) {
+	      var deleted = this.delete(key);
+	      if (!deleted && value !== undefined) {
+	        if (this.map.size >= this.max) {
+	          var firstKey = this.map.keys().next().value;
+	          this.delete(firstKey);
 	        }
-	        var node = this[CACHE].get(key);
-	        var item = node.value;
-	        if (this[DISPOSE]) {
-	          if (!this[NO_DISPOSE_ON_SET]) this[DISPOSE](key, item.value);
-	        }
-	        item.now = now;
-	        item.maxAge = maxAge;
-	        item.value = value;
-	        this[LENGTH] += len - item.length;
-	        item.length = len;
-	        this.get(key);
-	        trim(this);
-	        return true;
+	        this.map.set(key, value);
 	      }
-	      var hit = new Entry(key, value, len, now, maxAge);
-	      if (hit.length > this[MAX]) {
-	        if (this[DISPOSE]) this[DISPOSE](key, value);
-	        return false;
-	      }
-	      this[LENGTH] += hit.length;
-	      this[LRU_LIST].unshift(hit);
-	      this[CACHE].set(key, this[LRU_LIST].head);
-	      trim(this);
-	      return true;
-	    }
-	  }, {
-	    key: "has",
-	    value: function has(key) {
-	      if (!this[CACHE].has(key)) return false;
-	      var hit = this[CACHE].get(key).value;
-	      return !isStale(this, hit);
-	    }
-	  }, {
-	    key: "get",
-	    value: function get(key) {
-	      return _get(this, key, true);
-	    }
-	  }, {
-	    key: "peek",
-	    value: function peek(key) {
-	      return _get(this, key, false);
-	    }
-	  }, {
-	    key: "pop",
-	    value: function pop() {
-	      var node = this[LRU_LIST].tail;
-	      if (!node) return null;
-	      _del(this, node);
-	      return node.value;
-	    }
-	  }, {
-	    key: "del",
-	    value: function del(key) {
-	      _del(this, this[CACHE].get(key));
-	    }
-	  }, {
-	    key: "load",
-	    value: function load(arr) {
-	      this.reset();
-	      var now = Date.now();
-	      for (var l = arr.length - 1; l >= 0; l--) {
-	        var hit = arr[l];
-	        var expiresAt = hit.e || 0;
-	        if (expiresAt === 0) this.set(hit.k, hit.v);else {
-	          var maxAge = expiresAt - now;
-	          if (maxAge > 0) {
-	            this.set(hit.k, hit.v, maxAge);
-	          }
-	        }
-	      }
-	    }
-	  }, {
-	    key: "prune",
-	    value: function prune() {
-	      var _this4 = this;
-	      this[CACHE].forEach(function (value, key) {
-	        return _get(_this4, key, false);
-	      });
+	      return this;
 	    }
 	  }]);
-	  return LRUCache;
 	}();
-	var _get = function _get(self, key, doUse) {
-	  var node = self[CACHE].get(key);
-	  if (node) {
-	    var hit = node.value;
-	    if (isStale(self, hit)) {
-	      _del(self, node);
-	      if (!self[ALLOW_STALE]) return undefined;
-	    } else {
-	      if (doUse) {
-	        if (self[UPDATE_AGE_ON_GET]) node.value.now = Date.now();
-	        self[LRU_LIST].unshiftNode(node);
-	      }
-	    }
-	    return hit.value;
-	  }
-	};
-	var isStale = function isStale(self, hit) {
-	  if (!hit || !hit.maxAge && !self[MAX_AGE]) return false;
-	  var diff = Date.now() - hit.now;
-	  return hit.maxAge ? diff > hit.maxAge : self[MAX_AGE] && diff > self[MAX_AGE];
-	};
-	var trim = function trim(self) {
-	  if (self[LENGTH] > self[MAX]) {
-	    for (var walker = self[LRU_LIST].tail; self[LENGTH] > self[MAX] && walker !== null;) {
-	      var prev = walker.prev;
-	      _del(self, walker);
-	      walker = prev;
-	    }
-	  }
-	};
-	var _del = function _del(self, node) {
-	  if (node) {
-	    var hit = node.value;
-	    if (self[DISPOSE]) self[DISPOSE](hit.key, hit.value);
-	    self[LENGTH] -= hit.length;
-	    self[CACHE].delete(hit.key);
-	    self[LRU_LIST].removeNode(node);
-	  }
-	};
-	var Entry = _createClass(function Entry(key, value, length, now, maxAge) {
-	  _classCallCheck(this, Entry);
-	  this.key = key;
-	  this.value = value;
-	  this.length = length;
-	  this.now = now;
-	  this.maxAge = maxAge || 0;
-	});
-	var forEachStep = function forEachStep(self, fn, node, thisp) {
-	  var hit = node.value;
-	  if (isStale(self, hit)) {
-	    _del(self, node);
-	    if (!self[ALLOW_STALE]) hit = undefined;
-	  }
-	  if (hit) fn.call(thisp, hit.value, hit.key, self);
-	};
-	var lruCache = LRUCache;
-	getDefaultExportFromCjs(lruCache);
+	var lrucache = LRUCache;
+	getDefaultExportFromCjs(lrucache);
 
 	var SemVer = semver$1;
 	var compare$6 = function compare(a, b, loose) {
@@ -11958,7 +11052,7 @@ var spine = (function (pc) {
 	      }
 	      debug('comp', this);
 	    }
-	    _createClass(Comparator, [{
+	    return _createClass(Comparator, [{
 	      key: "parse",
 	      value: function parse(comp) {
 	        var r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR];
@@ -12044,7 +11138,6 @@ var spine = (function (pc) {
 	        return ANY;
 	      }
 	    }]);
-	    return Comparator;
 	  }();
 	  comparator = Comparator;
 	  var parseOptions = parseOptions_1;
@@ -12119,7 +11212,7 @@ var spine = (function (pc) {
 	      }
 	      this.format();
 	    }
-	    _createClass(Range, [{
+	    return _createClass(Range, [{
 	      key: "format",
 	      value: function format() {
 	        this.range = this.set.map(function (comps) {
@@ -12227,13 +11320,10 @@ var spine = (function (pc) {
 	        return false;
 	      }
 	    }]);
-	    return Range;
 	  }();
 	  range = Range;
-	  var LRU = lruCache;
-	  var cache = new LRU({
-	    max: 1000
-	  });
+	  var LRU = lrucache;
+	  var cache = new LRU();
 	  var parseOptions = parseOptions_1;
 	  var Comparator = requireComparator();
 	  var debug = debug_1;
@@ -12423,7 +11513,7 @@ var spine = (function (pc) {
 	    return comp.trim().replace(re[options.includePrerelease ? t.GTE0PRE : t.GTE0], '');
 	  };
 	  var hyphenReplace = function hyphenReplace(incPr) {
-	    return function ($0, from, fM, fm, fp, fpr, fb, to, tM, tm, tp, tpr, tb) {
+	    return function ($0, from, fM, fm, fp, fpr, fb, to, tM, tm, tp, tpr) {
 	      if (isX(fM)) {
 	        from = '';
 	      } else if (isX(fm)) {
@@ -12565,7 +11655,7 @@ var spine = (function (pc) {
 	    this.init();
 	    this._hidden = false;
 	  }
-	  _createClass(Spine, [{
+	  return _createClass(Spine, [{
 	    key: "destroy",
 	    value: function destroy() {
 	      this.removeFromLayers();
@@ -12960,25 +12050,37 @@ var spine = (function (pc) {
 	      this.addToLayers();
 	    }
 	  }]);
-	  return Spine;
 	}();
 
-	var SpineComponent = function (_Component) {
-	  _inherits(SpineComponent, _Component);
-	  var _super = _createSuper(SpineComponent);
-	  function SpineComponent(system, entity) {
-	    var _this;
-	    _classCallCheck(this, SpineComponent);
-	    _this = _super.call(this, system, entity);
-	    _this.on('set_atlasAsset', _this.onSetAsset, _assertThisInitialized(_this));
-	    _this.on('set_textureAssets', _this.onSetAssets, _assertThisInitialized(_this));
-	    _this.on('set_skeletonAsset', _this.onSetAsset, _assertThisInitialized(_this));
-	    _this.on('set_atlasData', _this.onSetResource, _assertThisInitialized(_this));
-	    _this.on('set_textures', _this.onSetResource, _assertThisInitialized(_this));
-	    _this.on('set_skeletonData', _this.onSetResource, _assertThisInitialized(_this));
-	    return _this;
+	function _callSuper$1(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
 	  }
-	  _createClass(SpineComponent, [{
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
+	var SpineComponent = function (_Component) {
+	  function SpineComponent(system, entity) {
+	    var _this2;
+	    _classCallCheck(this, SpineComponent);
+	    _this2 = _callSuper$1(this, SpineComponent, [system, entity]);
+	    _this2.on('set_atlasAsset', _this2.onSetAsset, _this2);
+	    _this2.on('set_textureAssets', _this2.onSetAssets, _this2);
+	    _this2.on('set_skeletonAsset', _this2.onSetAsset, _this2);
+	    _this2.on('set_atlasData', _this2.onSetResource, _this2);
+	    _this2.on('set_textures', _this2.onSetResource, _this2);
+	    _this2.on('set_skeletonData', _this2.onSetResource, _this2);
+	    return _this2;
+	  }
+	  _inherits(SpineComponent, _Component);
+	  return _createClass(SpineComponent, [{
 	    key: "_createSpine",
 	    value: function _createSpine() {
 	      if (this.data.spine) {
@@ -13160,7 +12262,6 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return SpineComponent;
 	}(pc.Component);
 
 	var SpineComponentData = _createClass(function SpineComponentData() {
@@ -13176,26 +12277,39 @@ var spine = (function (pc) {
 	  this.skeletonData = null;
 	});
 
-	var SpineComponentSystem = function (_ComponentSystem) {
-	  _inherits(SpineComponentSystem, _ComponentSystem);
-	  var _super = _createSuper(SpineComponentSystem);
-	  function SpineComponentSystem(app) {
-	    var _this;
-	    _classCallCheck(this, SpineComponentSystem);
-	    _this = _super.call(this, app);
-	    _this.id = 'spine';
-	    _this.ComponentType = SpineComponent;
-	    _this.DataType = SpineComponentData;
-	    _this.schema = ['enabled', 'atlasAsset', 'textureAssets', 'skeletonAsset', 'atlasData', 'textures', 'skeletonData', 'speed', 'spine'];
-	    _this.on('beforeremove', _this.onBeforeRemove, _assertThisInitialized(_this));
-	    _this.app.systems.on('update', _this.onUpdate, _assertThisInitialized(_this));
-	    return _this;
+	function _callSuper(_this, derived, args) {
+	  function isNativeReflectConstruct() {
+	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+	    if (Reflect.construct.sham) return false;
+	    if (typeof Proxy === "function") return true;
+	    try {
+	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	    } catch (e) {
+	      return false;
+	    }
 	  }
-	  _createClass(SpineComponentSystem, [{
+	  derived = _getPrototypeOf(derived);
+	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
+	}
+	var SpineComponentSystem = function (_ComponentSystem) {
+	  function SpineComponentSystem(app) {
+	    var _this2;
+	    _classCallCheck(this, SpineComponentSystem);
+	    _this2 = _callSuper(this, SpineComponentSystem, [app]);
+	    _this2.id = 'spine';
+	    _this2.ComponentType = SpineComponent;
+	    _this2.DataType = SpineComponentData;
+	    _this2.schema = ['enabled', 'atlasAsset', 'textureAssets', 'skeletonAsset', 'atlasData', 'textures', 'skeletonData', 'speed', 'spine'];
+	    _this2.on('beforeremove', _this2.onBeforeRemove, _this2);
+	    _this2.app.systems.on('update', _this2.onUpdate, _this2);
+	    return _this2;
+	  }
+	  _inherits(SpineComponentSystem, _ComponentSystem);
+	  return _createClass(SpineComponentSystem, [{
 	    key: "initializeComponentData",
 	    value: function initializeComponentData(component, data, properties) {
 	      properties = ['enabled', 'atlasAsset', 'textureAssets', 'skeletonAsset', 'atlasData', 'textures', 'skeletonData', 'spine'];
-	      _get$1(_getPrototypeOf(SpineComponentSystem.prototype), "initializeComponentData", this).call(this, component, data, properties);
+	      _get(_getPrototypeOf(SpineComponentSystem.prototype), "initializeComponentData", this).call(this, component, data, properties);
 	    }
 	  }, {
 	    key: "onBeforeRemove",
@@ -13224,7 +12338,6 @@ var spine = (function (pc) {
 	      }
 	    }
 	  }]);
-	  return SpineComponentSystem;
 	}(pc.ComponentSystem);
 
 	(function () {
