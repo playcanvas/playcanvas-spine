@@ -2,7 +2,6 @@ pc.extend(pc, function () {
     var SpineComponentSystem = function SpineComponentSystem (app) {
         this.id = 'spine';
         this.description = "";
-        app.systems.add(this.id, this);
 
         this.ComponentType = pc.SpineComponent;
         this.DataType = pc.SpineComponentData;
@@ -22,8 +21,7 @@ pc.extend(pc, function () {
         this.on('remove', this.onRemove, this);
         // this.on('update', this.onUpdate, this);
 
-        pc.ComponentSystem.on('update', this.onUpdate, this);
-
+        this.app.systems.on('update', this.onUpdate, this);
     };
     SpineComponentSystem = pc.inherits(SpineComponentSystem, pc.ComponentSystem);
 

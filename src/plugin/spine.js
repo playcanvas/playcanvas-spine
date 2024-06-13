@@ -166,13 +166,13 @@ pc.extend(pc, function () {
                         normals: [0,1,0,0,1,0,0,1,0,0,1,0],
                         uvs: [
                             attachment.uvs[0],
-                            1 - attachment.uvs[1],
+                            attachment.uvs[1],
                             attachment.uvs[2],
-                            1 - attachment.uvs[3],
+                            attachment.uvs[3],
                             attachment.uvs[4],
-                            1 - attachment.uvs[5],
+                            attachment.uvs[5],
                             attachment.uvs[6],
-                            1 - attachment.uvs[7],
+                            attachment.uvs[7]
                         ],
                         indices: [0,3,2,2,1,0]
                     };

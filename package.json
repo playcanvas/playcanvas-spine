@@ -3,6 +3,7 @@
   "description": "Spine plugin for PlayCanvas Engine",
   "version": "0.1.0",
   "devDependencies": {
+    "grunt": "^1.6.1",
     "grunt-contrib-uglify": "*"
   }
 }
