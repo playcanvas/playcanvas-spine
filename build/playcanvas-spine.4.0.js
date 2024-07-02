@@ -11423,6 +11423,7 @@ var spine = (function (pc) {
 	      var material = new pc__namespace.StandardMaterial();
 	      material.emissiveMap = texture;
 	      material.emissiveVertexColor = true;
+	      material.emissive = pc__namespace.Color.WHITE;
 	      material.opacityMap = texture;
 	      material.opacityVertexColor = true;
 	      material.depthWrite = false;

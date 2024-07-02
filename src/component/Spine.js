@@ -223,6 +223,7 @@ class Spine {
 
         material.emissiveMap = texture;
         material.emissiveVertexColor = true;
+        material.emissive = pc.Color.WHITE;
 
         material.opacityMap = texture;
         material.opacityVertexColor = true;
