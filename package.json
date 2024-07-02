@@ -42,7 +42,8 @@
     "semver": "^7.6.1",
     "serve": "^14.2.3",
     "spine40": "npm:@esotericsoftware/spine-core@4.0",
-    "spine41": "npm:@esotericsoftware/spine-core@4.1"
+    "spine41": "npm:@esotericsoftware/spine-core@4.1",
+    "spine42": "npm:@esotericsoftware/spine-core@4.2"
   },
   "scripts": {
     "build": "rollup -c",

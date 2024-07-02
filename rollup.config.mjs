@@ -36,6 +36,10 @@ const builds = [
     {
         name: 'playcanvas-spine.4.1',
         lib: 'src/wrapper41.js'
+    },
+    {
+        name: 'playcanvas-spine.4.2',
+        lib: 'src/wrapper42.js'
     }
 ];
 
