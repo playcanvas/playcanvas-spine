@@ -14,9 +14,9 @@ import { SpineComponentSystem } from './component/SpineComponentSystem.js';
 (function () {
     const app = pc.Application.getApplication();
     if (!app) {
-        console.warn("No Application found. An Application or AppBase must be instantiated before `playcanvas-spine`."
-        return
-    };
+        console.warn("No Application found. An Application or AppBase must be instantiated before `playcanvas-spine`.");
+        return;
+    }
     const system = new SpineComponentSystem(app);
     app.systems.add(system);
 }());
