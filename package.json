@@ -24,7 +24,8 @@
     "extends": "@playcanvas/eslint-config",
     "settings": {
       "import/core-modules": [
-        "spine-core-import"
+        "spine-core-import",
+        "spine-class-import"
       ]
     }
   },
@@ -43,7 +44,8 @@
     "serve": "^14.2.3",
     "spine40": "npm:@esotericsoftware/spine-core@4.0",
     "spine41": "npm:@esotericsoftware/spine-core@4.1",
-    "spine42": "npm:@esotericsoftware/spine-core@4.2"
+    "spine42": "npm:@esotericsoftware/spine-core@4.2",
+    "spine43": "npm:@esotericsoftware/spine-core@4.3"
   },
   "scripts": {
     "build": "rollup -c",

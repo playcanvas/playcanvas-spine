@@ -50,32 +50,3 @@ canvas {
     color: #ff6b6b;
     white-space: pre-wrap;
 }
-
-/* index page */
-
-.index {
-    max-width: 760px;
-    margin: 40px auto;
-    padding: 0 20px;
-    overflow: auto;
-}
-
-body.page {
-    overflow: auto;
-}
-
-.index table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.index th,
-.index td {
-    padding: 8px 10px;
-    border-bottom: 1px solid #444;
-    text-align: left;
-}
-
-.index .note {
-    color: #aaa;
-}

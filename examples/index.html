@@ -1,58 +1,166 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PlayCanvas Spine Examples</title>
-    <link rel="stylesheet" href="./css/example.css">
+    <link rel="stylesheet" href="./css/index.css">
 </head>
-<body class="page">
-    <div class="index">
-        <h1>PlayCanvas Spine Examples</h1>
+<body>
+    <header class="hero">
+        <p class="eyebrow">PlayCanvas Engine plugin</p>
+        <h1>Spine for PlayCanvas</h1>
+        <p class="lead">
+            Play skeletal animations made with the <a href="https://esotericsoftware.com/">Spine</a>
+            editor in PlayCanvas. Each example uses the plugin build for one Spine version, and runs on
+            both WebGL2 and WebGPU.
+        </p>
+        <nav class="actions">
+            <a class="button primary" href="https://github.com/playcanvas/playcanvas-spine">View on GitHub</a>
+            <a class="button" href="https://github.com/playcanvas/playcanvas-spine#usage">How to use it</a>
+        </nav>
+    </header>
+
+    <main class="grid">
+        <article class="card">
+            <a class="thumbnail" href="./spine-4.3.html">
+                <img src="./assets/spine-4.3/thumbnail.webp" alt="Celestial Circus, Diamond and Tank skeletons">
+                <span class="badge">New</span>
+            </a>
+            <div class="content">
+                <div class="heading">
+                    <h2>Spine 4.3</h2>
+                    <code>playcanvas-spine.4.3.js</code>
+                </div>
+                <p>Celestial Circus, Diamond and Tank, rendered with the spine-core 4.3 renderer.</p>
+                <ul class="tags">
+                    <li>Physics</li>
+                    <li>Sliders</li>
+                    <li>Tint black</li>
+                    <li>Blend modes</li>
+                    <li>Clipping</li>
+                </ul>
+                <div class="launch">
+                    <a class="button primary" href="./spine-4.3.html">WebGL2</a>
+                    <a class="button" href="./spine-4.3.html?device=webgpu">WebGPU</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="card">
+            <a class="thumbnail" href="./spine-4.2.html">
+                <img src="./assets/spine-4.2/thumbnail.webp" alt="Spineboy and Celestial Circus skeletons">
+            </a>
+            <div class="content">
+                <div class="heading">
+                    <h2>Spine 4.2</h2>
+                    <code>playcanvas-spine.4.2.js</code>
+                </div>
+                <p>Spineboy running, and Celestial Circus swinging with physics.</p>
+                <ul class="tags">
+                    <li>Physics</li>
+                    <li>Clipping</li>
+                </ul>
+                <div class="launch">
+                    <a class="button primary" href="./spine-4.2.html">WebGL2</a>
+                    <a class="button" href="./spine-4.2.html?device=webgpu">WebGPU</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="card">
+            <a class="thumbnail" href="./spine-4.1.html">
+                <img src="./assets/spine-4.1/thumbnail.webp" alt="Raptor skeleton">
+            </a>
+            <div class="content">
+                <div class="heading">
+                    <h2>Spine 4.1</h2>
+                    <code>playcanvas-spine.4.1.js</code>
+                </div>
+                <p>Spineboy riding the Raptor.</p>
+                <ul class="tags">
+                    <li>Meshes</li>
+                    <li>IK</li>
+                </ul>
+                <div class="launch">
+                    <a class="button primary" href="./spine-4.1.html">WebGL2</a>
+                    <a class="button" href="./spine-4.1.html?device=webgpu">WebGPU</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="card">
+            <a class="thumbnail" href="./spine-4.0.html">
+                <img src="./assets/spine-4.0/thumbnail.webp" alt="Owl and Raptor skeletons">
+            </a>
+            <div class="content">
+                <div class="heading">
+                    <h2>Spine 4.0</h2>
+                    <code>playcanvas-spine.4.0.js</code>
+                </div>
+                <p>The Owl follows the mouse, next to the Raptor.</p>
+                <ul class="tags">
+                    <li>Additive blending</li>
+                    <li>Meshes</li>
+                    <li>IK</li>
+                </ul>
+                <div class="launch">
+                    <a class="button primary" href="./spine-4.0.html">WebGL2</a>
+                    <a class="button" href="./spine-4.0.html?device=webgpu">WebGPU</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="card">
+            <a class="thumbnail" href="./spine-3.8.html">
+                <img src="./assets/spine-3.8/thumbnail.webp" alt="Spineboy skeleton">
+            </a>
+            <div class="content">
+                <div class="heading">
+                    <h2>Spine 3.8</h2>
+                    <code>playcanvas-spine.3.8.js</code>
+                </div>
+                <p>Spineboy jumping out of a portal.</p>
+                <ul class="tags">
+                    <li>Clipping</li>
+                </ul>
+                <div class="launch">
+                    <a class="button primary" href="./spine-3.8.html">WebGL2</a>
+                    <a class="button" href="./spine-3.8.html?device=webgpu">WebGPU</a>
+                </div>
+            </div>
+        </article>
+
+        <article class="card">
+            <a class="thumbnail" href="./spine-3.6.html">
+                <img src="./assets/spine-3.6/thumbnail.webp" alt="Goblins and Alien skeletons">
+            </a>
+            <div class="content">
+                <div class="heading">
+                    <h2>Spine 3.6</h2>
+                    <code>playcanvas-spine.3.6.js</code>
+                </div>
+                <p>The Goblins, with a skin to switch between, and the Alien.</p>
+                <ul class="tags">
+                    <li>Skins</li>
+                    <li>Meshes</li>
+                </ul>
+                <div class="launch">
+                    <a class="button primary" href="./spine-3.6.html">WebGL2</a>
+                    <a class="button" href="./spine-3.6.html?device=webgpu">WebGPU</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
         <p>
-            Each page uses the plugin build for one Spine version, with skeletons exported from that
-            version of the Spine Editor. Add <code>?device=webgpu</code> to a page to use WebGPU.
-        </p>
-        <table>
-            <thead>
-                <tr><th>Spine</th><th>Plugin</th><th>Skeletons</th></tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a href="./spine-4.2.html">4.2</a></td>
-                    <td><code>playcanvas-spine.4.2.js</code></td>
-                    <td>spineboy, celestial-circus (physics)</td>
-                </tr>
-                <tr>
-                    <td><a href="./spine-4.1.html">4.1</a></td>
-                    <td><code>playcanvas-spine.4.1.js</code></td>
-                    <td>raptor</td>
-                </tr>
-                <tr>
-                    <td><a href="./spine-4.0.html">4.0</a></td>
-                    <td><code>playcanvas-spine.4.0.js</code></td>
-                    <td>owl (follows the mouse), raptor</td>
-                </tr>
-                <tr>
-                    <td><a href="./spine-3.8.html">3.8</a></td>
-                    <td><code>playcanvas-spine.3.8.js</code></td>
-                    <td>spineboy (clipping)</td>
-                </tr>
-                <tr>
-                    <td><a href="./spine-3.6.html">3.6</a></td>
-                    <td><code>playcanvas-spine.3.6.js</code></td>
-                    <td>goblins (skins), alien</td>
-                </tr>
-            </tbody>
-        </table>
-        <p class="note">
             The skeletons are Spine example projects from the
-            <a href="https://github.com/EsotericSoftware/spine-runtimes/tree/4.2/examples">Spine Runtimes</a>
-            repository, copyright Esoteric Software. Their images are licensed for non-commercial use only,
-            as described in the <code>license.txt</code> next to each project in
-            <code>examples/assets</code>. They are provided to demonstrate the plugin and are not for use
-            in your projects.
+            <a href="https://github.com/EsotericSoftware/spine-runtimes">Spine Runtimes</a> repository,
+            copyright Esoteric Software. Their images are licensed for non-commercial use only, as described
+            in the <code>license.txt</code> next to each project in <code>examples/assets</code>. They are
+            provided to demonstrate the plugin and are not for use in your projects.
         </p>
-    </div>
+    </footer>
 </body>
 </html>

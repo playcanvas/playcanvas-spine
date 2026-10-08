@@ -138,6 +138,7 @@ const measureBounds = (entity) => {
  * @property {number} [scale] - The scale of the entity. Defaults to 1.
  * @property {string} [animation] - The animation to loop on track 0.
  * @property {string} [skin] - The skin to use.
+ * @property {number} [row] - The row to show the skeleton in, from the top. Defaults to 0.
  * @property {boolean} [controls] - Whether to show the animation and skin pickers. Defaults to true.
  * @property {function(object, object): void} [setup] - Called with the entity and the spine
  * runtime after the spine component is created, for skeletons that need custom animation logic.
@@ -255,7 +256,7 @@ async function runExample({ version, skeletons }) {
         config.setup?.(entity, window.spine);
 
         const { minX, minY, maxX, maxY } = measureBounds(entity);
-        layout.push({ entity, minX: minX * scale, minY: minY * scale, maxX: maxX * scale, maxY: maxY * scale });
+        layout.push({ entity, row: config.row ?? 0, minX: minX * scale, minY: minY * scale, maxX: maxX * scale, maxY: maxY * scale });
 
         const row = createElement('div', { className: 'row' }, [
             createElement('a', { href: license, target: '_blank', textContent: config.name, title: 'License' })
@@ -272,16 +273,30 @@ async function runExample({ version, skeletons }) {
         controls.append(row);
     });
 
-    // lay the skeletons out side by side
+    // lay the skeletons out side by side in centered rows, stacked from the top down
     const gap = 1;
-    const bounds = { minX: 0, minY: Infinity, maxX: 0, maxY: -Infinity };
-    for (const { entity, minX, minY, maxX, maxY } of layout) {
-        entity.setLocalPosition(bounds.maxX - minX, 0, 0);
-        bounds.maxX += maxX - minX + gap;
-        bounds.minY = Math.min(bounds.minY, minY);
-        bounds.maxY = Math.max(bounds.maxY, maxY);
+    const rows = [];
+    for (const item of layout) {
+        (rows[item.row] ??= []).push(item);
     }
-    bounds.maxX -= gap;
+    const bounds = { minX: 0, minY: 0, maxX: 0, maxY: 0 };
+    for (const row of rows.filter(Boolean)) {
+        const width = row.reduce((sum, { minX, maxX }) => sum + maxX - minX, 0) + gap * (row.length - 1);
+        const height = Math.max(...row.map(({ minY, maxY }) => maxY - minY));
+        const bottom = bounds.minY - height;
+
+        // align the bottoms of the skeletons in the row
+        let left = -width / 2;
+        for (const { entity, minX, minY, maxX } of row) {
+            entity.setLocalPosition(left - minX, bottom - minY, 0);
+            left += maxX - minX + gap;
+        }
+
+        bounds.minX = Math.min(bounds.minX, -width / 2);
+        bounds.maxX = Math.max(bounds.maxX, width / 2);
+        bounds.minY = bottom - gap;
+    }
+    bounds.minY += gap;
 
     // an orthographic camera framing all the skeletons
     const margin = 1.15;

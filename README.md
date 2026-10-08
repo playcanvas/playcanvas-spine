@@ -4,22 +4,34 @@ A [Spine](http://esotericsoftware.com/) plugin for the PlayCanvas Engine.
 
 [![CI][ci-badge]][ci-url]
 
-The `examples` folder has an example for each supported Spine version. To run them, run `npm run serve` and open `http://localhost:8080/examples/`.
+See the [examples](https://playcanvas.github.io/playcanvas-spine/examples/) for each supported Spine version. To run them locally, run `npm run serve` and open `http://localhost:8080/examples/`.
 
 ## Usage
 
 ### Versions
 
-The following plugins are available:
+Use the plugin matching the version of the Spine Editor the animations were exported with:
 
-| Spine Editor | PlayCanvas Engine |
-| ------------ | ----------------- |
-| 3.6          | Up to 1.65        |
-| 3.8          | Up to 1.65        |
-| 4.0          | 1.27 and later    |
-| 4.1          | 1.27 and later    |
+| Spine Editor | Plugin                    |
+| ------------ | ------------------------- |
+| 4.3          | `playcanvas-spine.4.3.js` |
+| 4.2          | `playcanvas-spine.4.2.js` |
+| 4.1          | `playcanvas-spine.4.1.js` |
+| 4.0          | `playcanvas-spine.4.0.js` |
+| 3.8          | `playcanvas-spine.3.8.js` |
+| 3.6          | `playcanvas-spine.3.6.js` |
+
+All plugins are tested with PlayCanvas Engine 2.23.1, on WebGL2 and WebGPU.
 
 Each plugin provides both a Component System to PlayCanvas Engine and the corresponding `spine-core` runtime to your scripts as global variable called `spine`.  This allows developers to leverage the full spine library.
+
+### Spine 4.3
+
+The 4.3 plugin renders using the `SkeletonRendererCore` of the spine-core runtime, which adds support for slot blend modes and tint black. Atlases exported with and without premultiplied alpha are both supported.
+
+Spine 4.3 changed parts of the spine-core API, for example `skeleton.setToSetupPose()` is now `skeleton.setupPose()`, so scripts using the `spine` global need updating. See the [Spine Runtimes changelog](https://github.com/EsotericSoftware/spine-runtimes/blob/4.3/CHANGELOG.md) for details. `setTint(color)` tints the whole skeleton; to tint parts of a skeleton, set the color of its slots.
+
+Colors match the Spine Editor exactly when the atlas textures have sRGB disabled. With sRGB enabled, the texture filtering is done in linear space, which slightly changes antialiased edges.
 
 ### Editor
 
@@ -44,7 +56,7 @@ entity.addComponent("spine", {
 
 ## Building
 
-Prebuilt versions of the PlayCanvas Spine library can be found in the `lib` folder. However, to build them yourself, first install the NPM package dependencies:
+Prebuilt versions of the PlayCanvas Spine library can be found in the `build` folder. However, to build them yourself, first install the NPM package dependencies:
 
 `npm install`
 
