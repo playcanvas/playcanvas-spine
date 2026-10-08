@@ -37,7 +37,7 @@
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "eslint": "^8.49.0",
-    "playcanvas": "^1.70.2",
+    "playcanvas": "^2.23.1",
     "rollup": "^4.17.2",
     "semver": "^7.6.1",
     "serve": "^14.2.3",

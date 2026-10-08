@@ -4,9 +4,7 @@ A [Spine](http://esotericsoftware.com/) plugin for the PlayCanvas Engine.
 
 [![CI][ci-badge]][ci-url]
 
-![](images/spine-man.gif)
-
-Examples such as the Hero above can be found in the `examples` folder. To run them, start a local web server and go to `http://localhost/path/to/examples/hero.html` (the path will depend on your file serving root directory).
+The `examples` folder has an example for each supported Spine version. To run them, run `npm run serve` and open `http://localhost:8080/examples/`.
 
 ## Usage
 
