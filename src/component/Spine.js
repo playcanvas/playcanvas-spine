@@ -92,10 +92,13 @@ class Spine {
         this._spine_3_6_0 = semver.satisfies(this.skeletonVersion, '<=3.6.0'); // version 3.6.0 or below
         this._spine_3_7_99 = semver.satisfies(this.skeletonVersion, '<=3.7.99'); // version 3.7.99 or below
         this._spine_4_0_X = semver.satisfies(this.skeletonVersion, '~4.0.0'); // version 4.0 family (4.0.31 - 4.0.79-beta)
-        this._spine_4_1_X = semver.satisfies(this.skeletonVersion, '~4.1.23'); // version 4.1 family
+        this._spine_4_1_plus = semver.satisfies(this.skeletonVersion, '>=4.1.0'); // version 4.1 or later
+
+        // spine 4.2 added physics constraints, and updateWorldTransform requires the physics mode
+        this._physics = spine.Physics ? spine.Physics.update : undefined;
 
         this.skeleton = new spine.Skeleton(_skeletonData);
-        this.skeleton.updateWorldTransform();
+        this.skeleton.updateWorldTransform(this._physics);
 
         this.stateData = new spine.AnimationStateData(this.skeleton.data);
         this.states = [new spine.AnimationState(this.stateData)];
@@ -313,7 +316,7 @@ class Spine {
         // convert vertices to world space
         slot.positions.length = 0;
         if (attachment instanceof spine.RegionAttachment) {
-            if (this._spine_4_1_X) {
+            if (this._spine_4_1_plus) {
                 attachment.computeWorldVertices(slot, slot.positions, 0, 2);
             } else {
                 attachment.computeWorldVertices(
@@ -352,16 +355,29 @@ class Spine {
         if (clipper.isClipping()) {
             // clip triangles on CPU
             const twoColorTint = false;
-            clipper.clipTriangles(
-                slot.positions,
-                0,
-                srcTriangles,
-                srcTriangles.length,
-                attachment.uvs,
-                spine.Color.WHITE,
-                spine.Color.WHITE,
-                twoColorTint
-            );
+            if (this._physics !== undefined) {
+                // spine 4.2 removed the verticesLength parameter
+                clipper.clipTriangles(
+                    slot.positions,
+                    srcTriangles,
+                    srcTriangles.length,
+                    attachment.uvs,
+                    spine.Color.WHITE,
+                    spine.Color.WHITE,
+                    twoColorTint
+                );
+            } else {
+                clipper.clipTriangles(
+                    slot.positions,
+                    0,
+                    srcTriangles,
+                    srcTriangles.length,
+                    attachment.uvs,
+                    spine.Color.WHITE,
+                    spine.Color.WHITE,
+                    twoColorTint
+                );
+            }
 
             // copy clipped vertex data
             slot.positions.length = 0;
@@ -650,8 +666,13 @@ class Spine {
             this.states[i].apply(this.skeleton);
         }
 
+        // advance the skeleton time used by spine 4.2 physics constraints
+        if (this._physics !== undefined) {
+            this.skeleton.update(dt);
+        }
+
         if (this.autoUpdate) {
-            this.skeleton.updateWorldTransform();
+            this.skeleton.updateWorldTransform(this._physics);
         }
 
         this.updateSkeleton();
