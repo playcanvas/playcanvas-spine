@@ -1,4 +1,4 @@
-/* Copyright 2015-2025 PlayCanvas Ltd */
+/* Copyright 2015-2026 PlayCanvas Ltd */
 
 var spine = (function (pc) {
 	'use strict';
@@ -9323,9 +9323,10 @@ var spine = (function (pc) {
 	    this._spine_3_6_0 = semver.satisfies(this.skeletonVersion, '<=3.6.0');
 	    this._spine_3_7_99 = semver.satisfies(this.skeletonVersion, '<=3.7.99');
 	    this._spine_4_0_X = semver.satisfies(this.skeletonVersion, '~4.0.0');
-	    this._spine_4_1_X = semver.satisfies(this.skeletonVersion, '~4.1.23');
+	    this._spine_4_1_plus = semver.satisfies(this.skeletonVersion, '>=4.1.0');
+	    this._physics = spine$1.Physics ? spine$1.Physics.update : undefined;
 	    this.skeleton = new spine$1.Skeleton(_skeletonData);
-	    this.skeleton.updateWorldTransform();
+	    this.skeleton.updateWorldTransform(this._physics);
 	    this.stateData = new spine$1.AnimationStateData(this.skeleton.data);
 	    this.states = [new spine$1.AnimationState(this.stateData)];
 	    this.clipper = new spine$1.SkeletonClipping();
@@ -9504,7 +9505,7 @@ var spine = (function (pc) {
 	      }
 	      slot.positions.length = 0;
 	      if (attachment instanceof spine$1.RegionAttachment) {
-	        if (this._spine_4_1_X) {
+	        if (this._spine_4_1_plus) {
 	          attachment.computeWorldVertices(slot, slot.positions, 0, 2);
 	        } else {
 	          attachment.computeWorldVertices(slot.bone, slot.positions, 0, 2);
@@ -9524,7 +9525,11 @@ var spine = (function (pc) {
 	      var count;
 	      if (clipper.isClipping()) {
 	        var twoColorTint = false;
-	        clipper.clipTriangles(slot.positions, 0, srcTriangles, srcTriangles.length, attachment.uvs, spine$1.Color.WHITE, spine$1.Color.WHITE, twoColorTint);
+	        if (this._physics !== undefined) {
+	          clipper.clipTriangles(slot.positions, srcTriangles, srcTriangles.length, attachment.uvs, spine$1.Color.WHITE, spine$1.Color.WHITE, twoColorTint);
+	        } else {
+	          clipper.clipTriangles(slot.positions, 0, srcTriangles, srcTriangles.length, attachment.uvs, spine$1.Color.WHITE, spine$1.Color.WHITE, twoColorTint);
+	        }
 	        slot.positions.length = 0;
 	        slot.uvs.length = 0;
 	        var vertexSize = twoColorTint ? 12 : 8;
@@ -9576,7 +9581,9 @@ var spine = (function (pc) {
 	          continue;
 	        }
 	        this.updateSlot(slot, clipper);
+	        clipper.clipEndWithSlot(slot);
 	      }
+	      clipper.clipEnd();
 	    }
 	  }, {
 	    key: "render",
@@ -9679,8 +9686,11 @@ var spine = (function (pc) {
 	      for (i = 0; i < n; i++) {
 	        this.states[i].apply(this.skeleton);
 	      }
+	      if (this._physics !== undefined) {
+	        this.skeleton.update(dt);
+	      }
 	      if (this.autoUpdate) {
-	        this.skeleton.updateWorldTransform();
+	        this.skeleton.updateWorldTransform(this._physics);
 	      }
 	      this.updateSkeleton();
 	      this.render();
@@ -10040,7 +10050,9 @@ var spine = (function (pc) {
 	(function () {
 	  var app = pc__namespace.Application.getApplication();
 	  if (!app) {
-	    console.warn("No Application found. An Application or AppBase must be instantiated before `playcanvas-spine`.");
+	    if (typeof document !== 'undefined') {
+	      console.warn("No Application found. An Application or AppBase must be instantiated before `playcanvas-spine`.");
+	    }
 	    return;
 	  }
 	  var system = new SpineComponentSystem(app);
