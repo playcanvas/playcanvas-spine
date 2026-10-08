@@ -449,7 +449,13 @@ class Spine {
 
             // update slot geometry
             this.updateSlot(slot, clipper);
+
+            // the clipping attachment's end slot can be a drawn slot
+            clipper.clipEndWithSlot(slot);
         }
+
+        // do not carry clipping over to the next frame
+        clipper.clipEnd();
     }
 
     render() {
