@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PlayCanvas Spine 4.2</title>
+    <link rel="stylesheet" href="./css/example.css">
+</head>
+<body>
+    <canvas id="application-canvas"></canvas>
+    <script src="./js/example.js"></script>
+    <script>
+        runExample({
+            version: '4.2',
+            skeletons: [
+                { name: 'spineboy', animation: 'run' },
+                // uses physics constraints, new in spine 4.2
+                { name: 'celestial-circus', scale: 0.3, animation: 'swing' }
+            ]
+        });
+    </script>
+</body>
+</html>

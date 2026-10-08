@@ -1,0 +1,54 @@
+# Publishes the examples to GitHub Pages. The examples use the committed builds in the build
+# folder, so the site shows the released plugin rather than unreleased source changes.
+
+name: Deploy Examples
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches: ['main']
+    paths: ['build/**', 'examples/**', '.github/workflows/deploy.yml']
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# allow only one concurrent deployment
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 10
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}examples/
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Stage site
+        run: |
+          mkdir _site
+          cp -r build examples _site/
+          echo '<!DOCTYPE html><meta http-equiv="refresh" content="0; url=examples/">' > _site/index.html
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

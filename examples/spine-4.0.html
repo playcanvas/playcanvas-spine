@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PlayCanvas Spine 4.0</title>
+    <link rel="stylesheet" href="./css/example.css">
+</head>
+<body>
+    <canvas id="application-canvas"></canvas>
+    <script src="./js/example.js"></script>
+    <script>
+        runExample({
+            version: '4.0',
+            skeletons: [
+                {
+                    name: 'owl',
+                    scale: 0.5,
+                    controls: false,
+                    // the owl looks at the mouse by blending additive animations on top of idle
+                    setup: (entity, spine) => {
+                        const { skeleton, state } = entity.spine;
+
+                        // the look animations key bones and mesh deforms that idle does not, so
+                        // reset the skeleton after each frame or the additive animations
+                        // accumulate on them
+                        entity.spine.system.app.on('update', () => skeleton.setToSetupPose());
+
+                        state.setAnimation(0, 'idle', true);
+                        state.setAnimation(1, 'blink', true);
+                        const look = ['left', 'right', 'up', 'down'].map((name, index) => {
+                            const track = state.setAnimation(index + 2, name, true);
+                            track.mixBlend = spine.MixBlend.add;
+                            track.alpha = 0;
+                            return track;
+                        });
+                        const [left, right, up, down] = look;
+                        window.addEventListener('pointermove', (event) => {
+                            const x = event.clientX / window.innerWidth * 2 - 1;
+                            const y = event.clientY / window.innerHeight * 2 - 1;
+                            right.alpha = Math.max(-x, 0);
+                            left.alpha = Math.max(x, 0);
+                            up.alpha = Math.max(-y, 0);
+                            down.alpha = Math.max(y, 0);
+                        });
+                    }
+                },
+                { name: 'raptor', scale: 0.5, animation: 'walk' }
+            ]
+        });
+    </script>
+</body>
+</html>

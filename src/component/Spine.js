@@ -489,22 +489,12 @@ class Spine {
             this._renderCounts.indexCount > 0 &&
             this._renderCounts.vertexCount > 0
         ) {
-            // update aabb
-            this.skeleton.getBounds(
-                this._aabbTempOffset,
-                this._aabbTempSize,
-                this._aabbTempArray
-            );
-            this._aabb.center = new pc.Vec3(
-                this._aabbTempOffset.x,
-                this._aabbTempOffset.y,
-                0
-            );
-            this._aabb.halfExtents = new pc.Vec3(
-                0.5 * this._aabbTempSize.x,
-                0.5 * this._aabbTempSize.y,
-                0
-            );
+            // update aabb, getBounds returns the bottom left corner and the size of the bounds
+            const offset = this._aabbTempOffset;
+            const size = this._aabbTempSize;
+            this.skeleton.getBounds(offset, size, this._aabbTempArray);
+            this._aabb.center.set(offset.x + 0.5 * size.x, offset.y + 0.5 * size.y, 0);
+            this._aabb.halfExtents.set(0.5 * size.x, 0.5 * size.y, 0);
 
             // make vertex buffer at least required size
             if (
