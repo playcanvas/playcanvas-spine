@@ -15763,7 +15763,6 @@ var spine = (function (pc) {
 	          mesh.vertexBuffer = null;
 	          mesh.indexBuffer[0] = null;
 	          meshInstance.destroy();
-	          mesh.destroy();
 	        }
 	      } catch (err) {
 	        _iterator2.e(err);
