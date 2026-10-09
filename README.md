@@ -37,6 +37,17 @@ Spine 4.3 changed parts of the spine-core API, for example `skeleton.setToSetupP
 
 Like the Spine Editor and the Spine Runtimes, the 4.3 plugin renders in gamma space, so the atlas textures need to be loaded with sRGB disabled. In the Editor, disable sRGB on the imported texture assets. The plugin logs a warning when an atlas texture is sRGB.
 
+Physics constraints react to the animation of the skeleton, but not to the movement of its entity. To pass the movement and rotation of the entity to physics, so that hair and cloth swing when the entity moves, enable the `physicsInheritance` attribute of the `spine` script in the Editor, or use the `skeletonPhysics` object of the spine-core runtime in code:
+
+```javascript
+const { skeletonPhysics } = entity.spine.spine;
+skeletonPhysics.setPositionInheritance(1, 1);
+skeletonPhysics.rotationInheritance = 1;
+
+// after teleporting the entity, so the jump is not passed to physics
+skeletonPhysics.resetTransform();
+```
+
 The 4.3 plugin also loads skeletons exported in the binary `.skel` format, which are smaller and faster to load than JSON. They are imported into the Editor as binary assets, assigned to the `skeletonBinary` attribute of the `spine` script instead of `skeleton`. In engine-only projects, load them as `binary` assets.
 
 ### Editor

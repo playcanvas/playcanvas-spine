@@ -41,7 +41,7 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "lint": "eslint src",
+    "lint": "eslint src build/spine.js",
     "serve": "serve ./ -l 8080 --no-request-logging"
   },
   "overrides": {
