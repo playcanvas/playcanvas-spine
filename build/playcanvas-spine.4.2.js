@@ -13275,6 +13275,9 @@ var spine = (function (pc) {
 	    _defineProperty(this, "autoUpdate", true);
 	    _defineProperty(this, "skeleton", void 0);
 	    _defineProperty(this, "states", void 0);
+	    if (skeletonData instanceof ArrayBuffer || ArrayBuffer.isView(skeletonData)) {
+	      throw new Error('playcanvas-spine: binary .skel skeletons are only supported by the Spine 4.3 plugin. Export the skeleton as JSON for this version.');
+	    }
 	    this._app = app;
 	    this._position = new pc__namespace.Vec3();
 	    var atlas;
@@ -13790,7 +13793,7 @@ var spine = (function (pc) {
 	      if (type === 'texture') {
 	        this.textures.push(resource);
 	      }
-	      if (type === 'json') {
+	      if (type === 'json' || type === 'binary') {
 	        this.skeletonData = resource;
 	      }
 	      if (type === 'text') {
