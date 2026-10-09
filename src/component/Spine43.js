@@ -37,6 +37,15 @@ const SHADER_DESC = {
 // spine packs colors as 0xAARRGGBB, which the vertex buffer needs as bytes in RGBA order
 const toRGBA = color => ((color & 0xff00ff00) | ((color >> 16) & 0xff) | ((color & 0xff) << 16)) >>> 0;
 
+// logs each warning once, like the Debug.warnOnce of the engine, which plugins have no access to
+const warnings = new Set();
+const warnOnce = (message) => {
+    if (!warnings.has(message)) {
+        warnings.add(message);
+        console.warn(message);
+    }
+};
+
 /**
  * A Spine animation object, for Spine 4.3. Rendering is done by the SkeletonRendererCore of the
  * spine-core runtime, which handles attachments, clipping, blend modes and colors.
@@ -82,6 +91,11 @@ class Spine {
 
             // textures without premultiplied alpha are premultiplied by the shader
             texture.premultipliedAlpha = page.pma;
+
+            // spine renders in gamma space, so the textures need to be sampled without sRGB decoding
+            if (texture.pcTexture.srgb) {
+                warnOnce(`playcanvas-spine: the texture '${page.name}' is sRGB, so the skeleton will not render with the right colors. Load Spine atlas textures with sRGB disabled.`);
+            }
         }
 
         const json = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(atlas));
@@ -185,7 +199,6 @@ class Spine {
             const pcTexture = texture.pcTexture;
             material = new pc.ShaderMaterial(SHADER_DESC);
             material.setParameter('uTexture', pcTexture);
-            material.setParameter('uTextureSrgb', pcTexture.srgb ? 1 : 0);
             material.setParameter('uPremultiply', texture.premultipliedAlpha ? 0 : 1);
             material.blendState = BLEND_STATES[blendMode];
             material.depthWrite = false;
@@ -376,12 +389,14 @@ class Spine {
     }
 
     /**
-     * Tints the whole skeleton. To tint parts of a skeleton, set the color of its slots.
+     * Not supported in Spine 4.3, which tints using the colors of the spine-core runtime instead:
+     * `skeleton.color` for the whole skeleton, and the colors of its slots and attachments for
+     * parts of it.
      *
-     * @param {pc.Color} color - The tint color.
+     * @ignore
      */
-    setTint(color) {
-        this.skeleton.color.set(color.r, color.g, color.b, color.a);
+    setTint() {
+        warnOnce('playcanvas-spine: setTint is not supported by the Spine 4.3 plugin. Use the colors of the skeleton, slots or attachments instead, for example skeleton.color or skeleton.findSlot(name).getPose().color.');
     }
 
     removeFromLayers() {

@@ -196,13 +196,18 @@ async function runExample({ version, skeletons }) {
     // the plugin registers its component system with the application when it loads, so it is
     // loaded as a script asset once the application exists
     const pluginAsset = new pc.Asset(pluginFile, 'script', { url: `../build/${pluginFile}` });
+
+    // the 4.3 plugin renders in gamma space and needs textures without sRGB, earlier plugins
+    // render with a StandardMaterial and need sRGB textures
+    const srgb = parseFloat(version) < 4.3;
+
     const skeletonAssets = skeletons.map(({ name }) => {
         const folder = `./assets/spine-${version}/${name}/`;
         return {
             json: new pc.Asset(`${name}-pro.json`, 'json', { url: `${folder}${name}-pro.json` }),
             atlas: new pc.Asset(`${name}-pma.atlas`, 'text', { url: `${folder}${name}-pma.atlas` }),
             // the asset name has to match the page name in the atlas
-            texture: new pc.Asset(`${name}-pma.png`, 'texture', { url: `${folder}${name}-pma.png` }, { srgb: true }),
+            texture: new pc.Asset(`${name}-pma.png`, 'texture', { url: `${folder}${name}-pma.png` }, { srgb }),
             license: `${folder}license.txt`
         };
     });

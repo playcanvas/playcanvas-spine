@@ -33,21 +33,12 @@ varying vec4 vDark;
 
 uniform sampler2D uTexture;
 
-// 1 when the texture is sampled with sRGB decoding, which is undone to get the gamma space color
-uniform float uTextureSrgb;
-
 // 1 when the texture alpha is not premultiplied
 uniform float uPremultiply;
 
-vec3 encodeSrgb(vec3 color) {
-    vec3 low = color * 12.92;
-    vec3 high = 1.055 * pow(color, vec3(1.0 / 2.4)) - 0.055;
-    return mix(high, low, step(color, vec3(0.0031308)));
-}
-
 void main(void) {
+    // the texture is not sRGB, so it is sampled in gamma space
     vec4 texColor = texture2D(uTexture, vUv0);
-    texColor.rgb = mix(texColor.rgb, encodeSrgb(texColor.rgb), uTextureSrgb);
     texColor.rgb *= mix(1.0, texColor.a, uPremultiply);
 
     // the two color tint, light and dark colors are premultiplied by alpha
@@ -95,23 +86,14 @@ varying vDark: vec4f;
 var uTexture: texture_2d<f32>;
 var uTextureSampler: sampler;
 
-// 1 when the texture is sampled with sRGB decoding, which is undone to get the gamma space color
-uniform uTextureSrgb: f32;
-
 // 1 when the texture alpha is not premultiplied
 uniform uPremultiply: f32;
-
-fn encodeSrgb(color: vec3f) -> vec3f {
-    let low = color * 12.92;
-    let high = 1.055 * pow(color, vec3f(1.0 / 2.4)) - 0.055;
-    return mix(high, low, step(color, vec3f(0.0031308)));
-}
 
 @fragment
 fn fragmentMain(input: FragmentInput) -> FragmentOutput {
     var output: FragmentOutput;
+    // the texture is not sRGB, so it is sampled in gamma space
     var texColor = textureSample(uTexture, uTextureSampler, input.vUv0);
-    texColor = vec4f(mix(texColor.rgb, encodeSrgb(texColor.rgb), uniform.uTextureSrgb), texColor.a);
     texColor = vec4f(texColor.rgb * mix(1.0, texColor.a, uniform.uPremultiply), texColor.a);
 
     // the two color tint, light and dark colors are premultiplied by alpha
