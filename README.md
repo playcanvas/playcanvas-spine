@@ -37,6 +37,8 @@ Spine 4.3 changed parts of the spine-core API, for example `skeleton.setToSetupP
 
 Like the Spine Editor and the Spine Runtimes, the 4.3 plugin renders in gamma space, so the atlas textures need to be loaded with sRGB disabled. In the Editor, disable sRGB on the imported texture assets. The plugin logs a warning when an atlas texture is sRGB.
 
+The 4.3 plugin also loads skeletons exported in the binary `.skel` format, which are smaller and faster to load than JSON. They are imported into the Editor as binary assets, assigned to the `skeletonBinary` attribute of the `spine` script instead of `skeleton`. In engine-only projects, load them as `binary` assets.
+
 ### Editor
 
 Add the plugin matching the Spine version used to export the animations, i.e `build/playcanvas-spine.X.X.min.js` and the PlayCanvas script `build/spine.js` to your project.
@@ -54,7 +56,7 @@ var entity = new pc.Entity();
 entity.addComponent("spine", {
     atlasAsset: atlas,       // atlas text asset id
     textureAssets: textures, // array of texture asset ids
-    skeletonAsset: skeleton  // skeleton json asset id
+    skeletonAsset: skeleton  // skeleton json asset id, or binary asset id for a .skel skeleton (4.3 only)
 });
 ```
 
