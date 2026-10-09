@@ -155,7 +155,6 @@ class Spine {
             mesh.vertexBuffer = null;
             mesh.indexBuffer[0] = null;
             meshInstance.destroy();
-            mesh.destroy();
         }
         this._meshInstancePool.length = 0;
         this._meshInstances.length = 0;

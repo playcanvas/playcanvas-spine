@@ -4,7 +4,7 @@ A [Spine](http://esotericsoftware.com/) plugin for the PlayCanvas Engine.
 
 [![CI][ci-badge]][ci-url]
 
-See the [Spine page](https://developer.playcanvas.com/user-manual/2D/spine/) of the PlayCanvas User Manual for how to use the plugin in the Editor and in engine-only projects, including the texture setup, controlling animations and the changes in Spine 4.3.
+See the [Spine page](https://developer.playcanvas.com/user-manual/2D/spine/) of the PlayCanvas User Manual for how to use the plugin in the Editor and in engine-only projects, including the texture setup, controlling animations and the changes in Spine 4.3. The [Spine Animation tutorial](https://developer.playcanvas.com/tutorials/spine-animation/) is a complete Editor project using the plugin.
 
 See the [examples](https://playcanvas.github.io/playcanvas-spine/examples/) for each supported Spine version. To run them locally, run `npm run serve` and open `http://localhost:8080/examples/`.
 
