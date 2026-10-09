@@ -60,7 +60,8 @@ class SpineComponent extends Component {
         if (type === 'texture') {
             this.textures.push(resource);
         }
-        if (type === 'json') {
+        // skeletons exported as json, or in the binary .skel format, which loads as an ArrayBuffer
+        if (type === 'json' || type === 'binary') {
             this.skeletonData = resource;
         }
         if (type === 'text') {

@@ -76,7 +76,8 @@ class Spine {
      *
      * @param {pc.AppBase} app - The application that will manage this Spine object.
      * @param {string} atlasData - Text data loaded from the atlas file.
-     * @param {object} skeletonData - JSON data loaded from the skeleton file.
+     * @param {object|ArrayBuffer} skeletonData - JSON data loaded from the skeleton file, or the
+     * contents of a binary .skel skeleton file.
      * @param {object} textureData - Texture initialization data. An object where the key is the
      * texture filename and the value is the pc.Texture resource.
      */
@@ -98,9 +99,12 @@ class Spine {
             }
         }
 
-        const json = new spine.SkeletonJson(new spine.AtlasAttachmentLoader(atlas));
-        json.scale *= 0.01;
-        const _skeletonData = json.readSkeletonData(skeletonData);
+        // skeletons exported in the binary .skel format load as an ArrayBuffer
+        const attachmentLoader = new spine.AtlasAttachmentLoader(atlas);
+        const binary = skeletonData instanceof ArrayBuffer || ArrayBuffer.isView(skeletonData);
+        const reader = binary ? new spine.SkeletonBinary(attachmentLoader) : new spine.SkeletonJson(attachmentLoader);
+        reader.scale *= 0.01;
+        const _skeletonData = reader.readSkeletonData(skeletonData);
         this.skeletonVersion = semver.valid(semver.coerce(_skeletonData.version));
 
         this.skeleton = new spine.Skeleton(_skeletonData);

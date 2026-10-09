@@ -46,6 +46,10 @@ class Spine {
      * texture filename and the value is the pc.Texture resource.
      */
     constructor(app, atlasData, skeletonData, textureData) {
+        if (skeletonData instanceof ArrayBuffer || ArrayBuffer.isView(skeletonData)) {
+            throw new Error('playcanvas-spine: binary .skel skeletons are only supported by the Spine 4.3 plugin. Export the skeleton as JSON for this version.');
+        }
+
         this._app = app;
 
         this._position = new pc.Vec3();

@@ -7,6 +7,7 @@
  * - engine=<version>|<url>: the engine build to load (default ENGINE_VERSION)
  * - debug: load the debug engine build, which reports deprecated API use
  * - min: load the minified plugin build
+ * - skeleton=binary: load the skeletons from their binary .skel exports, on pages which have them
  */
 
 // the engine version the examples are tested with
@@ -151,10 +152,13 @@ const measureBounds = (entity) => {
  * @param {string} options.version - The Spine version, which selects the plugin build and the
  * asset folder.
  * @param {SkeletonConfig[]} options.skeletons - The skeletons to show, left to right.
+ * @param {boolean} [options.binary] - Whether the skeletons also have binary .skel exports, which
+ * the page can load instead of the json exports.
  */
-async function runExample({ version, skeletons }) {
+async function runExample({ version, skeletons, binary = false }) {
     const deviceType = params.get('device') === 'webgpu' ? 'webgpu' : 'webgl2';
     const pluginFile = `playcanvas-spine.${version}${params.has('min') ? '.min' : ''}.js`;
+    const skeletonFormat = binary && params.get('skeleton') === 'binary' ? 'binary' : 'json';
 
     // overlay with the example details and controls
     const controls = createElement('div', { className: 'controls' });
@@ -170,6 +174,10 @@ async function runExample({ version, skeletons }) {
             createElement('label', { textContent: 'Plugin' }),
             createSelect(['full', 'min'], params.has('min') ? 'min' : 'full', value => reloadWith('min', value === 'min' ? '' : null))
         ]),
+        ...(binary ? [createElement('div', { className: 'row' }, [
+            createElement('label', { textContent: 'Skeleton' }),
+            createSelect(['json', 'binary'], skeletonFormat, value => reloadWith('skeleton', value === 'json' ? null : value))
+        ])] : []),
         controls,
         errorPanel
     ]));
@@ -191,7 +199,7 @@ async function runExample({ version, skeletons }) {
     window.addEventListener('resize', () => app.resizeCanvas());
     app.start();
 
-    info.textContent = `Engine ${pc.version} · ${device.deviceType} · ${pluginFile}`;
+    info.textContent = `Engine ${pc.version} · ${device.deviceType} · ${pluginFile} · ${skeletonFormat} skeletons`;
 
     // the plugin registers its component system with the application when it loads, so it is
     // loaded as a script asset once the application exists
@@ -204,7 +212,10 @@ async function runExample({ version, skeletons }) {
     const skeletonAssets = skeletons.map(({ name }) => {
         const folder = `./assets/spine-${version}/${name}/`;
         return {
-            json: new pc.Asset(`${name}-pro.json`, 'json', { url: `${folder}${name}-pro.json` }),
+            // binary .skel exports load as binary assets, and are smaller and faster to parse
+            skeleton: skeletonFormat === 'binary' ?
+                new pc.Asset(`${name}-pro.skel`, 'binary', { url: `${folder}${name}-pro.skel` }) :
+                new pc.Asset(`${name}-pro.json`, 'json', { url: `${folder}${name}-pro.json` }),
             atlas: new pc.Asset(`${name}-pma.atlas`, 'text', { url: `${folder}${name}-pma.atlas` }),
             // the asset name has to match the page name in the atlas
             texture: new pc.Asset(`${name}-pma.png`, 'texture', { url: `${folder}${name}-pma.png` }, { srgb }),
@@ -212,7 +223,7 @@ async function runExample({ version, skeletons }) {
         };
     });
 
-    const allAssets = [pluginAsset, ...skeletonAssets.flatMap(({ json, atlas, texture }) => [json, atlas, texture])];
+    const allAssets = [pluginAsset, ...skeletonAssets.flatMap(({ skeleton, atlas, texture }) => [skeleton, atlas, texture])];
     await new Promise((resolve) => {
         new pc.AssetListLoader(allAssets, app.assets).load(resolve);
     });
@@ -226,7 +237,7 @@ async function runExample({ version, skeletons }) {
     const layout = [];
 
     skeletons.forEach((config, index) => {
-        const { json, atlas, texture, license } = skeletonAssets[index];
+        const { skeleton: skeletonAsset, atlas, texture, license } = skeletonAssets[index];
         const scale = config.scale ?? 1;
 
         const entity = new pc.Entity(config.name);
@@ -236,7 +247,7 @@ async function runExample({ version, skeletons }) {
 
         entity.addComponent('spine', {
             atlasAsset: atlas.id,
-            skeletonAsset: json.id,
+            skeletonAsset: skeletonAsset.id,
             textureAssets: [texture.id]
         });
 
