@@ -11899,9 +11899,11 @@ var spine = (function (pc) {
 	      this._meshes = [];
 	      this._meshInstances.length = 0;
 	      if (this._renderCounts.indexCount > 0 && this._renderCounts.vertexCount > 0) {
-	        this.skeleton.getBounds(this._aabbTempOffset, this._aabbTempSize, this._aabbTempArray);
-	        this._aabb.center = new pc__namespace.Vec3(this._aabbTempOffset.x, this._aabbTempOffset.y, 0);
-	        this._aabb.halfExtents = new pc__namespace.Vec3(0.5 * this._aabbTempSize.x, 0.5 * this._aabbTempSize.y, 0);
+	        var offset = this._aabbTempOffset;
+	        var size = this._aabbTempSize;
+	        this.skeleton.getBounds(offset, size, this._aabbTempArray);
+	        this._aabb.center.set(offset.x + 0.5 * size.x, offset.y + 0.5 * size.y, 0);
+	        this._aabb.halfExtents.set(0.5 * size.x, 0.5 * size.y, 0);
 	        if (!this._vertexBuffer || this._vertexBuffer.getNumVertices() < this._renderCounts.vertexCount) {
 	          if (this._vertexBuffer) this._vertexBuffer.destroy();
 	          this._vertexBuffer = new pc__namespace.VertexBuffer(this._app.graphicsDevice, this._vertexFormat, this._renderCounts.vertexCount);
