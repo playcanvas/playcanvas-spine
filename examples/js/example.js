@@ -44,6 +44,12 @@ const createSelect = (options, value, onChange) => {
     return select;
 };
 
+const createCheckbox = (text, checked, onChange) => {
+    const input = createElement('input', { type: 'checkbox', checked });
+    input.addEventListener('change', () => onChange(input.checked));
+    return createElement('label', { className: 'checkbox' }, [input, text]);
+};
+
 // reload the page with one URL parameter changed
 const reloadWith = (name, value) => {
     if (value === null) {
@@ -134,11 +140,66 @@ const measureBounds = (entity) => {
 };
 
 /**
+ * Moves the skeletons around their laid out positions, and toggles whether their physics
+ * constraints inherit the movement, which makes physics driven parts such as hair swing.
+ *
+ * @param {object} app - The application.
+ * @param {object[]} layout - The laid out skeletons, with their entities and bounds.
+ * @param {HTMLElement} row - The element to add the controls to.
+ */
+const setupPhysicsControls = (app, layout, row) => {
+    const items = layout.map(({ entity, minX, maxX }) => ({
+        entity,
+        position: entity.getLocalPosition().clone(),
+        width: maxX - minX
+    }));
+
+    const setInheritance = (enabled) => {
+        const value = enabled ? 1 : 0;
+        for (const { entity } of items) {
+            const { skeletonPhysics } = entity.spine.spine;
+            skeletonPhysics.setPositionInheritance(value, value);
+            skeletonPhysics.rotationInheritance = value;
+        }
+    };
+
+    // horizontal offset relative to the skeleton width, and rotation in degrees, over time
+    const motions = {
+        still: () => [0, 0],
+        sway: t => [0.12 * Math.sin(t * 3), 0],
+        rock: t => [0, 20 * Math.sin(t * 2.5)],
+        shake: t => [0.03 * Math.sin(t * 25) * (Math.sin(t * 1.5) > 0.3 ? 1 : 0), 0]
+    };
+    let motion = 'sway';
+    let time = 0;
+
+    app.on('update', (dt) => {
+        time += dt;
+        const [offset, angle] = motions[motion](time);
+        for (const { entity, position, width } of items) {
+            entity.setLocalPosition(position.x + offset * width, position.y, position.z);
+            entity.setLocalEulerAngles(0, 0, angle);
+        }
+    });
+
+    setInheritance(true);
+    row.append(
+        createCheckbox('Physics inheritance', true, setInheritance),
+        createElement('label', { textContent: 'Motion' }),
+        createSelect(Object.keys(motions), motion, (value) => {
+            motion = value;
+        })
+    );
+};
+
+/**
  * @typedef {object} SkeletonConfig
  * @property {string} name - The project name, which is also the file name prefix of its exports.
  * @property {number} [scale] - The scale of the entity. Defaults to 1.
  * @property {string} [animation] - The animation to loop on track 0.
  * @property {string} [skin] - The skin to use.
+ * @property {string[]} [textures] - The file names of the atlas pages. Defaults to the single page
+ * `<name>-pma.png`.
  * @property {number} [row] - The row to show the skeleton in, from the top. Defaults to 0.
  * @property {boolean} [controls] - Whether to show the animation and skin pickers. Defaults to true.
  * @property {function(object, object): void} [setup] - Called with the entity and the spine
@@ -154,14 +215,17 @@ const measureBounds = (entity) => {
  * @param {SkeletonConfig[]} options.skeletons - The skeletons to show, left to right.
  * @param {boolean} [options.binary] - Whether the skeletons also have binary .skel exports, which
  * the page can load instead of the json exports.
+ * @param {boolean} [options.physics] - Whether to show the physics inheritance controls, which move
+ * the skeletons and pass the movement to their physics constraints.
  */
-async function runExample({ version, skeletons, binary = false }) {
+async function runExample({ version, skeletons, binary = false, physics = false }) {
     const deviceType = params.get('device') === 'webgpu' ? 'webgpu' : 'webgl2';
     const pluginFile = `playcanvas-spine.${version}${params.has('min') ? '.min' : ''}.js`;
     const skeletonFormat = binary && params.get('skeleton') === 'binary' ? 'binary' : 'json';
 
     // overlay with the example details and controls
     const controls = createElement('div', { className: 'controls' });
+    const physicsControls = createElement('div', { className: 'row' });
     errorPanel = createElement('pre', { className: 'errors', hidden: true });
     const info = createElement('div', { className: 'info' });
     document.body.append(createElement('div', { className: 'overlay' }, [
@@ -178,6 +242,7 @@ async function runExample({ version, skeletons, binary = false }) {
             createElement('label', { textContent: 'Skeleton' }),
             createSelect(['json', 'binary'], skeletonFormat, value => reloadWith('skeleton', value === 'json' ? null : value))
         ])] : []),
+        ...(physics ? [physicsControls] : []),
         controls,
         errorPanel
     ]));
@@ -209,7 +274,7 @@ async function runExample({ version, skeletons, binary = false }) {
     // render with a StandardMaterial and need sRGB textures
     const srgb = parseFloat(version) < 4.3;
 
-    const skeletonAssets = skeletons.map(({ name }) => {
+    const skeletonAssets = skeletons.map(({ name, textures }) => {
         const folder = `./assets/spine-${version}/${name}/`;
         return {
             // binary .skel exports load as binary assets, and are smaller and faster to parse
@@ -217,13 +282,13 @@ async function runExample({ version, skeletons, binary = false }) {
                 new pc.Asset(`${name}-pro.skel`, 'binary', { url: `${folder}${name}-pro.skel` }) :
                 new pc.Asset(`${name}-pro.json`, 'json', { url: `${folder}${name}-pro.json` }),
             atlas: new pc.Asset(`${name}-pma.atlas`, 'text', { url: `${folder}${name}-pma.atlas` }),
-            // the asset name has to match the page name in the atlas
-            texture: new pc.Asset(`${name}-pma.png`, 'texture', { url: `${folder}${name}-pma.png` }, { srgb }),
+            // the asset names have to match the page names in the atlas
+            textures: (textures ?? [`${name}-pma.png`]).map(file => new pc.Asset(file, 'texture', { url: `${folder}${file}` }, { srgb })),
             license: `${folder}license.txt`
         };
     });
 
-    const allAssets = [pluginAsset, ...skeletonAssets.flatMap(({ skeleton, atlas, texture }) => [skeleton, atlas, texture])];
+    const allAssets = [pluginAsset, ...skeletonAssets.flatMap(({ skeleton, atlas, textures }) => [skeleton, atlas, ...textures])];
     await new Promise((resolve) => {
         new pc.AssetListLoader(allAssets, app.assets).load(resolve);
     });
@@ -237,7 +302,7 @@ async function runExample({ version, skeletons, binary = false }) {
     const layout = [];
 
     skeletons.forEach((config, index) => {
-        const { skeleton: skeletonAsset, atlas, texture, license } = skeletonAssets[index];
+        const { skeleton: skeletonAsset, atlas, textures, license } = skeletonAssets[index];
         const scale = config.scale ?? 1;
 
         const entity = new pc.Entity(config.name);
@@ -248,7 +313,7 @@ async function runExample({ version, skeletons, binary = false }) {
         entity.addComponent('spine', {
             atlasAsset: atlas.id,
             skeletonAsset: skeletonAsset.id,
-            textureAssets: [texture.id]
+            textureAssets: textures.map(texture => texture.id)
         });
 
         const { skeleton, state } = entity.spine;
@@ -338,6 +403,10 @@ async function runExample({ version, skeletons, binary = false }) {
     };
     fitCamera();
     app.graphicsDevice.on('resizecanvas', fitCamera);
+
+    if (physics) {
+        setupPhysicsControls(app, layout, physicsControls);
+    }
 
     // exposed for automated testing
     window.example = { app, entities, errors, warnings };

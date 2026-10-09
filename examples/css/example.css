@@ -45,6 +45,17 @@ canvas {
     min-width: 120px;
 }
 
+.overlay .checkbox {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.overlay .checkbox input {
+    margin: 0;
+    accent-color: #f60;
+}
+
 .overlay .errors {
     margin: 8px 0 0;
     color: #ff6b6b;

@@ -14,11 +14,20 @@
             version: '4.3',
             // the skeletons can also load from their binary .skel exports
             binary: true,
+            // the skeletons can move, and pass the movement to their physics constraints
+            physics: true,
             skeletons: [
                 // uses physics constraints
                 { name: 'celestial-circus', scale: 0.3, animation: 'swing' },
                 // uses sliders, new in spine 4.3, and image sequences
                 { name: 'diamond', scale: 0.8, animation: 'size-changing-rotation' },
+                // uses physics constraints for the snow, and has three atlas pages
+                {
+                    name: 'snowglobe',
+                    scale: 0.27,
+                    animation: 'idle',
+                    textures: ['snowglobe-pma.png', 'snowglobe-pma_2.png', 'snowglobe-pma_3.png']
+                },
                 // uses clipping, tint black and additive and multiply blending
                 { name: 'tank', scale: 0.15, animation: 'drive', row: 1 }
             ]

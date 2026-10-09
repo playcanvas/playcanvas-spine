@@ -72,6 +72,17 @@ class Spine {
     states;
 
     /**
+     * Passes the movement of the entity to the physics constraints of the skeleton, so that
+     * physics driven parts such as hair and cloth react when the entity moves or rotates. No
+     * movement is passed by default. Enable it with `skeletonPhysics.setPositionInheritance(1, 1)`
+     * and `skeletonPhysics.rotationInheritance = 1`, and call `skeletonPhysics.resetTransform()`
+     * after teleporting the entity, so the jump is not passed to physics.
+     *
+     * @type {spine.SkeletonPhysicsMovement}
+     */
+    skeletonPhysics;
+
+    /**
      * Contains the skeleton and animation states as detailed in the Spine Runtime documentation.
      *
      * @param {pc.AppBase} app - The application that will manage this Spine object.
@@ -116,6 +127,20 @@ class Spine {
         this._renderer = new spine.SkeletonRendererCore();
 
         this._node = new pc.GraphNode();
+
+        // the world transform of the node, which renders the skeleton in its local space, is the
+        // transform the physics constraints inherit movement from
+        this._physicsRotation = 0;
+        this._physicsQuat = new pc.Quat();
+        this._physicsLastQuat = new pc.Quat();
+        this._physicsHasLastQuat = false;
+        this._physicsWorldToLocal = new pc.Mat4();
+        this._physicsWorldToLocalValid = false;
+        this._physicsPoint = new pc.Vec3();
+        this.skeletonPhysics = new spine.SkeletonPhysicsMovement(this.skeleton, {
+            readTransform: (out, readRotation) => this._readPhysicsTransform(out, readRotation),
+            worldToSkeleton: point => this._physicsWorldToSkeleton(point)
+        });
         this._aabb = new pc.BoundingBox();
         this._aabbMin = new pc.Vec3();
         this._aabbMax = new pc.Vec3();
@@ -377,6 +402,9 @@ class Spine {
             states[i].apply(this.skeleton);
         }
 
+        // pass the movement of the entity since the last update to the physics constraints
+        this.skeletonPhysics.applyTransformMovement();
+
         // advance the skeleton time used by physics constraints
         this.skeleton.update(dt);
 
@@ -389,6 +417,43 @@ class Spine {
 
     setPosition(p) {
         this._position.copy(p);
+    }
+
+    _readPhysicsTransform(out, readRotation) {
+        const node = this._node;
+        const position = node.getPosition();
+        out.x = position.x;
+        out.y = position.y;
+        out.z = position.z;
+        this._physicsWorldToLocalValid = false;
+
+        if (!readRotation) return;
+
+        // the rotation around the local z axis, the normal of the skeleton plane, accumulated from
+        // the rotation between updates, so that it does not wrap and ignores tilting the plane
+        const quat = this._physicsQuat.copy(node.getRotation());
+        if (this._physicsHasLastQuat) {
+            const relative = this._physicsLastQuat.invert().mul(quat).normalize();
+            const twistLength = Math.hypot(relative.z, relative.w);
+            if (twistLength > 0.000001) {
+                this._physicsRotation += 2 * Math.atan2(relative.z / twistLength, relative.w / twistLength) * pc.math.RAD_TO_DEG;
+            }
+        }
+        this._physicsLastQuat.copy(quat);
+        this._physicsHasLastQuat = true;
+        out.rotation = this._physicsRotation;
+    }
+
+    _physicsWorldToSkeleton(point) {
+        // the skeleton coordinates are the local coordinates of the node
+        if (!this._physicsWorldToLocalValid) {
+            this._physicsWorldToLocal.copy(this._node.getWorldTransform()).invert();
+            this._physicsWorldToLocalValid = true;
+        }
+        const local = this._physicsWorldToLocal.transformPoint(this._physicsPoint.set(point.x, point.y, point.z), this._physicsPoint);
+        point.x = local.x;
+        point.y = local.y;
+        point.z = local.z;
     }
 
     /**

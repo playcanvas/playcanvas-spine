@@ -22,5 +22,18 @@ export default [
         rules: {
             'import/order': 'off'
         }
+    },
+    {
+        // the script for the Editor, which uses the engine and the plugin through their globals
+        files: ['build/spine.js'],
+        languageOptions: {
+            sourceType: 'script',
+            globals: {
+                pc: 'readonly'
+            }
+        },
+        rules: {
+            strict: 'off'
+        }
     }
 ];
