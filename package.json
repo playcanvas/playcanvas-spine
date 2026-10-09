@@ -20,28 +20,20 @@
     "type": "git",
     "url": "https://github.com/playcanvas/playcanvas-spine.git"
   },
-  "eslintConfig": {
-    "extends": "@playcanvas/eslint-config",
-    "settings": {
-      "import/core-modules": [
-        "spine-core-import",
-        "spine-class-import"
-      ]
-    }
-  },
   "devDependencies": {
-    "@babel/preset-env": "^7.24.5",
-    "@playcanvas/eslint-config": "^1.7.1",
-    "@rollup/plugin-alias": "^5.1.0",
-    "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-commonjs": "^25.0.7",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-terser": "^0.4.4",
-    "eslint": "^8.49.0",
+    "@babel/preset-env": "^7.29.7",
+    "@playcanvas/eslint-config": "^2.1.0",
+    "@rollup/plugin-alias": "^6.0.0",
+    "@rollup/plugin-babel": "^7.1.0",
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^1.0.0",
+    "eslint": "^9.39.5",
+    "globals": "^17.13.0",
     "playcanvas": "^2.23.1",
-    "rollup": "^4.17.2",
-    "semver": "^7.6.1",
-    "serve": "^14.2.3",
+    "rollup": "^4.64.3",
+    "semver": "^7.8.5",
+    "serve": "^14.2.6",
     "spine40": "npm:@esotericsoftware/spine-core@4.0",
     "spine41": "npm:@esotericsoftware/spine-core@4.1",
     "spine42": "npm:@esotericsoftware/spine-core@4.2",
@@ -51,5 +43,8 @@
     "build": "rollup -c",
     "lint": "eslint src",
     "serve": "serve ./ -l 8080 --no-request-logging"
+  },
+  "overrides": {
+    "compression": "^1.8.2"
   }
 }

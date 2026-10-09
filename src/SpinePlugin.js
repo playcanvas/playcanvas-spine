@@ -16,7 +16,7 @@ import { SpineComponentSystem } from './component/SpineComponentSystem.js';
     if (!app) {
         // the Editor parses scripts in a worker without an Application, so only warn in a page
         if (typeof document !== 'undefined') {
-            console.warn("No Application found. An Application or AppBase must be instantiated before `playcanvas-spine`.");
+            console.warn('No Application found. An Application or AppBase must be instantiated before `playcanvas-spine`.');
         }
         return;
     }
