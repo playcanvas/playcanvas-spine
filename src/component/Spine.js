@@ -598,9 +598,10 @@ class Spine {
                     // write index data
                     const indices = slot.indices;
                     const indCount = indices.length;
-                    for (j = 0; j < indCount; j++)
+                    for (j = 0; j < indCount; j++) {
                         dstIndices[dstIndexOffset + j] =
                             indices[j] + dstVertexOffset;
+                    }
 
                     batchIndexCount += indCount;
                     dstIndexOffset += indCount;
