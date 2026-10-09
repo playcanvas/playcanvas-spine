@@ -7826,6 +7826,131 @@ var spine = (function (pc) {
 	  spine.SwirlEffect = SwirlEffect;
 	})(spine$1 || (spine$1 = {}));
 
+	function _arrayLikeToArray(r, a) {
+	  (null == a || a > r.length) && (a = r.length);
+	  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+	  return n;
+	}
+	function _arrayWithHoles(r) {
+	  if (Array.isArray(r)) return r;
+	}
+	function _arrayWithoutHoles(r) {
+	  if (Array.isArray(r)) return _arrayLikeToArray(r);
+	}
+	function _assertThisInitialized(e) {
+	  if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	  return e;
+	}
+	function _callSuper(t, o, e) {
+	  return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e));
+	}
+	function _classCallCheck(a, n) {
+	  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
+	}
+	function _defineProperties(e, r) {
+	  for (var t = 0; t < r.length; t++) {
+	    var o = r[t];
+	    o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey(o.key), o);
+	  }
+	}
+	function _createClass(e, r, t) {
+	  return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", {
+	    writable: false
+	  }), e;
+	}
+	function _createForOfIteratorHelper(r, e) {
+	  var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+	  if (!t) {
+	    if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e) {
+	      t && (r = t);
+	      var n = 0,
+	        F = function () {};
+	      return {
+	        s: F,
+	        n: function () {
+	          return n >= r.length ? {
+	            done: true
+	          } : {
+	            done: false,
+	            value: r[n++]
+	          };
+	        },
+	        e: function (r) {
+	          throw r;
+	        },
+	        f: F
+	      };
+	    }
+	    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+	  }
+	  var o,
+	    a = true,
+	    u = false;
+	  return {
+	    s: function () {
+	      t = t.call(r);
+	    },
+	    n: function () {
+	      var r = t.next();
+	      return a = r.done, r;
+	    },
+	    e: function (r) {
+	      u = true, o = r;
+	    },
+	    f: function () {
+	      try {
+	        a || null == t.return || t.return();
+	      } finally {
+	        if (u) throw o;
+	      }
+	    }
+	  };
+	}
+	function _defineProperty(e, r, t) {
+	  return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+	    value: t,
+	    enumerable: true,
+	    configurable: true,
+	    writable: true
+	  }) : e[r] = t, e;
+	}
+	function _get() {
+	  return _get = "undefined" != typeof Reflect && Reflect.get ? Reflect.get.bind() : function (e, t, r) {
+	    var p = _superPropBase(e, t);
+	    if (p) {
+	      var n = Object.getOwnPropertyDescriptor(p, t);
+	      return n.get ? n.get.call(arguments.length < 3 ? e : r) : n.value;
+	    }
+	  }, _get.apply(null, arguments);
+	}
+	function _getPrototypeOf(t) {
+	  return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) {
+	    return t.__proto__ || Object.getPrototypeOf(t);
+	  }, _getPrototypeOf(t);
+	}
+	function _inherits(t, e) {
+	  if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function");
+	  t.prototype = Object.create(e && e.prototype, {
+	    constructor: {
+	      value: t,
+	      writable: true,
+	      configurable: true
+	    }
+	  }), Object.defineProperty(t, "prototype", {
+	    writable: false
+	  }), e && _setPrototypeOf(t, e);
+	}
+	function _isNativeReflectConstruct() {
+	  try {
+	    var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+	  } catch (t) {}
+	  return (_isNativeReflectConstruct = function () {
+	    return !!t;
+	  })();
+	}
+	function _iterableToArray(r) {
+	  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
+	}
 	function _iterableToArrayLimit(r, l) {
 	  var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
 	  if (null != t) {
@@ -7834,12 +7959,12 @@ var spine = (function (pc) {
 	      i,
 	      u,
 	      a = [],
-	      f = !0,
-	      o = !1;
+	      f = true,
+	      o = false;
 	    try {
 	      if (i = (t = t.call(r)).next, 0 === l) ; else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
 	    } catch (r) {
-	      o = !0, n = r;
+	      o = true, n = r;
 	    } finally {
 	      try {
 	        if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return;
@@ -7850,6 +7975,52 @@ var spine = (function (pc) {
 	    return a;
 	  }
 	}
+	function _nonIterableRest() {
+	  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+	}
+	function _nonIterableSpread() {
+	  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+	}
+	function _possibleConstructorReturn(t, e) {
+	  if (e && ("object" == typeof e || "function" == typeof e)) return e;
+	  if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined");
+	  return _assertThisInitialized(t);
+	}
+	function _setPrototypeOf(t, e) {
+	  return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) {
+	    return t.__proto__ = e, t;
+	  }, _setPrototypeOf(t, e);
+	}
+	function _slicedToArray(r, e) {
+	  return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
+	}
+	function _superPropBase(t, o) {
+	  for (; !{}.hasOwnProperty.call(t, o) && null !== (t = _getPrototypeOf(t)););
+	  return t;
+	}
+	function _superPropGet(t, o, e, r) {
+	  var p = _get(_getPrototypeOf(t.prototype ), o, e);
+	  return "function" == typeof p ? function (t) {
+	    return p.apply(e, t);
+	  } : p;
+	}
+	function _toConsumableArray(r) {
+	  return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread();
+	}
+	function _toPrimitive(t, e) {
+	  if ("object" != typeof t || !t) return t;
+	  var r;
+	  if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) {
+	    var i = r.call(t, e);
+	    if ("object" != typeof i) return i;
+	    throw new TypeError("@@toPrimitive must return a primitive value.");
+	  }
+	  return (String )(t);
+	}
+	function _toPropertyKey(t) {
+	  var i = _toPrimitive(t, "string");
+	  return "symbol" == typeof i ? i : i + "";
+	}
 	function _typeof(o) {
 	  "@babel/helpers - typeof";
 
@@ -7859,206 +8030,12 @@ var spine = (function (pc) {
 	    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
 	  }, _typeof(o);
 	}
-	function _classCallCheck(instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError("Cannot call a class as a function");
+	function _unsupportedIterableToArray(r, a) {
+	  if (r) {
+	    if ("string" == typeof r) return _arrayLikeToArray(r, a);
+	    var t = {}.toString.call(r).slice(8, -1);
+	    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
 	  }
-	}
-	function _defineProperties(target, props) {
-	  for (var i = 0; i < props.length; i++) {
-	    var descriptor = props[i];
-	    descriptor.enumerable = descriptor.enumerable || false;
-	    descriptor.configurable = true;
-	    if ("value" in descriptor) descriptor.writable = true;
-	    Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor);
-	  }
-	}
-	function _createClass(Constructor, protoProps, staticProps) {
-	  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-	  if (staticProps) _defineProperties(Constructor, staticProps);
-	  Object.defineProperty(Constructor, "prototype", {
-	    writable: false
-	  });
-	  return Constructor;
-	}
-	function _defineProperty(obj, key, value) {
-	  key = _toPropertyKey(key);
-	  if (key in obj) {
-	    Object.defineProperty(obj, key, {
-	      value: value,
-	      enumerable: true,
-	      configurable: true,
-	      writable: true
-	    });
-	  } else {
-	    obj[key] = value;
-	  }
-	  return obj;
-	}
-	function _inherits(subClass, superClass) {
-	  if (typeof superClass !== "function" && superClass !== null) {
-	    throw new TypeError("Super expression must either be null or a function");
-	  }
-	  subClass.prototype = Object.create(superClass && superClass.prototype, {
-	    constructor: {
-	      value: subClass,
-	      writable: true,
-	      configurable: true
-	    }
-	  });
-	  Object.defineProperty(subClass, "prototype", {
-	    writable: false
-	  });
-	  if (superClass) _setPrototypeOf(subClass, superClass);
-	}
-	function _getPrototypeOf(o) {
-	  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) {
-	    return o.__proto__ || Object.getPrototypeOf(o);
-	  };
-	  return _getPrototypeOf(o);
-	}
-	function _setPrototypeOf(o, p) {
-	  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
-	    o.__proto__ = p;
-	    return o;
-	  };
-	  return _setPrototypeOf(o, p);
-	}
-	function _assertThisInitialized(self) {
-	  if (self === void 0) {
-	    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-	  }
-	  return self;
-	}
-	function _possibleConstructorReturn(self, call) {
-	  if (call && (typeof call === "object" || typeof call === "function")) {
-	    return call;
-	  } else if (call !== void 0) {
-	    throw new TypeError("Derived constructors may only return object or undefined");
-	  }
-	  return _assertThisInitialized(self);
-	}
-	function _superPropBase(object, property) {
-	  while (!Object.prototype.hasOwnProperty.call(object, property)) {
-	    object = _getPrototypeOf(object);
-	    if (object === null) break;
-	  }
-	  return object;
-	}
-	function _get() {
-	  if (typeof Reflect !== "undefined" && Reflect.get) {
-	    _get = Reflect.get.bind();
-	  } else {
-	    _get = function _get(target, property, receiver) {
-	      var base = _superPropBase(target, property);
-	      if (!base) return;
-	      var desc = Object.getOwnPropertyDescriptor(base, property);
-	      if (desc.get) {
-	        return desc.get.call(arguments.length < 3 ? target : receiver);
-	      }
-	      return desc.value;
-	    };
-	  }
-	  return _get.apply(this, arguments);
-	}
-	function _slicedToArray(arr, i) {
-	  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-	}
-	function _toConsumableArray(arr) {
-	  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-	}
-	function _arrayWithoutHoles(arr) {
-	  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-	}
-	function _arrayWithHoles(arr) {
-	  if (Array.isArray(arr)) return arr;
-	}
-	function _iterableToArray(iter) {
-	  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-	}
-	function _unsupportedIterableToArray(o, minLen) {
-	  if (!o) return;
-	  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-	  var n = Object.prototype.toString.call(o).slice(8, -1);
-	  if (n === "Object" && o.constructor) n = o.constructor.name;
-	  if (n === "Map" || n === "Set") return Array.from(o);
-	  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-	}
-	function _arrayLikeToArray(arr, len) {
-	  if (len == null || len > arr.length) len = arr.length;
-	  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-	  return arr2;
-	}
-	function _nonIterableSpread() {
-	  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-	}
-	function _nonIterableRest() {
-	  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-	}
-	function _createForOfIteratorHelper(o, allowArrayLike) {
-	  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
-	  if (!it) {
-	    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike  ) {
-	      if (it) o = it;
-	      var i = 0;
-	      var F = function () {};
-	      return {
-	        s: F,
-	        n: function () {
-	          if (i >= o.length) return {
-	            done: true
-	          };
-	          return {
-	            done: false,
-	            value: o[i++]
-	          };
-	        },
-	        e: function (e) {
-	          throw e;
-	        },
-	        f: F
-	      };
-	    }
-	    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-	  }
-	  var normalCompletion = true,
-	    didErr = false,
-	    err;
-	  return {
-	    s: function () {
-	      it = it.call(o);
-	    },
-	    n: function () {
-	      var step = it.next();
-	      normalCompletion = step.done;
-	      return step;
-	    },
-	    e: function (e) {
-	      didErr = true;
-	      err = e;
-	    },
-	    f: function () {
-	      try {
-	        if (!normalCompletion && it.return != null) it.return();
-	      } finally {
-	        if (didErr) throw err;
-	      }
-	    }
-	  };
-	}
-	function _toPrimitive(input, hint) {
-	  if (typeof input !== "object" || input === null) return input;
-	  var prim = input[Symbol.toPrimitive];
-	  if (prim !== undefined) {
-	    var res = prim.call(input, hint );
-	    if (typeof res !== "object") return res;
-	    throw new TypeError("@@toPrimitive must return a primitive value.");
-	  }
-	  return (String )(input);
-	}
-	function _toPropertyKey(arg) {
-	  var key = _toPrimitive(arg, "string");
-	  return typeof key === "symbol" ? key : String(key);
 	}
 
 	var TO_TEXTURE_FILTER = {
@@ -8112,612 +8089,778 @@ var spine = (function (pc) {
 		return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 	}
 
-	var SEMVER_SPEC_VERSION = '2.0.0';
-	var MAX_LENGTH$1 = 256;
-	var MAX_SAFE_INTEGER$1 = Number.MAX_SAFE_INTEGER || 9007199254740991;
-	var MAX_SAFE_COMPONENT_LENGTH = 16;
-	var MAX_SAFE_BUILD_LENGTH = MAX_LENGTH$1 - 6;
-	var RELEASE_TYPES = ['major', 'premajor', 'minor', 'preminor', 'patch', 'prepatch', 'prerelease'];
-	var constants = {
-	  MAX_LENGTH: MAX_LENGTH$1,
-	  MAX_SAFE_COMPONENT_LENGTH: MAX_SAFE_COMPONENT_LENGTH,
-	  MAX_SAFE_BUILD_LENGTH: MAX_SAFE_BUILD_LENGTH,
-	  MAX_SAFE_INTEGER: MAX_SAFE_INTEGER$1,
-	  RELEASE_TYPES: RELEASE_TYPES,
-	  SEMVER_SPEC_VERSION: SEMVER_SPEC_VERSION,
-	  FLAG_INCLUDE_PRERELEASE: 1,
-	  FLAG_LOOSE: 2
-	};
-	var constants$1 = getDefaultExportFromCjs(constants);
-
-	var debug$1 = (typeof process === "undefined" ? "undefined" : _typeof(process)) === 'object' && process.env && process.env.NODE_DEBUG && /\bsemver\b/i.test(process.env.NODE_DEBUG) ? function () {
-	  var _console;
-	  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-	    args[_key] = arguments[_key];
-	  }
-	  return (_console = console).error.apply(_console, ['SEMVER'].concat(args));
-	} : function () {};
-	var debug_1 = debug$1;
-	getDefaultExportFromCjs(debug_1);
-
-	var re$2 = {exports: {}};
-
-	(function (module, exports) {
-	  var MAX_SAFE_COMPONENT_LENGTH = constants.MAX_SAFE_COMPONENT_LENGTH,
-	    MAX_SAFE_BUILD_LENGTH = constants.MAX_SAFE_BUILD_LENGTH,
-	    MAX_LENGTH = constants.MAX_LENGTH;
-	  var debug = debug_1;
-	  exports = module.exports = {};
-	  var re = exports.re = [];
-	  var safeRe = exports.safeRe = [];
-	  var src = exports.src = [];
-	  var t = exports.t = {};
-	  var R = 0;
-	  var LETTERDASHNUMBER = '[a-zA-Z0-9-]';
-	  var safeRegexReplacements = [['\\s', 1], ['\\d', MAX_LENGTH], [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH]];
-	  var makeSafeRegex = function makeSafeRegex(value) {
-	    for (var _i = 0, _safeRegexReplacement = safeRegexReplacements; _i < _safeRegexReplacement.length; _i++) {
-	      var _safeRegexReplacement2 = _slicedToArray(_safeRegexReplacement[_i], 2),
-	        token = _safeRegexReplacement2[0],
-	        max = _safeRegexReplacement2[1];
-	      value = value.split("".concat(token, "*")).join("".concat(token, "{0,").concat(max, "}")).split("".concat(token, "+")).join("".concat(token, "{1,").concat(max, "}"));
-	    }
-	    return value;
+	var constants$1;
+	var hasRequiredConstants;
+	function requireConstants() {
+	  if (hasRequiredConstants) return constants$1;
+	  hasRequiredConstants = 1;
+	  var SEMVER_SPEC_VERSION = '2.0.0';
+	  var MAX_LENGTH = 256;
+	  var MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER || 9007199254740991;
+	  var MAX_SAFE_COMPONENT_LENGTH = 16;
+	  var MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6;
+	  var RELEASE_TYPES = ['major', 'premajor', 'minor', 'preminor', 'patch', 'prepatch', 'prerelease'];
+	  constants$1 = {
+	    MAX_LENGTH: MAX_LENGTH,
+	    MAX_SAFE_COMPONENT_LENGTH: MAX_SAFE_COMPONENT_LENGTH,
+	    MAX_SAFE_BUILD_LENGTH: MAX_SAFE_BUILD_LENGTH,
+	    MAX_SAFE_INTEGER: MAX_SAFE_INTEGER,
+	    RELEASE_TYPES: RELEASE_TYPES,
+	    SEMVER_SPEC_VERSION: SEMVER_SPEC_VERSION,
+	    FLAG_INCLUDE_PRERELEASE: 1,
+	    FLAG_LOOSE: 2
 	  };
-	  var createToken = function createToken(name, value, isGlobal) {
-	    var safe = makeSafeRegex(value);
-	    var index = R++;
-	    debug(name, index, value);
-	    t[name] = index;
-	    src[index] = value;
-	    re[index] = new RegExp(value, isGlobal ? 'g' : undefined);
-	    safeRe[index] = new RegExp(safe, isGlobal ? 'g' : undefined);
+	  return constants$1;
+	}
+
+	var constantsExports = requireConstants();
+	var constants = /*@__PURE__*/getDefaultExportFromCjs(constantsExports);
+
+	var debug_1;
+	var hasRequiredDebug;
+	function requireDebug() {
+	  if (hasRequiredDebug) return debug_1;
+	  hasRequiredDebug = 1;
+	  var debug = (typeof process === "undefined" ? "undefined" : _typeof(process)) === 'object' && process.env && process.env.NODE_DEBUG && /\bsemver\b/i.test(process.env.NODE_DEBUG) ? function () {
+	    var _console;
+	    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	    return (_console = console).error.apply(_console, ['SEMVER'].concat(args));
+	  } : function () {};
+	  debug_1 = debug;
+	  return debug_1;
+	}
+
+	var re = {exports: {}};
+
+	var hasRequiredRe;
+	function requireRe() {
+	  if (hasRequiredRe) return re.exports;
+	  hasRequiredRe = 1;
+	  (function (module, exports) {
+
+	    var _require$$ = requireConstants(),
+	      MAX_SAFE_COMPONENT_LENGTH = _require$$.MAX_SAFE_COMPONENT_LENGTH,
+	      MAX_SAFE_BUILD_LENGTH = _require$$.MAX_SAFE_BUILD_LENGTH,
+	      MAX_LENGTH = _require$$.MAX_LENGTH;
+	    var debug = requireDebug();
+	    exports = module.exports = {};
+	    var re = exports.re = [];
+	    var safeRe = exports.safeRe = [];
+	    var src = exports.src = [];
+	    var safeSrc = exports.safeSrc = [];
+	    var t = exports.t = {};
+	    var R = 0;
+	    var LETTERDASHNUMBER = '[a-zA-Z0-9-]';
+	    var safeRegexReplacements = [['\\s', 1], ['\\d', MAX_LENGTH], [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH]];
+	    var makeSafeRegex = function makeSafeRegex(value) {
+	      for (var _i = 0, _safeRegexReplacement = safeRegexReplacements; _i < _safeRegexReplacement.length; _i++) {
+	        var _safeRegexReplacement2 = _slicedToArray(_safeRegexReplacement[_i], 2),
+	          token = _safeRegexReplacement2[0],
+	          max = _safeRegexReplacement2[1];
+	        value = value.split("".concat(token, "*")).join("".concat(token, "{0,").concat(max, "}")).split("".concat(token, "+")).join("".concat(token, "{1,").concat(max, "}"));
+	      }
+	      return value;
+	    };
+	    var createToken = function createToken(name, value, isGlobal) {
+	      var safe = makeSafeRegex(value);
+	      var index = R++;
+	      debug(name, index, value);
+	      t[name] = index;
+	      src[index] = value;
+	      safeSrc[index] = safe;
+	      re[index] = new RegExp(value, isGlobal ? 'g' : undefined);
+	      safeRe[index] = new RegExp(safe, isGlobal ? 'g' : undefined);
+	    };
+	    createToken('NUMERICIDENTIFIER', '0|[1-9]\\d*');
+	    createToken('NUMERICIDENTIFIERLOOSE', '\\d+');
+	    createToken('NONNUMERICIDENTIFIER', "\\d*[a-zA-Z-]".concat(LETTERDASHNUMBER, "*"));
+	    createToken('MAINVERSION', "(".concat(src[t.NUMERICIDENTIFIER], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIER], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIER], ")"));
+	    createToken('MAINVERSIONLOOSE', "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")"));
+	    createToken('PRERELEASEIDENTIFIER', "(?:".concat(src[t.NONNUMERICIDENTIFIER], "|").concat(src[t.NUMERICIDENTIFIER], ")"));
+	    createToken('PRERELEASEIDENTIFIERLOOSE', "(?:".concat(src[t.NONNUMERICIDENTIFIER], "|").concat(src[t.NUMERICIDENTIFIERLOOSE], ")"));
+	    createToken('PRERELEASE', "(?:-(".concat(src[t.PRERELEASEIDENTIFIER], "(?:\\.").concat(src[t.PRERELEASEIDENTIFIER], ")*))"));
+	    createToken('PRERELEASELOOSE', "(?:-?(".concat(src[t.PRERELEASEIDENTIFIERLOOSE], "(?:\\.").concat(src[t.PRERELEASEIDENTIFIERLOOSE], ")*))"));
+	    createToken('BUILDIDENTIFIER', "".concat(LETTERDASHNUMBER, "+"));
+	    createToken('BUILD', "(?:\\+(".concat(src[t.BUILDIDENTIFIER], "(?:\\.").concat(src[t.BUILDIDENTIFIER], ")*))"));
+	    createToken('FULLPLAIN', "v?".concat(src[t.MAINVERSION]).concat(src[t.PRERELEASE], "?").concat(src[t.BUILD], "?"));
+	    createToken('FULL', "^".concat(src[t.FULLPLAIN], "$"));
+	    createToken('LOOSEPLAIN', "[v=\\s]*".concat(src[t.MAINVERSIONLOOSE]).concat(src[t.PRERELEASELOOSE], "?").concat(src[t.BUILD], "?"));
+	    createToken('LOOSE', "^".concat(src[t.LOOSEPLAIN], "$"));
+	    createToken('GTLT', '((?:<|>)?=?)');
+	    createToken('XRANGEIDENTIFIERLOOSE', "".concat(src[t.NUMERICIDENTIFIERLOOSE], "|x|X|\\*"));
+	    createToken('XRANGEIDENTIFIER', "".concat(src[t.NUMERICIDENTIFIER], "|x|X|\\*"));
+	    createToken('XRANGEPLAIN', "[v=\\s]*(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:".concat(src[t.PRERELEASE], ")?").concat(src[t.BUILD], "?") + ")?)?");
+	    createToken('XRANGEPLAINLOOSE', "[v=\\s]*(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:".concat(src[t.PRERELEASELOOSE], ")?").concat(src[t.BUILD], "?") + ")?)?");
+	    createToken('XRANGE', "^".concat(src[t.GTLT], "\\s*").concat(src[t.XRANGEPLAIN], "$"));
+	    createToken('XRANGELOOSE', "^".concat(src[t.GTLT], "\\s*").concat(src[t.XRANGEPLAINLOOSE], "$"));
+	    createToken('COERCEPLAIN', "".concat('(^|[^\\d])' + '(\\d{1,').concat(MAX_SAFE_COMPONENT_LENGTH, "})") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?"));
+	    createToken('COERCE', "".concat(src[t.COERCEPLAIN], "(?:$|[^\\d])"));
+	    createToken('COERCEFULL', src[t.COERCEPLAIN] + "(?:".concat(src[t.PRERELEASE], ")?") + "(?:".concat(src[t.BUILD], ")?") + "(?:$|[^\\d])");
+	    createToken('COERCERTL', src[t.COERCE], true);
+	    createToken('COERCERTLFULL', src[t.COERCEFULL], true);
+	    createToken('LONETILDE', '(?:~>?)');
+	    createToken('TILDETRIM', "(\\s*)".concat(src[t.LONETILDE], "\\s+"), true);
+	    exports.tildeTrimReplace = '$1~';
+	    createToken('TILDE', "^".concat(src[t.LONETILDE]).concat(src[t.XRANGEPLAIN], "$"));
+	    createToken('TILDELOOSE', "^".concat(src[t.LONETILDE]).concat(src[t.XRANGEPLAINLOOSE], "$"));
+	    createToken('LONECARET', '(?:\\^)');
+	    createToken('CARETTRIM', "(\\s*)".concat(src[t.LONECARET], "\\s+"), true);
+	    exports.caretTrimReplace = '$1^';
+	    createToken('CARET', "^".concat(src[t.LONECARET]).concat(src[t.XRANGEPLAIN], "$"));
+	    createToken('CARETLOOSE', "^".concat(src[t.LONECARET]).concat(src[t.XRANGEPLAINLOOSE], "$"));
+	    createToken('COMPARATORLOOSE', "^".concat(src[t.GTLT], "\\s*(").concat(src[t.LOOSEPLAIN], ")$|^$"));
+	    createToken('COMPARATOR', "^".concat(src[t.GTLT], "\\s*(").concat(src[t.FULLPLAIN], ")$|^$"));
+	    createToken('COMPARATORTRIM', "(\\s*)".concat(src[t.GTLT], "\\s*(").concat(src[t.LOOSEPLAIN], "|").concat(src[t.XRANGEPLAIN], ")"), true);
+	    exports.comparatorTrimReplace = '$1$2$3';
+	    createToken('HYPHENRANGE', "^\\s*(".concat(src[t.XRANGEPLAIN], ")") + "\\s+-\\s+" + "(".concat(src[t.XRANGEPLAIN], ")") + "\\s*$");
+	    createToken('HYPHENRANGELOOSE', "^\\s*(".concat(src[t.XRANGEPLAINLOOSE], ")") + "\\s+-\\s+" + "(".concat(src[t.XRANGEPLAINLOOSE], ")") + "\\s*$");
+	    createToken('STAR', '(<|>)?=?\\s*\\*');
+	    createToken('GTE0', '^\\s*>=\\s*0\\.0\\.0\\s*$');
+	    createToken('GTE0PRE', '^\\s*>=\\s*0\\.0\\.0-0\\s*$');
+	  })(re, re.exports);
+	  return re.exports;
+	}
+
+	var parseOptions_1;
+	var hasRequiredParseOptions;
+	function requireParseOptions() {
+	  if (hasRequiredParseOptions) return parseOptions_1;
+	  hasRequiredParseOptions = 1;
+	  var looseOption = Object.freeze({
+	    loose: true
+	  });
+	  var emptyOpts = Object.freeze({});
+	  var parseOptions = function parseOptions(options) {
+	    if (!options) {
+	      return emptyOpts;
+	    }
+	    if (_typeof(options) !== 'object') {
+	      return looseOption;
+	    }
+	    return options;
 	  };
-	  createToken('NUMERICIDENTIFIER', '0|[1-9]\\d*');
-	  createToken('NUMERICIDENTIFIERLOOSE', '\\d+');
-	  createToken('NONNUMERICIDENTIFIER', "\\d*[a-zA-Z-]".concat(LETTERDASHNUMBER, "*"));
-	  createToken('MAINVERSION', "(".concat(src[t.NUMERICIDENTIFIER], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIER], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIER], ")"));
-	  createToken('MAINVERSIONLOOSE', "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")\\.") + "(".concat(src[t.NUMERICIDENTIFIERLOOSE], ")"));
-	  createToken('PRERELEASEIDENTIFIER', "(?:".concat(src[t.NUMERICIDENTIFIER], "|").concat(src[t.NONNUMERICIDENTIFIER], ")"));
-	  createToken('PRERELEASEIDENTIFIERLOOSE', "(?:".concat(src[t.NUMERICIDENTIFIERLOOSE], "|").concat(src[t.NONNUMERICIDENTIFIER], ")"));
-	  createToken('PRERELEASE', "(?:-(".concat(src[t.PRERELEASEIDENTIFIER], "(?:\\.").concat(src[t.PRERELEASEIDENTIFIER], ")*))"));
-	  createToken('PRERELEASELOOSE', "(?:-?(".concat(src[t.PRERELEASEIDENTIFIERLOOSE], "(?:\\.").concat(src[t.PRERELEASEIDENTIFIERLOOSE], ")*))"));
-	  createToken('BUILDIDENTIFIER', "".concat(LETTERDASHNUMBER, "+"));
-	  createToken('BUILD', "(?:\\+(".concat(src[t.BUILDIDENTIFIER], "(?:\\.").concat(src[t.BUILDIDENTIFIER], ")*))"));
-	  createToken('FULLPLAIN', "v?".concat(src[t.MAINVERSION]).concat(src[t.PRERELEASE], "?").concat(src[t.BUILD], "?"));
-	  createToken('FULL', "^".concat(src[t.FULLPLAIN], "$"));
-	  createToken('LOOSEPLAIN', "[v=\\s]*".concat(src[t.MAINVERSIONLOOSE]).concat(src[t.PRERELEASELOOSE], "?").concat(src[t.BUILD], "?"));
-	  createToken('LOOSE', "^".concat(src[t.LOOSEPLAIN], "$"));
-	  createToken('GTLT', '((?:<|>)?=?)');
-	  createToken('XRANGEIDENTIFIERLOOSE', "".concat(src[t.NUMERICIDENTIFIERLOOSE], "|x|X|\\*"));
-	  createToken('XRANGEIDENTIFIER', "".concat(src[t.NUMERICIDENTIFIER], "|x|X|\\*"));
-	  createToken('XRANGEPLAIN', "[v=\\s]*(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIER], ")") + "(?:".concat(src[t.PRERELEASE], ")?").concat(src[t.BUILD], "?") + ")?)?");
-	  createToken('XRANGEPLAINLOOSE', "[v=\\s]*(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:\\.(".concat(src[t.XRANGEIDENTIFIERLOOSE], ")") + "(?:".concat(src[t.PRERELEASELOOSE], ")?").concat(src[t.BUILD], "?") + ")?)?");
-	  createToken('XRANGE', "^".concat(src[t.GTLT], "\\s*").concat(src[t.XRANGEPLAIN], "$"));
-	  createToken('XRANGELOOSE', "^".concat(src[t.GTLT], "\\s*").concat(src[t.XRANGEPLAINLOOSE], "$"));
-	  createToken('COERCEPLAIN', "".concat('(^|[^\\d])' + '(\\d{1,').concat(MAX_SAFE_COMPONENT_LENGTH, "})") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?") + "(?:\\.(\\d{1,".concat(MAX_SAFE_COMPONENT_LENGTH, "}))?"));
-	  createToken('COERCE', "".concat(src[t.COERCEPLAIN], "(?:$|[^\\d])"));
-	  createToken('COERCEFULL', src[t.COERCEPLAIN] + "(?:".concat(src[t.PRERELEASE], ")?") + "(?:".concat(src[t.BUILD], ")?") + "(?:$|[^\\d])");
-	  createToken('COERCERTL', src[t.COERCE], true);
-	  createToken('COERCERTLFULL', src[t.COERCEFULL], true);
-	  createToken('LONETILDE', '(?:~>?)');
-	  createToken('TILDETRIM', "(\\s*)".concat(src[t.LONETILDE], "\\s+"), true);
-	  exports.tildeTrimReplace = '$1~';
-	  createToken('TILDE', "^".concat(src[t.LONETILDE]).concat(src[t.XRANGEPLAIN], "$"));
-	  createToken('TILDELOOSE', "^".concat(src[t.LONETILDE]).concat(src[t.XRANGEPLAINLOOSE], "$"));
-	  createToken('LONECARET', '(?:\\^)');
-	  createToken('CARETTRIM', "(\\s*)".concat(src[t.LONECARET], "\\s+"), true);
-	  exports.caretTrimReplace = '$1^';
-	  createToken('CARET', "^".concat(src[t.LONECARET]).concat(src[t.XRANGEPLAIN], "$"));
-	  createToken('CARETLOOSE', "^".concat(src[t.LONECARET]).concat(src[t.XRANGEPLAINLOOSE], "$"));
-	  createToken('COMPARATORLOOSE', "^".concat(src[t.GTLT], "\\s*(").concat(src[t.LOOSEPLAIN], ")$|^$"));
-	  createToken('COMPARATOR', "^".concat(src[t.GTLT], "\\s*(").concat(src[t.FULLPLAIN], ")$|^$"));
-	  createToken('COMPARATORTRIM', "(\\s*)".concat(src[t.GTLT], "\\s*(").concat(src[t.LOOSEPLAIN], "|").concat(src[t.XRANGEPLAIN], ")"), true);
-	  exports.comparatorTrimReplace = '$1$2$3';
-	  createToken('HYPHENRANGE', "^\\s*(".concat(src[t.XRANGEPLAIN], ")") + "\\s+-\\s+" + "(".concat(src[t.XRANGEPLAIN], ")") + "\\s*$");
-	  createToken('HYPHENRANGELOOSE', "^\\s*(".concat(src[t.XRANGEPLAINLOOSE], ")") + "\\s+-\\s+" + "(".concat(src[t.XRANGEPLAINLOOSE], ")") + "\\s*$");
-	  createToken('STAR', '(<|>)?=?\\s*\\*');
-	  createToken('GTE0', '^\\s*>=\\s*0\\.0\\.0\\s*$');
-	  createToken('GTE0PRE', '^\\s*>=\\s*0\\.0\\.0-0\\s*$');
-	})(re$2, re$2.exports);
-	var reExports = re$2.exports;
-	getDefaultExportFromCjs(reExports);
+	  parseOptions_1 = parseOptions;
+	  return parseOptions_1;
+	}
 
-	var looseOption = Object.freeze({
-	  loose: true
-	});
-	var emptyOpts = Object.freeze({});
-	var parseOptions$1 = function parseOptions(options) {
-	  if (!options) {
-	    return emptyOpts;
-	  }
-	  if (_typeof(options) !== 'object') {
-	    return looseOption;
-	  }
-	  return options;
-	};
-	var parseOptions_1 = parseOptions$1;
-	getDefaultExportFromCjs(parseOptions_1);
+	var identifiers;
+	var hasRequiredIdentifiers;
+	function requireIdentifiers() {
+	  if (hasRequiredIdentifiers) return identifiers;
+	  hasRequiredIdentifiers = 1;
+	  var numeric = /^[0-9]+$/;
+	  var compareIdentifiers = function compareIdentifiers(a, b) {
+	    if (typeof a === 'number' && typeof b === 'number') {
+	      return a === b ? 0 : a < b ? -1 : 1;
+	    }
+	    var anum = numeric.test(a);
+	    var bnum = numeric.test(b);
+	    if (anum && bnum) {
+	      a = +a;
+	      b = +b;
+	    }
+	    return a === b ? 0 : anum && !bnum ? -1 : bnum && !anum ? 1 : a < b ? -1 : 1;
+	  };
+	  var rcompareIdentifiers = function rcompareIdentifiers(a, b) {
+	    return compareIdentifiers(b, a);
+	  };
+	  identifiers = {
+	    compareIdentifiers: compareIdentifiers,
+	    rcompareIdentifiers: rcompareIdentifiers
+	  };
+	  return identifiers;
+	}
 
-	var numeric = /^[0-9]+$/;
-	var compareIdentifiers$1 = function compareIdentifiers(a, b) {
-	  var anum = numeric.test(a);
-	  var bnum = numeric.test(b);
-	  if (anum && bnum) {
-	    a = +a;
-	    b = +b;
-	  }
-	  return a === b ? 0 : anum && !bnum ? -1 : bnum && !anum ? 1 : a < b ? -1 : 1;
-	};
-	var rcompareIdentifiers = function rcompareIdentifiers(a, b) {
-	  return compareIdentifiers$1(b, a);
-	};
-	var identifiers = {
-	  compareIdentifiers: compareIdentifiers$1,
-	  rcompareIdentifiers: rcompareIdentifiers
-	};
-	getDefaultExportFromCjs(identifiers);
-
-	var debug = debug_1;
-	var MAX_LENGTH = constants.MAX_LENGTH,
-	  MAX_SAFE_INTEGER = constants.MAX_SAFE_INTEGER;
-	var re$1 = reExports.safeRe,
-	  t$1 = reExports.t;
-	var parseOptions = parseOptions_1;
-	var compareIdentifiers = identifiers.compareIdentifiers;
-	var SemVer$3 = function () {
-	  function SemVer(version, options) {
-	    _classCallCheck(this, SemVer);
-	    options = parseOptions(options);
-	    if (version instanceof SemVer) {
-	      if (version.loose === !!options.loose && version.includePrerelease === !!options.includePrerelease) {
-	        return version;
-	      } else {
-	        version = version.version;
-	      }
-	    } else if (typeof version !== 'string') {
-	      throw new TypeError("Invalid version. Must be a string. Got type \"".concat(_typeof(version), "\"."));
+	var semver$1;
+	var hasRequiredSemver;
+	function requireSemver() {
+	  if (hasRequiredSemver) return semver$1;
+	  hasRequiredSemver = 1;
+	  var debug = requireDebug();
+	  var _require$$ = requireConstants(),
+	    MAX_LENGTH = _require$$.MAX_LENGTH,
+	    MAX_SAFE_INTEGER = _require$$.MAX_SAFE_INTEGER;
+	  var _require$$2 = requireRe(),
+	    re = _require$$2.safeRe,
+	    t = _require$$2.t;
+	  var parseOptions = requireParseOptions();
+	  var _require$$3 = requireIdentifiers(),
+	    compareIdentifiers = _require$$3.compareIdentifiers;
+	  var isPrereleaseIdentifier = function isPrereleaseIdentifier(prerelease, identifier) {
+	    var identifiers = identifier.split('.');
+	    if (identifiers.length > prerelease.length) {
+	      return false;
 	    }
-	    if (version.length > MAX_LENGTH) {
-	      throw new TypeError("version is longer than ".concat(MAX_LENGTH, " characters"));
-	    }
-	    debug('SemVer', version, options);
-	    this.options = options;
-	    this.loose = !!options.loose;
-	    this.includePrerelease = !!options.includePrerelease;
-	    var m = version.trim().match(options.loose ? re$1[t$1.LOOSE] : re$1[t$1.FULL]);
-	    if (!m) {
-	      throw new TypeError("Invalid Version: ".concat(version));
-	    }
-	    this.raw = version;
-	    this.major = +m[1];
-	    this.minor = +m[2];
-	    this.patch = +m[3];
-	    if (this.major > MAX_SAFE_INTEGER || this.major < 0) {
-	      throw new TypeError('Invalid major version');
-	    }
-	    if (this.minor > MAX_SAFE_INTEGER || this.minor < 0) {
-	      throw new TypeError('Invalid minor version');
-	    }
-	    if (this.patch > MAX_SAFE_INTEGER || this.patch < 0) {
-	      throw new TypeError('Invalid patch version');
-	    }
-	    if (!m[4]) {
-	      this.prerelease = [];
-	    } else {
-	      this.prerelease = m[4].split('.').map(function (id) {
-	        if (/^[0-9]+$/.test(id)) {
-	          var num = +id;
-	          if (num >= 0 && num < MAX_SAFE_INTEGER) {
-	            return num;
-	          }
-	        }
-	        return id;
-	      });
-	    }
-	    this.build = m[5] ? m[5].split('.') : [];
-	    this.format();
-	  }
-	  return _createClass(SemVer, [{
-	    key: "format",
-	    value: function format() {
-	      this.version = "".concat(this.major, ".").concat(this.minor, ".").concat(this.patch);
-	      if (this.prerelease.length) {
-	        this.version += "-".concat(this.prerelease.join('.'));
-	      }
-	      return this.version;
-	    }
-	  }, {
-	    key: "toString",
-	    value: function toString() {
-	      return this.version;
-	    }
-	  }, {
-	    key: "compare",
-	    value: function compare(other) {
-	      debug('SemVer.compare', this.version, this.options, other);
-	      if (!(other instanceof SemVer)) {
-	        if (typeof other === 'string' && other === this.version) {
-	          return 0;
-	        }
-	        other = new SemVer(other, this.options);
-	      }
-	      if (other.version === this.version) {
-	        return 0;
-	      }
-	      return this.compareMain(other) || this.comparePre(other);
-	    }
-	  }, {
-	    key: "compareMain",
-	    value: function compareMain(other) {
-	      if (!(other instanceof SemVer)) {
-	        other = new SemVer(other, this.options);
-	      }
-	      return compareIdentifiers(this.major, other.major) || compareIdentifiers(this.minor, other.minor) || compareIdentifiers(this.patch, other.patch);
-	    }
-	  }, {
-	    key: "comparePre",
-	    value: function comparePre(other) {
-	      if (!(other instanceof SemVer)) {
-	        other = new SemVer(other, this.options);
-	      }
-	      if (this.prerelease.length && !other.prerelease.length) {
-	        return -1;
-	      } else if (!this.prerelease.length && other.prerelease.length) {
-	        return 1;
-	      } else if (!this.prerelease.length && !other.prerelease.length) {
-	        return 0;
-	      }
-	      var i = 0;
-	      do {
-	        var a = this.prerelease[i];
-	        var b = other.prerelease[i];
-	        debug('prerelease compare', i, a, b);
-	        if (a === undefined && b === undefined) {
-	          return 0;
-	        } else if (b === undefined) {
-	          return 1;
-	        } else if (a === undefined) {
-	          return -1;
-	        } else if (a === b) {
-	          continue;
-	        } else {
-	          return compareIdentifiers(a, b);
-	        }
-	      } while (++i);
-	    }
-	  }, {
-	    key: "compareBuild",
-	    value: function compareBuild(other) {
-	      if (!(other instanceof SemVer)) {
-	        other = new SemVer(other, this.options);
-	      }
-	      var i = 0;
-	      do {
-	        var a = this.build[i];
-	        var b = other.build[i];
-	        debug('build compare', i, a, b);
-	        if (a === undefined && b === undefined) {
-	          return 0;
-	        } else if (b === undefined) {
-	          return 1;
-	        } else if (a === undefined) {
-	          return -1;
-	        } else if (a === b) {
-	          continue;
-	        } else {
-	          return compareIdentifiers(a, b);
-	        }
-	      } while (++i);
-	    }
-	  }, {
-	    key: "inc",
-	    value: function inc(release, identifier, identifierBase) {
-	      switch (release) {
-	        case 'premajor':
-	          this.prerelease.length = 0;
-	          this.patch = 0;
-	          this.minor = 0;
-	          this.major++;
-	          this.inc('pre', identifier, identifierBase);
-	          break;
-	        case 'preminor':
-	          this.prerelease.length = 0;
-	          this.patch = 0;
-	          this.minor++;
-	          this.inc('pre', identifier, identifierBase);
-	          break;
-	        case 'prepatch':
-	          this.prerelease.length = 0;
-	          this.inc('patch', identifier, identifierBase);
-	          this.inc('pre', identifier, identifierBase);
-	          break;
-	        case 'prerelease':
-	          if (this.prerelease.length === 0) {
-	            this.inc('patch', identifier, identifierBase);
-	          }
-	          this.inc('pre', identifier, identifierBase);
-	          break;
-	        case 'major':
-	          if (this.minor !== 0 || this.patch !== 0 || this.prerelease.length === 0) {
-	            this.major++;
-	          }
-	          this.minor = 0;
-	          this.patch = 0;
-	          this.prerelease = [];
-	          break;
-	        case 'minor':
-	          if (this.patch !== 0 || this.prerelease.length === 0) {
-	            this.minor++;
-	          }
-	          this.patch = 0;
-	          this.prerelease = [];
-	          break;
-	        case 'patch':
-	          if (this.prerelease.length === 0) {
-	            this.patch++;
-	          }
-	          this.prerelease = [];
-	          break;
-	        case 'pre':
-	          {
-	            var base = Number(identifierBase) ? 1 : 0;
-	            if (!identifier && identifierBase === false) {
-	              throw new Error('invalid increment argument: identifier is empty');
-	            }
-	            if (this.prerelease.length === 0) {
-	              this.prerelease = [base];
-	            } else {
-	              var i = this.prerelease.length;
-	              while (--i >= 0) {
-	                if (typeof this.prerelease[i] === 'number') {
-	                  this.prerelease[i]++;
-	                  i = -2;
-	                }
-	              }
-	              if (i === -1) {
-	                if (identifier === this.prerelease.join('.') && identifierBase === false) {
-	                  throw new Error('invalid increment argument: identifier already exists');
-	                }
-	                this.prerelease.push(base);
-	              }
-	            }
-	            if (identifier) {
-	              var prerelease = [identifier, base];
-	              if (identifierBase === false) {
-	                prerelease = [identifier];
-	              }
-	              if (compareIdentifiers(this.prerelease[0], identifier) === 0) {
-	                if (isNaN(this.prerelease[1])) {
-	                  this.prerelease = prerelease;
-	                }
-	              } else {
-	                this.prerelease = prerelease;
-	              }
-	            }
-	            break;
-	          }
-	        default:
-	          throw new Error("invalid increment argument: ".concat(release));
-	      }
-	      this.raw = this.format();
-	      if (this.build.length) {
-	        this.raw += "+".concat(this.build.join('.'));
-	      }
-	      return this;
-	    }
-	  }]);
-	}();
-	var semver$1 = SemVer$3;
-	getDefaultExportFromCjs(semver$1);
-
-	var SemVer$2 = semver$1;
-	var parse$2 = function parse(version, options) {
-	  var throwErrors = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-	  if (version instanceof SemVer$2) {
-	    return version;
-	  }
-	  try {
-	    return new SemVer$2(version, options);
-	  } catch (er) {
-	    if (!throwErrors) {
-	      return null;
-	    }
-	    throw er;
-	  }
-	};
-	var parse_1 = parse$2;
-	getDefaultExportFromCjs(parse_1);
-
-	var parse$1 = parse_1;
-	var valid = function valid(version, options) {
-	  var v = parse$1(version, options);
-	  return v ? v.version : null;
-	};
-	var valid_1 = valid;
-	var valid$1 = getDefaultExportFromCjs(valid_1);
-
-	var SemVer$1 = semver$1;
-	var parse = parse_1;
-	var re = reExports.safeRe,
-	  t = reExports.t;
-	var coerce = function coerce(version, options) {
-	  if (version instanceof SemVer$1) {
-	    return version;
-	  }
-	  if (typeof version === 'number') {
-	    version = String(version);
-	  }
-	  if (typeof version !== 'string') {
-	    return null;
-	  }
-	  options = options || {};
-	  var match = null;
-	  if (!options.rtl) {
-	    match = version.match(options.includePrerelease ? re[t.COERCEFULL] : re[t.COERCE]);
-	  } else {
-	    var coerceRtlRegex = options.includePrerelease ? re[t.COERCERTLFULL] : re[t.COERCERTL];
-	    var next;
-	    while ((next = coerceRtlRegex.exec(version)) && (!match || match.index + match[0].length !== version.length)) {
-	      if (!match || next.index + next[0].length !== match.index + match[0].length) {
-	        match = next;
-	      }
-	      coerceRtlRegex.lastIndex = next.index + next[1].length + next[2].length;
-	    }
-	    coerceRtlRegex.lastIndex = -1;
-	  }
-	  if (match === null) {
-	    return null;
-	  }
-	  var major = match[2];
-	  var minor = match[3] || '0';
-	  var patch = match[4] || '0';
-	  var prerelease = options.includePrerelease && match[5] ? "-".concat(match[5]) : '';
-	  var build = options.includePrerelease && match[6] ? "+".concat(match[6]) : '';
-	  return parse("".concat(major, ".").concat(minor, ".").concat(patch).concat(prerelease).concat(build), options);
-	};
-	var coerce_1 = coerce;
-	var coerce$1 = getDefaultExportFromCjs(coerce_1);
-
-	var LRUCache = function () {
-	  function LRUCache() {
-	    _classCallCheck(this, LRUCache);
-	    this.max = 1000;
-	    this.map = new Map();
-	  }
-	  return _createClass(LRUCache, [{
-	    key: "get",
-	    value: function get(key) {
-	      var value = this.map.get(key);
-	      if (value === undefined) {
-	        return undefined;
-	      } else {
-	        this.map.delete(key);
-	        this.map.set(key, value);
-	        return value;
-	      }
-	    }
-	  }, {
-	    key: "delete",
-	    value: function _delete(key) {
-	      if (this.map.has(key)) {
-	        this.map.delete(key);
-	        return true;
-	      } else {
+	    for (var i = 0; i < identifiers.length; i++) {
+	      if (compareIdentifiers(prerelease[i], identifiers[i]) !== 0) {
 	        return false;
 	      }
 	    }
-	  }, {
-	    key: "set",
-	    value: function set(key, value) {
-	      var deleted = this.delete(key);
-	      if (!deleted && value !== undefined) {
-	        if (this.map.size >= this.max) {
-	          var firstKey = this.map.keys().next().value;
-	          this.delete(firstKey);
+	    return true;
+	  };
+	  var SemVer = function () {
+	    function SemVer(version, options) {
+	      _classCallCheck(this, SemVer);
+	      options = parseOptions(options);
+	      if (version instanceof SemVer) {
+	        if (version.loose === !!options.loose && version.includePrerelease === !!options.includePrerelease) {
+	          return version;
+	        } else {
+	          version = version.version;
 	        }
-	        this.map.set(key, value);
+	      } else if (typeof version !== 'string') {
+	        throw new TypeError("Invalid version. Must be a string. Got type \"".concat(_typeof(version), "\"."));
 	      }
-	      return this;
+	      if (version.length > MAX_LENGTH) {
+	        throw new TypeError("version is longer than ".concat(MAX_LENGTH, " characters"));
+	      }
+	      debug('SemVer', version, options);
+	      this.options = options;
+	      this.loose = !!options.loose;
+	      this.includePrerelease = !!options.includePrerelease;
+	      var m = version.trim().match(options.loose ? re[t.LOOSE] : re[t.FULL]);
+	      if (!m) {
+	        throw new TypeError("Invalid Version: ".concat(version));
+	      }
+	      this.raw = version;
+	      this.major = +m[1];
+	      this.minor = +m[2];
+	      this.patch = +m[3];
+	      if (this.major > MAX_SAFE_INTEGER || this.major < 0) {
+	        throw new TypeError('Invalid major version');
+	      }
+	      if (this.minor > MAX_SAFE_INTEGER || this.minor < 0) {
+	        throw new TypeError('Invalid minor version');
+	      }
+	      if (this.patch > MAX_SAFE_INTEGER || this.patch < 0) {
+	        throw new TypeError('Invalid patch version');
+	      }
+	      if (!m[4]) {
+	        this.prerelease = [];
+	      } else {
+	        this.prerelease = m[4].split('.').map(function (id) {
+	          if (/^[0-9]+$/.test(id)) {
+	            var num = +id;
+	            if (num >= 0 && num < MAX_SAFE_INTEGER) {
+	              return num;
+	            }
+	          }
+	          return id;
+	        });
+	      }
+	      this.build = m[5] ? m[5].split('.') : [];
+	      this.format();
 	    }
-	  }]);
-	}();
-	var lrucache = LRUCache;
-	getDefaultExportFromCjs(lrucache);
-
-	var SemVer = semver$1;
-	var compare$6 = function compare(a, b, loose) {
-	  return new SemVer(a, loose).compare(new SemVer(b, loose));
-	};
-	var compare_1 = compare$6;
-	getDefaultExportFromCjs(compare_1);
-
-	var compare$5 = compare_1;
-	var eq$1 = function eq(a, b, loose) {
-	  return compare$5(a, b, loose) === 0;
-	};
-	var eq_1 = eq$1;
-	getDefaultExportFromCjs(eq_1);
-
-	var compare$4 = compare_1;
-	var neq$1 = function neq(a, b, loose) {
-	  return compare$4(a, b, loose) !== 0;
-	};
-	var neq_1 = neq$1;
-	getDefaultExportFromCjs(neq_1);
-
-	var compare$3 = compare_1;
-	var gt$1 = function gt(a, b, loose) {
-	  return compare$3(a, b, loose) > 0;
-	};
-	var gt_1 = gt$1;
-	getDefaultExportFromCjs(gt_1);
-
-	var compare$2 = compare_1;
-	var gte$1 = function gte(a, b, loose) {
-	  return compare$2(a, b, loose) >= 0;
-	};
-	var gte_1 = gte$1;
-	getDefaultExportFromCjs(gte_1);
-
-	var compare$1 = compare_1;
-	var lt$1 = function lt(a, b, loose) {
-	  return compare$1(a, b, loose) < 0;
-	};
-	var lt_1 = lt$1;
-	getDefaultExportFromCjs(lt_1);
-
-	var compare = compare_1;
-	var lte$1 = function lte(a, b, loose) {
-	  return compare(a, b, loose) <= 0;
-	};
-	var lte_1 = lte$1;
-	getDefaultExportFromCjs(lte_1);
-
-	var eq = eq_1;
-	var neq = neq_1;
-	var gt = gt_1;
-	var gte = gte_1;
-	var lt = lt_1;
-	var lte = lte_1;
-	var cmp = function cmp(a, op, b, loose) {
-	  switch (op) {
-	    case '===':
-	      if (_typeof(a) === 'object') {
-	        a = a.version;
+	    return _createClass(SemVer, [{
+	      key: "format",
+	      value: function format() {
+	        this.version = "".concat(this.major, ".").concat(this.minor, ".").concat(this.patch);
+	        if (this.prerelease.length) {
+	          this.version += "-".concat(this.prerelease.join('.'));
+	        }
+	        return this.version;
 	      }
-	      if (_typeof(b) === 'object') {
-	        b = b.version;
+	    }, {
+	      key: "toString",
+	      value: function toString() {
+	        return this.version;
 	      }
-	      return a === b;
-	    case '!==':
-	      if (_typeof(a) === 'object') {
-	        a = a.version;
+	    }, {
+	      key: "compare",
+	      value: function compare(other) {
+	        debug('SemVer.compare', this.version, this.options, other);
+	        if (!(other instanceof SemVer)) {
+	          if (typeof other === 'string' && other === this.version) {
+	            return 0;
+	          }
+	          other = new SemVer(other, this.options);
+	        }
+	        if (other.version === this.version) {
+	          return 0;
+	        }
+	        return this.compareMain(other) || this.comparePre(other);
 	      }
-	      if (_typeof(b) === 'object') {
-	        b = b.version;
+	    }, {
+	      key: "compareMain",
+	      value: function compareMain(other) {
+	        if (!(other instanceof SemVer)) {
+	          other = new SemVer(other, this.options);
+	        }
+	        if (this.major < other.major) {
+	          return -1;
+	        }
+	        if (this.major > other.major) {
+	          return 1;
+	        }
+	        if (this.minor < other.minor) {
+	          return -1;
+	        }
+	        if (this.minor > other.minor) {
+	          return 1;
+	        }
+	        if (this.patch < other.patch) {
+	          return -1;
+	        }
+	        if (this.patch > other.patch) {
+	          return 1;
+	        }
+	        return 0;
 	      }
-	      return a !== b;
-	    case '':
-	    case '=':
-	    case '==':
-	      return eq(a, b, loose);
-	    case '!=':
-	      return neq(a, b, loose);
-	    case '>':
-	      return gt(a, b, loose);
-	    case '>=':
-	      return gte(a, b, loose);
-	    case '<':
-	      return lt(a, b, loose);
-	    case '<=':
-	      return lte(a, b, loose);
-	    default:
-	      throw new TypeError("Invalid operator: ".concat(op));
-	  }
-	};
-	var cmp_1 = cmp;
-	getDefaultExportFromCjs(cmp_1);
+	    }, {
+	      key: "comparePre",
+	      value: function comparePre(other) {
+	        if (!(other instanceof SemVer)) {
+	          other = new SemVer(other, this.options);
+	        }
+	        if (this.prerelease.length && !other.prerelease.length) {
+	          return -1;
+	        } else if (!this.prerelease.length && other.prerelease.length) {
+	          return 1;
+	        } else if (!this.prerelease.length && !other.prerelease.length) {
+	          return 0;
+	        }
+	        var i = 0;
+	        do {
+	          var a = this.prerelease[i];
+	          var b = other.prerelease[i];
+	          debug('prerelease compare', i, a, b);
+	          if (a === undefined && b === undefined) {
+	            return 0;
+	          } else if (b === undefined) {
+	            return 1;
+	          } else if (a === undefined) {
+	            return -1;
+	          } else if (a === b) {
+	            continue;
+	          } else {
+	            return compareIdentifiers(a, b);
+	          }
+	        } while (++i);
+	      }
+	    }, {
+	      key: "compareBuild",
+	      value: function compareBuild(other) {
+	        if (!(other instanceof SemVer)) {
+	          other = new SemVer(other, this.options);
+	        }
+	        var i = 0;
+	        do {
+	          var a = this.build[i];
+	          var b = other.build[i];
+	          debug('build compare', i, a, b);
+	          if (a === undefined && b === undefined) {
+	            return 0;
+	          } else if (b === undefined) {
+	            return 1;
+	          } else if (a === undefined) {
+	            return -1;
+	          } else if (a === b) {
+	            continue;
+	          } else {
+	            return compareIdentifiers(a, b);
+	          }
+	        } while (++i);
+	      }
+	    }, {
+	      key: "inc",
+	      value: function inc(release, identifier, identifierBase) {
+	        if (release.startsWith('pre')) {
+	          if (!identifier && identifierBase === false) {
+	            throw new Error('invalid increment argument: identifier is empty');
+	          }
+	          if (identifier) {
+	            var match = "-".concat(identifier).match(this.options.loose ? re[t.PRERELEASELOOSE] : re[t.PRERELEASE]);
+	            if (!match || match[1] !== identifier) {
+	              throw new Error("invalid identifier: ".concat(identifier));
+	            }
+	          }
+	        }
+	        switch (release) {
+	          case 'premajor':
+	            this.prerelease.length = 0;
+	            this.patch = 0;
+	            this.minor = 0;
+	            this.major++;
+	            this.inc('pre', identifier, identifierBase);
+	            break;
+	          case 'preminor':
+	            this.prerelease.length = 0;
+	            this.patch = 0;
+	            this.minor++;
+	            this.inc('pre', identifier, identifierBase);
+	            break;
+	          case 'prepatch':
+	            this.prerelease.length = 0;
+	            this.inc('patch', identifier, identifierBase);
+	            this.inc('pre', identifier, identifierBase);
+	            break;
+	          case 'prerelease':
+	            if (this.prerelease.length === 0) {
+	              this.inc('patch', identifier, identifierBase);
+	            }
+	            this.inc('pre', identifier, identifierBase);
+	            break;
+	          case 'release':
+	            if (this.prerelease.length === 0) {
+	              throw new Error("version ".concat(this.raw, " is not a prerelease"));
+	            }
+	            this.prerelease.length = 0;
+	            break;
+	          case 'major':
+	            if (this.minor !== 0 || this.patch !== 0 || this.prerelease.length === 0) {
+	              this.major++;
+	            }
+	            this.minor = 0;
+	            this.patch = 0;
+	            this.prerelease = [];
+	            break;
+	          case 'minor':
+	            if (this.patch !== 0 || this.prerelease.length === 0) {
+	              this.minor++;
+	            }
+	            this.patch = 0;
+	            this.prerelease = [];
+	            break;
+	          case 'patch':
+	            if (this.prerelease.length === 0) {
+	              this.patch++;
+	            }
+	            this.prerelease = [];
+	            break;
+	          case 'pre':
+	            {
+	              var base = Number(identifierBase) ? 1 : 0;
+	              if (this.prerelease.length === 0) {
+	                this.prerelease = [base];
+	              } else {
+	                var i = this.prerelease.length;
+	                while (--i >= 0) {
+	                  if (typeof this.prerelease[i] === 'number') {
+	                    this.prerelease[i]++;
+	                    i = -2;
+	                  }
+	                }
+	                if (i === -1) {
+	                  if (identifier === this.prerelease.join('.') && identifierBase === false) {
+	                    throw new Error('invalid increment argument: identifier already exists');
+	                  }
+	                  this.prerelease.push(base);
+	                }
+	              }
+	              if (identifier) {
+	                var prerelease = [identifier, base];
+	                if (identifierBase === false) {
+	                  prerelease = [identifier];
+	                }
+	                if (isPrereleaseIdentifier(this.prerelease, identifier)) {
+	                  var prereleaseBase = this.prerelease[identifier.split('.').length];
+	                  if (isNaN(prereleaseBase)) {
+	                    this.prerelease = prerelease;
+	                  }
+	                } else {
+	                  this.prerelease = prerelease;
+	                }
+	              }
+	              break;
+	            }
+	          default:
+	            throw new Error("invalid increment argument: ".concat(release));
+	        }
+	        this.raw = this.format();
+	        if (this.build.length) {
+	          this.raw += "+".concat(this.build.join('.'));
+	        }
+	        return this;
+	      }
+	    }]);
+	  }();
+	  semver$1 = SemVer;
+	  return semver$1;
+	}
+
+	var parse_1;
+	var hasRequiredParse;
+	function requireParse() {
+	  if (hasRequiredParse) return parse_1;
+	  hasRequiredParse = 1;
+	  var SemVer = requireSemver();
+	  var parse = function parse(version, options) {
+	    var throwErrors = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+	    if (version instanceof SemVer) {
+	      return version;
+	    }
+	    try {
+	      return new SemVer(version, options);
+	    } catch (er) {
+	      if (!throwErrors) {
+	        return null;
+	      }
+	      throw er;
+	    }
+	  };
+	  parse_1 = parse;
+	  return parse_1;
+	}
+
+	var valid_1;
+	var hasRequiredValid;
+	function requireValid() {
+	  if (hasRequiredValid) return valid_1;
+	  hasRequiredValid = 1;
+	  var parse = requireParse();
+	  var valid = function valid(version, options) {
+	    var v = parse(version, options);
+	    return v ? v.version : null;
+	  };
+	  valid_1 = valid;
+	  return valid_1;
+	}
+
+	var validExports = requireValid();
+	var valid = /*@__PURE__*/getDefaultExportFromCjs(validExports);
+
+	var coerce_1;
+	var hasRequiredCoerce;
+	function requireCoerce() {
+	  if (hasRequiredCoerce) return coerce_1;
+	  hasRequiredCoerce = 1;
+	  var SemVer = requireSemver();
+	  var parse = requireParse();
+	  var _require$$ = requireRe(),
+	    re = _require$$.safeRe,
+	    t = _require$$.t;
+	  var coerce = function coerce(version, options) {
+	    if (version instanceof SemVer) {
+	      return version;
+	    }
+	    if (typeof version === 'number') {
+	      version = String(version);
+	    }
+	    if (typeof version !== 'string') {
+	      return null;
+	    }
+	    options = options || {};
+	    var match = null;
+	    if (!options.rtl) {
+	      match = version.match(options.includePrerelease ? re[t.COERCEFULL] : re[t.COERCE]);
+	    } else {
+	      var coerceRtlRegex = options.includePrerelease ? re[t.COERCERTLFULL] : re[t.COERCERTL];
+	      var next;
+	      while ((next = coerceRtlRegex.exec(version)) && (!match || match.index + match[0].length !== version.length)) {
+	        if (!match || next.index + next[0].length !== match.index + match[0].length) {
+	          match = next;
+	        }
+	        coerceRtlRegex.lastIndex = next.index + next[1].length + next[2].length;
+	      }
+	      coerceRtlRegex.lastIndex = -1;
+	    }
+	    if (match === null) {
+	      return null;
+	    }
+	    var major = match[2];
+	    var minor = match[3] || '0';
+	    var patch = match[4] || '0';
+	    var prerelease = options.includePrerelease && match[5] ? "-".concat(match[5]) : '';
+	    var build = options.includePrerelease && match[6] ? "+".concat(match[6]) : '';
+	    return parse("".concat(major, ".").concat(minor, ".").concat(patch).concat(prerelease).concat(build), options);
+	  };
+	  coerce_1 = coerce;
+	  return coerce_1;
+	}
+
+	var coerceExports = requireCoerce();
+	var coerce = /*@__PURE__*/getDefaultExportFromCjs(coerceExports);
+
+	var lrucache;
+	var hasRequiredLrucache;
+	function requireLrucache() {
+	  if (hasRequiredLrucache) return lrucache;
+	  hasRequiredLrucache = 1;
+	  var LRUCache = function () {
+	    function LRUCache() {
+	      _classCallCheck(this, LRUCache);
+	      this.max = 1000;
+	      this.map = new Map();
+	    }
+	    return _createClass(LRUCache, [{
+	      key: "get",
+	      value: function get(key) {
+	        var value = this.map.get(key);
+	        if (value === undefined) {
+	          return undefined;
+	        } else {
+	          this.map.delete(key);
+	          this.map.set(key, value);
+	          return value;
+	        }
+	      }
+	    }, {
+	      key: "delete",
+	      value: function _delete(key) {
+	        return this.map.delete(key);
+	      }
+	    }, {
+	      key: "set",
+	      value: function set(key, value) {
+	        var deleted = this.delete(key);
+	        if (!deleted && value !== undefined) {
+	          if (this.map.size >= this.max) {
+	            var firstKey = this.map.keys().next().value;
+	            this.delete(firstKey);
+	          }
+	          this.map.set(key, value);
+	        }
+	        return this;
+	      }
+	    }]);
+	  }();
+	  lrucache = LRUCache;
+	  return lrucache;
+	}
+
+	var compare_1;
+	var hasRequiredCompare;
+	function requireCompare() {
+	  if (hasRequiredCompare) return compare_1;
+	  hasRequiredCompare = 1;
+	  var SemVer = requireSemver();
+	  var compare = function compare(a, b, loose) {
+	    return new SemVer(a, loose).compare(new SemVer(b, loose));
+	  };
+	  compare_1 = compare;
+	  return compare_1;
+	}
+
+	var eq_1;
+	var hasRequiredEq;
+	function requireEq() {
+	  if (hasRequiredEq) return eq_1;
+	  hasRequiredEq = 1;
+	  var compare = requireCompare();
+	  var eq = function eq(a, b, loose) {
+	    return compare(a, b, loose) === 0;
+	  };
+	  eq_1 = eq;
+	  return eq_1;
+	}
+
+	var neq_1;
+	var hasRequiredNeq;
+	function requireNeq() {
+	  if (hasRequiredNeq) return neq_1;
+	  hasRequiredNeq = 1;
+	  var compare = requireCompare();
+	  var neq = function neq(a, b, loose) {
+	    return compare(a, b, loose) !== 0;
+	  };
+	  neq_1 = neq;
+	  return neq_1;
+	}
+
+	var gt_1;
+	var hasRequiredGt;
+	function requireGt() {
+	  if (hasRequiredGt) return gt_1;
+	  hasRequiredGt = 1;
+	  var compare = requireCompare();
+	  var gt = function gt(a, b, loose) {
+	    return compare(a, b, loose) > 0;
+	  };
+	  gt_1 = gt;
+	  return gt_1;
+	}
+
+	var gte_1;
+	var hasRequiredGte;
+	function requireGte() {
+	  if (hasRequiredGte) return gte_1;
+	  hasRequiredGte = 1;
+	  var compare = requireCompare();
+	  var gte = function gte(a, b, loose) {
+	    return compare(a, b, loose) >= 0;
+	  };
+	  gte_1 = gte;
+	  return gte_1;
+	}
+
+	var lt_1;
+	var hasRequiredLt;
+	function requireLt() {
+	  if (hasRequiredLt) return lt_1;
+	  hasRequiredLt = 1;
+	  var compare = requireCompare();
+	  var lt = function lt(a, b, loose) {
+	    return compare(a, b, loose) < 0;
+	  };
+	  lt_1 = lt;
+	  return lt_1;
+	}
+
+	var lte_1;
+	var hasRequiredLte;
+	function requireLte() {
+	  if (hasRequiredLte) return lte_1;
+	  hasRequiredLte = 1;
+	  var compare = requireCompare();
+	  var lte = function lte(a, b, loose) {
+	    return compare(a, b, loose) <= 0;
+	  };
+	  lte_1 = lte;
+	  return lte_1;
+	}
+
+	var cmp_1;
+	var hasRequiredCmp;
+	function requireCmp() {
+	  if (hasRequiredCmp) return cmp_1;
+	  hasRequiredCmp = 1;
+	  var eq = requireEq();
+	  var neq = requireNeq();
+	  var gt = requireGt();
+	  var gte = requireGte();
+	  var lt = requireLt();
+	  var lte = requireLte();
+	  var cmp = function cmp(a, op, b, loose) {
+	    switch (op) {
+	      case '===':
+	        if (_typeof(a) === 'object') {
+	          a = a.version;
+	        }
+	        if (_typeof(b) === 'object') {
+	          b = b.version;
+	        }
+	        return a === b;
+	      case '!==':
+	        if (_typeof(a) === 'object') {
+	          a = a.version;
+	        }
+	        if (_typeof(b) === 'object') {
+	          b = b.version;
+	        }
+	        return a !== b;
+	      case '':
+	      case '=':
+	      case '==':
+	        return eq(a, b, loose);
+	      case '!=':
+	        return neq(a, b, loose);
+	      case '>':
+	        return gt(a, b, loose);
+	      case '>=':
+	        return gte(a, b, loose);
+	      case '<':
+	        return lt(a, b, loose);
+	      case '<=':
+	        return lte(a, b, loose);
+	      default:
+	        throw new TypeError("Invalid operator: ".concat(op));
+	    }
+	  };
+	  cmp_1 = cmp;
+	  return cmp_1;
+	}
 
 	var comparator;
 	var hasRequiredComparator;
@@ -8836,12 +8979,13 @@ var spine = (function (pc) {
 	    }]);
 	  }();
 	  comparator = Comparator;
-	  var parseOptions = parseOptions_1;
-	  var re = reExports.safeRe,
-	    t = reExports.t;
-	  var cmp = cmp_1;
-	  var debug = debug_1;
-	  var SemVer = semver$1;
+	  var parseOptions = requireParseOptions();
+	  var _require$$ = requireRe(),
+	    re = _require$$.safeRe,
+	    t = _require$$.t;
+	  var cmp = requireCmp();
+	  var debug = requireDebug();
+	  var SemVer = requireSemver();
 	  var Range = requireRange();
 	  return comparator;
 	}
@@ -8851,6 +8995,7 @@ var spine = (function (pc) {
 	function requireRange() {
 	  if (hasRequiredRange) return range;
 	  hasRequiredRange = 1;
+	  var SPACE_CHARACTERS = /\s+/g;
 	  var Range = function () {
 	    function Range(range, options) {
 	      var _this = this;
@@ -8866,13 +9011,13 @@ var spine = (function (pc) {
 	      if (range instanceof Comparator) {
 	        this.raw = range.value;
 	        this.set = [[range]];
-	        this.format();
+	        this.formatted = undefined;
 	        return this;
 	      }
 	      this.options = options;
 	      this.loose = !!options.loose;
 	      this.includePrerelease = !!options.includePrerelease;
-	      this.raw = range.trim().split(/\s+/).join(' ');
+	      this.raw = range.trim().replace(SPACE_CHARACTERS, ' ');
 	      this.set = this.raw.split('||').map(function (r) {
 	        return _this.parseRange(r.trim());
 	      }).filter(function (c) {
@@ -8906,14 +9051,31 @@ var spine = (function (pc) {
 	          }
 	        }
 	      }
-	      this.format();
+	      this.formatted = undefined;
 	    }
 	    return _createClass(Range, [{
+	      key: "range",
+	      get: function get() {
+	        if (this.formatted === undefined) {
+	          this.formatted = '';
+	          for (var i = 0; i < this.set.length; i++) {
+	            if (i > 0) {
+	              this.formatted += '||';
+	            }
+	            var comps = this.set[i];
+	            for (var k = 0; k < comps.length; k++) {
+	              if (k > 0) {
+	                this.formatted += ' ';
+	              }
+	              this.formatted += comps[k].toString().trim();
+	            }
+	          }
+	        }
+	        return this.formatted;
+	      }
+	    }, {
 	      key: "format",
 	      value: function format() {
-	        this.range = this.set.map(function (comps) {
-	          return comps.join(' ').trim();
-	        }).join('||').trim();
 	        return this.range;
 	      }
 	    }, {
@@ -8925,6 +9087,7 @@ var spine = (function (pc) {
 	      key: "parseRange",
 	      value: function parseRange(range) {
 	        var _this2 = this;
+	        range = range.replace(BUILDSTRIPRE, '');
 	        var memoOpts = (this.options.includePrerelease && FLAG_INCLUDE_PRERELEASE) | (this.options.loose && FLAG_LOOSE);
 	        var memoKey = memoOpts + ':' + range;
 	        var cached = cache.get(memoKey);
@@ -9018,19 +9181,23 @@ var spine = (function (pc) {
 	    }]);
 	  }();
 	  range = Range;
-	  var LRU = lrucache;
+	  var LRU = requireLrucache();
 	  var cache = new LRU();
-	  var parseOptions = parseOptions_1;
+	  var parseOptions = requireParseOptions();
 	  var Comparator = requireComparator();
-	  var debug = debug_1;
-	  var SemVer = semver$1;
-	  var re = reExports.safeRe,
-	    t = reExports.t,
-	    comparatorTrimReplace = reExports.comparatorTrimReplace,
-	    tildeTrimReplace = reExports.tildeTrimReplace,
-	    caretTrimReplace = reExports.caretTrimReplace;
-	  var FLAG_INCLUDE_PRERELEASE = constants.FLAG_INCLUDE_PRERELEASE,
-	    FLAG_LOOSE = constants.FLAG_LOOSE;
+	  var debug = requireDebug();
+	  var SemVer = requireSemver();
+	  var _require$$ = requireRe(),
+	    re = _require$$.safeRe,
+	    src = _require$$.src,
+	    t = _require$$.t,
+	    comparatorTrimReplace = _require$$.comparatorTrimReplace,
+	    tildeTrimReplace = _require$$.tildeTrimReplace,
+	    caretTrimReplace = _require$$.caretTrimReplace;
+	  var _require$$2 = requireConstants(),
+	    FLAG_INCLUDE_PRERELEASE = _require$$2.FLAG_INCLUDE_PRERELEASE,
+	    FLAG_LOOSE = _require$$2.FLAG_LOOSE;
+	  var BUILDSTRIPRE = new RegExp(src[t.BUILD], 'g');
 	  var isNullSet = function isNullSet(c) {
 	    return c.value === '<0.0.0-0';
 	  };
@@ -9050,6 +9217,7 @@ var spine = (function (pc) {
 	    return result;
 	  };
 	  var parseComparator = function parseComparator(comp, options) {
+	    comp = comp.replace(re[t.BUILD], '');
 	    debug('comp', comp, options);
 	    comp = replaceCarets(comp, options);
 	    debug('caret', comp);
@@ -9064,6 +9232,9 @@ var spine = (function (pc) {
 	  var isX = function isX(id) {
 	    return !id || id.toLowerCase() === 'x' || id === '*';
 	  };
+	  var invalidXRangeOrder = function invalidXRangeOrder(M, m, p) {
+	    return isX(M) && !isX(m) || isX(m) && p && !isX(p);
+	  };
 	  var replaceTildes = function replaceTildes(comp, options) {
 	    return comp.trim().split(/\s+/).map(function (c) {
 	      return replaceTilde(c, options);
@@ -9071,15 +9242,16 @@ var spine = (function (pc) {
 	  };
 	  var replaceTilde = function replaceTilde(comp, options) {
 	    var r = options.loose ? re[t.TILDELOOSE] : re[t.TILDE];
+	    var z = options.includePrerelease ? '-0' : '';
 	    return comp.replace(r, function (_, M, m, p, pr) {
 	      debug('tilde', comp, _, M, m, p, pr);
 	      var ret;
 	      if (isX(M)) {
 	        ret = '';
 	      } else if (isX(m)) {
-	        ret = ">=".concat(M, ".0.0 <").concat(+M + 1, ".0.0-0");
+	        ret = ">=".concat(M, ".0.0").concat(z, " <").concat(+M + 1, ".0.0-0");
 	      } else if (isX(p)) {
-	        ret = ">=".concat(M, ".").concat(m, ".0 <").concat(M, ".").concat(+m + 1, ".0-0");
+	        ret = ">=".concat(M, ".").concat(m, ".0").concat(z, " <").concat(M, ".").concat(+m + 1, ".0-0");
 	      } else if (pr) {
 	        debug('replaceTilde pr', pr);
 	        ret = ">=".concat(M, ".").concat(m, ".").concat(p, "-").concat(pr, " <").concat(M, ".").concat(+m + 1, ".0-0");
@@ -9127,9 +9299,9 @@ var spine = (function (pc) {
 	        debug('no pr');
 	        if (M === '0') {
 	          if (m === '0') {
-	            ret = ">=".concat(M, ".").concat(m, ".").concat(p).concat(z, " <").concat(M, ".").concat(m, ".").concat(+p + 1, "-0");
+	            ret = ">=".concat(M, ".").concat(m, ".").concat(p, " <").concat(M, ".").concat(m, ".").concat(+p + 1, "-0");
 	          } else {
-	            ret = ">=".concat(M, ".").concat(m, ".").concat(p).concat(z, " <").concat(M, ".").concat(+m + 1, ".0-0");
+	            ret = ">=".concat(M, ".").concat(m, ".").concat(p, " <").concat(M, ".").concat(+m + 1, ".0-0");
 	          }
 	        } else {
 	          ret = ">=".concat(M, ".").concat(m, ".").concat(p, " <").concat(+M + 1, ".0.0-0");
@@ -9150,6 +9322,9 @@ var spine = (function (pc) {
 	    var r = options.loose ? re[t.XRANGELOOSE] : re[t.XRANGE];
 	    return comp.replace(r, function (ret, gtlt, M, m, p, pr) {
 	      debug('xRange', comp, ret, gtlt, M, m, p, pr);
+	      if (invalidXRangeOrder(M, m, p)) {
+	        return comp;
+	      }
 	      var xM = isX(M);
 	      var xm = xM || isX(m);
 	      var xp = xm || isX(p);
@@ -9263,23 +9438,32 @@ var spine = (function (pc) {
 	  return range;
 	}
 
-	var Range = requireRange();
-	var satisfies = function satisfies(version, range, options) {
-	  try {
-	    range = new Range(range, options);
-	  } catch (er) {
-	    return false;
-	  }
-	  return range.test(version);
-	};
-	var satisfies_1 = satisfies;
-	var satisfies$1 = getDefaultExportFromCjs(satisfies_1);
+	var satisfies_1;
+	var hasRequiredSatisfies;
+	function requireSatisfies() {
+	  if (hasRequiredSatisfies) return satisfies_1;
+	  hasRequiredSatisfies = 1;
+	  var Range = requireRange();
+	  var satisfies = function satisfies(version, range, options) {
+	    try {
+	      range = new Range(range, options);
+	    } catch (er) {
+	      return false;
+	    }
+	    return range.test(version);
+	  };
+	  satisfies_1 = satisfies;
+	  return satisfies_1;
+	}
+
+	var satisfiesExports = requireSatisfies();
+	var satisfies = /*@__PURE__*/getDefaultExportFromCjs(satisfiesExports);
 
 	var semver = {
-	  valid: valid$1,
-	  coerce: coerce$1,
-	  satisfies: satisfies$1,
-	  SEMVER_SPEC_VERSION: constants$1.SEMVER_SPEC_VERSION
+	  valid: valid,
+	  coerce: coerce,
+	  satisfies: satisfies,
+	  SEMVER_SPEC_VERSION: constants.SEMVER_SPEC_VERSION
 	};
 
 	var ATTACHMENT_TYPE = {
@@ -9644,7 +9828,9 @@ var spine = (function (pc) {
 	            }
 	            var indices = slot.indices;
 	            var indCount = indices.length;
-	            for (j = 0; j < indCount; j++) dstIndices[dstIndexOffset + j] = indices[j] + dstVertexOffset;
+	            for (j = 0; j < indCount; j++) {
+	              dstIndices[dstIndexOffset + j] = indices[j] + dstVertexOffset;
+	            }
 	            batchIndexCount += indCount;
 	            dstIndexOffset += indCount;
 	            dstVertexOffset += posCount;
@@ -9761,32 +9947,18 @@ var spine = (function (pc) {
 	  }]);
 	}();
 
-	function _callSuper$1(_this, derived, args) {
-	  function isNativeReflectConstruct() {
-	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-	    if (Reflect.construct.sham) return false;
-	    if (typeof Proxy === "function") return true;
-	    try {
-	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
-	    } catch (e) {
-	      return false;
-	    }
-	  }
-	  derived = _getPrototypeOf(derived);
-	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
-	}
 	var SpineComponent = function (_Component) {
 	  function SpineComponent(system, entity) {
-	    var _this2;
+	    var _this;
 	    _classCallCheck(this, SpineComponent);
-	    _this2 = _callSuper$1(this, SpineComponent, [system, entity]);
-	    _this2.on('set_atlasAsset', _this2.onSetAsset, _this2);
-	    _this2.on('set_textureAssets', _this2.onSetAssets, _this2);
-	    _this2.on('set_skeletonAsset', _this2.onSetAsset, _this2);
-	    _this2.on('set_atlasData', _this2.onSetResource, _this2);
-	    _this2.on('set_textures', _this2.onSetResource, _this2);
-	    _this2.on('set_skeletonData', _this2.onSetResource, _this2);
-	    return _this2;
+	    _this = _callSuper(this, SpineComponent, [system, entity]);
+	    _this.on('set_atlasAsset', _this.onSetAsset, _this);
+	    _this.on('set_textureAssets', _this.onSetAssets, _this);
+	    _this.on('set_skeletonAsset', _this.onSetAsset, _this);
+	    _this.on('set_atlasData', _this.onSetResource, _this);
+	    _this.on('set_textures', _this.onSetResource, _this);
+	    _this.on('set_skeletonData', _this.onSetResource, _this);
+	    return _this;
 	  }
 	  _inherits(SpineComponent, _Component);
 	  return _createClass(SpineComponent, [{
@@ -9986,39 +10158,25 @@ var spine = (function (pc) {
 	  this.skeletonData = null;
 	});
 
-	function _callSuper(_this, derived, args) {
-	  function isNativeReflectConstruct() {
-	    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-	    if (Reflect.construct.sham) return false;
-	    if (typeof Proxy === "function") return true;
-	    try {
-	      return !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
-	    } catch (e) {
-	      return false;
-	    }
-	  }
-	  derived = _getPrototypeOf(derived);
-	  return _possibleConstructorReturn(_this, isNativeReflectConstruct() ? Reflect.construct(derived, args || [], _getPrototypeOf(_this).constructor) : derived.apply(_this, args));
-	}
 	var SpineComponentSystem = function (_ComponentSystem) {
 	  function SpineComponentSystem(app) {
-	    var _this2;
+	    var _this;
 	    _classCallCheck(this, SpineComponentSystem);
-	    _this2 = _callSuper(this, SpineComponentSystem, [app]);
-	    _this2.id = 'spine';
-	    _this2.ComponentType = SpineComponent;
-	    _this2.DataType = SpineComponentData;
-	    _this2.schema = ['enabled', 'atlasAsset', 'textureAssets', 'skeletonAsset', 'atlasData', 'textures', 'skeletonData', 'speed', 'spine'];
-	    _this2.on('beforeremove', _this2.onBeforeRemove, _this2);
-	    _this2.app.systems.on('update', _this2.onUpdate, _this2);
-	    return _this2;
+	    _this = _callSuper(this, SpineComponentSystem, [app]);
+	    _this.id = 'spine';
+	    _this.ComponentType = SpineComponent;
+	    _this.DataType = SpineComponentData;
+	    _this.schema = ['enabled', 'atlasAsset', 'textureAssets', 'skeletonAsset', 'atlasData', 'textures', 'skeletonData', 'speed', 'spine'];
+	    _this.on('beforeremove', _this.onBeforeRemove, _this);
+	    _this.app.systems.on('update', _this.onUpdate, _this);
+	    return _this;
 	  }
 	  _inherits(SpineComponentSystem, _ComponentSystem);
 	  return _createClass(SpineComponentSystem, [{
 	    key: "initializeComponentData",
 	    value: function initializeComponentData(component, data, properties) {
 	      properties = ['enabled', 'atlasAsset', 'textureAssets', 'skeletonAsset', 'atlasData', 'textures', 'skeletonData', 'spine'];
-	      _get(_getPrototypeOf(SpineComponentSystem.prototype), "initializeComponentData", this).call(this, component, data, properties);
+	      _superPropGet(SpineComponentSystem, "initializeComponentData", this)([component, data, properties]);
 	    }
 	  }, {
 	    key: "onBeforeRemove",
@@ -10053,7 +10211,7 @@ var spine = (function (pc) {
 	  var app = pc__namespace.Application.getApplication();
 	  if (!app) {
 	    if (typeof document !== 'undefined') {
-	      console.warn("No Application found. An Application or AppBase must be instantiated before `playcanvas-spine`.");
+	      console.warn('No Application found. An Application or AppBase must be instantiated before `playcanvas-spine`.');
 	    }
 	    return;
 	  }
