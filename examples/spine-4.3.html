@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PlayCanvas Spine 4.3</title>
+    <link rel="stylesheet" href="./css/example.css">
+</head>
+<body>
+    <canvas id="application-canvas"></canvas>
+    <script src="./js/example.js"></script>
+    <script>
+        runExample({
+            version: '4.3',
+            skeletons: [
+                // uses physics constraints
+                { name: 'celestial-circus', scale: 0.3, animation: 'swing' },
+                // uses sliders, new in spine 4.3, and image sequences
+                { name: 'diamond', scale: 0.8, animation: 'size-changing-rotation' },
+                // uses clipping, tint black and additive and multiply blending
+                { name: 'tank', scale: 0.15, animation: 'drive', row: 1 }
+            ]
+        });
+    </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 import { Asset, Component, path as resourcePath } from 'playcanvas';
 
-import { Spine } from './Spine.js';
+import { Spine } from 'spine-class-import'; // spine-class-import is an alias
 
 class SpineComponent extends Component {
     constructor(system, entity) {

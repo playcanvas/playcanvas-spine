@@ -17,7 +17,8 @@ const banner = `/* Copyright 2015-${new Date().getFullYear()} PlayCanvas Ltd */\
  * @example
  * {
  *     name: 'playcanvas-spine.4.0',
- *     lib: 'spine40' // replacement for import alias
+ *     lib: 'spine40', // replacement for the spine-core-import alias
+ *     spine: 'src/component/Spine.js' // replacement for the spine-class-import alias
  * }
  */
 const builds = [
@@ -40,6 +41,12 @@ const builds = [
     {
         name: 'playcanvas-spine.4.2',
         lib: 'src/wrapper42.js'
+    },
+    {
+        // spine 4.3 renders using the SkeletonRendererCore added in spine-core 4.3
+        name: 'playcanvas-spine.4.3',
+        lib: 'src/wrapper43.js',
+        spine: 'src/component/Spine43.js'
     }
 ];
 
@@ -79,10 +86,10 @@ export default [
 /**
  * Return a target that rollup is supposed to build.
  *
- * @param {{ name, lib }} buildDefinition - The build definition.
+ * @param {{ name, lib, spine }} buildDefinition - The build definition.
  * @returns {RollupOptions} One rollup target.
  */
-function buildTarget({ name, lib }) {
+function buildTarget({ name, lib, spine = 'src/component/Spine.js' }) {
 
     const outputDir = './build/';
 
@@ -95,8 +102,8 @@ function buildTarget({ name, lib }) {
         playcanvas: 'pc'
     };
 
-    // spine-core-import is an alias
-    const entries = { 'spine-core-import': lib };
+    // spine-core-import and spine-class-import are aliases
+    const entries = { 'spine-core-import': lib, 'spine-class-import': spine };
 
     const buildPlugins = [alias({ entries }), commonjs(), nodeResolve(), babel(es5Options('release'))];
 
